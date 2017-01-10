@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locators>    
+  <nameFieldLoc>xpath</nameFieldLoc>
+  <nameFieldVal>//input[@id='855482710_9436966273'] | //input[@name='855482710_9436966273']</nameFieldVal>  
+  
+  <companyFieldLoc>xpath</companyFieldLoc>
+  <companyFieldVal>//input[@id='855482710_9436966274'] | //input[@name='855482710_9436966274']</companyFieldVal>
+  
+  <cityFieldLoc>xpath</cityFieldLoc>
+  <cityFieldVal>//input[@id='855482710_9436966277'] | //input[@name='855482710_9436966277']</cityFieldVal>
+  
+  <healthCheckBoxLoc>xpath</healthCheckBoxLoc>
+  <healthCheckBoxVal>//span[contains(text(), 'fieldName')]/preceding-sibling::span</healthCheckBoxVal>
+</locators>

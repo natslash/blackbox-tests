@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Regression Suite" parallel="false">
+  <test name="Integration Tests">
+    <classes>      
+      <class name="es.talos.demo.it.DataDrivenDemoTestIT"/>
+      <class name="es.talos.demo.it.SurveyMonkeyTestIT"/>
+    </classes>
+  </test> <!-- Integration Tests -->
+</suite> <!-- Suite -->

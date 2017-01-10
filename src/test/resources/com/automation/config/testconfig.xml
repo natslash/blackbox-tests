@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testconfig>
+
+	<!-- -->
+
+	<protocol>https</protocol>
+	<hostname>www.surveymonkey.com</hostname>
+	<port></port>
+	<appendurl>r/8D5G59L</appendurl>
+	<!--  <SitesUrl>https://www.surveymonkey.com/r/8D5G59L</SitesUrl> -->
+    <timeOutInSeconds>30</timeOutInSeconds>
+	
+
+    <!-- Browser is currently a property which is shared across the test and 
+		Framework level. We may need to change if we need to make the test browser 
+		different for different applications... Try to use the selenium browser names 
+		here (Ex: iexplore, firefox, safari, custom, safariproxy etc..) -->
+
+	<browser>firefox</browser>
+
+
+	<!-- Firefox profile name, has to be set if we want to use existing firefox 
+		profile to find profile name see "Name = " in %APPDATA%\Mozilla\Firefox\\profiles.ini -->
+
+	<firefoxprofile>default</firefoxprofile>
+	<!-- <locatorbasedir>\com\send\pages</locatorbasedir> -->
+</testconfig>
