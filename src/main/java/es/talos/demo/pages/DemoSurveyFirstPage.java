@@ -7,6 +7,9 @@ import org.openqa.selenium.WebElement;
 import com.inlogiq.talos.framework.LocatorPool;
 import com.inlogiq.talos.framework.WebDriverPage;
 import com.inlogiq.talos.utils.LocatorUtils;
+
+import ru.yandex.qatools.allure.annotations.Step;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -39,6 +42,7 @@ public class DemoSurveyFirstPage extends WebDriverPage {
     cityField.sendKeys(city);    
   }
   
+  @Step("Choosing option in the First Page")
   public void chooseOption(String fieldName){	 
 	String checkBoxFieldVal = "//span[contains(text(), '" + fieldName + "')]/preceding-sibling::span";
 	
@@ -46,6 +50,7 @@ public class DemoSurveyFirstPage extends WebDriverPage {
     radioButton.click();    
   } 
   
+  @Step("moving to next Page")
   public void clickNextButton(){
     nextButton = getDriver().findElement(By.xpath("//button[contains(text(),'Next')]"));
     wait.until(ExpectedConditions.elementToBeClickable(nextButton));

@@ -15,6 +15,7 @@ import com.inlogiq.talos.framework.WebDriverTest;
 import es.talos.demo.pages.DemoResultsPage;
 import es.talos.demo.pages.DemoSurveyFirstPage;
 import es.talos.demo.pages.DemoSurveySecondPage;
+import ru.yandex.qatools.allure.annotations.Step;
 
 public class SurveyMonkeyTestIT extends WebDriverTest{
 	DemoSurveyFirstPage demoSurveyFirstPage;
@@ -39,13 +40,13 @@ public class SurveyMonkeyTestIT extends WebDriverTest{
 	}
 
 	@Test
+	@Step("Testing completing the survey")
 	public void surveyTest() throws InterruptedException {
 
 		demoSurveyFirstPage = initPage(driver, DemoSurveyFirstPage.class);
 
 		demoSurveyFirstPage.fillTextFields("Test", "inlogiq", "Valencia");
 		
-
 		demoSurveyFirstPage.chooseOption("Very healthy");
 
 		demoSurveyFirstPage.chooseOption("No");
@@ -67,7 +68,7 @@ public class SurveyMonkeyTestIT extends WebDriverTest{
 		demoResultsPage.clickDoneButton();
 
 		String ansMessageExpected = demoResultsPage.getQuestionText();
-		Assert.assertTrue(ansMessageExpected.contains("How physically healthy are you?"), "The actual message is not the same as expected message: " + ansMessageExpected);
+		Assert.assertTrue(ansMessageExpected.contains("Discover new things"), "The actual message is not the same as expected message: " + ansMessageExpected);
 		Reporter.log("Answer message is as expected");
 	}
 

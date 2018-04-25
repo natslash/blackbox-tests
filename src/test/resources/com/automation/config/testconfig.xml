@@ -16,7 +16,7 @@
 		different for different applications... Try to use the selenium browser names 
 		here (Ex: iexplore, firefox, safari, custom, safariproxy etc..) -->
 
-	<browser>firefox</browser>
+	<browser>chrome</browser>
 
 
 	<!-- Firefox profile name, has to be set if we want to use existing firefox 

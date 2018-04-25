@@ -33,7 +33,7 @@ public class DemoResultsPage extends WebDriverPage {
   }
   
   public String getQuestionText(){
-    thanksMessage = getDriver().findElement(By.xpath("//div[contains(text(),'How physically healthy are you?')]"));
+    thanksMessage = getDriver().findElement(By.xpath("//h1[contains(text(),'Discover new things')]"));
     wait.until(ExpectedConditions.visibilityOf(thanksMessage));
     return thanksMessage.getText();    
   } 
