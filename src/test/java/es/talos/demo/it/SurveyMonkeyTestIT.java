@@ -15,7 +15,7 @@ import com.inlogiq.talos.framework.WebDriverTest;
 import es.talos.demo.pages.DemoResultsPage;
 import es.talos.demo.pages.DemoSurveyFirstPage;
 import es.talos.demo.pages.DemoSurveySecondPage;
-import ru.yandex.qatools.allure.annotations.Step;
+import io.qameta.allure.Step;
 
 public class SurveyMonkeyTestIT extends WebDriverTest{
 	DemoSurveyFirstPage demoSurveyFirstPage;

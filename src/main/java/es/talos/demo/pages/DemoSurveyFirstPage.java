@@ -8,7 +8,7 @@ import com.inlogiq.talos.framework.LocatorPool;
 import com.inlogiq.talos.framework.WebDriverPage;
 import com.inlogiq.talos.utils.LocatorUtils;
 
-import ru.yandex.qatools.allure.annotations.Step;
+import io.qameta.allure.Step;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
