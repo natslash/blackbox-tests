@@ -15,17 +15,7 @@
 			<groupId>com.inlogiq</groupId>
 			<artifactId>talos</artifactId>
 			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<version>1.3</version>
-		</dependency>
-		<dependency>
-			<groupId>io.qameta.allure</groupId>
-			<artifactId>allure-testng</artifactId>
-			<version>2.6.0</version>
-		</dependency>
+		</dependency>				
 	</dependencies>
 
 	<build>
@@ -73,6 +63,9 @@
 				<groupId>io.qameta.allure</groupId>
 				<artifactId>allure-maven</artifactId>
 				<version>2.8</version>
+				<configuration>
+					<reportDirectory>target/allure-report</reportDirectory>
+				</configuration>
 			</plugin>
 			<!--Needed only to show reports locally. Run jetty:run and open localhost:8080 
 				to show the report -->
@@ -87,5 +80,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>	
+	</build>
 </project>

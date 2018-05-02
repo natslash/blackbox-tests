@@ -5,6 +5,7 @@
     <classes>      
       <class name="es.talos.demo.it.DataDrivenDemoTestIT"/>
       <class name="es.talos.demo.it.SurveyMonkeyTestIT"/>
+      <class name="es.talos.demo.it.RESTServiceTestIT"/>
     </classes>
   </test> <!-- Integration Tests -->
 </suite> <!-- Suite -->
