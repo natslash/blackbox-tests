@@ -58,6 +58,7 @@ local.properties
 .settings/
 .loadpath
 .allure
+ allure-results/**
 /src/main/resources/rebel.xml
 # External tool builders
 .externalToolBuilders/
@@ -73,6 +74,7 @@ local.properties
 /target/
 /test-output/
 /bin/
+
 /target/
 
 ######################
