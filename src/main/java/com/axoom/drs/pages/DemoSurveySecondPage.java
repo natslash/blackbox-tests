@@ -1,11 +1,11 @@
-package es.talos.demo.pages;
+package com.axoom.drs.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import com.inlogiq.talos.framework.WebDriverPage;
+import com.axoom.talos.framework.WebDriverPage;
 
 
 public class DemoSurveySecondPage extends WebDriverPage {

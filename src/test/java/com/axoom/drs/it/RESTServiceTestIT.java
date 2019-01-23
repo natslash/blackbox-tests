@@ -1,4 +1,4 @@
-package es.talos.demo.it;
+package com.axoom.drs.it;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.CoreMatchers.hasItems;

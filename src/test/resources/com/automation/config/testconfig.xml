@@ -4,9 +4,9 @@
 	<!-- -->
 
 	<protocol>https</protocol>
-	<hostname>www.surveymonkey.com</hostname>
+	<hostname>account.dev.myaxoom.com</hostname>
 	<port></port>
-	<appendurl>r/8D5G59L</appendurl>
+	<appendurl></appendurl>
 	<!--  <SitesUrl>https://www.surveymonkey.com/r/8D5G59L</SitesUrl> -->
     <timeOutInSeconds>30</timeOutInSeconds>
 	
