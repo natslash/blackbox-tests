@@ -1,1 +1,0 @@
-{"uuid":"b66c4c58-a33f-4015-919c-bdcf3b8b73b9","name":"es.talos.demo.it.DataDrivenDemoTestIT.afterMethod","description":"","start":1524656717231,"stop":1524656717869,"children":["202149aa-fbe0-4030-9f4a-2f1c0dbdd4ad"],"afters":[{"name":"afterMethod","status":"passed","stage":"finished","description":"","start":1524656717231,"stop":1524656717869}]}

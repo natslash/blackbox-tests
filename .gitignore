@@ -1,7 +1,9 @@
 # Add any directories, files, or patterns you don't want to be tracked by version control
-/build/
-/bin/
-/target/
+**/build/
+**/bin/
+**/target/
+ **/allure-results/**
+ **/test-output/
  
 # OS Files #
 .DS_Store
