@@ -3,9 +3,7 @@
 <suite name="Regression Suite" parallel="false">
   <test name="Integration Tests">
     <classes>      
-      <class name="es.talos.demo.it.DataDrivenDemoTestIT"/>
-      <class name="es.talos.demo.it.SurveyMonkeyTestIT"/>
-      <class name="es.talos.demo.it.RESTServiceTestIT"/>
+      <class name="com.axoom.drs.it.AxoomDrsPositiveTestsIT"/>
     </classes>
   </test> <!-- Integration Tests -->
 </suite> <!-- Suite -->

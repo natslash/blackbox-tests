@@ -22,7 +22,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
   
   private String inputEmailFieldId = "Input_Email";
   private String inputPasswordFieldId = "Input_Password";
-  private String loginButtonXpath = "//button[text()='Login']";
+  private String loginButtonId = "button-login";
   
   
 
@@ -38,7 +38,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
     inputPasswordField = getDriver().findElement(By.id(inputPasswordFieldId));
     inputPasswordField.sendKeys(password);
     
-    loginButton = getDriver().findElement(By.xpath(loginButtonXpath));
+    loginButton = getDriver().findElement(By.id(loginButtonId));
     clickAndWaitForPageLoad(loginButton, 1);    
   }
   
