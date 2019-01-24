@@ -10,6 +10,20 @@
 		<aspectj.version>1.9.1</aspectj.version>
 		<allure.version>1.4.16</allure.version>
 	</properties>
+
+    <repositories>
+        <repository>
+            <id>ax-releases</id>
+            <name>axoom-releases</name>
+            <url>https://axoom.jfrog.io/axoom/maven-axoom</url>
+        </repository>
+        <repository>
+            <id>ax-snapshots</id>
+            <name>axoom-snapshots</name>
+            <url>https://axoom.jfrog.io/axoom/maven-axoom</url>
+        </repository>
+    </repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.axoom</groupId>
