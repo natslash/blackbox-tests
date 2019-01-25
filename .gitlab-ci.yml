@@ -37,7 +37,7 @@ test:dev:
     - export DRS_URL=https://device-registration-service.dev.myaxoom.com
     - export DRS_CLIENT_ID=$DEV_DRS_CLIENT_ID
     - export DRS_SECRET=$DEV_DRS_SECRET
-    - export DRS_SCOPES=device-registration-service.devices.write,device-registration-service.devices.read
+    - export DRS_SCOPES=device-registration-service.devices.write device-registration-service.devices.read
     - export SYSTEM_INTEGRATOR_EMAIL=264d0dac.axoom.com@emea.teams.ms
     - export SYSTEM_INTEGRATOR_PASSWORD=kafkarulestheaxoom2world
     - export DRS_DEVICES_API=/api/v1/devices
