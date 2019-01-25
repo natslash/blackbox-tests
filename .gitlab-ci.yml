@@ -1,4 +1,4 @@
-image: axoom-docker.jfrog.io/axoom/iot/maven-chromedriver:0.1.0-alpha0000
+image: axoom-docker.jfrog.io/axoom/iot/maven-chromedriver:0.1.0-alpha0001
 
 variables:
   MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
