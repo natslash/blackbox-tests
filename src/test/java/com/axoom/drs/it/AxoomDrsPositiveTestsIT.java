@@ -348,7 +348,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     Response response = request.get();
     System.out.println(response.then().log().all(true));
     Assert.assertTrue(response.statusCode() == 200,
-        "Expectes tatus code is 200 but the status is: " + response.statusCode());
+        "Expected status code is 200 but the status is: " + response.statusCode());
 
   }
 
