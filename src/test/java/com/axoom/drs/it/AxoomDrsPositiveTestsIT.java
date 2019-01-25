@@ -160,12 +160,17 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     request.body(json);
     System.out.println(request.log().all(true));
     Response response = request.post("/");
-    System.out.println(response.then().log().all(true));
-    deviceId = response.getBody().jsonPath().getString("id");
-    Assert.assertTrue(response.statusCode() == 201,
-        "Expected tatus code is 201 but the status is: " + response.statusCode());
-    Assert.assertTrue(!deviceId.isEmpty(), "Device is ID is null");
-
+    if (response.statusCode() == 201) {
+      System.out.println(response.then().log().all(true));
+      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+          + "\nxxxxxxxxxxxxxxxxxxx\n");
+      deviceId = response.getBody().jsonPath().getString("id");
+      Assert.assertTrue(response.statusCode() == 201,
+          "Expected tatus code is 201 but the status is: " + response.statusCode());
+      Assert.assertTrue(!deviceId.isEmpty(), "Device is ID is null");
+    } else {
+      System.out.println("Create device failed: " + response.statusCode());
+    }
   }
 
   @Test(dependsOnMethods = {"myAxoomLoginTest", "createDeviceTest"}, priority = 0,
@@ -190,7 +195,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
         "Expected status code is 200 but the status is: " + response.statusCode());
 
   }
-  
+
   @Test(dependsOnMethods = {"myAxoomLoginTest", "createDeviceTest"}, priority = 0,
       description = "Get total number of devices using DRS APIs")
   @Description("Get total number of device using DRS APIs")
@@ -198,8 +203,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   @Story("Get total number of device using DRS APIs")
   public void getNumberOfeviceDetailsTest() {
 
-    RestAssured.baseURI =
-        "https://device-registration-service.dev.myaxoom.com" + drs_endpoint;
+    RestAssured.baseURI = "https://device-registration-service.dev.myaxoom.com" + drs_endpoint;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -213,7 +217,8 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
         "Expected status code is 200 but the status is: " + response.statusCode());
     JsonParser parser = new JsonParser();
     JsonArray responseJson = (JsonArray) parser.parse(response.asString());
-    Assert.assertTrue(responseJson.size() == 1, "The total number of devices should not be more than 1");
+    Assert.assertTrue(responseJson.size() == 1,
+        "The total number of devices should not be more than 1");
   }
 
   @Test(dependsOnMethods = {"myAxoomLoginTest", "createDeviceTest", "getDeviceDetailsTest"},
@@ -260,8 +265,8 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest", "createDeviceTest", "getDeviceDetailsTest", "updateDeviceTest"},
-      priority = 0, description = "Delete a device using DRS APIs")
+  @Test(dependsOnMethods = {"myAxoomLoginTest", "createDeviceTest", "getDeviceDetailsTest",
+      "updateDeviceTest"}, priority = 0, description = "Delete a device using DRS APIs")
   @Description("Delete a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   @Story("Delete a device with valid values using DRS APIs")
@@ -282,7 +287,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
         "Expected status code is 204 but the status is: " + response.statusCode());
 
   }
-  
+
   @Test(dependsOnMethods = {"deleteDeviceTest"}, priority = 0,
       description = "Get a non existent device´s details using DRS APIs")
   @Description("Get a non existent device´s details using DRS APIs")
@@ -305,9 +310,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
         "Expected status code is 404 but the status is:" + response.statusCode());
 
   }
-  
-  @Test(dependsOnMethods = {"deleteDeviceTest"},
-      priority = 0, description = "Delete a non existentdevice using DRS APIs")
+
+  @Test(dependsOnMethods = {"deleteDeviceTest"}, priority = 0,
+      description = "Delete a non existentdevice using DRS APIs")
   @Description("Try Deleting a non existent device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   @Story("Deleting a non existent device with valid values using DRS APIs")
@@ -328,16 +333,15 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
         "Expected tatus code is 204 but the status is: " + response.statusCode());
 
   }
-  
+
   @Test(dependsOnMethods = {"myAxoomLoginTest"}, priority = 0,
       description = "Get health details using DRS APIs")
   @Description("Get a health details using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   @Story("Get a health details using DRS APIs")
-  public void getHealth(){
+  public void getHealth() {
 
-    RestAssured.baseURI =
-        "https://device-registration-service.dev.myaxoom.com" + "/health";
+    RestAssured.baseURI = "https://device-registration-service.dev.myaxoom.com" + "/health";
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
