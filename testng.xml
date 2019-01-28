@@ -4,6 +4,7 @@
   <test name="Integration Tests">
     <classes>      
       <class name="com.axoom.drs.it.AxoomDrsPositiveTestsIT"/>
+      <class name="com.axoom.drs.it.AxoomDrsNegativeTestsIT"/>
     </classes>
   </test> <!-- Integration Tests -->
 </suite> <!-- Suite -->
