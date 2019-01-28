@@ -141,6 +141,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     deviceValues.put("tenant", tenantId);
     deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
     deviceValues.put("configuration", config);
+    deviceValues.put("ioTProvider", "google");
 
     String json = null;
     try {
@@ -173,7 +174,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest", "createDeviceTest"}, priority = 0,
+  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0,
       description = "Get a device´s details using DRS APIs")
   @Description("Get a device´s details using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
@@ -189,14 +190,14 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     request.header("Authorization", "Bearer " + accessToken);
 
     System.out.println(request.log().all(true));
-    Response response = request.get("/");
+    Response response = request.get();
     System.out.println(response.then().log().all(true));
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
 
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest", "createDeviceTest"}, priority = 0,
+  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0,
       description = "Get total number of devices using DRS APIs")
   @Description("Get total number of device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
@@ -218,10 +219,10 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     JsonParser parser = new JsonParser();
     JsonArray responseJson = (JsonArray) parser.parse(response.asString());
     Assert.assertTrue(responseJson.size() == 1,
-        "The total number of devices should not be more than 1");
+        "The total number of devices should not be more than 1. total Number of devices: " + responseJson.size());
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest", "createDeviceTest", "getDeviceDetailsTest"},
+  @Test(dependsOnMethods = {"getDeviceDetailsTest"},
       priority = 0, description = "Update a device using DRS APIs")
   @Description("Delete a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
@@ -239,6 +240,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     deviceValues.put("tenant", tenantId);
     deviceValues.put("configuration", config);
     deviceValues.put("name", "ChangedName");
+    deviceValues.put("ioTProvider", "google");
 
     String json = null;
     try {
@@ -265,8 +267,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest", "createDeviceTest", "getDeviceDetailsTest",
-      "updateDeviceTest"}, priority = 0, description = "Delete a device using DRS APIs")
+  @Test(dependsOnMethods = {"updateDeviceTest"}, priority = 0, description = "Delete a device using DRS APIs")
   @Description("Delete a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   @Story("Delete a device with valid values using DRS APIs")
