@@ -42,4 +42,4 @@ test:dev:
     - export SYSTEM_INTEGRATOR_PASSWORD=kafkarulestheaxoom2world
     - export DRS_DEVICES_API=/api/v1/devices
     - export DRS_REDIRECT_URI=https://device-registration-service.dev.myaxoom.com/swagger/oauth2-redirect.html
-    - mvn $MAVEN_CLI_OPTS verify
+    - mvn $MAVEN_CLI_OPTS verify package
