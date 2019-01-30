@@ -45,7 +45,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   private String cisUrl;
   private String drs_endpoint;
   private String deviceId;
+  private String baseUri;
   private WebDriver driver;
+  private int numOfDevices;
   private Map<String, String> requestParams = new HashMap<>();
 
   @BeforeClass
@@ -62,6 +64,8 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     accessToken = null;
     deviceId = null;
     drs_endpoint = System.getenv("DRS_DEVICES_API");
+    baseUri = "https://device-registration-service.dev.myaxoom.com";
+    numOfDevices = 0;
     cert =
         "-----BEGIN CERTIFICATE-----\nMIIDBTCCAe2gAwIBAgIUC6zaR1eCZnzUkvjRw5Av9xFbugIwDQYJKoZIhvcNAQELBQAwETEPMA0GA1UEAwwGdW51c2VkMCAXDTE4MTIxMTEzMDA0NVoYDzQ3NTYxMTA3MTMwMDQ1WjARMQ8wDQYDVQQDDAZ1bnVzZWQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDNoB/kj0CGGVK7/nulywUugteDXyfP51PPpa8V5nN+CVeZj0jZA+iIV4vuF2AJCXIx9LkVY7/TRcv0oTUGt+N68BjFEAldYoYKNr+PCfJaVCGFPTgBok1uwQ49XAyXdZEWMRxVy1B1f78Ak+mKV+EbBuCPQPXLE7I5qUE7B1NorpnkX8gmbFnLFB2i6iiPybAw7p3clhr6M6vt1AJBJCpNJ4CqJkuZtz19xP36ZLv2BWU1/bZzRWXJG7Af+daYccxFclS3S9SM7tVaE/5PNmQ2CRr1Qub3rUtqVUDls7KYNh6GrTzjwy7LaUpIa2oH7wgJwBJREftTDNavGXTNhuxpAgMBAAGjUzBRMB0GA1UdDgQWBBSQeQGm7O1A1l02SR4aXQozmI3iqjAfBgNVHSMEGDAWgBSQeQGm7O1A1l02SR4aXQozmI3iqjAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCIINss2WMxZXMuq5W+lKRXq5MZ4Hq/g5JKoqUpeQBmrsq42vVOLoi96dtwoTpNpZ8Ka+yQQXjcr8az4HTX2AyleE3PX1EGODuMx6aQTbrhr7wAWFxD87jjKhC5MUCPtJErSQOWYyd58qFoqLxmnw7kZWJ1SIwwhT3kU+hwxovYPd8HCDR/wMhRLOv6PNk3Z7wBaZ/C2qEUHJ9qnXmS/f/7CJlLEvDfRIvawj8HyaIjUQscIy29FOqoHJ/KsyGyYlrOdp4xQ5STif3he/iVWFa51wUUOhPK7Kv9GuoGghdeR3VWf0BGq+IoU+FDpJ8iCnzqu5rmB302hU788AxUn6vW\n-----END CERTIFICATE-----";
     requestParams.put("clientId", clientId);
@@ -130,6 +134,10 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   @Story("Create a device with valid values using DRS APIs")
   public void createDeviceTest() {
+    
+    //get total number of devices in the registry before creation of device
+    numOfDevices = getNumberOfDevices();
+    
     // prepare Device Configuration Values
     Map<String, String> config = new HashMap<>();
     config.put("publicKeyFormat", "rsa_x509_pem");
@@ -152,7 +160,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     }
 
     System.out.println(json);
-    RestAssured.baseURI = "https://device-registration-service.dev.myaxoom.com" + drs_endpoint;
+    RestAssured.baseURI = baseUri + drs_endpoint;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -181,8 +189,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   @Story("Get a device´s details using DRS APIs")
   public void getDeviceDetailsTest() {
 
-    RestAssured.baseURI =
-        "https://device-registration-service.dev.myaxoom.com" + drs_endpoint + "/" + deviceId;
+    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -204,22 +211,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   @Story("Get total number of device using DRS APIs")
   public void getNumberOfeviceDetailsTest() {
 
-    RestAssured.baseURI = "https://device-registration-service.dev.myaxoom.com" + drs_endpoint;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-
-    System.out.println(request.log().all(true));
-    Response response = request.get("/");
-    System.out.println(response.then().log().all(true));
-    Assert.assertTrue(response.statusCode() == 200,
-        "Expected status code is 200 but the status is: " + response.statusCode());
-    JsonParser parser = new JsonParser();
-    JsonArray responseJson = (JsonArray) parser.parse(response.asString());
-    Assert.assertTrue(responseJson.size() == 1,
-        "The total number of devices should not be more than 1. total Number of devices: " + responseJson.size());
+    int numOfDevicesAfterCreation = getNumberOfDevices();
+    Assert.assertTrue(numOfDevices == numOfDevicesAfterCreation - 1,
+        "The total number of devices should not be more than 1. total Number of devices: " + numOfDevicesAfterCreation);
   }
 
   @Test(dependsOnMethods = {"getDeviceDetailsTest"},
@@ -252,7 +246,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
     System.out.println(json);
     RestAssured.baseURI =
-        "https://device-registration-service.dev.myaxoom.com" + drs_endpoint + "/" + deviceId;
+        baseUri + drs_endpoint + "/" + deviceId;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -274,7 +268,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   public void deleteDeviceTest() {
 
     RestAssured.baseURI =
-        "https://device-registration-service.dev.myaxoom.com" + drs_endpoint + "/" + deviceId;
+        baseUri + drs_endpoint + "/" + deviceId;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -296,8 +290,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   @Story("Get a non existent device´s details using DRS APIs")
   public void getNonExistentDeviceDetailsTest() {
 
-    RestAssured.baseURI =
-        "https://device-registration-service.dev.myaxoom.com" + drs_endpoint + "/" + deviceId;
+    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -320,7 +313,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   public void deleteANonExistentDeviceTest() {
 
     RestAssured.baseURI =
-        "https://device-registration-service.dev.myaxoom.com" + drs_endpoint + "/" + deviceId;
+        baseUri + drs_endpoint + "/" + deviceId;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -342,7 +335,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   @Story("Get a health details using DRS APIs")
   public void getHealth() {
 
-    RestAssured.baseURI = "https://device-registration-service.dev.myaxoom.com" + "/health";
+    RestAssured.baseURI = baseUri + "/health";
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -355,6 +348,24 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
 
+  }
+  
+  public int getNumberOfDevices() {
+    RestAssured.baseURI = baseUri + drs_endpoint;
+    System.out.println(RestAssured.baseURI);
+    RequestSpecification request = RestAssured.given();
+
+    request.header("Content-Type", "application/json");
+    request.header("Authorization", "Bearer " + accessToken);
+
+    System.out.println(request.log().all(true));
+    Response response = request.get("/");
+    System.out.println(response.then().log().all(true));
+    Assert.assertTrue(response.statusCode() == 200,
+        "Expected status code is 200 but the status is: " + response.statusCode());
+    JsonParser parser = new JsonParser();
+    JsonArray responseJson = (JsonArray) parser.parse(response.asString());
+    return responseJson.size() ;
   }
 
 }

@@ -43,6 +43,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   private String cisUrl;
   private String drs_endpoint;
   private String deviceId;
+  private String baseUri;
   private WebDriver driver;
   private Map<String, String> requestParams = new HashMap<>();
 
@@ -60,6 +61,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     accessToken = null;
     deviceId = null;
     drs_endpoint = System.getenv("DRS_DEVICES_API");
+    baseUri = "https://device-registration-service.dev.myaxoom.com";
     cert =
         "-----BEGIN CERTIFICATE-----\nMIIDBTCCAe2gAwIBAgIUC6zaR1eCZnzUkvjRw5Av9xFbugIwDQYJKoZIhvcNAQELBQAwETEPMA0GA1UEAwwGdW51c2VkMCAXDTE4MTIxMTEzMDA0NVoYDzQ3NTYxMTA3MTMwMDQ1WjARMQ8wDQYDVQQDDAZ1bnVzZWQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDNoB/kj0CGGVK7/nulywUugteDXyfP51PPpa8V5nN+CVeZj0jZA+iIV4vuF2AJCXIx9LkVY7/TRcv0oTUGt+N68BjFEAldYoYKNr+PCfJaVCGFPTgBok1uwQ49XAyXdZEWMRxVy1B1f78Ak+mKV+EbBuCPQPXLE7I5qUE7B1NorpnkX8gmbFnLFB2i6iiPybAw7p3clhr6M6vt1AJBJCpNJ4CqJkuZtz19xP36ZLv2BWU1/bZzRWXJG7Af+daYccxFclS3S9SM7tVaE/5PNmQ2CRr1Qub3rUtqVUDls7KYNh6GrTzjwy7LaUpIa2oH7wgJwBJREftTDNavGXTNhuxpAgMBAAGjUzBRMB0GA1UdDgQWBBSQeQGm7O1A1l02SR4aXQozmI3iqjAfBgNVHSMEGDAWgBSQeQGm7O1A1l02SR4aXQozmI3iqjAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCIINss2WMxZXMuq5W+lKRXq5MZ4Hq/g5JKoqUpeQBmrsq42vVOLoi96dtwoTpNpZ8Ka+yQQXjcr8az4HTX2AyleE3PX1EGODuMx6aQTbrhr7wAWFxD87jjKhC5MUCPtJErSQOWYyd58qFoqLxmnw7kZWJ1SIwwhT3kU+hwxovYPd8HCDR/wMhRLOv6PNk3Z7wBaZ/C2qEUHJ9qnXmS/f/7CJlLEvDfRIvawj8HyaIjUQscIy29FOqoHJ/KsyGyYlrOdp4xQ5STif3he/iVWFa51wUUOhPK7Kv9GuoGghdeR3VWf0BGq+IoU+FDpJ8iCnzqu5rmB302hU788AxUn6vW\n-----END CERTIFICATE-----";
     requestParams.put("clientId", clientId);
@@ -85,8 +87,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   @AfterClass 
   public void deleteDeviceTest() {
 
-    RestAssured.baseURI =
-        "https://device-registration-service.dev.myaxoom.com" + drs_endpoint + "/" + deviceId;
+    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -169,7 +170,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     }
 
     System.out.println(json);
-    RestAssured.baseURI = "https://device-registration-service.dev.myaxoom.com" + drs_endpoint;
+    RestAssured.baseURI = baseUri + drs_endpoint;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -220,7 +221,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     }
 
     System.out.println(json);
-    RestAssured.baseURI = "https://device-registration-service.dev.myaxoom.com" + drs_endpoint;
+    RestAssured.baseURI = baseUri + drs_endpoint;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -270,8 +271,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     }
 
     System.out.println(json);
-    RestAssured.baseURI =
-        "https://device-registration-service.dev.myaxoom.com" + drs_endpoint + "/" + deviceId;
+    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -309,8 +309,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     }
 
     System.out.println(json);
-    RestAssured.baseURI =
-        "https://device-registration-service.dev.myaxoom.com" + drs_endpoint + "/" + deviceId;
+    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -350,8 +349,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     }
 
     System.out.println(json);
-    RestAssured.baseURI =
-        "https://device-registration-service.dev.myaxoom.com" + drs_endpoint + "/" + deviceId;
+    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -392,8 +390,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     }
 
     System.out.println(json);
-    RestAssured.baseURI =
-        "https://device-registration-service.dev.myaxoom.com" + drs_endpoint + "/" + deviceId;
+    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
