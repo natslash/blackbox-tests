@@ -242,10 +242,10 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     }
   }  
 
-  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0, description = "Update a device with wrong config using DRS APIs")
+  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0, description = "Update a device with wrong IoT provider using DRS APIs")
   @Description("Delete a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Update a device with wrong config values using DRS APIs")
+  @Story("Update a device with wrong IoT provider using DRS APIs")
   public void updateDeviceWithWrongIotProviderTest() {
 
     // prepare Device Configuration Values
@@ -286,10 +286,10 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
 
   }
   
-  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0, description = "Update a device with wrong config using DRS APIs")
+  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0, description = "Update a device with no location using DRS APIs")
   @Description("Delete a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Update a device with wrong config values using DRS APIs")
+  @Story("Update a device with no location using DRS APIs")
   public void updateDeviceWithNoLocationTest() {
 
     // prepare Device Configuration Values
@@ -325,10 +325,10 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
 
   }
 
-  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0, description = "Update a device with wrong config using DRS APIs")
+  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0, description = "Update a device with wrong Certificate using DRS APIs")
   @Description("Delete a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Update a device with wrong config values using DRS APIs")
+  @Story("Update a device with wrong Certificate using DRS APIs")
   public void updateDeviceWithInvalidCertificateTest() {
 
     // prepare Device Configuration Values
@@ -367,10 +367,10 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   }
   
 
-  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0, description = "Update a device with wrong config using DRS APIs")
+  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0, description = "Update a device with No config using DRS APIs")
   @Description("Delete a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Update a device with wrong config values using DRS APIs")
+  @Story("Update a device with No config values using DRS APIs")
   public void updateDeviceWithNoConfigurationTest() {
 
     // prepare Device Configuration Values

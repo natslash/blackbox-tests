@@ -62,7 +62,7 @@
 					<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
-					<testFailureIgnore>false</testFailureIgnore>
+					<testFailureIgnore>true</testFailureIgnore>
 					<System.properties>
 						<property>
 							<name>allure.results.directory</name>
