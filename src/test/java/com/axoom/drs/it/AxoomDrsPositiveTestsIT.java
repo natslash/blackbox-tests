@@ -17,19 +17,17 @@ import com.axoom.drs.pages.MyAxoomLoginPage;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+@Story("Positive test cases for DRS APIs")
 public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   private MyAxoomLoginPage myAxoomLoginPage;
   private String inputEmail;
@@ -67,7 +65,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     baseUri = "https://device-registration-service.dev.myaxoom.com";
     numOfDevices = 0;
     cert =
-        "-----BEGIN CERTIFICATE-----\nMIIDBTCCAe2gAwIBAgIUC6zaR1eCZnzUkvjRw5Av9xFbugIwDQYJKoZIhvcNAQELBQAwETEPMA0GA1UEAwwGdW51c2VkMCAXDTE4MTIxMTEzMDA0NVoYDzQ3NTYxMTA3MTMwMDQ1WjARMQ8wDQYDVQQDDAZ1bnVzZWQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDNoB/kj0CGGVK7/nulywUugteDXyfP51PPpa8V5nN+CVeZj0jZA+iIV4vuF2AJCXIx9LkVY7/TRcv0oTUGt+N68BjFEAldYoYKNr+PCfJaVCGFPTgBok1uwQ49XAyXdZEWMRxVy1B1f78Ak+mKV+EbBuCPQPXLE7I5qUE7B1NorpnkX8gmbFnLFB2i6iiPybAw7p3clhr6M6vt1AJBJCpNJ4CqJkuZtz19xP36ZLv2BWU1/bZzRWXJG7Af+daYccxFclS3S9SM7tVaE/5PNmQ2CRr1Qub3rUtqVUDls7KYNh6GrTzjwy7LaUpIa2oH7wgJwBJREftTDNavGXTNhuxpAgMBAAGjUzBRMB0GA1UdDgQWBBSQeQGm7O1A1l02SR4aXQozmI3iqjAfBgNVHSMEGDAWgBSQeQGm7O1A1l02SR4aXQozmI3iqjAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCIINss2WMxZXMuq5W+lKRXq5MZ4Hq/g5JKoqUpeQBmrsq42vVOLoi96dtwoTpNpZ8Ka+yQQXjcr8az4HTX2AyleE3PX1EGODuMx6aQTbrhr7wAWFxD87jjKhC5MUCPtJErSQOWYyd58qFoqLxmnw7kZWJ1SIwwhT3kU+hwxovYPd8HCDR/wMhRLOv6PNk3Z7wBaZ/C2qEUHJ9qnXmS/f/7CJlLEvDfRIvawj8HyaIjUQscIy29FOqoHJ/KsyGyYlrOdp4xQ5STif3he/iVWFa51wUUOhPK7Kv9GuoGghdeR3VWf0BGq+IoU+FDpJ8iCnzqu5rmB302hU788AxUn6vW\n-----END CERTIFICATE-----";
+        "-----BEGIN CERTIFICATE-----\nMIIDBTCCAe2gAwIBAgIUF1iV/9udf9JB8v2yvHbNC2A0deAwDQYJKoZIhvcNAQELBQAwETEPMA0GA1UEAwwGdW51c2VkMCAXDTE5MDEzMDE1MTc1NloYDzQ3NTYxMjI3MTUxNzU2WjARMQ8wDQYDVQQDDAZ1bnVzZWQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDtCQTYfELLfHNJWxmW5JYYnIpptHh4GWSo+/ZJOZhcRFozTR944sLQ582bdjEggosCs8XfIjXfSMCHT3Jbo2MVCgW2W/8dG1hRke/UN6T0Gz89QqCHrve4C3n/N4k+KbxOCOEfkXEZvaljGZ/uVSpnlHBztAXxxWlG9EoXqD3swj9i3jfvdLGzw1owIB19PZL7i+TKgpVDz6Kexa0f7d5n7Sp5ASxuWbcs/+UsPFRePZT8zMsuPhXp9yVSjtd2QktBNezsSI8b3JeyFg0KXgjv4VoP1RRaD+CkGhJKkLQp4afq4yVaPUiJttQwpT0dMXzdmfgP1e9w5WVLdwT0O0gjAgMBAAGjUzBRMB0GA1UdDgQWBBTE9NeokJNR2uhUQkqrQcrDlu/UajAfBgNVHSMEGDAWgBTE9NeokJNR2uhUQkqrQcrDlu/UajAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCxam8a8cYrO7XN7XAhzUlbZ1eNCYl45CeFsrM8MUBPpXmGIO7QjkVIIJhD6AWDCeXWaDL80su4YPZMMpOLwVeVsJwAMMs5KAqkieifsz1UJg4PBZVfpN6jBtkONAFBj6RcZTUEo8gvH/rI166oqD+zcKiVkkZYSS2MFzYcLZAkGbtEytefcZzycrGPCSnhOg245cDhSP7CBTNBRW54C8TuzhdaRqjAgwYeSEoQKAMiIKJCldornqHlK/XFU7A7QRuT3vTEVbisUqqMRpIfa8vilb1GMIDIJihSyhN2EWGTg7garew8uGDpIQMeFZVhgc2GHkXB8u4I68dhbpm1KUc5\n-----END CERTIFICATE-----";
     requestParams.put("clientId", clientId);
     requestParams.put("redirectUri", redirectUri);
     requestParams.put("cisUrl", cisUrl);
@@ -96,10 +94,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
         "-----------------------------------------------------------------------------------------------");
   }
 
-  @Test(priority = 0, description = "Perform Login UI test to get access token for API tests")
+  @Test
   @Description("Perform Login UI test to get access token for API tests")
-  @Severity(SeverityLevel.BLOCKER)
-  @Story("Perform Valid Login to My Axoom")
+  @Severity(SeverityLevel.BLOCKER)  
   public void myAxoomLoginTest() throws InterruptedException {
 
     String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
@@ -128,11 +125,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"}, priority = 0,
-      description = "Create a device using DRS APIs")
+  @Test(dependsOnMethods = {"myAxoomLoginTest"})
   @Description("Create a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Create a device with valid values using DRS APIs")
   public void createDeviceTest() {
     
     //get total number of devices in the registry before creation of device
@@ -182,11 +177,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0,
-      description = "Get a device큦 details using DRS APIs")
+  @Test(dependsOnMethods = {"createDeviceTest"})
   @Description("Get a device큦 details using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Get a device큦 details using DRS APIs")
   public void getDeviceDetailsTest() {
 
     RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
@@ -204,11 +197,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
   }
 
-  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0,
-      description = "Get total number of devices using DRS APIs")
+  @Test(dependsOnMethods = {"createDeviceTest"})
   @Description("Get total number of device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Get total number of device using DRS APIs")
   public void getNumberOfeviceDetailsTest() {
 
     int numOfDevicesAfterCreation = getNumberOfDevices();
@@ -216,11 +207,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
         "The total number of devices should not be more than 1. total Number of devices: " + numOfDevicesAfterCreation);
   }
 
-  @Test(dependsOnMethods = {"getDeviceDetailsTest"},
-      priority = 0, description = "Update a device using DRS APIs")
-  @Description("Delete a device using DRS APIs")
+  @Test(dependsOnMethods = {"getDeviceDetailsTest"})
+  @Description("Update a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Update a device with valid values using DRS APIs")
   public void updateDeviceTest() {
 
     // prepare Device Configuration Values
@@ -261,10 +250,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
   }
 
-  @Test(dependsOnMethods = {"updateDeviceTest"}, priority = 0, description = "Delete a device using DRS APIs")
+  @Test(dependsOnMethods = {"updateDeviceTest"})
   @Description("Delete a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Delete a device with valid values using DRS APIs")
   public void deleteDeviceTest() {
 
     RestAssured.baseURI =
@@ -283,11 +271,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
   }
 
-  @Test(dependsOnMethods = {"deleteDeviceTest"}, priority = 0,
-      description = "Get a non existent device큦 details using DRS APIs")
+  @Test(dependsOnMethods = {"deleteDeviceTest"})
   @Description("Get a non existent device큦 details using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Get a non existent device큦 details using DRS APIs")
   public void getNonExistentDeviceDetailsTest() {
 
     RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
@@ -305,11 +291,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
   }
 
-  @Test(dependsOnMethods = {"deleteDeviceTest"}, priority = 0,
-      description = "Delete a non existentdevice using DRS APIs")
+  @Test(dependsOnMethods = {"deleteDeviceTest"})
   @Description("Try Deleting a non existent device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Deleting a non existent device with valid values using DRS APIs")
   public void deleteANonExistentDeviceTest() {
 
     RestAssured.baseURI =
@@ -328,11 +312,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"}, priority = 0,
-      description = "Get health details using DRS APIs")
-  @Description("Get a health details using DRS APIs")
+  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Description("Get health details using DRS APIs")  
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Get a health details using DRS APIs")
   public void getHealth() {
 
     RestAssured.baseURI = baseUri + "/health";

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Regression Suite" parallel="false">
-  <test name="Integration Tests">
+<suite name="DRS API integration test Suite" parallel="false">
+  <test name="Positive Integration Tests">
     <classes>      
       <class name="com.axoom.drs.it.AxoomDrsPositiveTestsIT"/>
+    </classes>
+  </test>
+  <test name="Negative Integration Tests">
+    <classes>      
       <class name="com.axoom.drs.it.AxoomDrsNegativeTestsIT"/>
     </classes>
-  </test> <!-- Integration Tests -->
+  </test> 
 </suite> <!-- Suite -->

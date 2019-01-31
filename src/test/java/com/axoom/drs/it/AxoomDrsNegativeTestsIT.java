@@ -18,8 +18,6 @@ import com.axoom.drs.pages.MyAxoomLoginPage;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -28,6 +26,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+@Story("Negative tests for device creation")
 public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   private MyAxoomLoginPage myAxoomLoginPage;
   private String inputEmail;
@@ -63,7 +62,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     drs_endpoint = System.getenv("DRS_DEVICES_API");
     baseUri = "https://device-registration-service.dev.myaxoom.com";
     cert =
-        "-----BEGIN CERTIFICATE-----\nMIIDBTCCAe2gAwIBAgIUC6zaR1eCZnzUkvjRw5Av9xFbugIwDQYJKoZIhvcNAQELBQAwETEPMA0GA1UEAwwGdW51c2VkMCAXDTE4MTIxMTEzMDA0NVoYDzQ3NTYxMTA3MTMwMDQ1WjARMQ8wDQYDVQQDDAZ1bnVzZWQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDNoB/kj0CGGVK7/nulywUugteDXyfP51PPpa8V5nN+CVeZj0jZA+iIV4vuF2AJCXIx9LkVY7/TRcv0oTUGt+N68BjFEAldYoYKNr+PCfJaVCGFPTgBok1uwQ49XAyXdZEWMRxVy1B1f78Ak+mKV+EbBuCPQPXLE7I5qUE7B1NorpnkX8gmbFnLFB2i6iiPybAw7p3clhr6M6vt1AJBJCpNJ4CqJkuZtz19xP36ZLv2BWU1/bZzRWXJG7Af+daYccxFclS3S9SM7tVaE/5PNmQ2CRr1Qub3rUtqVUDls7KYNh6GrTzjwy7LaUpIa2oH7wgJwBJREftTDNavGXTNhuxpAgMBAAGjUzBRMB0GA1UdDgQWBBSQeQGm7O1A1l02SR4aXQozmI3iqjAfBgNVHSMEGDAWgBSQeQGm7O1A1l02SR4aXQozmI3iqjAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCIINss2WMxZXMuq5W+lKRXq5MZ4Hq/g5JKoqUpeQBmrsq42vVOLoi96dtwoTpNpZ8Ka+yQQXjcr8az4HTX2AyleE3PX1EGODuMx6aQTbrhr7wAWFxD87jjKhC5MUCPtJErSQOWYyd58qFoqLxmnw7kZWJ1SIwwhT3kU+hwxovYPd8HCDR/wMhRLOv6PNk3Z7wBaZ/C2qEUHJ9qnXmS/f/7CJlLEvDfRIvawj8HyaIjUQscIy29FOqoHJ/KsyGyYlrOdp4xQ5STif3he/iVWFa51wUUOhPK7Kv9GuoGghdeR3VWf0BGq+IoU+FDpJ8iCnzqu5rmB302hU788AxUn6vW\n-----END CERTIFICATE-----";
+        "-----BEGIN CERTIFICATE-----\nMIIDBTCCAe2gAwIBAgIUF1iV/9udf9JB8v2yvHbNC2A0deAwDQYJKoZIhvcNAQELBQAwETEPMA0GA1UEAwwGdW51c2VkMCAXDTE5MDEzMDE1MTc1NloYDzQ3NTYxMjI3MTUxNzU2WjARMQ8wDQYDVQQDDAZ1bnVzZWQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDtCQTYfELLfHNJWxmW5JYYnIpptHh4GWSo+/ZJOZhcRFozTR944sLQ582bdjEggosCs8XfIjXfSMCHT3Jbo2MVCgW2W/8dG1hRke/UN6T0Gz89QqCHrve4C3n/N4k+KbxOCOEfkXEZvaljGZ/uVSpnlHBztAXxxWlG9EoXqD3swj9i3jfvdLGzw1owIB19PZL7i+TKgpVDz6Kexa0f7d5n7Sp5ASxuWbcs/+UsPFRePZT8zMsuPhXp9yVSjtd2QktBNezsSI8b3JeyFg0KXgjv4VoP1RRaD+CkGhJKkLQp4afq4yVaPUiJttQwpT0dMXzdmfgP1e9w5WVLdwT0O0gjAgMBAAGjUzBRMB0GA1UdDgQWBBTE9NeokJNR2uhUQkqrQcrDlu/UajAfBgNVHSMEGDAWgBTE9NeokJNR2uhUQkqrQcrDlu/UajAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCxam8a8cYrO7XN7XAhzUlbZ1eNCYl45CeFsrM8MUBPpXmGIO7QjkVIIJhD6AWDCeXWaDL80su4YPZMMpOLwVeVsJwAMMs5KAqkieifsz1UJg4PBZVfpN6jBtkONAFBj6RcZTUEo8gvH/rI166oqD+zcKiVkkZYSS2MFzYcLZAkGbtEytefcZzycrGPCSnhOg245cDhSP7CBTNBRW54C8TuzhdaRqjAgwYeSEoQKAMiIKJCldornqHlK/XFU7A7QRuT3vTEVbisUqqMRpIfa8vilb1GMIDIJihSyhN2EWGTg7garew8uGDpIQMeFZVhgc2GHkXB8u4I68dhbpm1KUc5\n-----END CERTIFICATE-----";
     requestParams.put("clientId", clientId);
     requestParams.put("redirectUri", redirectUri);
     requestParams.put("cisUrl", cisUrl);
@@ -110,10 +109,9 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
         "-----------------------------------------------------------------------------------------------");
   }
 
-  @Test(priority = 0, description = "Perform Login UI test to get access token for API tests")
+  @Test
   @Description("Perform Login UI test to get access token for API tests")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Perform Valid Login to My Axoom")
   public void myAxoomLoginTest() throws InterruptedException {
 
     String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
@@ -142,12 +140,10 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
 
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"}, priority = 0,
-      description = "Create an invalid device using DRS APIs")
-
+  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Description("Create a device with invalid provider using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Create a device with invalid values using DRS APIs")
-  public void createDeviceWithInvalidDataTest() {
+  public void createDeviceWithInvalidProviderTest() {
     // prepare Device Configuration Values
     Map<String, String> config = new HashMap<>();
     config.put("publicKeyFormat", "rsa_x509_pem");
@@ -191,13 +187,106 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
       System.out.println(response.statusCode());
     }
   }
+  
+  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Description("Verify creating a device with invalid certificate format using DRS APIs")
+  @Severity(SeverityLevel.BLOCKER)
+  public void createDeviceWithInvalidCertFormatTypeTest() {
+    // prepare Device Configuration Values
+    Map<String, String> config = new HashMap<>();
+    config.put("publicKeyFormat", "rsa_x50_pem");
+    config.put("publicKey", cert);
+    config.put("location", "europe-west1");
 
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"}, priority = 0,
-      description = "Create a device using DRS APIs")
+    Map<String, Object> deviceValues = new HashMap<>();
+    deviceValues.put("tenant", tenantId);
+    deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
+    deviceValues.put("configuration", config);
+    deviceValues.put("ioTProvider", "google");
+
+    String json = null;
+    try {
+      json = new ObjectMapper().writeValueAsString(deviceValues);
+    } catch (JsonProcessingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    System.out.println(json);
+    RestAssured.baseURI = baseUri + drs_endpoint;
+    System.out.println(RestAssured.baseURI);
+    RequestSpecification request = RestAssured.given();
+
+    request.header("Content-Type", "application/json");
+    request.header("Authorization", "Bearer " + accessToken);
+    request.body(json);
+    System.out.println(request.log().all(true));
+    Response response = request.post("/");
+    if (response.statusCode() == 400) {
+      System.out.println(response.then().log().all(true));
+      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint()
+          + "\nxxxxxxxxxxxxxxxxxxx\n");
+      String errorMessage = "The publicKeyFormat has to match one of following formats: RSA_PEM, ES256_PEM, RSA_X509_PEM, ES256_X509_PEM";
+      Assert.assertTrue(response.getBody().asString().contains(errorMessage));
+
+    } else {
+      System.out.println(response.statusCode());
+    }
+  }
+  
+  
+  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Description("Verify creating a device with invalid certificate using DRS APIs")
+  @Severity(SeverityLevel.BLOCKER)
+  public void createDeviceWithInvalidCertTest() {
+    // prepare Device Configuration Values
+    Map<String, String> config = new HashMap<>();
+    config.put("publicKeyFormat", "rsa_x509_pem");
+    config.put("publicKey", cert + 1);
+    config.put("location", "europe-west1");
+
+
+    Map<String, Object> deviceValues = new HashMap<>();
+    deviceValues.put("tenant", tenantId);
+    deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
+    deviceValues.put("configuration", config);
+    deviceValues.put("ioTProvider", "google");
+
+    String json = null;
+    try {
+      json = new ObjectMapper().writeValueAsString(deviceValues);
+    } catch (JsonProcessingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    System.out.println(json);
+    RestAssured.baseURI = baseUri + drs_endpoint;
+    System.out.println(RestAssured.baseURI);
+    RequestSpecification request = RestAssured.given();
+
+    request.header("Content-Type", "application/json");
+    request.header("Authorization", "Bearer " + accessToken);
+    request.body(json);
+    System.out.println(request.log().all(true));
+    Response response = request.post("/");
+    if (response.statusCode() == 400) {
+      System.out.println(response.then().log().all(true));
+      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint()
+          + "\nxxxxxxxxxxxxxxxxxxx\n");
+      String errorMessage = "Invalid RS256 certificate";
+      Assert.assertTrue(response.getBody().asString().contains(errorMessage));
+
+    } else {
+      System.out.println(response.statusCode());
+    }
+  }
+
+
+  @Test(dependsOnMethods = {"myAxoomLoginTest"})
   @Description("Create a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Create a device with valid values using DRS APIs")
   public void createDeviceTest() {
     // prepare Device Configuration Values
     Map<String, String> config = new HashMap<>();
@@ -239,14 +328,13 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
           "Expected tatus code is 201 but the status is: " + response.statusCode());
       Assert.assertTrue(!deviceId.isEmpty(), "Device is ID is null");
     } else {
-      System.out.println("Create device failed: " + response.statusCode());
+      Assert.fail("Create device failed: " + response.statusCode());
     }
   }  
 
-  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0, description = "Update a device with wrong IoT provider using DRS APIs")
-  @Description("Delete a device using DRS APIs")
+  @Test(dependsOnMethods = {"createDeviceTest"})
+  @Description("Update a device with wrong IoT provider using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Update a device with wrong IoT provider using DRS APIs")
   public void updateDeviceWithWrongIotProviderTest() {
 
     // prepare Device Configuration Values
@@ -286,10 +374,9 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
 
   }
   
-  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0, description = "Update a device with no location using DRS APIs")
-  @Description("Delete a device using DRS APIs")
+  @Test(dependsOnMethods = {"createDeviceTest"})
+  @Description("Update a device with no location using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Update a device with no location using DRS APIs")
   public void updateDeviceWithNoLocationTest() {
 
     // prepare Device Configuration Values
@@ -324,10 +411,9 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
 
   }
 
-  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0, description = "Update a device with wrong Certificate using DRS APIs")
-  @Description("Delete a device using DRS APIs")
+  @Test(dependsOnMethods = {"createDeviceTest"})
+  @Description("Update a device with wrong Certificate using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Update a device with wrong Certificate using DRS APIs")
   public void updateDeviceWithInvalidCertificateTest() {
 
     // prepare Device Configuration Values
@@ -365,10 +451,9 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   }
   
 
-  @Test(dependsOnMethods = {"createDeviceTest"}, priority = 0, description = "Update a device with No config using DRS APIs")
-  @Description("Delete a device using DRS APIs")
+  @Test(dependsOnMethods = {"createDeviceTest"})
+  @Description("Update a device with No config using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  @Story("Update a device with No config values using DRS APIs")
   public void updateDeviceWithNoConfigurationTest() {
 
     // prepare Device Configuration Values
