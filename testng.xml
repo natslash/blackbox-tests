@@ -10,5 +10,10 @@
     <classes>      
       <class name="com.axoom.drs.it.AxoomDrsNegativeTestsIT"/>
     </classes>
+  </test>
+  <test name="Device Communication Integration Tests">
+    <classes>      
+      <class name="com.axoom.drs.it.AxoomMqTTTestsIT"/>
+    </classes>
   </test> 
 </suite> <!-- Suite -->

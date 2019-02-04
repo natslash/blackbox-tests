@@ -62,7 +62,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     drs_endpoint = System.getenv("DRS_DEVICES_API");
     baseUri = "https://device-registration-service.dev.myaxoom.com";
     cert =
-        "-----BEGIN CERTIFICATE-----\nMIIDBTCCAe2gAwIBAgIUF1iV/9udf9JB8v2yvHbNC2A0deAwDQYJKoZIhvcNAQELBQAwETEPMA0GA1UEAwwGdW51c2VkMCAXDTE5MDEzMDE1MTc1NloYDzQ3NTYxMjI3MTUxNzU2WjARMQ8wDQYDVQQDDAZ1bnVzZWQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDtCQTYfELLfHNJWxmW5JYYnIpptHh4GWSo+/ZJOZhcRFozTR944sLQ582bdjEggosCs8XfIjXfSMCHT3Jbo2MVCgW2W/8dG1hRke/UN6T0Gz89QqCHrve4C3n/N4k+KbxOCOEfkXEZvaljGZ/uVSpnlHBztAXxxWlG9EoXqD3swj9i3jfvdLGzw1owIB19PZL7i+TKgpVDz6Kexa0f7d5n7Sp5ASxuWbcs/+UsPFRePZT8zMsuPhXp9yVSjtd2QktBNezsSI8b3JeyFg0KXgjv4VoP1RRaD+CkGhJKkLQp4afq4yVaPUiJttQwpT0dMXzdmfgP1e9w5WVLdwT0O0gjAgMBAAGjUzBRMB0GA1UdDgQWBBTE9NeokJNR2uhUQkqrQcrDlu/UajAfBgNVHSMEGDAWgBTE9NeokJNR2uhUQkqrQcrDlu/UajAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCxam8a8cYrO7XN7XAhzUlbZ1eNCYl45CeFsrM8MUBPpXmGIO7QjkVIIJhD6AWDCeXWaDL80su4YPZMMpOLwVeVsJwAMMs5KAqkieifsz1UJg4PBZVfpN6jBtkONAFBj6RcZTUEo8gvH/rI166oqD+zcKiVkkZYSS2MFzYcLZAkGbtEytefcZzycrGPCSnhOg245cDhSP7CBTNBRW54C8TuzhdaRqjAgwYeSEoQKAMiIKJCldornqHlK/XFU7A7QRuT3vTEVbisUqqMRpIfa8vilb1GMIDIJihSyhN2EWGTg7garew8uGDpIQMeFZVhgc2GHkXB8u4I68dhbpm1KUc5\n-----END CERTIFICATE-----";
+        "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+SbFi/8yDdq3rOBOSVTcja4HHUJ7DXhsKds3iqMU8cP2bX7bNkb3DSsHwO1/29bJrX2IWiC+xfXSoEePmsVQNw==\n-----END PUBLIC KEY-----";
     requestParams.put("clientId", clientId);
     requestParams.put("redirectUri", redirectUri);
     requestParams.put("cisUrl", cisUrl);
@@ -146,7 +146,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   public void createDeviceWithInvalidProviderTest() {
     // prepare Device Configuration Values
     Map<String, String> config = new HashMap<>();
-    config.put("publicKeyFormat", "rsa_x509_pem");
+    config.put("publicKeyFormat", "EC256_pem");
     config.put("publicKey", cert);
     config.put("location", "europe-west1");
 
@@ -290,7 +290,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   public void createDeviceTest() {
     // prepare Device Configuration Values
     Map<String, String> config = new HashMap<>();
-    config.put("publicKeyFormat", "rsa_x509_pem");
+    config.put("publicKeyFormat", "ES256_PEM");
     config.put("publicKey", cert);
     config.put("location", "europe-west1");
 
@@ -328,7 +328,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
           "Expected tatus code is 201 but the status is: " + response.statusCode());
       Assert.assertTrue(!deviceId.isEmpty(), "Device is ID is null");
     } else {
-      Assert.fail("Create device failed: " + response.statusCode());
+      Assert.fail("Create device failed: " + response.getBody().prettyPrint());
     }
   }  
 
