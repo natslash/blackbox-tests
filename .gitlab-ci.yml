@@ -42,4 +42,9 @@ test:dev:
     - export SYSTEM_INTEGRATOR_PASSWORD=kafkarulestheaxoom2world
     - export DRS_DEVICES_API=/api/v1/devices
     - export DRS_REDIRECT_URI=https://device-registration-service.dev.myaxoom.com/swagger/oauth2-redirect.html
+    - export SRS_API = /api/v1/schemas
+    - export SRS_CLIENT_ID = mvp-schema-registration-service-swagger
+    - export SRS_REDIRECT_URI = https://schema-registration-service.dev.myaxoom.com/swagger/oauth2-redirect.html
+    - export SRS_SCOPES = schema-registration-service.schemas.write schema-registration-service.schemas.read
+    - export SRS_URL = https://schema-registration-service.dev.myaxoom.com
     - mvn $MAVEN_CLI_OPTS verify package
