@@ -24,7 +24,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -167,8 +166,8 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     }
   }
 
-  // @Test(dependsOnMethods = {"myAxoomLoginTest"})
-  @Description("Create a Data Composition using DCS APIs")
+  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Description("Verify creating an empty Data Composition using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createEmptySchemaTest() {
 
@@ -197,15 +196,14 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       System.out.println(response.then().log().all(true));
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
-      String NameErrorMsg = response.getBody().jsonPath().getString("Name");
-      String SchemaErrorMsg = response.getBody().jsonPath().getString("Schema");
-      Assert.assertTrue(NameErrorMsg.equalsIgnoreCase("[The Name field is required.]"));
-      Assert.assertTrue(SchemaErrorMsg.equalsIgnoreCase("[The Schema field is required.]"));
+      String responseString = response.getBody().asString();      
+      Assert.assertTrue(responseString.contains("The FriendlyName field is required"));
+      Assert.assertTrue(responseString.contains("The SchemaSubject field is required"));
     }
   }
 
   @Test(dependsOnMethods = {"myAxoomLoginTest"})
-  @Description("Create a data composition with no name using DCS APIs")
+  @Description("Verify creating a data composition with no name using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDataCompositionWithNoNameTest() {
 
@@ -241,7 +239,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   }
 
   @Test(dependsOnMethods = {"myAxoomLoginTest"})
-  @Description("Create a data composition using DCS APIs")
+  @Description("Verify creating a data composition with no schema subject using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDataCompositionWithNoSchemaSubjectTest() {
 
@@ -275,7 +273,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       String NameErrorMsg = response.getBody().asString();
       Assert.assertTrue(NameErrorMsg.contains("The SchemaSubject field is required."));
     }
-  } 
+  }
 
   @Test(dependsOnMethods = {"createDataCompositionTest"})
   @Description("Get a data composition´s details using DCS APIs")
@@ -351,7 +349,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   }
 
   @Test(dependsOnMethods = {"myAxoomLoginTest"})
-  @Description("Get a non existent data composition´s details using DCS APIs")
+  @Description("Verify gettingl a non existent data composition´s details using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getNonExistentDataCompositionDetailsTest() {
 

@@ -280,7 +280,7 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
     }
   }
   
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  //@Test(dependsOnMethods = {"myAxoomLoginTest"})
   @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createSchemaWithInvalidSchemaTest() {

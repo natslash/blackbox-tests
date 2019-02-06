@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="DRS API integration test Suite" parallel="false">
-  <test name="Positive Integration Tests">
+<suite name="API integration test Suite" parallel="false">
+  <test name="DRS API Integration Tests">
     <classes>      
       <class name="com.axoom.drs.it.AxoomDrsPositiveTestsIT"/>
-    </classes>
-  </test>
-  <test name="Negative Integration Tests">
-    <classes>      
       <class name="com.axoom.drs.it.AxoomDrsNegativeTestsIT"/>
+      <class name="com.axoom.drs.it.AxoomMqTTTestsIT"/>
     </classes>
   </test>
-  <test name="Device Communication Integration Tests">
+  <test name="DCS API integration Tests">
     <classes>      
-      <class name="com.axoom.drs.it.AxoomMqTTTestsIT"/>
+      <class name="com.axoom.dcs.it.AxoomDcsPositiveTestsIT"/>
+    </classes>
+  </test>
+  <test name="SRS API Integration Tests">
+    <classes>      
+      <class name="com.axoom.srs.it.AxoomSrsPositiveTestsIT"/>
     </classes>
   </test> 
 </suite> <!-- Suite -->
