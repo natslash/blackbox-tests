@@ -56,7 +56,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     redirectUri = System.getenv("DRS_REDIRECT_URI");
     scope = System.getenv("DRS_SCOPES");
     cisUrl = System.getenv("CIS_URL");
-    secret = System.getenv("DRS_SECRET");
+    secret = System.getenv("SECRET");
     authCode = null;
     accessToken = null;
     deviceId = null;

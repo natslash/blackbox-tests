@@ -1,4 +1,4 @@
-package com.axoom.drs.it;
+package com.axoom.srs.it;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -9,7 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -18,6 +17,8 @@ import com.axoom.drs.pages.MyAxoomLoginPage;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -26,8 +27,8 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-@Story("Negative tests for device creation")
-public class AxoomDrsNegativeTestsIT extends WebDriverTest {
+@Story("Positive test cases for SRS APIs")
+public class AxoomSrsPositiveTestsIT extends WebDriverTest {
   private MyAxoomLoginPage myAxoomLoginPage;
   private String inputEmail;
   private String inputPassword;
@@ -40,10 +41,11 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   private String cert;
   private String secret;
   private String cisUrl;
-  private String drs_endpoint;
-  private String deviceId;
+  private String srs_endpoint;
+  private String schemaId;
   private String baseUri;
   private WebDriver driver;
+  private int numOfSchemas;
   private Map<String, String> requestParams = new HashMap<>();
 
   @BeforeClass
@@ -51,18 +53,19 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     inputEmail = System.getenv("SYSTEM_INTEGRATOR_EMAIL");
     inputPassword = System.getenv("SYSTEM_INTEGRATOR_PASSWORD");
     tenantId = System.getenv("TENANT_ID");
-    clientId = System.getenv("DRS_CLIENT_ID");
-    redirectUri = System.getenv("DRS_REDIRECT_URI");
-    scope = System.getenv("DRS_SCOPES");
+    clientId = System.getenv("SRS_CLIENT_ID");
+    redirectUri = System.getenv("SRS_REDIRECT_URI");
+    scope = System.getenv("SRS_SCOPES");
     cisUrl = System.getenv("CIS_URL");
     secret = System.getenv("SECRET");
     authCode = null;
     accessToken = null;
-    deviceId = null;
-    drs_endpoint = System.getenv("DRS_DEVICES_API");
-    baseUri = "https://device-registration-service.dev.myaxoom.com";
+    schemaId = null;
+    srs_endpoint = System.getenv("SRS_API");
+    baseUri = "https://schema-registration-service.dev.myaxoom.com";
+    numOfSchemas = 0;
     cert =
-        "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+SbFi/8yDdq3rOBOSVTcja4HHUJ7DXhsKds3iqMU8cP2bX7bNkb3DSsHwO1/29bJrX2IWiC+xfXSoEePmsVQNw==\n-----END PUBLIC KEY-----";
+        "-----BEGIN CERTIFICATE-----\nMIIDBTCCAe2gAwIBAgIUF1iV/9udf9JB8v2yvHbNC2A0deAwDQYJKoZIhvcNAQELBQAwETEPMA0GA1UEAwwGdW51c2VkMCAXDTE5MDEzMDE1MTc1NloYDzQ3NTYxMjI3MTUxNzU2WjARMQ8wDQYDVQQDDAZ1bnVzZWQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDtCQTYfELLfHNJWxmW5JYYnIpptHh4GWSo+/ZJOZhcRFozTR944sLQ582bdjEggosCs8XfIjXfSMCHT3Jbo2MVCgW2W/8dG1hRke/UN6T0Gz89QqCHrve4C3n/N4k+KbxOCOEfkXEZvaljGZ/uVSpnlHBztAXxxWlG9EoXqD3swj9i3jfvdLGzw1owIB19PZL7i+TKgpVDz6Kexa0f7d5n7Sp5ASxuWbcs/+UsPFRePZT8zMsuPhXp9yVSjtd2QktBNezsSI8b3JeyFg0KXgjv4VoP1RRaD+CkGhJKkLQp4afq4yVaPUiJttQwpT0dMXzdmfgP1e9w5WVLdwT0O0gjAgMBAAGjUzBRMB0GA1UdDgQWBBTE9NeokJNR2uhUQkqrQcrDlu/UajAfBgNVHSMEGDAWgBTE9NeokJNR2uhUQkqrQcrDlu/UajAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCxam8a8cYrO7XN7XAhzUlbZ1eNCYl45CeFsrM8MUBPpXmGIO7QjkVIIJhD6AWDCeXWaDL80su4YPZMMpOLwVeVsJwAMMs5KAqkieifsz1UJg4PBZVfpN6jBtkONAFBj6RcZTUEo8gvH/rI166oqD+zcKiVkkZYSS2MFzYcLZAkGbtEytefcZzycrGPCSnhOg245cDhSP7CBTNBRW54C8TuzhdaRqjAgwYeSEoQKAMiIKJCldornqHlK/XFU7A7QRuT3vTEVbisUqqMRpIfa8vilb1GMIDIJihSyhN2EWGTg7garew8uGDpIQMeFZVhgc2GHkXB8u4I68dhbpm1KUc5\n-----END CERTIFICATE-----";
     requestParams.put("clientId", clientId);
     requestParams.put("redirectUri", redirectUri);
     requestParams.put("cisUrl", cisUrl);
@@ -81,24 +84,6 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
-  }
-  
-  @AfterClass 
-  public void deleteDeviceTest() {
-
-    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-
-    System.out.println(request.log().all(true));
-    Response response = request.delete("/");
-    System.out.println(response.then().log().all(true));
-    Assert.assertTrue(response.statusCode() == 204,
-        "Expected status code is 204 but the status is: " + response.statusCode());
-
   }
 
   @AfterMethod
@@ -141,176 +126,29 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   }
 
   @Test(dependsOnMethods = {"myAxoomLoginTest"})
-  @Description("Create a device with invalid provider using DRS APIs")
+  @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  public void createDeviceWithInvalidProviderTest() {
-    // prepare Device Configuration Values
-    Map<String, String> config = new HashMap<>();
-    config.put("publicKeyFormat", "EC256_pem");
-    config.put("publicKey", cert);
-    config.put("location", "europe-west1");
+  public void createSchemaTest() {
 
+    // get total number of schemas in the registry before creation of schema
+    numOfSchemas = getNumberOfSchemas();
 
-    Map<String, Object> deviceValues = new HashMap<>();
-    deviceValues.put("tenant", tenantId);
-    deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
-    deviceValues.put("configuration", config);
-    deviceValues.put("ioTProvider", "axoom");
+    // prepare Schema Values
+    Map<String, String> schemaData = new HashMap<>();
+    schemaData.put("name", "MySchema" + System.currentTimeMillis());
+    schemaData.put("schema",
+        "{\"type\":\"record\",\"name\":\"DeviceMeasurement\",\"namespace\":\"com.axoom.playground.devicemeasurement\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-micros\"},{\"name\":\"value\",\"type\":\"double\"},{\"name\":\"tenant\",\"type\":\"boolean\"}]}");
 
     String json = null;
     try {
-      json = new ObjectMapper().writeValueAsString(deviceValues);
+      json = new ObjectMapper().writeValueAsString(schemaData);
     } catch (JsonProcessingException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
     System.out.println(json);
-    RestAssured.baseURI = baseUri + drs_endpoint;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-    request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.post("/");
-    if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
-          + "\nxxxxxxxxxxxxxxxxxxx\n");
-
-      Assert.assertTrue(response.statusCode() == 400,
-          "Expected tatus code is 400 but the status is: " + response.statusCode());
-
-    } else {
-      System.out.println(response.statusCode());
-    }
-  }
-  
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
-  @Description("Verify creating a device with invalid certificate format using DRS APIs")
-  @Severity(SeverityLevel.BLOCKER)
-  public void createDeviceWithInvalidCertFormatTypeTest() {
-    // prepare Device Configuration Values
-    Map<String, String> config = new HashMap<>();
-    config.put("publicKeyFormat", "rsa_x50_pem");
-    config.put("publicKey", cert);
-    config.put("location", "europe-west1");
-
-
-    Map<String, Object> deviceValues = new HashMap<>();
-    deviceValues.put("tenant", tenantId);
-    deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
-    deviceValues.put("configuration", config);
-    deviceValues.put("ioTProvider", "google");
-
-    String json = null;
-    try {
-      json = new ObjectMapper().writeValueAsString(deviceValues);
-    } catch (JsonProcessingException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
-    System.out.println(json);
-    RestAssured.baseURI = baseUri + drs_endpoint;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-    request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.post("/");
-    if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint()
-          + "\nxxxxxxxxxxxxxxxxxxx\n");
-      String errorMessage = "The publicKeyFormat has to match one of following formats: RSA_PEM, ES256_PEM, RSA_X509_PEM, ES256_X509_PEM";
-      Assert.assertTrue(response.getBody().asString().contains(errorMessage));
-
-    } else {
-      System.out.println(response.statusCode());
-    }
-  }
-  
-  
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
-  @Description("Verify creating a device with invalid certificate using DRS APIs")
-  @Severity(SeverityLevel.BLOCKER)
-  public void createDeviceWithInvalidCertTest() {
-    // prepare Device Configuration Values
-    Map<String, String> config = new HashMap<>();
-    config.put("publicKeyFormat", "rsa_x509_pem");
-    config.put("publicKey", cert + 1);
-    config.put("location", "europe-west1");
-
-
-    Map<String, Object> deviceValues = new HashMap<>();
-    deviceValues.put("tenant", tenantId);
-    deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
-    deviceValues.put("configuration", config);
-    deviceValues.put("ioTProvider", "google");
-
-    String json = null;
-    try {
-      json = new ObjectMapper().writeValueAsString(deviceValues);
-    } catch (JsonProcessingException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
-    System.out.println(json);
-    RestAssured.baseURI = baseUri + drs_endpoint;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-    request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.post("/");
-    if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint()
-          + "\nxxxxxxxxxxxxxxxxxxx\n");
-      String errorMessage = "Invalid RS256 certificate";
-      Assert.assertTrue(response.getBody().asString().contains(errorMessage));
-
-    } else {
-      System.out.println(response.statusCode());
-    }
-  }
-
-
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
-  @Description("Create a device using DRS APIs")
-  @Severity(SeverityLevel.BLOCKER)
-  public void createDeviceTest() {
-    // prepare Device Configuration Values
-    Map<String, String> config = new HashMap<>();
-    config.put("publicKeyFormat", "ES256_PEM");
-    config.put("publicKey", cert);
-    config.put("location", "europe-west1");
-
-
-    Map<String, Object> deviceValues = new HashMap<>();
-    deviceValues.put("tenant", tenantId);
-    deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
-    deviceValues.put("configuration", config);
-    deviceValues.put("ioTProvider", "google");
-
-    String json = null;
-    try {
-      json = new ObjectMapper().writeValueAsString(deviceValues);
-    } catch (JsonProcessingException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
-    System.out.println(json);
-    RestAssured.baseURI = baseUri + drs_endpoint;
+    RestAssured.baseURI = baseUri + srs_endpoint;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -323,19 +161,196 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
       System.out.println(response.then().log().all(true));
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
-      deviceId = response.getBody().jsonPath().getString("id");
-      Assert.assertTrue(response.statusCode() == 201,
-          "Expected tatus code is 201 but the status is: " + response.statusCode());
-      Assert.assertTrue(!deviceId.isEmpty(), "Device is ID is null");
+      schemaId = response.getBody().jsonPath().getString("id");
+      Assert.assertTrue(!schemaId.isEmpty(), "Schema is ID is null");
     } else {
-      Assert.fail("Create device failed: " + response.getBody().prettyPrint());
+      System.out.println("Create Schema failed: " + response.statusCode());
     }
-  }  
+  }
 
-  @Test(dependsOnMethods = {"createDeviceTest"})
-  @Description("Update a device with wrong IoT provider using DRS APIs")
+  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  public void updateDeviceWithWrongIotProviderTest() {
+  public void createEmptySchemaTest() {
+
+    // prepare Schema Values
+    Map<String, String> schemaData = new HashMap<>();
+
+    String json = null;
+    try {
+      json = new ObjectMapper().writeValueAsString(schemaData);
+    } catch (JsonProcessingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    System.out.println(json);
+    RestAssured.baseURI = baseUri + srs_endpoint;
+    System.out.println(RestAssured.baseURI);
+    RequestSpecification request = RestAssured.given();
+
+    request.header("Content-Type", "application/json");
+    request.header("Authorization", "Bearer " + accessToken);
+    request.body(json);
+    System.out.println(request.log().all(true));
+    Response response = request.post("/");
+    if (response.statusCode() == 400) {
+      System.out.println(response.then().log().all(true));
+      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+          + "\nxxxxxxxxxxxxxxxxxxx\n");
+      String NameErrorMsg = response.getBody().jsonPath().getString("Name");
+      String SchemaErrorMsg = response.getBody().jsonPath().getString("Schema");
+      Assert.assertTrue(NameErrorMsg.equalsIgnoreCase("[The Name field is required.]"));
+      Assert.assertTrue(SchemaErrorMsg.equalsIgnoreCase("[The Schema field is required.]"));
+    }
+  }
+
+  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Description("Create a schema using SRS APIs")
+  @Severity(SeverityLevel.BLOCKER)
+  public void createSchemaWithNoNameTest() {
+
+    // prepare Schema Values
+    Map<String, String> schemaData = new HashMap<>();
+    schemaData.put("name", null);
+    schemaData.put("schema",
+        "{\"type\":\"record\",\"name\":\"DeviceMeasurement\",\"namespace\":\"com.axoom.playground.devicemeasurement\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-micros\"},{\"name\":\"value\",\"type\":\"double\"},{\"name\":\"tenant\",\"type\":\"boolean\"}]}");
+
+    String json = null;
+    try {
+      json = new ObjectMapper().writeValueAsString(schemaData);
+    } catch (JsonProcessingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    System.out.println(json);
+    RestAssured.baseURI = baseUri + srs_endpoint;
+    System.out.println(RestAssured.baseURI);
+    RequestSpecification request = RestAssured.given();
+
+    request.header("Content-Type", "application/json");
+    request.header("Authorization", "Bearer " + accessToken);
+    request.body(json);
+    System.out.println(request.log().all(true));
+    Response response = request.post("/");
+    if (response.statusCode() == 400) {
+      System.out.println(response.then().log().all(true));
+      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+          + "\nxxxxxxxxxxxxxxxxxxx\n");
+      String NameErrorMsg = response.getBody().jsonPath().getString("Name");
+      Assert.assertTrue(NameErrorMsg.equalsIgnoreCase("[The Name field is required.]"));
+    }
+  }
+
+  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Description("Create a schema using SRS APIs")
+  @Severity(SeverityLevel.BLOCKER)
+  public void createSchemaWithNullSchemaTest() {
+
+    // prepare Schema Values
+    Map<String, String> schemaData = new HashMap<>();
+    schemaData.put("name", "new" + System.currentTimeMillis());
+    schemaData.put("schema", null);
+
+    String json = null;
+    try {
+      json = new ObjectMapper().writeValueAsString(schemaData);
+    } catch (JsonProcessingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    System.out.println(json);
+    RestAssured.baseURI = baseUri + srs_endpoint;
+    System.out.println(RestAssured.baseURI);
+    RequestSpecification request = RestAssured.given();
+
+    request.header("Content-Type", "application/json");
+    request.header("Authorization", "Bearer " + accessToken);
+    request.body(json);
+    System.out.println(request.log().all(true));
+    Response response = request.post("/");
+    if (response.statusCode() == 400) {
+      System.out.println(response.then().log().all(true));
+      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+          + "\nxxxxxxxxxxxxxxxxxxx\n");
+      String NameErrorMsg = response.getBody().jsonPath().getString("Schema");
+      Assert.assertTrue(NameErrorMsg.equalsIgnoreCase("[The Schema field is required.]"));
+    }
+  }
+  
+  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Description("Create a schema using SRS APIs")
+  @Severity(SeverityLevel.BLOCKER)
+  public void createSchemaWithInvalidSchemaTest() {
+
+    // prepare Schema Values
+    Map<String, String> schemaData = new HashMap<>();
+    schemaData.put("name", "new" + System.currentTimeMillis());
+    schemaData.put("schema", "Schema");
+
+    String json = null;
+    try {
+      json = new ObjectMapper().writeValueAsString(schemaData);
+    } catch (JsonProcessingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    System.out.println(json);
+    RestAssured.baseURI = baseUri + srs_endpoint;
+    System.out.println(RestAssured.baseURI);
+    RequestSpecification request = RestAssured.given();
+
+    request.header("Content-Type", "application/json");
+    request.header("Authorization", "Bearer " + accessToken);
+    request.body(json);
+    System.out.println(request.log().all(true));
+    Response response = request.post();
+    System.out.println(response.then().log().all(true));
+    System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint()
+          + "\nxxxxxxxxxxxxxxxxxxx\n");
+    //String NameErrorMsg = response.getBody().jsonPath().getString("Schema");
+    Assert.assertTrue(response.getBody().asString().contains("Input schema is an invalid Avro schema"));
+    Assert.assertTrue(response.statusCode() == 400, "Expected Status code is 400, but the actual status code is: " + response.statusCode());
+  }
+
+  @Test(dependsOnMethods = {"createSchemaTest"})
+  @Description("Get a schema´s details using SRS APIs")
+  @Severity(SeverityLevel.BLOCKER)
+  public void getSchemaDetailsTest() {
+
+    RestAssured.baseURI = baseUri + srs_endpoint + "/" + schemaId;
+    System.out.println(RestAssured.baseURI);
+    RequestSpecification request = RestAssured.given();
+
+    request.header("Content-Type", "application/json");
+    request.header("Authorization", "Bearer " + accessToken);
+
+    System.out.println(request.log().all(true));
+    Response response = request.get();
+    System.out.println(response.then().log().all(true));
+    Assert.assertTrue(response.statusCode() == 200,
+        "Expected status code is 200 but the status is: " + response.statusCode());
+
+  }
+
+  @Test(dependsOnMethods = {"createSchemaTest"})
+  @Description("Get total number of schema using SRS APIs")
+  @Severity(SeverityLevel.BLOCKER)
+  public void getNumberOfSchemasTest() {
+
+    int numOfSchemasAfterCreation = getNumberOfSchemas();
+    Assert.assertTrue(numOfSchemas == numOfSchemasAfterCreation - 1,
+        "The total number of scehmas should not be more than " + numOfSchemas
+            + ". total Number of schemas: " + numOfSchemasAfterCreation);
+  }
+
+  // @Test(dependsOnMethods = {"getSchemaDetailsTest"})
+  @Description("Update a schema using SRS APIs")
+  @Severity(SeverityLevel.BLOCKER)
+  public void updateSchemaTest() {
 
     // prepare Device Configuration Values
     Map<String, String> config = new HashMap<>();
@@ -343,23 +358,16 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     config.put("publicKey", cert);
     config.put("location", "europe-west1");
 
-
-    Map<String, Object> deviceValues = new HashMap<>();
-    deviceValues.put("tenant", tenantId);
-    deviceValues.put("configuration", config);
-    deviceValues.put("name", "ChangedName");
-    deviceValues.put("ioTProvider", "axoom");
-
     String json = null;
     try {
-      json = new ObjectMapper().writeValueAsString(deviceValues);
+      json = new ObjectMapper().writeValueAsString(config);
     } catch (JsonProcessingException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
     System.out.println(json);
-    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
+    RestAssured.baseURI = baseUri + srs_endpoint + "/" + schemaId;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
@@ -367,126 +375,69 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
-    Response response = request.put();
+    Response response = request.put("/");
     System.out.println(response.then().log().all(true));
-    Assert.assertTrue(response.statusCode() == 400,
-        "Expected tatus code is 400 but the status is: " + response.statusCode());
+    Assert.assertTrue(response.statusCode() == 200,
+        "Expected tatus code is 200 but the status is: " + response.statusCode());
 
   }
-  
-  @Test(dependsOnMethods = {"createDeviceTest"})
-  @Description("Update a device with no location using DRS APIs")
+
+  @Test
+  @Description("Get a non existent schema´s details using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  public void updateDeviceWithNoLocationTest() {
+  public void getNonExistentDeviceDetailsTest() {
 
-    // prepare Device Configuration Values
-    Map<String, String> config = new HashMap<>();
-    config.put("publicKeyFormat", "rsa_x509_pem");
-    config.put("publicKey", cert);
-
-    Map<String, Object> deviceValues = new HashMap<>();    
-    deviceValues.put("configuration", config);    
-
-    String json = null;
-    try {
-      json = new ObjectMapper().writeValueAsString(deviceValues);
-    } catch (JsonProcessingException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
-    System.out.println(json);
-    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
+    RestAssured.baseURI = baseUri + srs_endpoint + "/" + 999999;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
-    request.body(json);
+
     System.out.println(request.log().all(true));
-    Response response = request.put();
+    Response response = request.get("/");
     System.out.println(response.then().log().all(true));
-    Assert.assertTrue(response.statusCode() == 400,
-        "Expected tatus code is 400 but the status is: " + response.statusCode());
+    Assert.assertTrue(response.statusCode() == 404,
+        "Expected status code is 404 but the status is:" + response.statusCode());
 
   }
 
-  @Test(dependsOnMethods = {"createDeviceTest"})
-  @Description("Update a device with wrong Certificate using DRS APIs")
+  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Description("Get health details using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  public void updateDeviceWithInvalidCertificateTest() {
+  public void getHealth() {
 
-    // prepare Device Configuration Values
-    Map<String, String> config = new HashMap<>();
-    config.put("publicKeyFormat", "rsa_x509_pem");
-    config.put("publicKey", "-----BEGIN CERTIFICATE-----\\n\n-----END CERTIFICATE-----");
-    config.put("location", "europe-west1");
+    RestAssured.baseURI = baseUri + "/health";
+    System.out.println(RestAssured.baseURI);
+    RequestSpecification request = RestAssured.given();
 
+    request.header("Content-Type", "text/plain");
+    request.header("Authorization", "Bearer " + accessToken);
 
-    Map<String, Object> deviceValues = new HashMap<>();   
-    deviceValues.put("configuration", config);   
+    System.out.println(request.log().all(true));
+    Response response = request.get();
+    System.out.println(response.then().log().all(true));
+    Assert.assertTrue(response.statusCode() == 200,
+        "Expected status code is 200 but the status is: " + response.statusCode());
 
-    String json = null;
-    try {
-      json = new ObjectMapper().writeValueAsString(deviceValues);
-    } catch (JsonProcessingException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+  }
 
-    System.out.println(json);
-    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
+  public int getNumberOfSchemas() {
+    RestAssured.baseURI = baseUri + srs_endpoint;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
-    request.body(json);
+
     System.out.println(request.log().all(true));
-    Response response = request.put();
+    Response response = request.get("/");
     System.out.println(response.then().log().all(true));
-    Assert.assertTrue(response.statusCode() == 400,
-        "Expected tatus code is 400 but the status is: " + response.statusCode());
-
+    Assert.assertTrue(response.statusCode() == 200,
+        "Expected status code is 200 but the status is: " + response.statusCode());
+    JsonParser parser = new JsonParser();
+    JsonArray responseJson = (JsonArray) parser.parse(response.asString());
+    return responseJson.size();
   }
-  
 
-  @Test(dependsOnMethods = {"createDeviceTest"})
-  @Description("Update a device with No config using DRS APIs")
-  @Severity(SeverityLevel.BLOCKER)
-  public void updateDeviceWithNoConfigurationTest() {
-
-    // prepare Device Configuration Values
-    Map<String, String> config = new HashMap<>();
-    config.put("publicKeyFormat", "");
-    config.put("publicKey", "");
-    config.put("location", "");
-
-
-    Map<String, Object> deviceValues = new HashMap<>();   
-    deviceValues.put("configuration", config);   
-
-    String json = null;
-    try {
-      json = new ObjectMapper().writeValueAsString(deviceValues);
-    } catch (JsonProcessingException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
-    System.out.println(json);
-    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-    request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.put();
-    System.out.println(response.then().log().all(true));
-    Assert.assertTrue(response.statusCode() == 400,
-        "Expected tatus code is 400 but the status is: " + response.statusCode());
-
-  }
 }
