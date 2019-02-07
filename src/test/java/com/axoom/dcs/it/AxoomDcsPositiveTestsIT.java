@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
@@ -92,12 +93,13 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
         "-----------------------------------------------------------------------------------------------");
   }
 
-  @Test
+  @Test(priority = 0)
   @Description("Perform Login UI test to get access token for API tests")
   @Severity(SeverityLevel.BLOCKER)
-  public void myAxoomLoginTest() throws InterruptedException {
-
-    String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
+  public void myAxoomLoginTest(ITestContext context) throws InterruptedException {    
+    
+     String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
+     
     try {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
           .addParameter("client_id", clientId).addParameter("redirect_uri", redirectUri)
@@ -113,6 +115,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       requestParams.put("authType", "Basic");
       requestParams.put("contentType", "application/x-www-form-urlencoded");
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
+      context.setAttribute("accessToken", accessToken);
       Reporter.log("Access Token Obtained: " + accessToken);
       System.out.println(accessToken);
       Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
@@ -120,7 +123,6 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
-
   }
 
   @Test(dependsOnMethods = {"myAxoomLoginTest"})

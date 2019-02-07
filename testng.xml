@@ -11,11 +11,12 @@
   <test name="DCS API integration Tests">
     <classes>      
       <class name="com.axoom.dcs.it.AxoomDcsPositiveTestsIT"/>
+      <class name="com.axoom.dcs.it.AxoomDcsNegativeTestsIT"/>
     </classes>
   </test>
   <test name="SRS API Integration Tests">
     <classes>      
-      <class name="com.axoom.srs.it.AxoomSrsPositiveTestsIT"/>
+     <!--  <class name="com.axoom.srs.it.AxoomSrsPositiveTestsIT"/> -->
     </classes>
   </test> 
 </suite> <!-- Suite -->

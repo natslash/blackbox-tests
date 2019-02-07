@@ -143,7 +143,6 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
     try {
       json = new ObjectMapper().writeValueAsString(schemaData);
     } catch (JsonProcessingException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
@@ -164,7 +163,7 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
       schemaId = response.getBody().jsonPath().getString("id");
       Assert.assertTrue(!schemaId.isEmpty(), "Schema is ID is null");
     } else {
-      System.out.println("Create Schema failed: " + response.statusCode());
+      Assert.fail("Create Schema failed: " + response.statusCode());
     }
   }
 

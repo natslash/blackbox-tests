@@ -1,12 +1,10 @@
 package com.axoom.drs.it;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.http.client.utils.URIBuilder;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -14,7 +12,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.axoom.drs.pages.MyAxoomLoginPage;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,14 +25,9 @@ import io.restassured.specification.RequestSpecification;
 
 @Story("Negative tests for device creation")
 public class AxoomDrsNegativeTestsIT extends WebDriverTest {
-  private MyAxoomLoginPage myAxoomLoginPage;
-  private String inputEmail;
-  private String inputPassword;
   private String tenantId;
   private String clientId;
   private String redirectUri;
-  private String scope;
-  private String authCode;
   private String accessToken;
   private String cert;
   private String secret;
@@ -43,21 +35,16 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   private String drs_endpoint;
   private String deviceId;
   private String baseUri;
-  private WebDriver driver;
   private Map<String, String> requestParams = new HashMap<>();
 
   @BeforeClass
-  public void beforeClass() {
-    inputEmail = System.getenv("SYSTEM_INTEGRATOR_EMAIL");
-    inputPassword = System.getenv("SYSTEM_INTEGRATOR_PASSWORD");
+  public void beforeClass(ITestContext context) {
     tenantId = System.getenv("TENANT_ID");
     clientId = System.getenv("DRS_CLIENT_ID");
     redirectUri = System.getenv("DRS_REDIRECT_URI");
-    scope = System.getenv("DRS_SCOPES");
     cisUrl = System.getenv("CIS_URL");
     secret = System.getenv("SECRET");
-    authCode = null;
-    accessToken = null;
+    accessToken = (String) context.getAttribute("accessToken");
     deviceId = null;
     drs_endpoint = System.getenv("DRS_DEVICES_API");
     baseUri = "https://device-registration-service.dev.myaxoom.com";
@@ -76,7 +63,6 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   @BeforeMethod
   public void beforeMethod() {
     super.initPlatformBaseTest();
-    this.driver = super.getDriver();
 
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
@@ -84,7 +70,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   }
   
   @AfterClass 
-  public void deleteDeviceTest() {
+  public void deleteDevice() {
 
     RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
     System.out.println(RestAssured.baseURI);
@@ -107,40 +93,9 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     Reporter.log("Stopped Test: " + this.getClass().getSimpleName());
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
-  }
+  } 
 
   @Test
-  @Description("Perform Login UI test to get access token for API tests")
-  @Severity(SeverityLevel.BLOCKER)
-  public void myAxoomLoginTest() throws InterruptedException {
-
-    String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
-    try {
-      URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
-          .addParameter("client_id", clientId).addParameter("redirect_uri", redirectUri)
-          .addParameter("scope", scope);
-      System.out.println(loginUrl);
-      getDriver().get(loginUrl.toString());
-      myAxoomLoginPage = initPage(driver, MyAxoomLoginPage.class);
-      myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);
-      authCode = myAxoomLoginPage.selectTenantAndReturnAuthCode(tenantId);
-      Reporter.log("Logged into My Axoom");
-
-      requestParams.put("authCode", authCode);
-      requestParams.put("authType", "Basic");
-      requestParams.put("contentType", "application/x-www-form-urlencoded");
-      accessToken = myAxoomLoginPage.getAccessToken(requestParams);
-      Reporter.log("Access Token Obtained: " + accessToken);
-      System.out.println(accessToken);
-      Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
-
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
-
-  }
-
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
   @Description("Create a device with invalid provider using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDeviceWithInvalidProviderTest() {
@@ -188,7 +143,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     }
   }
   
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test
   @Description("Verify creating a device with invalid certificate format using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDeviceWithInvalidCertFormatTypeTest() {
@@ -236,7 +191,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   }
   
   
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test
   @Description("Verify creating a device with invalid certificate using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDeviceWithInvalidCertTest() {
@@ -284,7 +239,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   }
 
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test
   @Description("Create a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDeviceTest() {

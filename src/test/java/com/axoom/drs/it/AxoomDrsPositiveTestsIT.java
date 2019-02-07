@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
@@ -94,10 +95,10 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
         "-----------------------------------------------------------------------------------------------");
   }
 
-  @Test
+  @Test(groups={"prerequisites" }, priority = 0)
   @Description("Perform Login UI test to get access token for API tests")
   @Severity(SeverityLevel.BLOCKER)  
-  public void myAxoomLoginTest() throws InterruptedException {
+  public void myAxoomLoginTest(ITestContext context) throws InterruptedException {
 
     String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
     try {
@@ -115,6 +116,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
       requestParams.put("authType", "Basic");
       requestParams.put("contentType", "application/x-www-form-urlencoded");
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
+      context.setAttribute("accessToken", accessToken);
       Reporter.log("Access Token Obtained: " + accessToken);
       System.out.println(accessToken);
       Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
@@ -204,7 +206,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
     int numOfDevicesAfterCreation = getNumberOfDevices();
     Assert.assertTrue(numOfDevices == numOfDevicesAfterCreation - 1,
-        "The total number of devices should not be more than 1. total Number of devices: " + numOfDevicesAfterCreation);
+        "The total number of devices should not be more than " + numOfDevices + ". total Number of devices: " + numOfDevicesAfterCreation);
   }
 
   @Test(dependsOnMethods = {"getDeviceDetailsTest"})

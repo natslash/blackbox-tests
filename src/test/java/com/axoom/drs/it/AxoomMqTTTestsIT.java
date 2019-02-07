@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -27,7 +28,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-@Story("Negative tests for device creation")
+@Story("MQTT Device simulation and messaging test")
 public class AxoomMqTTTestsIT extends WebDriverTest {
   private MyAxoomLoginPage myAxoomLoginPage;
   private String inputEmail;
@@ -84,7 +85,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
   }
 
-  //@AfterClass
+  @AfterClass
   public void deleteDevice() {
 
     RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
@@ -110,7 +111,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
         "-----------------------------------------------------------------------------------------------");
   }
 
-  @Test
+  @Test(priority = 0)
   @Description("Perform Login UI test to get access token for API tests")
   @Severity(SeverityLevel.BLOCKER)
   public void myAxoomLoginTest() throws InterruptedException {
@@ -189,22 +190,20 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     }
   }
 
-
-
   @Test(dependsOnMethods = {"createDeviceTest"})
-  @Description("Create a device using DRS APIs")
+  @Description("Simulate a device and send an MQTT message")
   @Severity(SeverityLevel.BLOCKER)
   public void sendMessageViaMqtt() {
     // Get file from resources folder
     File resourcesDirectory = new File("src/test/resources/com/automation/keypairs");
     String privateKeyFilePath = resourcesDirectory.getAbsolutePath() + "/" + "ec_private_pkcs8";
-    String[] args = {"-project_id=mvp-iotcore-eval", "-registry_id=integrationtest",
+    String[] args = {"-project_id=mvp-iotcore-eval", "-registry_id=blackboxtest01",
         "-cloud_region=europe-west1", "-device_id=" + deviceId,
         "-private_key_file=" + privateKeyFilePath, "-algorithm=ES256"};
     try {
       MqttExample.main(args);
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (Exception e) {      
+      Assert.fail("Sending message failed" + "\n" + e.getMessage());
     }
   }
 
