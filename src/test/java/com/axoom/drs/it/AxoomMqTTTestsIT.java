@@ -44,6 +44,8 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
   private String cisUrl;
   private String drs_endpoint;
   private String deviceId;
+  private String projectId;
+  private String providerRegion;
   private String baseUri;
   private WebDriver driver;
   private Map<String, String> requestParams = new HashMap<>();
@@ -58,6 +60,8 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     scope = System.getenv("DRS_SCOPES");
     cisUrl = System.getenv("CIS_URL");
     secret = System.getenv("SECRET");
+    projectId = System.getenv("PROJECT_ID");
+    providerRegion = System.getenv("PROVIDER_REGION");
     authCode = null;
     accessToken = null;
     deviceId = null;
@@ -197,8 +201,8 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     // Get file from resources folder
     File resourcesDirectory = new File("src/test/resources/com/automation/keypairs");
     String privateKeyFilePath = resourcesDirectory.getAbsolutePath() + "/" + "ec_private_pkcs8";
-    String[] args = {"-project_id=mvp-iotcore-eval", "-registry_id=blackboxtest01",
-        "-cloud_region=europe-west1", "-device_id=" + deviceId,
+    String[] args = {"-project_id=" + projectId, "-registry_id=" + tenantId,
+        "-cloud_region=" + providerRegion, "-device_id=" + deviceId,
         "-private_key_file=" + privateKeyFilePath, "-algorithm=ES256"};
     try {
       MqttExample.main(args);
