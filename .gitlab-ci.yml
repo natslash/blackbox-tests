@@ -46,6 +46,11 @@ test:dev:
     - export PROJECT_ID=mvp-iotcore-eval
     - export SRS_CLIENT_ID=mvp-schema-registration-service-swagger
     - export SRS_REDIRECT_URI=https://schema-registration-service.dev.myaxoom.com/swagger/oauth2-redirect.html
-    - export SRS_SCOPES=schema-registration-service.schemas.write schema-registration-service.schemas.read
+    - export SRS_SCOPES="schema-registration-service.schemas.write schema-registration-service.schemas.read"
     - export SRS_URL=https://schema-registration-service.dev.myaxoom.com
+    - export DCS_API=/api/v1/datacompositions
+    - export DCS_CLIENT_ID=mvp-data-composition-service-swagger
+    - export DCS_REDIRECT_URI=https://data-composition-service.dev.myaxoom.com/swagger/oauth2-redirect.html
+    - export DCS_SCOPES="data-composition-service.data-composition.read data-composition-service.data-composition.write"
+    - export DCS_URL=https://data-composition-service.dev.myaxoom.com
     - mvn $MAVEN_CLI_OPTS verify package
