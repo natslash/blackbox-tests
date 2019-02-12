@@ -17,6 +17,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.drs.devices.MqttExample;
 import com.axoom.drs.pages.MyAxoomLoginPage;
+import com.axoom.drs.utils.AxoomKafkaConsumer;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,6 +48,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
   private String projectId;
   private String providerRegion;
   private String baseUri;
+  private String serverAddress;
   private WebDriver driver;
   private Map<String, String> requestParams = new HashMap<>();
 
@@ -67,6 +69,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     deviceId = null;
     drs_endpoint = System.getenv("DRS_DEVICES_API");
     baseUri = "https://device-registration-service.dev.myaxoom.com";
+    serverAddress = System.getenv("MVP-KAFKA");
     cert =
         "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+SbFi/8yDdq3rOBOSVTcja4HHUJ7DXhsKds3iqMU8cP2bX7bNkb3DSsHwO1/29bJrX2IWiC+xfXSoEePmsVQNw==\n-----END PUBLIC KEY-----";
     requestParams.put("clientId", clientId);
@@ -197,15 +200,19 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
   @Test(dependsOnMethods = {"createDeviceTest"})
   @Description("Simulate a device and send an MQTT message")
   @Severity(SeverityLevel.BLOCKER)
-  public void sendMessageViaMqtt() {
+  public void sendMessageViaMqttAndReceiveTest() {
     // Get file from resources folder
     File resourcesDirectory = new File("src/test/resources/com/automation/keypairs");
     String privateKeyFilePath = resourcesDirectory.getAbsolutePath() + "/" + "ec_private_pkcs8";
     String[] args = {"-project_id=" + projectId, "-registry_id=" + tenantId,
         "-cloud_region=" + providerRegion, "-device_id=" + deviceId,
         "-private_key_file=" + privateKeyFilePath, "-algorithm=ES256"};
+    String topic =  tenantId + "-processed";
+    
     try {
       MqttExample.main(args);
+      int numOfRecords = AxoomKafkaConsumer.runConsumer(topic, serverAddress);
+      Assert.assertTrue(numOfRecords >= 5, "Number of Records is less than the records sent");
     } catch (Exception e) {      
       Assert.fail("Sending message failed" + "\n" + e.getMessage());
     }
