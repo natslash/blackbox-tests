@@ -19,6 +19,7 @@ import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -107,7 +108,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       System.out.println(loginUrl);
       getDriver().get(loginUrl.toString());
       myAxoomLoginPage = initPage(driver, MyAxoomLoginPage.class);
-      myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);
+      myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);      
       authCode = myAxoomLoginPage.selectTenantAndReturnAuthCode(tenantId);
       Reporter.log("Logged into My Axoom");
 
@@ -135,7 +136,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
 
     // prepare Schema Values
     Map<String, String> dataComposition = new HashMap<>();
-    dataComposition.put("schemaSubject", "533d8038b3c34b43af2ffa191292bfda");
+    dataComposition.put("schemaId", "533d8038b3c34b43af2ffa191292bfda");
     dataComposition.put("friendlyName", "DataCompoistion" + System.currentTimeMillis());
 
     String json = null;
@@ -200,7 +201,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       String responseString = response.getBody().asString();      
       Assert.assertTrue(responseString.contains("The FriendlyName field is required"));
-      Assert.assertTrue(responseString.contains("The SchemaSubject field is required"));
+      Assert.assertTrue(responseString.contains("The SchemaId field is required"));
     }
   }
 
@@ -211,7 +212,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
 
     // prepare Schema Values
     Map<String, String> dataComposition = new HashMap<>();
-    dataComposition.put("schemaSubject", "533d8038b3c34b43af2ffa191292bfda");
+    dataComposition.put("schemaId", "533d8038b3c34b43af2ffa191292bfda");
 
     String json = null;
     try {
@@ -243,12 +244,12 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   @Test(dependsOnMethods = {"myAxoomLoginTest"})
   @Description("Verify creating a data composition with no schema subject using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  public void createDataCompositionWithNoSchemaSubjectTest() {
+  public void createDataCompositionWithNoschemaIdTest() {
 
     // prepare Schema Values
     Map<String, String> dataComposition = new HashMap<>();
     dataComposition.put("friendlyName", "DataCompoistion" + System.currentTimeMillis());
-    dataComposition.put("schemaSubject", null);
+    dataComposition.put("schemaId", null);
 
     String json = null;
     try {
@@ -273,7 +274,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       String NameErrorMsg = response.getBody().asString();
-      Assert.assertTrue(NameErrorMsg.contains("The SchemaSubject field is required."));
+      Assert.assertTrue(NameErrorMsg.contains("The SchemaId field is required."));
     }
   }
 
@@ -404,8 +405,9 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
     JsonParser parser = new JsonParser();
-    JsonArray responseJson = (JsonArray) parser.parse(response.asString());
-    return responseJson.size();
+    JsonObject responseJson = (JsonObject) parser.parse(response.asString());
+    JsonArray dataCompositionsArray = responseJson.getAsJsonArray("elements");
+    return dataCompositionsArray.size();
   }
 
 }
