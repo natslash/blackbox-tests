@@ -129,7 +129,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   @Test(dependsOnMethods = {"myAxoomLoginTest"})
   @Description("Create a Data Compositiion using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  public void createDataCompositionTest() {
+  public void createDataCompositionTest(ITestContext context) {
 
     // get total number of data compositions in the registry before creation of data composition
     numOfDataCompositions = getNumberOfDataCompositions();
@@ -143,7 +143,6 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     try {
       json = new ObjectMapper().writeValueAsString(dataComposition);
     } catch (JsonProcessingException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
@@ -163,6 +162,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       dataCompositionId = response.getBody().jsonPath().getString("id");
       Assert.assertTrue(!dataCompositionId.isEmpty(), "DataComposition is ID is null");
+      context.setAttribute("dataCompositionId", dataCompositionId);
     } else {
       System.out.println(response.then().log().all(true));
       Assert.fail("Data Composition creation failed: " + response.statusCode());
