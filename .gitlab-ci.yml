@@ -49,7 +49,6 @@ test:dev:
     - export SRS_SCOPES="schema-registration-service.schemas.write schema-registration-service.schemas.read"
     - export SRS_URL=https://schema-registration-service.dev.myaxoom.com
     - export DCS_API=/api/v1/datacompositions
-    - export MVP-KAFKA="mvp-kafka:9092"
     - export DCS_CLIENT_ID=mvp-data-composition-service-swagger
     - export DCS_REDIRECT_URI=https://data-composition-service.dev.myaxoom.com/swagger/oauth2-redirect.html
     - export DCS_SCOPES="data-composition-service.data-composition.read data-composition-service.data-composition.write"
