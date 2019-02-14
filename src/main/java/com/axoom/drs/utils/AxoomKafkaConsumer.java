@@ -3,6 +3,8 @@ package com.axoom.drs.utils;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+import org.apache.commons.lang3.time.StopWatch;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -32,7 +34,9 @@ public class AxoomKafkaConsumer {
     int numOfRecords = 0;
     final int giveUp = 10;
     int noRecordsCount = 0;
-
+    StopWatch watch = new StopWatch();
+    watch.start();
+    
     while (true) {
       final ConsumerRecords<Long, String> consumerRecords = consumer.poll(Duration.ofMillis(1000));      
       if (consumerRecords.count() == 0) {
@@ -52,7 +56,9 @@ public class AxoomKafkaConsumer {
       consumer.commitAsync();
     }
     consumer.close();
-    System.out.println("DONE");
+    watch.stop();
+    System.out.println("DONE");    
+    System.out.println("Time elapsed to consume" + numOfRecords + " events: " + watch.getTime(TimeUnit.SECONDS) + " seconds.");
     return numOfRecords;
   }
 }

@@ -204,7 +204,7 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
       String TypeErrorMsg = response.getBody().jsonPath().getString("Type");
       Assert.assertTrue(nameErrorMsg.equalsIgnoreCase("[The Name field is required.]"));
       Assert.assertTrue(schemaErrorMsg.equalsIgnoreCase("[The Schema field is required.]"));
-      Assert.assertTrue(TypeErrorMsg.equalsIgnoreCase("[The Type field is required.]"));
+      Assert.assertTrue(TypeErrorMsg.equalsIgnoreCase("[The field Type is invalid.]"));
     }
     else {
       Assert.fail("Test createEmptyRequestBodyTest failed" + response.statusCode()); 
@@ -327,7 +327,7 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       String typeErrorMsg = response.getBody().jsonPath().getString("Type");
-      Assert.assertTrue(typeErrorMsg.equalsIgnoreCase("[The Type field is required.]"));
+      Assert.assertTrue(typeErrorMsg.equalsIgnoreCase("[The field Type is invalid.]"));
     }
     
     else if(response.statusCode() == 201){
@@ -372,7 +372,7 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
     // String nameErrorMsg = response.getBody().jsonPath().getString("Schema");
     Assert.assertTrue(
         response.getBody().asString().contains("Input schema is an invalid Avro schema"));
-    Assert.assertTrue(response.statusCode() == 400,
+    Assert.assertTrue(response.statusCode() == 422,
         "Expected Status code is 400, but the actual status code is: " + response.statusCode());
   }
 
@@ -499,7 +499,8 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
     schemaData.put("name", schemaName + "renamed");
     schemaData.put("schema",
         "{\"type\":\"record\",\"name\":\"DeviceMeasurement\",\"namespace\":\"com.axoom.playground.devicemeasurement\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-micros\"},{\"name\":\"value\",\"type\":\"double\"},{\"name\":\"tenant\",\"type\":\"boolean\"}]}");
-
+    schemaData.put("type", "avro");
+    
     String json = null;
     try {
       json = new ObjectMapper().writeValueAsString(schemaData);
@@ -527,9 +528,8 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
       //Changing just the name should retain the version
       Assert.assertTrue(version.equals("2"), "Version is not 2");
     } else {
-      Assert.fail("Update Invalid Schema failed: " + response.statusCode());
+      Assert.fail("Update Schema name failed: " + response.statusCode() + "\n" +  response.asString());
     }
-
   }
 
   @Test
@@ -549,7 +549,6 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
     System.out.println(response.then().log().all(true));
     Assert.assertTrue(response.statusCode() == 404,
         "Expected status code is 404 but the status is:" + response.statusCode());
-
   }
 
   @Test(dependsOnMethods = {"myAxoomLoginTest"})
@@ -569,7 +568,6 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
     System.out.println(response.then().log().all(true));
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
-
   }
 
   public int getNumberOfSchemas() {

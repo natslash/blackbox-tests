@@ -20,7 +20,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyFactory;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAmount;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+import org.apache.commons.lang3.time.StopWatch;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -223,7 +228,8 @@ public class MqttExample {
 
     attachCallback(client, options.deviceId);
     
-    System.out.println("In time: " + System.currentTimeMillis());
+    StopWatch watch = new StopWatch();
+    watch.start();    
     
     // Publish to the events or state topic based on the flag.
     String subTopic = options.messageType.equals("event") ? "events" : options.messageType;
@@ -290,7 +296,8 @@ public class MqttExample {
     if (client.isConnected()) {
       client.disconnect();
     }
-    System.out.println("Out time: " + System.currentTimeMillis());
+    watch.stop();
+    System.out.println("Time consumed to publish events: " + watch.getTime(TimeUnit.SECONDS) + " seconds.");
     System.out.println("Finished loop successfully. Goodbye!");
     client.close();
     // [END iot_mqtt_publish]
