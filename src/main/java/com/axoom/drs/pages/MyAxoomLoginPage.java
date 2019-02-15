@@ -11,8 +11,6 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import com.axoom.talos.framework.WebDriverPage;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
@@ -30,18 +28,17 @@ public class MyAxoomLoginPage extends WebDriverPage {
   private String inputEmailFieldId = "Input_Email";
   private String inputPasswordFieldId = "Input_Password";
   private String loginButtonId = "button-login";  
-  private WebDriverWait wait;
 
   public MyAxoomLoginPage(WebDriver driver) {
-    super(driver);
-    wait = new WebDriverWait(driver, 1);
+    super(driver);    
   }
 
   public void loginToMyAxoom(String email, String password) {
 
     inputEmailField = getDriver().findElement(By.id(inputEmailFieldId));
-    wait.until(ExpectedConditions.elementToBeClickable(inputEmailField));
-    inputEmailField.sendKeys(email);
+    if (inputEmailField.isDisplayed() && inputEmailField.isEnabled()) {
+      inputEmailField.sendKeys(email);
+    }
 
     inputPasswordField = getDriver().findElement(By.id(inputPasswordFieldId));
     inputPasswordField.sendKeys(password);
@@ -94,5 +91,5 @@ public class MyAxoomLoginPage extends WebDriverPage {
       return jsonPathEvaluator.get("access_token");
     }
     return response.asString();
-  }  
+  }
 }
