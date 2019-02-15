@@ -43,7 +43,7 @@ test:dev:
     - export DRS_DEVICES_API=/api/v1/devices
     - export DRS_REDIRECT_URI=https://device-registration-service.dev.myaxoom.com/swagger/oauth2-redirect.html
     - export SRS_API=/api/v1/schemas
-    - export MVP-KAFKA="mvp-kafka:9092"
+    - export MVP-KAFKA=mvp-kafka:9092
     - export PROJECT_ID=mvp-iotcore-eval
     - export SRS_CLIENT_ID=mvp-schema-registration-service-swagger
     - export SRS_REDIRECT_URI=https://schema-registration-service.dev.myaxoom.com/swagger/oauth2-redirect.html
