@@ -16,7 +16,8 @@
   </test>
   <test name="SRS API Integration Tests">
     <classes>      
-     <class name="com.axoom.srs.it.AxoomSrsPositiveTestsIT"/>
+     <class name="com.axoom.srs.it.AxoomCreateSrsTestsIT"/>
+     <class name="com.axoom.srs.it.AxoomUpdateSrsTestsIT"/>
     </classes>
   </test> 
 </suite> <!-- Suite -->

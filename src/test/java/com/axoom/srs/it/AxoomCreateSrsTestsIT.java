@@ -29,7 +29,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 @Story("Positive test cases for SRS APIs")
-public class AxoomSrsPositiveTestsIT extends WebDriverTest {
+public class AxoomCreateSrsTestsIT extends WebDriverTest {
   private MyAxoomLoginPage myAxoomLoginPage;
   private String inputEmail;
   private String inputPassword;
@@ -42,8 +42,7 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
   private String secret;
   private String cisUrl;
   private String srs_endpoint;
-  private String schemaId;
-  private String schemaName;
+  private String schemaId;  
   private String baseUri;
   private WebDriver driver;
   private int numOfSchemas;
@@ -62,7 +61,6 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
     authCode = null;
     accessToken = null;
     schemaId = null;
-    schemaName = null;
     srs_endpoint = System.getenv("SRS_API");
     baseUri = "https://schema-registration-service.dev.myaxoom.com";
     numOfSchemas = 0;
@@ -164,7 +162,6 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       schemaId = response.getBody().jsonPath().getString("id");
       Assert.assertTrue(!schemaId.isEmpty(), "Schema is ID is null");
-      schemaName = name;
     } else {
       Assert.fail("Create Schema failed: " + response.statusCode());
     }
@@ -405,132 +402,7 @@ public class AxoomSrsPositiveTestsIT extends WebDriverTest {
     Assert.assertTrue(numOfSchemas + 1 == numOfSchemasAfterCreation,
         "The total number of scehmas should not be more than " + numOfSchemas + 1
             + ". total Number of schemas: " + numOfSchemasAfterCreation);
-  }
-
-  @Test(dependsOnMethods = {"createSchemaTest"})
-  @Description("Update a schema using SRS APIs")
-  @Severity(SeverityLevel.BLOCKER)
-  public void updateWithIncompatibleSchemaTest() {
-
-    // prepare Schema Values
-    Map<String, String> schemaData = new HashMap<>();
-    schemaData.put("name", schemaName);
-    schemaData.put("schema",
-        "{\"type\":\"record\",\"name\":\"DeviceMeasurement\",\"namespace\":\"com.axoom.playground.devicemeasurement\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-micros\"},{\"name\":\"value\",\"type\":\"double\"}, {\"name\":\"custom\",\"type\":\"double\"},{\"name\":\"tenant\",\"type\":\"boolean\"}]}");
-    schemaData.put("type", "avro");
-
-    String json = null;
-    try {
-      json = new ObjectMapper().writeValueAsString(schemaData);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    }
-
-    System.out.println(json);
-    RestAssured.baseURI = baseUri + srs_endpoint + "/" + schemaId;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-    request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.put("/");
-    if (response.statusCode() == 409) {
-      System.out.println(response.then().log().all(true));
-      System.out.println(
-          "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint() + "\nxxxxxxxxxxxxxxxxxxx\n");
-    } else {
-      Assert.fail("Update Invalid Schema failed: " + response.statusCode());
-    }
-
-  }
-
-  @Test (dependsOnMethods = {"updateWithIncompatibleSchemaTest"})
-  @Description("Update a schema using SRS APIs")
-  @Severity(SeverityLevel.BLOCKER)
-  public void updateWithCompatibleSchemaTest() {
-
-    // prepare Schema Values
-    Map<String, String> schemaData = new HashMap<>();
-    schemaData.put("name", schemaName);
-    schemaData.put("schema",
-        "{\"type\":\"record\",\"name\":\"DeviceMeasurement\",\"namespace\":\"com.axoom.playground.devicemeasurement\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-micros\"},{\"name\":\"value\",\"type\":\"double\"}, {\"name\":\"custom\",\"type\":\"double\", \"default\":1.0},{\"name\":\"tenant\",\"type\":\"boolean\"}]}");
-    schemaData.put("type", "avro");
-
-    String json = null;
-    try {
-      json = new ObjectMapper().writeValueAsString(schemaData);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    }
-
-    System.out.println(json);
-    RestAssured.baseURI = baseUri + srs_endpoint + "/" + schemaId;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-    request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.put("/");
-    if (response.statusCode() == 201) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
-          + "\nxxxxxxxxxxxxxxxxxxx\n");
-      schemaId = response.getBody().jsonPath().getString("id");
-      String version = response.getBody().jsonPath().getString("version");
-      Assert.assertTrue(!schemaId.isEmpty(), "Schema is ID is null");
-      Assert.assertTrue(version.equals("2"), "Version is not 2");
-    } else {
-      Assert.fail("Update Valid Schema failed: " + response.statusCode());
-    }
-
-  }
-  
-  @Test(dependsOnMethods = {"updateWithCompatibleSchemaTest"})
-  @Description("Update a schema using SRS APIs")
-  @Severity(SeverityLevel.BLOCKER)
-  public void updateSchemaNameTest() {
-
-    // prepare Schema Values
-    Map<String, String> schemaData = new HashMap<>();
-    schemaData.put("name", schemaName + "renamed");
-    schemaData.put("schema",
-        "{\"type\":\"record\",\"name\":\"DeviceMeasurement\",\"namespace\":\"com.axoom.playground.devicemeasurement\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-micros\"},{\"name\":\"value\",\"type\":\"double\"},{\"name\":\"tenant\",\"type\":\"boolean\"}]}");
-    schemaData.put("type", "avro");
-    
-    String json = null;
-    try {
-      json = new ObjectMapper().writeValueAsString(schemaData);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    }
-
-    System.out.println(json);
-    RestAssured.baseURI = baseUri + srs_endpoint + "/" + schemaId;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-    request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.put("/");
-    if (response.statusCode() == 201) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
-          + "\nxxxxxxxxxxxxxxxxxxx\n");
-      schemaId = response.getBody().jsonPath().getString("id");
-      String version = response.getBody().jsonPath().getString("version");
-      Assert.assertTrue(!schemaId.isEmpty(), "Schema is ID is null");
-      //Changing just the name should retain the version
-      Assert.assertTrue(version.equals("2"), "Version is not 2");
-    } else {
-      Assert.fail("Update Schema name failed: " + response.statusCode() + "\n" +  response.asString());
-    }
-  }
+  }  
 
   @Test
   @Description("Get a non existent schema´s details using SRS APIs")
