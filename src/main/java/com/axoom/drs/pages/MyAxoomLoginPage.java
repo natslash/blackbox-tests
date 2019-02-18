@@ -29,7 +29,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
 
   private String inputEmailFieldId = "Input_Email";
   private String inputPasswordFieldId = "Input_Password";
-  private String loginButtonId = "button-login";  
+  private String loginButtonId = "button-login";
   private WebDriverWait wait;
 
   public MyAxoomLoginPage(WebDriver driver) {
@@ -56,14 +56,14 @@ public class MyAxoomLoginPage extends WebDriverPage {
     clickAndWaitForPageLoad(tenantField, 1);
     String urlWithAuthCode = getDriver().getCurrentUrl();
     String authCode = null;
-    List<NameValuePair> params;
-    try {
-      params = URLEncodedUtils.parse(new URI(urlWithAuthCode), Charset.forName("UTF-8"));
+    try {      
+      List<NameValuePair> params;
+      params = URLEncodedUtils.parse(new URI(urlWithAuthCode), "UTF-8");
       for (NameValuePair param : params) {
         if (param.getName().equals("code"))
           authCode = param.getValue();
       }
-    } catch (URISyntaxException e) {
+    } catch (URISyntaxException e) {      
       e.printStackTrace();
     }
     return authCode;
@@ -94,5 +94,5 @@ public class MyAxoomLoginPage extends WebDriverPage {
       return jsonPathEvaluator.get("access_token");
     }
     return response.asString();
-  }  
+  }
 }
