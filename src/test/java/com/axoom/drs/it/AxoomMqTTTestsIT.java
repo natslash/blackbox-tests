@@ -69,7 +69,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     deviceId = null;
     drs_endpoint = System.getenv("DRS_DEVICES_API");
     baseUri = "https://device-registration-service.dev.myaxoom.com";
-    serverAddress = System.getenv("MVP-KAFKA");
+    serverAddress = System.getenv("KAFKA_SERVER");
     cert =
         "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+SbFi/8yDdq3rOBOSVTcja4HHUJ7DXhsKds3iqMU8cP2bX7bNkb3DSsHwO1/29bJrX2IWiC+xfXSoEePmsVQNw==\n-----END PUBLIC KEY-----";
     requestParams.put("clientId", clientId);
