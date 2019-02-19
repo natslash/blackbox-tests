@@ -2,7 +2,6 @@ package com.axoom.drs.pages;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.Charset;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;

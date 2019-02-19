@@ -1,4 +1,4 @@
-package com.axoom.drs.utils;
+package com.axoom.utils;
 import java.util.Base64;
 import java.util.Map;
 import io.restassured.RestAssured;

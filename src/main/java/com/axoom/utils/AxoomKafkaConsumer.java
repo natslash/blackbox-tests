@@ -1,4 +1,4 @@
-package com.axoom.drs.utils;
+package com.axoom.utils;
 
 import java.time.Duration;
 import java.util.Collections;
