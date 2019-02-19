@@ -1,5 +1,7 @@
 package com.axoom.qrecords.grpc;
 
+import io.grpc.*;
+import io.grpc.MethodDescriptor.MethodType;
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 import static io.grpc.stub.ClientCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ClientCalls.asyncUnaryCall;
@@ -9,43 +11,55 @@ import static io.grpc.stub.ClientCalls.futureUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
+import java.util.Iterator;
+import javax.annotation.Generated;
 import com.axoom.qrecords.Qrecords;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.protobuf.Descriptors;
+import io.grpc.protobuf.ProtoFileDescriptorSupplier;
+import io.grpc.protobuf.ProtoMethodDescriptorSupplier;
+import io.grpc.protobuf.ProtoServiceDescriptorSupplier;
+import io.grpc.protobuf.ProtoUtils;
+import io.grpc.stub.AbstractStub;
+import io.grpc.stub.ServerCalls.*;
+import io.grpc.stub.*;
+import io.grpc.stub.annotations.RpcMethod;
 
 /**
  */
-@javax.annotation.Generated(
+@Generated(
     value = "by gRPC proto compiler (version 1.18.0)",
     comments = "Source: qrecords.proto")
 public final class QRecordsGrpc {
 
   private QRecordsGrpc() {}
 
-  public static final String SERVICE_NAME = "qrecords.QRecords";
+  public static final String SERVICE_NAME = "com.axoom.qrecords.QRecords";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<Qrecords.RecordStreamRequest,
+  private static volatile MethodDescriptor<Qrecords.RecordStreamRequest,
       Qrecords.QRecord> getGetStreamMethod;
 
-  @io.grpc.stub.annotations.RpcMethod(
+  @RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetStream",
       requestType = Qrecords.RecordStreamRequest.class,
       responseType = Qrecords.QRecord.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<Qrecords.RecordStreamRequest,
+      methodType = MethodType.SERVER_STREAMING)
+  public static MethodDescriptor<Qrecords.RecordStreamRequest,
       Qrecords.QRecord> getGetStreamMethod() {
-    io.grpc.MethodDescriptor<Qrecords.RecordStreamRequest, Qrecords.QRecord> getGetStreamMethod;
+    MethodDescriptor<Qrecords.RecordStreamRequest, Qrecords.QRecord> getGetStreamMethod;
     if ((getGetStreamMethod = QRecordsGrpc.getGetStreamMethod) == null) {
       synchronized (QRecordsGrpc.class) {
         if ((getGetStreamMethod = QRecordsGrpc.getGetStreamMethod) == null) {
           QRecordsGrpc.getGetStreamMethod = getGetStreamMethod = 
-              io.grpc.MethodDescriptor.<Qrecords.RecordStreamRequest, Qrecords.QRecord>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              MethodDescriptor.<Qrecords.RecordStreamRequest, Qrecords.QRecord>newBuilder()
+              .setType(MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
-                  "qrecords.QRecords", "GetStream"))
+                  "com.axoom.qrecords.QRecords", "GetStream"))
               .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              .setRequestMarshaller(ProtoUtils.marshaller(
                   Qrecords.RecordStreamRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              .setResponseMarshaller(ProtoUtils.marshaller(
                   Qrecords.QRecord.getDefaultInstance()))
                   .setSchemaDescriptor(new QRecordsMethodDescriptorSupplier("GetStream"))
                   .build();
@@ -55,29 +69,29 @@ public final class QRecordsGrpc {
      return getGetStreamMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<Qrecords.RecordRequest,
+  private static volatile MethodDescriptor<Qrecords.RecordRequest,
       Qrecords.QRecord> getGetMaterializedMethod;
 
-  @io.grpc.stub.annotations.RpcMethod(
+  @RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetMaterialized",
       requestType = Qrecords.RecordRequest.class,
       responseType = Qrecords.QRecord.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<Qrecords.RecordRequest,
+      methodType = MethodType.UNARY)
+  public static MethodDescriptor<Qrecords.RecordRequest,
       Qrecords.QRecord> getGetMaterializedMethod() {
-    io.grpc.MethodDescriptor<Qrecords.RecordRequest, Qrecords.QRecord> getGetMaterializedMethod;
+    MethodDescriptor<Qrecords.RecordRequest, Qrecords.QRecord> getGetMaterializedMethod;
     if ((getGetMaterializedMethod = QRecordsGrpc.getGetMaterializedMethod) == null) {
       synchronized (QRecordsGrpc.class) {
         if ((getGetMaterializedMethod = QRecordsGrpc.getGetMaterializedMethod) == null) {
           QRecordsGrpc.getGetMaterializedMethod = getGetMaterializedMethod = 
-              io.grpc.MethodDescriptor.<Qrecords.RecordRequest, Qrecords.QRecord>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              MethodDescriptor.<Qrecords.RecordRequest, Qrecords.QRecord>newBuilder()
+              .setType(MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "qrecords.QRecords", "GetMaterialized"))
+                  "com.axoom.qrecords.QRecords", "GetMaterialized"))
               .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              .setRequestMarshaller(ProtoUtils.marshaller(
                   Qrecords.RecordRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              .setResponseMarshaller(ProtoUtils.marshaller(
                   Qrecords.QRecord.getDefaultInstance()))
                   .setSchemaDescriptor(new QRecordsMethodDescriptorSupplier("GetMaterialized"))
                   .build();
@@ -87,29 +101,29 @@ public final class QRecordsGrpc {
      return getGetMaterializedMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<Qrecords.RecordListRequest,
+  private static volatile MethodDescriptor<Qrecords.RecordListRequest,
       Qrecords.QRecord> getListHistoricalMethod;
 
-  @io.grpc.stub.annotations.RpcMethod(
+  @RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "ListHistorical",
       requestType = Qrecords.RecordListRequest.class,
       responseType = Qrecords.QRecord.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<Qrecords.RecordListRequest,
+      methodType = MethodType.SERVER_STREAMING)
+  public static MethodDescriptor<Qrecords.RecordListRequest,
       Qrecords.QRecord> getListHistoricalMethod() {
-    io.grpc.MethodDescriptor<Qrecords.RecordListRequest, Qrecords.QRecord> getListHistoricalMethod;
+    MethodDescriptor<Qrecords.RecordListRequest, Qrecords.QRecord> getListHistoricalMethod;
     if ((getListHistoricalMethod = QRecordsGrpc.getListHistoricalMethod) == null) {
       synchronized (QRecordsGrpc.class) {
         if ((getListHistoricalMethod = QRecordsGrpc.getListHistoricalMethod) == null) {
           QRecordsGrpc.getListHistoricalMethod = getListHistoricalMethod = 
-              io.grpc.MethodDescriptor.<Qrecords.RecordListRequest, Qrecords.QRecord>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              MethodDescriptor.<Qrecords.RecordListRequest, Qrecords.QRecord>newBuilder()
+              .setType(MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
-                  "qrecords.QRecords", "ListHistorical"))
+                  "com.axoom.qrecords.QRecords", "ListHistorical"))
               .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              .setRequestMarshaller(ProtoUtils.marshaller(
                   Qrecords.RecordListRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              .setResponseMarshaller(ProtoUtils.marshaller(
                   Qrecords.QRecord.getDefaultInstance()))
                   .setSchemaDescriptor(new QRecordsMethodDescriptorSupplier("ListHistorical"))
                   .build();
@@ -119,29 +133,29 @@ public final class QRecordsGrpc {
      return getListHistoricalMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<Qrecords.RecordRequest,
+  private static volatile MethodDescriptor<Qrecords.RecordRequest,
       Qrecords.QRecord> getGetLatestHistoricalMethod;
 
-  @io.grpc.stub.annotations.RpcMethod(
+  @RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetLatestHistorical",
       requestType = Qrecords.RecordRequest.class,
       responseType = Qrecords.QRecord.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<Qrecords.RecordRequest,
+      methodType = MethodType.UNARY)
+  public static MethodDescriptor<Qrecords.RecordRequest,
       Qrecords.QRecord> getGetLatestHistoricalMethod() {
-    io.grpc.MethodDescriptor<Qrecords.RecordRequest, Qrecords.QRecord> getGetLatestHistoricalMethod;
+    MethodDescriptor<Qrecords.RecordRequest, Qrecords.QRecord> getGetLatestHistoricalMethod;
     if ((getGetLatestHistoricalMethod = QRecordsGrpc.getGetLatestHistoricalMethod) == null) {
       synchronized (QRecordsGrpc.class) {
         if ((getGetLatestHistoricalMethod = QRecordsGrpc.getGetLatestHistoricalMethod) == null) {
           QRecordsGrpc.getGetLatestHistoricalMethod = getGetLatestHistoricalMethod = 
-              io.grpc.MethodDescriptor.<Qrecords.RecordRequest, Qrecords.QRecord>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              MethodDescriptor.<Qrecords.RecordRequest, Qrecords.QRecord>newBuilder()
+              .setType(MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "qrecords.QRecords", "GetLatestHistorical"))
+                  "com.axoom.qrecords.QRecords", "GetLatestHistorical"))
               .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              .setRequestMarshaller(ProtoUtils.marshaller(
                   Qrecords.RecordRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              .setResponseMarshaller(ProtoUtils.marshaller(
                   Qrecords.QRecord.getDefaultInstance()))
                   .setSchemaDescriptor(new QRecordsMethodDescriptorSupplier("GetLatestHistorical"))
                   .build();
@@ -154,7 +168,7 @@ public final class QRecordsGrpc {
   /**
    * Creates a new async stub that supports all call types for the service
    */
-  public static QRecordsStub newStub(io.grpc.Channel channel) {
+  public static QRecordsStub newStub(Channel channel) {
     return new QRecordsStub(channel);
   }
 
@@ -162,7 +176,7 @@ public final class QRecordsGrpc {
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
   public static QRecordsBlockingStub newBlockingStub(
-      io.grpc.Channel channel) {
+      Channel channel) {
     return new QRecordsBlockingStub(channel);
   }
 
@@ -170,7 +184,7 @@ public final class QRecordsGrpc {
    * Creates a new ListenableFuture-style stub that supports unary calls on the service
    */
   public static QRecordsFutureStub newFutureStub(
-      io.grpc.Channel channel) {
+      Channel channel) {
     return new QRecordsFutureStub(channel);
   }
 
@@ -184,17 +198,17 @@ public final class QRecordsGrpc {
      * </pre>
      */
     public void getStream(Qrecords.RecordStreamRequest request,
-        io.grpc.stub.StreamObserver<Qrecords.QRecord> responseObserver) {
+        StreamObserver<Qrecords.QRecord> responseObserver) {
       asyncUnimplementedUnaryCall(getGetStreamMethod(), responseObserver);
     }
 
     /**
      * <pre>
-     * GetMaterialized returns the materialized view of the requested data composition.
+     * GetMaterialized returns the materialized view of the requested data composition
      * </pre>
      */
     public void getMaterialized(Qrecords.RecordRequest request,
-        io.grpc.stub.StreamObserver<Qrecords.QRecord> responseObserver) {
+        StreamObserver<Qrecords.QRecord> responseObserver) {
       asyncUnimplementedUnaryCall(getGetMaterializedMethod(), responseObserver);
     }
 
@@ -205,22 +219,22 @@ public final class QRecordsGrpc {
      * </pre>
      */
     public void listHistorical(Qrecords.RecordListRequest request,
-        io.grpc.stub.StreamObserver<Qrecords.QRecord> responseObserver) {
+        StreamObserver<Qrecords.QRecord> responseObserver) {
       asyncUnimplementedUnaryCall(getListHistoricalMethod(), responseObserver);
     }
 
     /**
      * <pre>
-     * GetLatestHistorical returns the latest historical known record.
+     * GetLatestHistorical returns the latest historical known record
      * </pre>
      */
     public void getLatestHistorical(Qrecords.RecordRequest request,
-        io.grpc.stub.StreamObserver<Qrecords.QRecord> responseObserver) {
+        StreamObserver<Qrecords.QRecord> responseObserver) {
       asyncUnimplementedUnaryCall(getGetLatestHistoricalMethod(), responseObserver);
     }
 
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+    @Override public final ServerServiceDefinition bindService() {
+      return ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getGetStreamMethod(),
             asyncServerStreamingCall(
@@ -255,19 +269,19 @@ public final class QRecordsGrpc {
 
   /**
    */
-  public static final class QRecordsStub extends io.grpc.stub.AbstractStub<QRecordsStub> {
-    private QRecordsStub(io.grpc.Channel channel) {
+  public static final class QRecordsStub extends AbstractStub<QRecordsStub> {
+    private QRecordsStub(Channel channel) {
       super(channel);
     }
 
-    private QRecordsStub(io.grpc.Channel channel,
-        io.grpc.CallOptions callOptions) {
+    private QRecordsStub(Channel channel,
+        CallOptions callOptions) {
       super(channel, callOptions);
     }
 
-    @java.lang.Override
-    protected QRecordsStub build(io.grpc.Channel channel,
-        io.grpc.CallOptions callOptions) {
+    @Override
+    protected QRecordsStub build(Channel channel,
+        CallOptions callOptions) {
       return new QRecordsStub(channel, callOptions);
     }
 
@@ -277,18 +291,18 @@ public final class QRecordsGrpc {
      * </pre>
      */
     public void getStream(Qrecords.RecordStreamRequest request,
-        io.grpc.stub.StreamObserver<Qrecords.QRecord> responseObserver) {
+        StreamObserver<Qrecords.QRecord> responseObserver) {
       asyncServerStreamingCall(
           getChannel().newCall(getGetStreamMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      * <pre>
-     * GetMaterialized returns the materialized view of the requested data composition.
+     * GetMaterialized returns the materialized view of the requested data composition
      * </pre>
      */
     public void getMaterialized(Qrecords.RecordRequest request,
-        io.grpc.stub.StreamObserver<Qrecords.QRecord> responseObserver) {
+        StreamObserver<Qrecords.QRecord> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetMaterializedMethod(), getCallOptions()), request, responseObserver);
     }
@@ -300,18 +314,18 @@ public final class QRecordsGrpc {
      * </pre>
      */
     public void listHistorical(Qrecords.RecordListRequest request,
-        io.grpc.stub.StreamObserver<Qrecords.QRecord> responseObserver) {
+        StreamObserver<Qrecords.QRecord> responseObserver) {
       asyncServerStreamingCall(
           getChannel().newCall(getListHistoricalMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      * <pre>
-     * GetLatestHistorical returns the latest historical known record.
+     * GetLatestHistorical returns the latest historical known record
      * </pre>
      */
     public void getLatestHistorical(Qrecords.RecordRequest request,
-        io.grpc.stub.StreamObserver<Qrecords.QRecord> responseObserver) {
+        StreamObserver<Qrecords.QRecord> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetLatestHistoricalMethod(), getCallOptions()), request, responseObserver);
     }
@@ -319,19 +333,19 @@ public final class QRecordsGrpc {
 
   /**
    */
-  public static final class QRecordsBlockingStub extends io.grpc.stub.AbstractStub<QRecordsBlockingStub> {
-    private QRecordsBlockingStub(io.grpc.Channel channel) {
+  public static final class QRecordsBlockingStub extends AbstractStub<QRecordsBlockingStub> {
+    private QRecordsBlockingStub(Channel channel) {
       super(channel);
     }
 
-    private QRecordsBlockingStub(io.grpc.Channel channel,
-        io.grpc.CallOptions callOptions) {
+    private QRecordsBlockingStub(Channel channel,
+        CallOptions callOptions) {
       super(channel, callOptions);
     }
 
-    @java.lang.Override
-    protected QRecordsBlockingStub build(io.grpc.Channel channel,
-        io.grpc.CallOptions callOptions) {
+    @Override
+    protected QRecordsBlockingStub build(Channel channel,
+        CallOptions callOptions) {
       return new QRecordsBlockingStub(channel, callOptions);
     }
 
@@ -340,7 +354,7 @@ public final class QRecordsGrpc {
      * GetStream returns an unbounded data stream for the requested data composition. The stream endures at max. 30 min.
      * </pre>
      */
-    public java.util.Iterator<Qrecords.QRecord> getStream(
+    public Iterator<Qrecords.QRecord> getStream(
         Qrecords.RecordStreamRequest request) {
       return blockingServerStreamingCall(
           getChannel(), getGetStreamMethod(), getCallOptions(), request);
@@ -348,7 +362,7 @@ public final class QRecordsGrpc {
 
     /**
      * <pre>
-     * GetMaterialized returns the materialized view of the requested data composition.
+     * GetMaterialized returns the materialized view of the requested data composition
      * </pre>
      */
     public Qrecords.QRecord getMaterialized(Qrecords.RecordRequest request) {
@@ -362,7 +376,7 @@ public final class QRecordsGrpc {
      * The stream ends either when the specified limit exceeded or when there are no more records stored in the specified time range.
      * </pre>
      */
-    public java.util.Iterator<Qrecords.QRecord> listHistorical(
+    public Iterator<Qrecords.QRecord> listHistorical(
         Qrecords.RecordListRequest request) {
       return blockingServerStreamingCall(
           getChannel(), getListHistoricalMethod(), getCallOptions(), request);
@@ -370,7 +384,7 @@ public final class QRecordsGrpc {
 
     /**
      * <pre>
-     * GetLatestHistorical returns the latest historical known record.
+     * GetLatestHistorical returns the latest historical known record
      * </pre>
      */
     public Qrecords.QRecord getLatestHistorical(Qrecords.RecordRequest request) {
@@ -381,28 +395,28 @@ public final class QRecordsGrpc {
 
   /**
    */
-  public static final class QRecordsFutureStub extends io.grpc.stub.AbstractStub<QRecordsFutureStub> {
-    private QRecordsFutureStub(io.grpc.Channel channel) {
+  public static final class QRecordsFutureStub extends AbstractStub<QRecordsFutureStub> {
+    private QRecordsFutureStub(Channel channel) {
       super(channel);
     }
 
-    private QRecordsFutureStub(io.grpc.Channel channel,
-        io.grpc.CallOptions callOptions) {
+    private QRecordsFutureStub(Channel channel,
+        CallOptions callOptions) {
       super(channel, callOptions);
     }
 
-    @java.lang.Override
-    protected QRecordsFutureStub build(io.grpc.Channel channel,
-        io.grpc.CallOptions callOptions) {
+    @Override
+    protected QRecordsFutureStub build(Channel channel,
+        CallOptions callOptions) {
       return new QRecordsFutureStub(channel, callOptions);
     }
 
     /**
      * <pre>
-     * GetMaterialized returns the materialized view of the requested data composition.
+     * GetMaterialized returns the materialized view of the requested data composition
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<Qrecords.QRecord> getMaterialized(
+    public ListenableFuture<Qrecords.QRecord> getMaterialized(
         Qrecords.RecordRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getGetMaterializedMethod(), getCallOptions()), request);
@@ -410,10 +424,10 @@ public final class QRecordsGrpc {
 
     /**
      * <pre>
-     * GetLatestHistorical returns the latest historical known record.
+     * GetLatestHistorical returns the latest historical known record
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<Qrecords.QRecord> getLatestHistorical(
+    public ListenableFuture<Qrecords.QRecord> getLatestHistorical(
         Qrecords.RecordRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getGetLatestHistoricalMethod(), getCallOptions()), request);
@@ -426,10 +440,10 @@ public final class QRecordsGrpc {
   private static final int METHODID_GET_LATEST_HISTORICAL = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
-      io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
-      io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
-      io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
-      io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
+      UnaryMethod<Req, Resp>,
+      ServerStreamingMethod<Req, Resp>,
+      ClientStreamingMethod<Req, Resp>,
+      BidiStreamingMethod<Req, Resp> {
     private final QRecordsImplBase serviceImpl;
     private final int methodId;
 
@@ -438,35 +452,35 @@ public final class QRecordsGrpc {
       this.methodId = methodId;
     }
 
-    @java.lang.Override
-    @java.lang.SuppressWarnings("unchecked")
-    public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
+    @Override
+    @SuppressWarnings("unchecked")
+    public void invoke(Req request, StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_GET_STREAM:
           serviceImpl.getStream((Qrecords.RecordStreamRequest) request,
-              (io.grpc.stub.StreamObserver<Qrecords.QRecord>) responseObserver);
+              (StreamObserver<Qrecords.QRecord>) responseObserver);
           break;
         case METHODID_GET_MATERIALIZED:
           serviceImpl.getMaterialized((Qrecords.RecordRequest) request,
-              (io.grpc.stub.StreamObserver<Qrecords.QRecord>) responseObserver);
+              (StreamObserver<Qrecords.QRecord>) responseObserver);
           break;
         case METHODID_LIST_HISTORICAL:
           serviceImpl.listHistorical((Qrecords.RecordListRequest) request,
-              (io.grpc.stub.StreamObserver<Qrecords.QRecord>) responseObserver);
+              (StreamObserver<Qrecords.QRecord>) responseObserver);
           break;
         case METHODID_GET_LATEST_HISTORICAL:
           serviceImpl.getLatestHistorical((Qrecords.RecordRequest) request,
-              (io.grpc.stub.StreamObserver<Qrecords.QRecord>) responseObserver);
+              (StreamObserver<Qrecords.QRecord>) responseObserver);
           break;
         default:
           throw new AssertionError();
       }
     }
 
-    @java.lang.Override
-    @java.lang.SuppressWarnings("unchecked")
-    public io.grpc.stub.StreamObserver<Req> invoke(
-        io.grpc.stub.StreamObserver<Resp> responseObserver) {
+    @Override
+    @SuppressWarnings("unchecked")
+    public StreamObserver<Req> invoke(
+        StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         default:
           throw new AssertionError();
@@ -475,16 +489,16 @@ public final class QRecordsGrpc {
   }
 
   private static abstract class QRecordsBaseDescriptorSupplier
-      implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
+      implements ProtoFileDescriptorSupplier, ProtoServiceDescriptorSupplier {
     QRecordsBaseDescriptorSupplier() {}
 
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
+    @Override
+    public Descriptors.FileDescriptor getFileDescriptor() {
       return Qrecords.getDescriptor();
     }
 
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.ServiceDescriptor getServiceDescriptor() {
+    @Override
+    public Descriptors.ServiceDescriptor getServiceDescriptor() {
       return getFileDescriptor().findServiceByName("QRecords");
     }
   }
@@ -496,28 +510,28 @@ public final class QRecordsGrpc {
 
   private static final class QRecordsMethodDescriptorSupplier
       extends QRecordsBaseDescriptorSupplier
-      implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
+      implements ProtoMethodDescriptorSupplier {
     private final String methodName;
 
     QRecordsMethodDescriptorSupplier(String methodName) {
       this.methodName = methodName;
     }
 
-    @java.lang.Override
-    public com.google.protobuf.Descriptors.MethodDescriptor getMethodDescriptor() {
+    @Override
+    public Descriptors.MethodDescriptor getMethodDescriptor() {
       return getServiceDescriptor().findMethodByName(methodName);
     }
   }
 
-  private static volatile io.grpc.ServiceDescriptor serviceDescriptor;
+  private static volatile ServiceDescriptor serviceDescriptor;
 
-  public static io.grpc.ServiceDescriptor getServiceDescriptor() {
-    io.grpc.ServiceDescriptor result = serviceDescriptor;
+  public static ServiceDescriptor getServiceDescriptor() {
+    ServiceDescriptor result = serviceDescriptor;
     if (result == null) {
       synchronized (QRecordsGrpc.class) {
         result = serviceDescriptor;
         if (result == null) {
-          serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
+          serviceDescriptor = result = ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new QRecordsFileDescriptorSupplier())
               .addMethod(getGetStreamMethod())
               .addMethod(getGetMaterializedMethod())

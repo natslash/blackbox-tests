@@ -3,81 +3,134 @@
 
 package com.axoom.qrecords;
 
+import com.google.protobuf.ExtensionRegistry;
+import java.io.*;
+import java.nio.*;
+import com.google.protobuf.*;
+import com.google.protobuf.Descriptors.Descriptor;
+import com.google.protobuf.Descriptors.FieldDescriptor;
+import com.google.protobuf.Descriptors.FileDescriptor;
+import com.google.protobuf.Descriptors.OneofDescriptor;
+
 public final class Qrecords {
   private Qrecords() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
+      ExtensionRegistryLite registry) {
   }
 
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistry registry) {
+      ExtensionRegistry registry) {
     registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
+        (ExtensionRegistryLite) registry);
   }
   public interface RecordStreamRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:qrecords.RecordStreamRequest)
-      com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:com.axoom.qrecords.RecordStreamRequest)
+      MessageOrBuilder {
 
     /**
      * <pre>
-     * The data composition id
+     * Stream subscriber can be grouped to share workload. Each record is delivered to one subscriber instance within the group. Consumer instances can be in separate processes or on separate machines.
      * </pre>
      *
-     * <code>string dataCompositionId = 1;</code>
+     * <code>string groupId = 1;</code>
      */
-    java.lang.String getDataCompositionId();
+    String getGroupId();
     /**
      * <pre>
-     * The data composition id
+     * Stream subscriber can be grouped to share workload. Each record is delivered to one subscriber instance within the group. Consumer instances can be in separate processes or on separate machines.
      * </pre>
      *
-     * <code>string dataCompositionId = 1;</code>
+     * <code>string groupId = 1;</code>
      */
-    com.google.protobuf.ByteString
+    ByteString
+        getGroupIdBytes();
+
+    /**
+     * <pre>
+     * The unique data composition ID
+     * </pre>
+     *
+     * <code>string dataCompositionId = 2;</code>
+     */
+    String getDataCompositionId();
+    /**
+     * <pre>
+     * The unique data composition ID
+     * </pre>
+     *
+     * <code>string dataCompositionId = 2;</code>
+     */
+    ByteString
         getDataCompositionIdBytes();
+
+    /**
+     * <pre>
+     * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp from = 3;</code>
+     */
+    boolean hasFrom();
+    /**
+     * <pre>
+     * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp from = 3;</code>
+     */
+    Timestamp getFrom();
+    /**
+     * <pre>
+     * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp from = 3;</code>
+     */
+    TimestampOrBuilder getFromOrBuilder();
 
     /**
      * <pre>
      * Specifies the duration (in seconds) after which the stream will be closed (max. 1800 = 30 min)
      * </pre>
      *
-     * <code>uint32 timeout = 2;</code>
+     * <code>uint32 timeout = 4;</code>
      */
     int getTimeout();
   }
   /**
-   * Protobuf type {@code qrecords.RecordStreamRequest}
+   * Protobuf type {@code com.axoom.qrecords.RecordStreamRequest}
    */
   public  static final class RecordStreamRequest extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:qrecords.RecordStreamRequest)
+      GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.axoom.qrecords.RecordStreamRequest)
       RecordStreamRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use RecordStreamRequest.newBuilder() to construct.
-    private RecordStreamRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private RecordStreamRequest(GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
     private RecordStreamRequest() {
+      groupId_ = "";
       dataCompositionId_ = "";
       timeout_ = 0;
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
+    @Override
+    public final UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
     private RecordStreamRequest(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        CodedInputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+      UnknownFieldSet.Builder unknownFields =
+          UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -94,90 +147,184 @@ public final class Qrecords {
               break;
             }
             case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
+
+              groupId_ = s;
+              break;
+            }
+            case 18: {
+              String s = input.readStringRequireUtf8();
 
               dataCompositionId_ = s;
               break;
             }
-            case 16: {
+            case 26: {
+              Timestamp.Builder subBuilder = null;
+              if (from_ != null) {
+                subBuilder = from_.toBuilder();
+              }
+              from_ = input.readMessage(Timestamp.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(from_);
+                from_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 32: {
 
               timeout_ = input.readUInt32();
               break;
             }
           }
         }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      } catch (InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
+      } catch (IOException e) {
+        throw new InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
-    public static final com.google.protobuf.Descriptors.Descriptor
+    public static final Descriptor
         getDescriptor() {
-      return Qrecords.internal_static_qrecords_RecordStreamRequest_descriptor;
+      return Qrecords.internal_static_com_axoom_qrecords_RecordStreamRequest_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected   FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return Qrecords.internal_static_qrecords_RecordStreamRequest_fieldAccessorTable
+      return Qrecords.internal_static_com_axoom_qrecords_RecordStreamRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               Qrecords.RecordStreamRequest.class, Qrecords.RecordStreamRequest.Builder.class);
     }
 
-    public static final int DATACOMPOSITIONID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object dataCompositionId_;
+    public static final int GROUPID_FIELD_NUMBER = 1;
+    private volatile Object groupId_;
     /**
      * <pre>
-     * The data composition id
+     * Stream subscriber can be grouped to share workload. Each record is delivered to one subscriber instance within the group. Consumer instances can be in separate processes or on separate machines.
      * </pre>
      *
-     * <code>string dataCompositionId = 1;</code>
+     * <code>string groupId = 1;</code>
      */
-    public java.lang.String getDataCompositionId() {
-      java.lang.Object ref = dataCompositionId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getGroupId() {
+      Object ref = groupId_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        ByteString bs = 
+            (ByteString) ref;
+        String s = bs.toStringUtf8();
+        groupId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * Stream subscriber can be grouped to share workload. Each record is delivered to one subscriber instance within the group. Consumer instances can be in separate processes or on separate machines.
+     * </pre>
+     *
+     * <code>string groupId = 1;</code>
+     */
+    public ByteString
+        getGroupIdBytes() {
+      Object ref = groupId_;
+      if (ref instanceof String) {
+        ByteString b = 
+            ByteString.copyFromUtf8(
+                (String) ref);
+        groupId_ = b;
+        return b;
+      } else {
+        return (ByteString) ref;
+      }
+    }
+
+    public static final int DATACOMPOSITIONID_FIELD_NUMBER = 2;
+    private volatile Object dataCompositionId_;
+    /**
+     * <pre>
+     * The unique data composition ID
+     * </pre>
+     *
+     * <code>string dataCompositionId = 2;</code>
+     */
+    public String getDataCompositionId() {
+      Object ref = dataCompositionId_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        ByteString bs = 
+            (ByteString) ref;
+        String s = bs.toStringUtf8();
         dataCompositionId_ = s;
         return s;
       }
     }
     /**
      * <pre>
-     * The data composition id
+     * The unique data composition ID
      * </pre>
      *
-     * <code>string dataCompositionId = 1;</code>
+     * <code>string dataCompositionId = 2;</code>
      */
-    public com.google.protobuf.ByteString
+    public ByteString
         getDataCompositionIdBytes() {
-      java.lang.Object ref = dataCompositionId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+      Object ref = dataCompositionId_;
+      if (ref instanceof String) {
+        ByteString b = 
+            ByteString.copyFromUtf8(
+                (String) ref);
         dataCompositionId_ = b;
         return b;
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        return (ByteString) ref;
       }
     }
 
-    public static final int TIMEOUT_FIELD_NUMBER = 2;
+    public static final int FROM_FIELD_NUMBER = 3;
+    private Timestamp from_;
+    /**
+     * <pre>
+     * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp from = 3;</code>
+     */
+    public boolean hasFrom() {
+      return from_ != null;
+    }
+    /**
+     * <pre>
+     * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp from = 3;</code>
+     */
+    public Timestamp getFrom() {
+      return from_ == null ? Timestamp.getDefaultInstance() : from_;
+    }
+    /**
+     * <pre>
+     * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp from = 3;</code>
+     */
+    public TimestampOrBuilder getFromOrBuilder() {
+      return getFrom();
+    }
+
+    public static final int TIMEOUT_FIELD_NUMBER = 4;
     private int timeout_;
     /**
      * <pre>
      * Specifies the duration (in seconds) after which the stream will be closed (max. 1800 = 30 min)
      * </pre>
      *
-     * <code>uint32 timeout = 2;</code>
+     * <code>uint32 timeout = 4;</code>
      */
     public int getTimeout() {
       return timeout_;
@@ -193,13 +340,19 @@ public final class Qrecords {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
+    public void writeTo(CodedOutputStream output)
+                        throws IOException {
+      if (!getGroupIdBytes().isEmpty()) {
+        GeneratedMessageV3.writeString(output, 1, groupId_);
+      }
       if (!getDataCompositionIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, dataCompositionId_);
+        GeneratedMessageV3.writeString(output, 2, dataCompositionId_);
+      }
+      if (from_ != null) {
+        output.writeMessage(3, getFrom());
       }
       if (timeout_ != 0) {
-        output.writeUInt32(2, timeout_);
+        output.writeUInt32(4, timeout_);
       }
       unknownFields.writeTo(output);
     }
@@ -209,20 +362,27 @@ public final class Qrecords {
       if (size != -1) return size;
 
       size = 0;
+      if (!getGroupIdBytes().isEmpty()) {
+        size += GeneratedMessageV3.computeStringSize(1, groupId_);
+      }
       if (!getDataCompositionIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, dataCompositionId_);
+        size += GeneratedMessageV3.computeStringSize(2, dataCompositionId_);
+      }
+      if (from_ != null) {
+        size += CodedOutputStream
+          .computeMessageSize(3, getFrom());
       }
       if (timeout_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(2, timeout_);
+        size += CodedOutputStream
+          .computeUInt32Size(4, timeout_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
@@ -232,23 +392,36 @@ public final class Qrecords {
       Qrecords.RecordStreamRequest other = (Qrecords.RecordStreamRequest) obj;
 
       boolean result = true;
+      result = result && getGroupId()
+          .equals(other.getGroupId());
       result = result && getDataCompositionId()
           .equals(other.getDataCompositionId());
+      result = result && (hasFrom() == other.hasFrom());
+      if (hasFrom()) {
+        result = result && getFrom()
+            .equals(other.getFrom());
+      }
       result = result && (getTimeout()
           == other.getTimeout());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + GROUPID_FIELD_NUMBER;
+      hash = (53 * hash) + getGroupId().hashCode();
       hash = (37 * hash) + DATACOMPOSITIONID_FIELD_NUMBER;
       hash = (53 * hash) + getDataCompositionId().hashCode();
+      if (hasFrom()) {
+        hash = (37 * hash) + FROM_FIELD_NUMBER;
+        hash = (53 * hash) + getFrom().hashCode();
+      }
       hash = (37 * hash) + TIMEOUT_FIELD_NUMBER;
       hash = (53 * hash) + getTimeout();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -257,72 +430,72 @@ public final class Qrecords {
     }
 
     public static Qrecords.RecordStreamRequest parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteBuffer data)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.RecordStreamRequest parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteBuffer data,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static Qrecords.RecordStreamRequest parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteString data)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.RecordStreamRequest parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteString data,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static Qrecords.RecordStreamRequest parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.RecordStreamRequest parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Qrecords.RecordStreamRequest parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+    public static Qrecords.RecordStreamRequest parseFrom(InputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
     public static Qrecords.RecordStreamRequest parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        InputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static Qrecords.RecordStreamRequest parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+    public static Qrecords.RecordStreamRequest parseDelimitedFrom(InputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
     public static Qrecords.RecordStreamRequest parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        InputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static Qrecords.RecordStreamRequest parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        CodedInputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
     public static Qrecords.RecordStreamRequest parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        CodedInputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -338,27 +511,27 @@ public final class Qrecords {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
-     * Protobuf type {@code qrecords.RecordStreamRequest}
+     * Protobuf type {@code com.axoom.qrecords.RecordStreamRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:qrecords.RecordStreamRequest)
+        GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.axoom.qrecords.RecordStreamRequest)
         Qrecords.RecordStreamRequestOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
+      public static final Descriptor
           getDescriptor() {
-        return Qrecords.internal_static_qrecords_RecordStreamRequest_descriptor;
+        return Qrecords.internal_static_com_axoom_qrecords_RecordStreamRequest_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return Qrecords.internal_static_qrecords_RecordStreamRequest_fieldAccessorTable
+        return Qrecords.internal_static_com_axoom_qrecords_RecordStreamRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 Qrecords.RecordStreamRequest.class, Qrecords.RecordStreamRequest.Builder.class);
       }
@@ -369,27 +542,35 @@ public final class Qrecords {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
+        if (GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
         }
       }
       public Builder clear() {
         super.clear();
+        groupId_ = "";
+
         dataCompositionId_ = "";
 
+        if (fromBuilder_ == null) {
+          from_ = null;
+        } else {
+          from_ = null;
+          fromBuilder_ = null;
+        }
         timeout_ = 0;
 
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor
+      public Descriptor
           getDescriptorForType() {
-        return Qrecords.internal_static_qrecords_RecordStreamRequest_descriptor;
+        return Qrecords.internal_static_com_axoom_qrecords_RecordStreamRequest_descriptor;
       }
 
       public Qrecords.RecordStreamRequest getDefaultInstanceForType() {
@@ -406,7 +587,13 @@ public final class Qrecords {
 
       public Qrecords.RecordStreamRequest buildPartial() {
         Qrecords.RecordStreamRequest result = new Qrecords.RecordStreamRequest(this);
+        result.groupId_ = groupId_;
         result.dataCompositionId_ = dataCompositionId_;
+        if (fromBuilder_ == null) {
+          result.from_ = from_;
+        } else {
+          result.from_ = fromBuilder_.build();
+        }
         result.timeout_ = timeout_;
         onBuilt();
         return result;
@@ -416,29 +603,29 @@ public final class Qrecords {
         return (Builder) super.clone();
       }
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+          FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
+      public Builder mergeFrom(Message other) {
         if (other instanceof Qrecords.RecordStreamRequest) {
           return mergeFrom((Qrecords.RecordStreamRequest)other);
         } else {
@@ -449,9 +636,16 @@ public final class Qrecords {
 
       public Builder mergeFrom(Qrecords.RecordStreamRequest other) {
         if (other == Qrecords.RecordStreamRequest.getDefaultInstance()) return this;
+        if (!other.getGroupId().isEmpty()) {
+          groupId_ = other.groupId_;
+          onChanged();
+        }
         if (!other.getDataCompositionId().isEmpty()) {
           dataCompositionId_ = other.dataCompositionId_;
           onChanged();
+        }
+        if (other.hasFrom()) {
+          mergeFrom(other.getFrom());
         }
         if (other.getTimeout() != 0) {
           setTimeout(other.getTimeout());
@@ -466,13 +660,13 @@ public final class Qrecords {
       }
 
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+          CodedInputStream input,
+          ExtensionRegistryLite extensionRegistry)
+          throws IOException {
         Qrecords.RecordStreamRequest parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        } catch (InvalidProtocolBufferException e) {
           parsedMessage = (Qrecords.RecordStreamRequest) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
@@ -483,55 +677,144 @@ public final class Qrecords {
         return this;
       }
 
-      private java.lang.Object dataCompositionId_ = "";
+      private Object groupId_ = "";
       /**
        * <pre>
-       * The data composition id
+       * Stream subscriber can be grouped to share workload. Each record is delivered to one subscriber instance within the group. Consumer instances can be in separate processes or on separate machines.
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string groupId = 1;</code>
        */
-      public java.lang.String getDataCompositionId() {
-        java.lang.Object ref = dataCompositionId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+      public String getGroupId() {
+        Object ref = groupId_;
+        if (!(ref instanceof String)) {
+          ByteString bs =
+              (ByteString) ref;
+          String s = bs.toStringUtf8();
+          groupId_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * Stream subscriber can be grouped to share workload. Each record is delivered to one subscriber instance within the group. Consumer instances can be in separate processes or on separate machines.
+       * </pre>
+       *
+       * <code>string groupId = 1;</code>
+       */
+      public ByteString
+          getGroupIdBytes() {
+        Object ref = groupId_;
+        if (ref instanceof String) {
+          ByteString b = 
+              ByteString.copyFromUtf8(
+                  (String) ref);
+          groupId_ = b;
+          return b;
+        } else {
+          return (ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * Stream subscriber can be grouped to share workload. Each record is delivered to one subscriber instance within the group. Consumer instances can be in separate processes or on separate machines.
+       * </pre>
+       *
+       * <code>string groupId = 1;</code>
+       */
+      public Builder setGroupId(
+          String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        groupId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Stream subscriber can be grouped to share workload. Each record is delivered to one subscriber instance within the group. Consumer instances can be in separate processes or on separate machines.
+       * </pre>
+       *
+       * <code>string groupId = 1;</code>
+       */
+      public Builder clearGroupId() {
+        
+        groupId_ = getDefaultInstance().getGroupId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Stream subscriber can be grouped to share workload. Each record is delivered to one subscriber instance within the group. Consumer instances can be in separate processes or on separate machines.
+       * </pre>
+       *
+       * <code>string groupId = 1;</code>
+       */
+      public Builder setGroupIdBytes(
+          ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        groupId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private Object dataCompositionId_ = "";
+      /**
+       * <pre>
+       * The unique data composition ID
+       * </pre>
+       *
+       * <code>string dataCompositionId = 2;</code>
+       */
+      public String getDataCompositionId() {
+        Object ref = dataCompositionId_;
+        if (!(ref instanceof String)) {
+          ByteString bs =
+              (ByteString) ref;
+          String s = bs.toStringUtf8();
           dataCompositionId_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string dataCompositionId = 2;</code>
        */
-      public com.google.protobuf.ByteString
+      public ByteString
           getDataCompositionIdBytes() {
-        java.lang.Object ref = dataCompositionId_;
+        Object ref = dataCompositionId_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+          ByteString b = 
+              ByteString.copyFromUtf8(
+                  (String) ref);
           dataCompositionId_ = b;
           return b;
         } else {
-          return (com.google.protobuf.ByteString) ref;
+          return (ByteString) ref;
         }
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string dataCompositionId = 2;</code>
        */
       public Builder setDataCompositionId(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -542,10 +825,10 @@ public final class Qrecords {
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string dataCompositionId = 2;</code>
        */
       public Builder clearDataCompositionId() {
         
@@ -555,13 +838,13 @@ public final class Qrecords {
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string dataCompositionId = 2;</code>
        */
       public Builder setDataCompositionIdBytes(
-          com.google.protobuf.ByteString value) {
+          ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -572,13 +855,166 @@ public final class Qrecords {
         return this;
       }
 
+      private Timestamp from_ = null;
+      private SingleFieldBuilderV3<
+          Timestamp, Timestamp.Builder, TimestampOrBuilder> fromBuilder_;
+      /**
+       * <pre>
+       * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      public boolean hasFrom() {
+        return fromBuilder_ != null || from_ != null;
+      }
+      /**
+       * <pre>
+       * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      public Timestamp getFrom() {
+        if (fromBuilder_ == null) {
+          return from_ == null ? Timestamp.getDefaultInstance() : from_;
+        } else {
+          return fromBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      public Builder setFrom(Timestamp value) {
+        if (fromBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          from_ = value;
+          onChanged();
+        } else {
+          fromBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      public Builder setFrom(
+          Timestamp.Builder builderForValue) {
+        if (fromBuilder_ == null) {
+          from_ = builderForValue.build();
+          onChanged();
+        } else {
+          fromBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      public Builder mergeFrom(Timestamp value) {
+        if (fromBuilder_ == null) {
+          if (from_ != null) {
+            from_ =
+              Timestamp.newBuilder(from_).mergeFrom(value).buildPartial();
+          } else {
+            from_ = value;
+          }
+          onChanged();
+        } else {
+          fromBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      public Builder clearFrom() {
+        if (fromBuilder_ == null) {
+          from_ = null;
+          onChanged();
+        } else {
+          from_ = null;
+          fromBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      public Timestamp.Builder getFromBuilder() {
+        
+        onChanged();
+        return getFromFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      public TimestampOrBuilder getFromOrBuilder() {
+        if (fromBuilder_ != null) {
+          return fromBuilder_.getMessageOrBuilder();
+        } else {
+          return from_ == null ?
+              Timestamp.getDefaultInstance() : from_;
+        }
+      }
+      /**
+       * <pre>
+       * From when to start the stream (Default UTC Now). Earliest is 7 days in the past from now. Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      private SingleFieldBuilderV3<
+          Timestamp, Timestamp.Builder, TimestampOrBuilder> 
+          getFromFieldBuilder() {
+        if (fromBuilder_ == null) {
+          fromBuilder_ = new SingleFieldBuilderV3<
+              Timestamp, Timestamp.Builder, TimestampOrBuilder>(
+                  getFrom(),
+                  getParentForChildren(),
+                  isClean());
+          from_ = null;
+        }
+        return fromBuilder_;
+      }
+
       private int timeout_ ;
       /**
        * <pre>
        * Specifies the duration (in seconds) after which the stream will be closed (max. 1800 = 30 min)
        * </pre>
        *
-       * <code>uint32 timeout = 2;</code>
+       * <code>uint32 timeout = 4;</code>
        */
       public int getTimeout() {
         return timeout_;
@@ -588,7 +1024,7 @@ public final class Qrecords {
        * Specifies the duration (in seconds) after which the stream will be closed (max. 1800 = 30 min)
        * </pre>
        *
-       * <code>uint32 timeout = 2;</code>
+       * <code>uint32 timeout = 4;</code>
        */
       public Builder setTimeout(int value) {
         
@@ -601,7 +1037,7 @@ public final class Qrecords {
        * Specifies the duration (in seconds) after which the stream will be closed (max. 1800 = 30 min)
        * </pre>
        *
-       * <code>uint32 timeout = 2;</code>
+       * <code>uint32 timeout = 4;</code>
        */
       public Builder clearTimeout() {
         
@@ -610,20 +1046,20 @@ public final class Qrecords {
         return this;
       }
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+          final UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+          final UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
 
-      // @@protoc_insertion_point(builder_scope:qrecords.RecordStreamRequest)
+      // @@protoc_insertion_point(builder_scope:com.axoom.qrecords.RecordStreamRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:qrecords.RecordStreamRequest)
+    // @@protoc_insertion_point(class_scope:com.axoom.qrecords.RecordStreamRequest)
     private static final Qrecords.RecordStreamRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new Qrecords.RecordStreamRequest();
@@ -633,22 +1069,22 @@ public final class Qrecords {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<RecordStreamRequest>
-        PARSER = new com.google.protobuf.AbstractParser<RecordStreamRequest>() {
+    private static final Parser<RecordStreamRequest>
+        PARSER = new AbstractParser<RecordStreamRequest>() {
       public RecordStreamRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+          CodedInputStream input,
+          ExtensionRegistryLite extensionRegistry)
+          throws InvalidProtocolBufferException {
         return new RecordStreamRequest(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<RecordStreamRequest> parser() {
+    public static Parser<RecordStreamRequest> parser() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.google.protobuf.Parser<RecordStreamRequest> getParserForType() {
+    @Override
+    public Parser<RecordStreamRequest> getParserForType() {
       return PARSER;
     }
 
@@ -659,59 +1095,59 @@ public final class Qrecords {
   }
 
   public interface RecordRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:qrecords.RecordRequest)
-      com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:com.axoom.qrecords.RecordRequest)
+      MessageOrBuilder {
 
     /**
      * <pre>
-     * The data composition id
+     * The unique data composition ID
      * </pre>
      *
      * <code>string dataCompositionId = 1;</code>
      */
-    java.lang.String getDataCompositionId();
+    String getDataCompositionId();
     /**
      * <pre>
-     * The data composition id
+     * The unique data composition ID
      * </pre>
      *
      * <code>string dataCompositionId = 1;</code>
      */
-    com.google.protobuf.ByteString
+    ByteString
         getDataCompositionIdBytes();
   }
   /**
-   * Protobuf type {@code qrecords.RecordRequest}
+   * Protobuf type {@code com.axoom.qrecords.RecordRequest}
    */
   public  static final class RecordRequest extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:qrecords.RecordRequest)
+      GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.axoom.qrecords.RecordRequest)
       RecordRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use RecordRequest.newBuilder() to construct.
-    private RecordRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private RecordRequest(GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
     private RecordRequest() {
       dataCompositionId_ = "";
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
+    @Override
+    public final UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
     private RecordRequest(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        CodedInputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+      UnknownFieldSet.Builder unknownFields =
+          UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -728,74 +1164,74 @@ public final class Qrecords {
               break;
             }
             case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
               dataCompositionId_ = s;
               break;
             }
           }
         }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      } catch (InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
+      } catch (IOException e) {
+        throw new InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
-    public static final com.google.protobuf.Descriptors.Descriptor
+    public static final Descriptor
         getDescriptor() {
-      return Qrecords.internal_static_qrecords_RecordRequest_descriptor;
+      return Qrecords.internal_static_com_axoom_qrecords_RecordRequest_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return Qrecords.internal_static_qrecords_RecordRequest_fieldAccessorTable
+      return Qrecords.internal_static_com_axoom_qrecords_RecordRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               Qrecords.RecordRequest.class, Qrecords.RecordRequest.Builder.class);
     }
 
     public static final int DATACOMPOSITIONID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object dataCompositionId_;
+    private volatile Object dataCompositionId_;
     /**
      * <pre>
-     * The data composition id
+     * The unique data composition ID
      * </pre>
      *
      * <code>string dataCompositionId = 1;</code>
      */
-    public java.lang.String getDataCompositionId() {
-      java.lang.Object ref = dataCompositionId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getDataCompositionId() {
+      Object ref = dataCompositionId_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        ByteString bs = 
+            (ByteString) ref;
+        String s = bs.toStringUtf8();
         dataCompositionId_ = s;
         return s;
       }
     }
     /**
      * <pre>
-     * The data composition id
+     * The unique data composition ID
      * </pre>
      *
      * <code>string dataCompositionId = 1;</code>
      */
-    public com.google.protobuf.ByteString
+    public ByteString
         getDataCompositionIdBytes() {
-      java.lang.Object ref = dataCompositionId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+      Object ref = dataCompositionId_;
+      if (ref instanceof String) {
+        ByteString b = 
+            ByteString.copyFromUtf8(
+                (String) ref);
         dataCompositionId_ = b;
         return b;
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        return (ByteString) ref;
       }
     }
 
@@ -809,10 +1245,10 @@ public final class Qrecords {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
+    public void writeTo(CodedOutputStream output)
+                        throws IOException {
       if (!getDataCompositionIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, dataCompositionId_);
+        GeneratedMessageV3.writeString(output, 1, dataCompositionId_);
       }
       unknownFields.writeTo(output);
     }
@@ -823,15 +1259,15 @@ public final class Qrecords {
 
       size = 0;
       if (!getDataCompositionIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, dataCompositionId_);
+        size += GeneratedMessageV3.computeStringSize(1, dataCompositionId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
@@ -847,7 +1283,7 @@ public final class Qrecords {
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -862,72 +1298,72 @@ public final class Qrecords {
     }
 
     public static Qrecords.RecordRequest parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteBuffer data)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.RecordRequest parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteBuffer data,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static Qrecords.RecordRequest parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteString data)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.RecordRequest parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteString data,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static Qrecords.RecordRequest parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.RecordRequest parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Qrecords.RecordRequest parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+    public static Qrecords.RecordRequest parseFrom(InputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
     public static Qrecords.RecordRequest parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        InputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static Qrecords.RecordRequest parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+    public static Qrecords.RecordRequest parseDelimitedFrom(InputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
     public static Qrecords.RecordRequest parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        InputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static Qrecords.RecordRequest parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        CodedInputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
     public static Qrecords.RecordRequest parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        CodedInputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -943,27 +1379,27 @@ public final class Qrecords {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
-     * Protobuf type {@code qrecords.RecordRequest}
+     * Protobuf type {@code com.axoom.qrecords.RecordRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:qrecords.RecordRequest)
+        GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.axoom.qrecords.RecordRequest)
         Qrecords.RecordRequestOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
+      public static final Descriptor
           getDescriptor() {
-        return Qrecords.internal_static_qrecords_RecordRequest_descriptor;
+        return Qrecords.internal_static_com_axoom_qrecords_RecordRequest_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return Qrecords.internal_static_qrecords_RecordRequest_fieldAccessorTable
+        return Qrecords.internal_static_com_axoom_qrecords_RecordRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 Qrecords.RecordRequest.class, Qrecords.RecordRequest.Builder.class);
       }
@@ -974,12 +1410,12 @@ public final class Qrecords {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
+        if (GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
         }
       }
@@ -990,9 +1426,9 @@ public final class Qrecords {
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor
+      public Descriptor
           getDescriptorForType() {
-        return Qrecords.internal_static_qrecords_RecordRequest_descriptor;
+        return Qrecords.internal_static_com_axoom_qrecords_RecordRequest_descriptor;
       }
 
       public Qrecords.RecordRequest getDefaultInstanceForType() {
@@ -1018,29 +1454,29 @@ public final class Qrecords {
         return (Builder) super.clone();
       }
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+          FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
+      public Builder mergeFrom(Message other) {
         if (other instanceof Qrecords.RecordRequest) {
           return mergeFrom((Qrecords.RecordRequest)other);
         } else {
@@ -1065,13 +1501,13 @@ public final class Qrecords {
       }
 
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+          CodedInputStream input,
+          ExtensionRegistryLite extensionRegistry)
+          throws IOException {
         Qrecords.RecordRequest parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        } catch (InvalidProtocolBufferException e) {
           parsedMessage = (Qrecords.RecordRequest) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
@@ -1082,55 +1518,55 @@ public final class Qrecords {
         return this;
       }
 
-      private java.lang.Object dataCompositionId_ = "";
+      private Object dataCompositionId_ = "";
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
        * <code>string dataCompositionId = 1;</code>
        */
-      public java.lang.String getDataCompositionId() {
-        java.lang.Object ref = dataCompositionId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+      public String getDataCompositionId() {
+        Object ref = dataCompositionId_;
+        if (!(ref instanceof String)) {
+          ByteString bs =
+              (ByteString) ref;
+          String s = bs.toStringUtf8();
           dataCompositionId_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
        * <code>string dataCompositionId = 1;</code>
        */
-      public com.google.protobuf.ByteString
+      public ByteString
           getDataCompositionIdBytes() {
-        java.lang.Object ref = dataCompositionId_;
+        Object ref = dataCompositionId_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+          ByteString b = 
+              ByteString.copyFromUtf8(
+                  (String) ref);
           dataCompositionId_ = b;
           return b;
         } else {
-          return (com.google.protobuf.ByteString) ref;
+          return (ByteString) ref;
         }
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
        * <code>string dataCompositionId = 1;</code>
        */
       public Builder setDataCompositionId(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1141,7 +1577,7 @@ public final class Qrecords {
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
        * <code>string dataCompositionId = 1;</code>
@@ -1154,13 +1590,13 @@ public final class Qrecords {
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
        * <code>string dataCompositionId = 1;</code>
        */
       public Builder setDataCompositionIdBytes(
-          com.google.protobuf.ByteString value) {
+          ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1171,20 +1607,20 @@ public final class Qrecords {
         return this;
       }
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+          final UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+          final UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
 
-      // @@protoc_insertion_point(builder_scope:qrecords.RecordRequest)
+      // @@protoc_insertion_point(builder_scope:com.axoom.qrecords.RecordRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:qrecords.RecordRequest)
+    // @@protoc_insertion_point(class_scope:com.axoom.qrecords.RecordRequest)
     private static final Qrecords.RecordRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new Qrecords.RecordRequest();
@@ -1194,22 +1630,22 @@ public final class Qrecords {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<RecordRequest>
-        PARSER = new com.google.protobuf.AbstractParser<RecordRequest>() {
+    private static final Parser<RecordRequest>
+        PARSER = new AbstractParser<RecordRequest>() {
       public RecordRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+          CodedInputStream input,
+          ExtensionRegistryLite extensionRegistry)
+          throws InvalidProtocolBufferException {
         return new RecordRequest(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<RecordRequest> parser() {
+    public static Parser<RecordRequest> parser() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.google.protobuf.Parser<RecordRequest> getParserForType() {
+    @Override
+    public Parser<RecordRequest> getParserForType() {
       return PARSER;
     }
 
@@ -1220,107 +1656,138 @@ public final class Qrecords {
   }
 
   public interface RecordListRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:qrecords.RecordListRequest)
-      com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:com.axoom.qrecords.RecordListRequest)
+      MessageOrBuilder {
 
     /**
      * <pre>
-     * The data composition id
+     * The client's ID; used for record load-balancing
      * </pre>
      *
-     * <code>string dataCompositionId = 1;</code>
+     * <code>string clientId = 1;</code>
      */
-    java.lang.String getDataCompositionId();
+    String getClientId();
     /**
      * <pre>
-     * The data composition id
+     * The client's ID; used for record load-balancing
      * </pre>
      *
-     * <code>string dataCompositionId = 1;</code>
+     * <code>string clientId = 1;</code>
      */
-    com.google.protobuf.ByteString
+    ByteString
+        getClientIdBytes();
+
+    /**
+     * <pre>
+     * The unique data composition ID
+     * </pre>
+     *
+     * <code>string dataCompositionId = 2;</code>
+     */
+    String getDataCompositionId();
+    /**
+     * <pre>
+     * The unique data composition ID
+     * </pre>
+     *
+     * <code>string dataCompositionId = 2;</code>
+     */
+    ByteString
         getDataCompositionIdBytes();
 
     /**
      * <pre>
-     * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * The exclusive starting point in nano seconds precision
      * </pre>
      *
-     * <code>string from = 2;</code>
+     * <code>.google.protobuf.Timestamp from = 3;</code>
      */
-    java.lang.String getFrom();
+    boolean hasFrom();
     /**
      * <pre>
-     * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * The exclusive starting point in nano seconds precision
      * </pre>
      *
-     * <code>string from = 2;</code>
+     * <code>.google.protobuf.Timestamp from = 3;</code>
      */
-    com.google.protobuf.ByteString
-        getFromBytes();
+    Timestamp getFrom();
+    /**
+     * <pre>
+     * The exclusive starting point in nano seconds precision
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp from = 3;</code>
+     */
+    TimestampOrBuilder getFromOrBuilder();
 
     /**
      * <pre>
-     * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * The inclusive ending point in nano seconds precision
      * </pre>
      *
-     * <code>string to = 3;</code>
+     * <code>.google.protobuf.Timestamp to = 4;</code>
      */
-    java.lang.String getTo();
+    boolean hasTo();
     /**
      * <pre>
-     * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * The inclusive ending point in nano seconds precision
      * </pre>
      *
-     * <code>string to = 3;</code>
+     * <code>.google.protobuf.Timestamp to = 4;</code>
      */
-    com.google.protobuf.ByteString
-        getToBytes();
+    Timestamp getTo();
+    /**
+     * <pre>
+     * The inclusive ending point in nano seconds precision
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp to = 4;</code>
+     */
+    TimestampOrBuilder getToOrBuilder();
 
     /**
      * <pre>
-     * When the limit hits the stream will end.
+     * When the limit hits the stream will end
      * </pre>
      *
-     * <code>int32 limit = 4;</code>
+     * <code>int32 limit = 5;</code>
      */
     int getLimit();
   }
   /**
-   * Protobuf type {@code qrecords.RecordListRequest}
+   * Protobuf type {@code com.axoom.qrecords.RecordListRequest}
    */
   public  static final class RecordListRequest extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:qrecords.RecordListRequest)
+      GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.axoom.qrecords.RecordListRequest)
       RecordListRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use RecordListRequest.newBuilder() to construct.
-    private RecordListRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private RecordListRequest(GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
     private RecordListRequest() {
+      clientId_ = "";
       dataCompositionId_ = "";
-      from_ = "";
-      to_ = "";
       limit_ = 0;
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
+    @Override
+    public final UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
     private RecordListRequest(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        CodedInputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+      UnknownFieldSet.Builder unknownFields =
+          UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -1337,186 +1804,230 @@ public final class Qrecords {
               break;
             }
             case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
+
+              clientId_ = s;
+              break;
+            }
+            case 18: {
+              String s = input.readStringRequireUtf8();
 
               dataCompositionId_ = s;
               break;
             }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              from_ = s;
-              break;
-            }
             case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
+              Timestamp.Builder subBuilder = null;
+              if (from_ != null) {
+                subBuilder = from_.toBuilder();
+              }
+              from_ = input.readMessage(Timestamp.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(from_);
+                from_ = subBuilder.buildPartial();
+              }
 
-              to_ = s;
               break;
             }
-            case 32: {
+            case 34: {
+              Timestamp.Builder subBuilder = null;
+              if (to_ != null) {
+                subBuilder = to_.toBuilder();
+              }
+              to_ = input.readMessage(Timestamp.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(to_);
+                to_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 40: {
 
               limit_ = input.readInt32();
               break;
             }
           }
         }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      } catch (InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
+      } catch (IOException e) {
+        throw new InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
-    public static final com.google.protobuf.Descriptors.Descriptor
+    public static final Descriptor
         getDescriptor() {
-      return Qrecords.internal_static_qrecords_RecordListRequest_descriptor;
+      return Qrecords.internal_static_com_axoom_qrecords_RecordListRequest_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return Qrecords.internal_static_qrecords_RecordListRequest_fieldAccessorTable
+      return Qrecords.internal_static_com_axoom_qrecords_RecordListRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               Qrecords.RecordListRequest.class, Qrecords.RecordListRequest.Builder.class);
     }
 
-    public static final int DATACOMPOSITIONID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object dataCompositionId_;
+    public static final int CLIENTID_FIELD_NUMBER = 1;
+    private volatile Object clientId_;
     /**
      * <pre>
-     * The data composition id
+     * The client's ID; used for record load-balancing
      * </pre>
      *
-     * <code>string dataCompositionId = 1;</code>
+     * <code>string clientId = 1;</code>
      */
-    public java.lang.String getDataCompositionId() {
-      java.lang.Object ref = dataCompositionId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getClientId() {
+      Object ref = clientId_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        ByteString bs = 
+            (ByteString) ref;
+        String s = bs.toStringUtf8();
+        clientId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The client's ID; used for record load-balancing
+     * </pre>
+     *
+     * <code>string clientId = 1;</code>
+     */
+    public ByteString
+        getClientIdBytes() {
+      Object ref = clientId_;
+      if (ref instanceof String) {
+        ByteString b = 
+            ByteString.copyFromUtf8(
+                (String) ref);
+        clientId_ = b;
+        return b;
+      } else {
+        return (ByteString) ref;
+      }
+    }
+
+    public static final int DATACOMPOSITIONID_FIELD_NUMBER = 2;
+    private volatile Object dataCompositionId_;
+    /**
+     * <pre>
+     * The unique data composition ID
+     * </pre>
+     *
+     * <code>string dataCompositionId = 2;</code>
+     */
+    public String getDataCompositionId() {
+      Object ref = dataCompositionId_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        ByteString bs = 
+            (ByteString) ref;
+        String s = bs.toStringUtf8();
         dataCompositionId_ = s;
         return s;
       }
     }
     /**
      * <pre>
-     * The data composition id
+     * The unique data composition ID
      * </pre>
      *
-     * <code>string dataCompositionId = 1;</code>
+     * <code>string dataCompositionId = 2;</code>
      */
-    public com.google.protobuf.ByteString
+    public ByteString
         getDataCompositionIdBytes() {
-      java.lang.Object ref = dataCompositionId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+      Object ref = dataCompositionId_;
+      if (ref instanceof String) {
+        ByteString b = 
+            ByteString.copyFromUtf8(
+                (String) ref);
         dataCompositionId_ = b;
         return b;
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        return (ByteString) ref;
       }
     }
 
-    public static final int FROM_FIELD_NUMBER = 2;
-    private volatile java.lang.Object from_;
+    public static final int FROM_FIELD_NUMBER = 3;
+    private Timestamp from_;
     /**
      * <pre>
-     * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * The exclusive starting point in nano seconds precision
      * </pre>
      *
-     * <code>string from = 2;</code>
+     * <code>.google.protobuf.Timestamp from = 3;</code>
      */
-    public java.lang.String getFrom() {
-      java.lang.Object ref = from_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        from_ = s;
-        return s;
-      }
+    public boolean hasFrom() {
+      return from_ != null;
     }
     /**
      * <pre>
-     * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * The exclusive starting point in nano seconds precision
      * </pre>
      *
-     * <code>string from = 2;</code>
+     * <code>.google.protobuf.Timestamp from = 3;</code>
      */
-    public com.google.protobuf.ByteString
-        getFromBytes() {
-      java.lang.Object ref = from_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        from_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public Timestamp getFrom() {
+      return from_ == null ? Timestamp.getDefaultInstance() : from_;
+    }
+    /**
+     * <pre>
+     * The exclusive starting point in nano seconds precision
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp from = 3;</code>
+     */
+    public TimestampOrBuilder getFromOrBuilder() {
+      return getFrom();
     }
 
-    public static final int TO_FIELD_NUMBER = 3;
-    private volatile java.lang.Object to_;
+    public static final int TO_FIELD_NUMBER = 4;
+    private Timestamp to_;
     /**
      * <pre>
-     * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * The inclusive ending point in nano seconds precision
      * </pre>
      *
-     * <code>string to = 3;</code>
+     * <code>.google.protobuf.Timestamp to = 4;</code>
      */
-    public java.lang.String getTo() {
-      java.lang.Object ref = to_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        to_ = s;
-        return s;
-      }
+    public boolean hasTo() {
+      return to_ != null;
     }
     /**
      * <pre>
-     * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+     * The inclusive ending point in nano seconds precision
      * </pre>
      *
-     * <code>string to = 3;</code>
+     * <code>.google.protobuf.Timestamp to = 4;</code>
      */
-    public com.google.protobuf.ByteString
-        getToBytes() {
-      java.lang.Object ref = to_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        to_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public Timestamp getTo() {
+      return to_ == null ? Timestamp.getDefaultInstance() : to_;
+    }
+    /**
+     * <pre>
+     * The inclusive ending point in nano seconds precision
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp to = 4;</code>
+     */
+    public TimestampOrBuilder getToOrBuilder() {
+      return getTo();
     }
 
-    public static final int LIMIT_FIELD_NUMBER = 4;
+    public static final int LIMIT_FIELD_NUMBER = 5;
     private int limit_;
     /**
      * <pre>
-     * When the limit hits the stream will end.
+     * When the limit hits the stream will end
      * </pre>
      *
-     * <code>int32 limit = 4;</code>
+     * <code>int32 limit = 5;</code>
      */
     public int getLimit() {
       return limit_;
@@ -1532,19 +2043,22 @@ public final class Qrecords {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
+    public void writeTo(CodedOutputStream output)
+                        throws IOException {
+      if (!getClientIdBytes().isEmpty()) {
+        GeneratedMessageV3.writeString(output, 1, clientId_);
+      }
       if (!getDataCompositionIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, dataCompositionId_);
+        GeneratedMessageV3.writeString(output, 2, dataCompositionId_);
       }
-      if (!getFromBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, from_);
+      if (from_ != null) {
+        output.writeMessage(3, getFrom());
       }
-      if (!getToBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, to_);
+      if (to_ != null) {
+        output.writeMessage(4, getTo());
       }
       if (limit_ != 0) {
-        output.writeInt32(4, limit_);
+        output.writeInt32(5, limit_);
       }
       unknownFields.writeTo(output);
     }
@@ -1554,26 +2068,31 @@ public final class Qrecords {
       if (size != -1) return size;
 
       size = 0;
+      if (!getClientIdBytes().isEmpty()) {
+        size += GeneratedMessageV3.computeStringSize(1, clientId_);
+      }
       if (!getDataCompositionIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, dataCompositionId_);
+        size += GeneratedMessageV3.computeStringSize(2, dataCompositionId_);
       }
-      if (!getFromBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, from_);
+      if (from_ != null) {
+        size += CodedOutputStream
+          .computeMessageSize(3, getFrom());
       }
-      if (!getToBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, to_);
+      if (to_ != null) {
+        size += CodedOutputStream
+          .computeMessageSize(4, getTo());
       }
       if (limit_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, limit_);
+        size += CodedOutputStream
+          .computeInt32Size(5, limit_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
@@ -1583,31 +2102,45 @@ public final class Qrecords {
       Qrecords.RecordListRequest other = (Qrecords.RecordListRequest) obj;
 
       boolean result = true;
+      result = result && getClientId()
+          .equals(other.getClientId());
       result = result && getDataCompositionId()
           .equals(other.getDataCompositionId());
-      result = result && getFrom()
-          .equals(other.getFrom());
-      result = result && getTo()
-          .equals(other.getTo());
+      result = result && (hasFrom() == other.hasFrom());
+      if (hasFrom()) {
+        result = result && getFrom()
+            .equals(other.getFrom());
+      }
+      result = result && (hasTo() == other.hasTo());
+      if (hasTo()) {
+        result = result && getTo()
+            .equals(other.getTo());
+      }
       result = result && (getLimit()
           == other.getLimit());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + CLIENTID_FIELD_NUMBER;
+      hash = (53 * hash) + getClientId().hashCode();
       hash = (37 * hash) + DATACOMPOSITIONID_FIELD_NUMBER;
       hash = (53 * hash) + getDataCompositionId().hashCode();
-      hash = (37 * hash) + FROM_FIELD_NUMBER;
-      hash = (53 * hash) + getFrom().hashCode();
-      hash = (37 * hash) + TO_FIELD_NUMBER;
-      hash = (53 * hash) + getTo().hashCode();
+      if (hasFrom()) {
+        hash = (37 * hash) + FROM_FIELD_NUMBER;
+        hash = (53 * hash) + getFrom().hashCode();
+      }
+      if (hasTo()) {
+        hash = (37 * hash) + TO_FIELD_NUMBER;
+        hash = (53 * hash) + getTo().hashCode();
+      }
       hash = (37 * hash) + LIMIT_FIELD_NUMBER;
       hash = (53 * hash) + getLimit();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -1616,72 +2149,72 @@ public final class Qrecords {
     }
 
     public static Qrecords.RecordListRequest parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteBuffer data)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.RecordListRequest parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteBuffer data,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static Qrecords.RecordListRequest parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteString data)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.RecordListRequest parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteString data,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static Qrecords.RecordListRequest parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.RecordListRequest parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Qrecords.RecordListRequest parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+    public static Qrecords.RecordListRequest parseFrom(InputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
     public static Qrecords.RecordListRequest parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        InputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static Qrecords.RecordListRequest parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+    public static Qrecords.RecordListRequest parseDelimitedFrom(InputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
     public static Qrecords.RecordListRequest parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        InputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static Qrecords.RecordListRequest parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        CodedInputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
     public static Qrecords.RecordListRequest parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        CodedInputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -1697,27 +2230,27 @@ public final class Qrecords {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
-     * Protobuf type {@code qrecords.RecordListRequest}
+     * Protobuf type {@code com.axoom.qrecords.RecordListRequest}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:qrecords.RecordListRequest)
+        GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.axoom.qrecords.RecordListRequest)
         Qrecords.RecordListRequestOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
+      public static final Descriptor
           getDescriptor() {
-        return Qrecords.internal_static_qrecords_RecordListRequest_descriptor;
+        return Qrecords.internal_static_com_axoom_qrecords_RecordListRequest_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return Qrecords.internal_static_qrecords_RecordListRequest_fieldAccessorTable
+        return Qrecords.internal_static_com_axoom_qrecords_RecordListRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 Qrecords.RecordListRequest.class, Qrecords.RecordListRequest.Builder.class);
       }
@@ -1728,31 +2261,41 @@ public final class Qrecords {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
+        if (GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
         }
       }
       public Builder clear() {
         super.clear();
+        clientId_ = "";
+
         dataCompositionId_ = "";
 
-        from_ = "";
-
-        to_ = "";
-
+        if (fromBuilder_ == null) {
+          from_ = null;
+        } else {
+          from_ = null;
+          fromBuilder_ = null;
+        }
+        if (toBuilder_ == null) {
+          to_ = null;
+        } else {
+          to_ = null;
+          toBuilder_ = null;
+        }
         limit_ = 0;
 
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor
+      public Descriptor
           getDescriptorForType() {
-        return Qrecords.internal_static_qrecords_RecordListRequest_descriptor;
+        return Qrecords.internal_static_com_axoom_qrecords_RecordListRequest_descriptor;
       }
 
       public Qrecords.RecordListRequest getDefaultInstanceForType() {
@@ -1769,9 +2312,18 @@ public final class Qrecords {
 
       public Qrecords.RecordListRequest buildPartial() {
         Qrecords.RecordListRequest result = new Qrecords.RecordListRequest(this);
+        result.clientId_ = clientId_;
         result.dataCompositionId_ = dataCompositionId_;
-        result.from_ = from_;
-        result.to_ = to_;
+        if (fromBuilder_ == null) {
+          result.from_ = from_;
+        } else {
+          result.from_ = fromBuilder_.build();
+        }
+        if (toBuilder_ == null) {
+          result.to_ = to_;
+        } else {
+          result.to_ = toBuilder_.build();
+        }
         result.limit_ = limit_;
         onBuilt();
         return result;
@@ -1781,29 +2333,29 @@ public final class Qrecords {
         return (Builder) super.clone();
       }
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+          FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
+      public Builder mergeFrom(Message other) {
         if (other instanceof Qrecords.RecordListRequest) {
           return mergeFrom((Qrecords.RecordListRequest)other);
         } else {
@@ -1814,17 +2366,19 @@ public final class Qrecords {
 
       public Builder mergeFrom(Qrecords.RecordListRequest other) {
         if (other == Qrecords.RecordListRequest.getDefaultInstance()) return this;
+        if (!other.getClientId().isEmpty()) {
+          clientId_ = other.clientId_;
+          onChanged();
+        }
         if (!other.getDataCompositionId().isEmpty()) {
           dataCompositionId_ = other.dataCompositionId_;
           onChanged();
         }
-        if (!other.getFrom().isEmpty()) {
-          from_ = other.from_;
-          onChanged();
+        if (other.hasFrom()) {
+          mergeFrom(other.getFrom());
         }
-        if (!other.getTo().isEmpty()) {
-          to_ = other.to_;
-          onChanged();
+        if (other.hasTo()) {
+          mergeTo(other.getTo());
         }
         if (other.getLimit() != 0) {
           setLimit(other.getLimit());
@@ -1839,13 +2393,13 @@ public final class Qrecords {
       }
 
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+          CodedInputStream input,
+          ExtensionRegistryLite extensionRegistry)
+          throws IOException {
         Qrecords.RecordListRequest parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        } catch (InvalidProtocolBufferException e) {
           parsedMessage = (Qrecords.RecordListRequest) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
@@ -1856,55 +2410,144 @@ public final class Qrecords {
         return this;
       }
 
-      private java.lang.Object dataCompositionId_ = "";
+      private Object clientId_ = "";
       /**
        * <pre>
-       * The data composition id
+       * The client's ID; used for record load-balancing
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string clientId = 1;</code>
        */
-      public java.lang.String getDataCompositionId() {
-        java.lang.Object ref = dataCompositionId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+      public String getClientId() {
+        Object ref = clientId_;
+        if (!(ref instanceof String)) {
+          ByteString bs =
+              (ByteString) ref;
+          String s = bs.toStringUtf8();
+          clientId_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The client's ID; used for record load-balancing
+       * </pre>
+       *
+       * <code>string clientId = 1;</code>
+       */
+      public ByteString
+          getClientIdBytes() {
+        Object ref = clientId_;
+        if (ref instanceof String) {
+          ByteString b = 
+              ByteString.copyFromUtf8(
+                  (String) ref);
+          clientId_ = b;
+          return b;
+        } else {
+          return (ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The client's ID; used for record load-balancing
+       * </pre>
+       *
+       * <code>string clientId = 1;</code>
+       */
+      public Builder setClientId(
+          String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        clientId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The client's ID; used for record load-balancing
+       * </pre>
+       *
+       * <code>string clientId = 1;</code>
+       */
+      public Builder clearClientId() {
+        
+        clientId_ = getDefaultInstance().getClientId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The client's ID; used for record load-balancing
+       * </pre>
+       *
+       * <code>string clientId = 1;</code>
+       */
+      public Builder setClientIdBytes(
+          ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        clientId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private Object dataCompositionId_ = "";
+      /**
+       * <pre>
+       * The unique data composition ID
+       * </pre>
+       *
+       * <code>string dataCompositionId = 2;</code>
+       */
+      public String getDataCompositionId() {
+        Object ref = dataCompositionId_;
+        if (!(ref instanceof String)) {
+          ByteString bs =
+              (ByteString) ref;
+          String s = bs.toStringUtf8();
           dataCompositionId_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string dataCompositionId = 2;</code>
        */
-      public com.google.protobuf.ByteString
+      public ByteString
           getDataCompositionIdBytes() {
-        java.lang.Object ref = dataCompositionId_;
+        Object ref = dataCompositionId_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+          ByteString b = 
+              ByteString.copyFromUtf8(
+                  (String) ref);
           dataCompositionId_ = b;
           return b;
         } else {
-          return (com.google.protobuf.ByteString) ref;
+          return (ByteString) ref;
         }
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string dataCompositionId = 2;</code>
        */
       public Builder setDataCompositionId(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1915,10 +2558,10 @@ public final class Qrecords {
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string dataCompositionId = 2;</code>
        */
       public Builder clearDataCompositionId() {
         
@@ -1928,13 +2571,13 @@ public final class Qrecords {
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string dataCompositionId = 2;</code>
        */
       public Builder setDataCompositionIdBytes(
-          com.google.protobuf.ByteString value) {
+          ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1945,201 +2588,329 @@ public final class Qrecords {
         return this;
       }
 
-      private java.lang.Object from_ = "";
+      private Timestamp from_ = null;
+      private SingleFieldBuilderV3<
+          Timestamp, Timestamp.Builder, TimestampOrBuilder> fromBuilder_;
       /**
        * <pre>
-       * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * The exclusive starting point in nano seconds precision
        * </pre>
        *
-       * <code>string from = 2;</code>
+       * <code>.google.protobuf.Timestamp from = 3;</code>
        */
-      public java.lang.String getFrom() {
-        java.lang.Object ref = from_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          from_ = s;
-          return s;
+      public boolean hasFrom() {
+        return fromBuilder_ != null || from_ != null;
+      }
+      /**
+       * <pre>
+       * The exclusive starting point in nano seconds precision
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      public Timestamp getFrom() {
+        if (fromBuilder_ == null) {
+          return from_ == null ? Timestamp.getDefaultInstance() : from_;
         } else {
-          return (java.lang.String) ref;
+          return fromBuilder_.getMessage();
         }
       }
       /**
        * <pre>
-       * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * The exclusive starting point in nano seconds precision
        * </pre>
        *
-       * <code>string from = 2;</code>
+       * <code>.google.protobuf.Timestamp from = 3;</code>
        */
-      public com.google.protobuf.ByteString
-          getFromBytes() {
-        java.lang.Object ref = from_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          from_ = b;
-          return b;
+      public Builder setFrom(Timestamp value) {
+        if (fromBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          from_ = value;
+          onChanged();
         } else {
-          return (com.google.protobuf.ByteString) ref;
+          fromBuilder_.setMessage(value);
         }
+
+        return this;
       }
       /**
        * <pre>
-       * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * The exclusive starting point in nano seconds precision
        * </pre>
        *
-       * <code>string from = 2;</code>
+       * <code>.google.protobuf.Timestamp from = 3;</code>
        */
       public Builder setFrom(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        from_ = value;
-        onChanged();
+          Timestamp.Builder builderForValue) {
+        if (fromBuilder_ == null) {
+          from_ = builderForValue.build();
+          onChanged();
+        } else {
+          fromBuilder_.setMessage(builderForValue.build());
+        }
+
         return this;
       }
       /**
        * <pre>
-       * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * The exclusive starting point in nano seconds precision
        * </pre>
        *
-       * <code>string from = 2;</code>
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      public Builder mergeFrom(Timestamp value) {
+        if (fromBuilder_ == null) {
+          if (from_ != null) {
+            from_ =
+              Timestamp.newBuilder(from_).mergeFrom(value).buildPartial();
+          } else {
+            from_ = value;
+          }
+          onChanged();
+        } else {
+          fromBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The exclusive starting point in nano seconds precision
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
        */
       public Builder clearFrom() {
-        
-        from_ = getDefaultInstance().getFrom();
-        onChanged();
+        if (fromBuilder_ == null) {
+          from_ = null;
+          onChanged();
+        } else {
+          from_ = null;
+          fromBuilder_ = null;
+        }
+
         return this;
       }
       /**
        * <pre>
-       * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * The exclusive starting point in nano seconds precision
        * </pre>
        *
-       * <code>string from = 2;</code>
+       * <code>.google.protobuf.Timestamp from = 3;</code>
        */
-      public Builder setFromBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
+      public Timestamp.Builder getFromBuilder() {
         
-        from_ = value;
         onChanged();
-        return this;
+        return getFromFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * The exclusive starting point in nano seconds precision
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      public TimestampOrBuilder getFromOrBuilder() {
+        if (fromBuilder_ != null) {
+          return fromBuilder_.getMessageOrBuilder();
+        } else {
+          return from_ == null ?
+              Timestamp.getDefaultInstance() : from_;
+        }
+      }
+      /**
+       * <pre>
+       * The exclusive starting point in nano seconds precision
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp from = 3;</code>
+       */
+      private SingleFieldBuilderV3<
+          Timestamp, Timestamp.Builder, TimestampOrBuilder> 
+          getFromFieldBuilder() {
+        if (fromBuilder_ == null) {
+          fromBuilder_ = new SingleFieldBuilderV3<
+              Timestamp, Timestamp.Builder, TimestampOrBuilder>(
+                  getFrom(),
+                  getParentForChildren(),
+                  isClean());
+          from_ = null;
+        }
+        return fromBuilder_;
       }
 
-      private java.lang.Object to_ = "";
+      private Timestamp to_ = null;
+      private SingleFieldBuilderV3<
+          Timestamp, Timestamp.Builder, TimestampOrBuilder> toBuilder_;
       /**
        * <pre>
-       * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * The inclusive ending point in nano seconds precision
        * </pre>
        *
-       * <code>string to = 3;</code>
+       * <code>.google.protobuf.Timestamp to = 4;</code>
        */
-      public java.lang.String getTo() {
-        java.lang.Object ref = to_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          to_ = s;
-          return s;
+      public boolean hasTo() {
+        return toBuilder_ != null || to_ != null;
+      }
+      /**
+       * <pre>
+       * The inclusive ending point in nano seconds precision
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp to = 4;</code>
+       */
+      public Timestamp getTo() {
+        if (toBuilder_ == null) {
+          return to_ == null ? Timestamp.getDefaultInstance() : to_;
         } else {
-          return (java.lang.String) ref;
+          return toBuilder_.getMessage();
         }
       }
       /**
        * <pre>
-       * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * The inclusive ending point in nano seconds precision
        * </pre>
        *
-       * <code>string to = 3;</code>
+       * <code>.google.protobuf.Timestamp to = 4;</code>
        */
-      public com.google.protobuf.ByteString
-          getToBytes() {
-        java.lang.Object ref = to_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          to_ = b;
-          return b;
+      public Builder setTo(Timestamp value) {
+        if (toBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          to_ = value;
+          onChanged();
         } else {
-          return (com.google.protobuf.ByteString) ref;
+          toBuilder_.setMessage(value);
         }
+
+        return this;
       }
       /**
        * <pre>
-       * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * The inclusive ending point in nano seconds precision
        * </pre>
        *
-       * <code>string to = 3;</code>
+       * <code>.google.protobuf.Timestamp to = 4;</code>
        */
       public Builder setTo(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        to_ = value;
-        onChanged();
+          Timestamp.Builder builderForValue) {
+        if (toBuilder_ == null) {
+          to_ = builderForValue.build();
+          onChanged();
+        } else {
+          toBuilder_.setMessage(builderForValue.build());
+        }
+
         return this;
       }
       /**
        * <pre>
-       * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * The inclusive ending point in nano seconds precision
        * </pre>
        *
-       * <code>string to = 3;</code>
+       * <code>.google.protobuf.Timestamp to = 4;</code>
+       */
+      public Builder mergeTo(Timestamp value) {
+        if (toBuilder_ == null) {
+          if (to_ != null) {
+            to_ =
+              Timestamp.newBuilder(to_).mergeFrom(value).buildPartial();
+          } else {
+            to_ = value;
+          }
+          onChanged();
+        } else {
+          toBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The inclusive ending point in nano seconds precision
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp to = 4;</code>
        */
       public Builder clearTo() {
-        
-        to_ = getDefaultInstance().getTo();
-        onChanged();
+        if (toBuilder_ == null) {
+          to_ = null;
+          onChanged();
+        } else {
+          to_ = null;
+          toBuilder_ = null;
+        }
+
         return this;
       }
       /**
        * <pre>
-       * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
+       * The inclusive ending point in nano seconds precision
        * </pre>
        *
-       * <code>string to = 3;</code>
+       * <code>.google.protobuf.Timestamp to = 4;</code>
        */
-      public Builder setToBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
+      public Timestamp.Builder getToBuilder() {
         
-        to_ = value;
         onChanged();
-        return this;
+        return getToFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * The inclusive ending point in nano seconds precision
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp to = 4;</code>
+       */
+      public TimestampOrBuilder getToOrBuilder() {
+        if (toBuilder_ != null) {
+          return toBuilder_.getMessageOrBuilder();
+        } else {
+          return to_ == null ?
+              Timestamp.getDefaultInstance() : to_;
+        }
+      }
+      /**
+       * <pre>
+       * The inclusive ending point in nano seconds precision
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp to = 4;</code>
+       */
+      private SingleFieldBuilderV3<
+          Timestamp, Timestamp.Builder, TimestampOrBuilder> 
+          getToFieldBuilder() {
+        if (toBuilder_ == null) {
+          toBuilder_ = new SingleFieldBuilderV3<
+              Timestamp, Timestamp.Builder, TimestampOrBuilder>(
+                  getTo(),
+                  getParentForChildren(),
+                  isClean());
+          to_ = null;
+        }
+        return toBuilder_;
       }
 
       private int limit_ ;
       /**
        * <pre>
-       * When the limit hits the stream will end.
+       * When the limit hits the stream will end
        * </pre>
        *
-       * <code>int32 limit = 4;</code>
+       * <code>int32 limit = 5;</code>
        */
       public int getLimit() {
         return limit_;
       }
       /**
        * <pre>
-       * When the limit hits the stream will end.
+       * When the limit hits the stream will end
        * </pre>
        *
-       * <code>int32 limit = 4;</code>
+       * <code>int32 limit = 5;</code>
        */
       public Builder setLimit(int value) {
         
@@ -2149,10 +2920,10 @@ public final class Qrecords {
       }
       /**
        * <pre>
-       * When the limit hits the stream will end.
+       * When the limit hits the stream will end
        * </pre>
        *
-       * <code>int32 limit = 4;</code>
+       * <code>int32 limit = 5;</code>
        */
       public Builder clearLimit() {
         
@@ -2161,20 +2932,20 @@ public final class Qrecords {
         return this;
       }
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+          final UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+          final UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
 
-      // @@protoc_insertion_point(builder_scope:qrecords.RecordListRequest)
+      // @@protoc_insertion_point(builder_scope:com.axoom.qrecords.RecordListRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:qrecords.RecordListRequest)
+    // @@protoc_insertion_point(class_scope:com.axoom.qrecords.RecordListRequest)
     private static final Qrecords.RecordListRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new Qrecords.RecordListRequest();
@@ -2184,22 +2955,22 @@ public final class Qrecords {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<RecordListRequest>
-        PARSER = new com.google.protobuf.AbstractParser<RecordListRequest>() {
+    private static final Parser<RecordListRequest>
+        PARSER = new AbstractParser<RecordListRequest>() {
       public RecordListRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+          CodedInputStream input,
+          ExtensionRegistryLite extensionRegistry)
+          throws InvalidProtocolBufferException {
         return new RecordListRequest(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<RecordListRequest> parser() {
+    public static Parser<RecordListRequest> parser() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.google.protobuf.Parser<RecordListRequest> getParserForType() {
+    @Override
+    public Parser<RecordListRequest> getParserForType() {
       return PARSER;
     }
 
@@ -2210,59 +2981,59 @@ public final class Qrecords {
   }
 
   public interface QRecordOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:qrecords.QRecord)
-      com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:com.axoom.qrecords.QRecord)
+      MessageOrBuilder {
 
     /**
-     * <code>.qrecords.QRecordHeader headers = 1;</code>
+     * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
      */
     boolean hasHeaders();
     /**
-     * <code>.qrecords.QRecordHeader headers = 1;</code>
+     * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
      */
     Qrecords.QRecordHeader getHeaders();
     /**
-     * <code>.qrecords.QRecordHeader headers = 1;</code>
+     * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
      */
     Qrecords.QRecordHeaderOrBuilder getHeadersOrBuilder();
 
     /**
      * <code>bytes payload = 2;</code>
      */
-    com.google.protobuf.ByteString getPayload();
+    ByteString getPayload();
   }
   /**
-   * Protobuf type {@code qrecords.QRecord}
+   * Protobuf type {@code com.axoom.qrecords.QRecord}
    */
   public  static final class QRecord extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:qrecords.QRecord)
+      GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.axoom.qrecords.QRecord)
       QRecordOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use QRecord.newBuilder() to construct.
-    private QRecord(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private QRecord(GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
     private QRecord() {
-      payload_ = com.google.protobuf.ByteString.EMPTY;
+      payload_ = ByteString.EMPTY;
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
+    @Override
+    public final UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
     private QRecord(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        CodedInputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+      UnknownFieldSet.Builder unknownFields =
+          UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -2298,24 +3069,24 @@ public final class Qrecords {
             }
           }
         }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      } catch (InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
+      } catch (IOException e) {
+        throw new InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
-    public static final com.google.protobuf.Descriptors.Descriptor
+    public static final Descriptor
         getDescriptor() {
-      return Qrecords.internal_static_qrecords_QRecord_descriptor;
+      return Qrecords.internal_static_com_axoom_qrecords_QRecord_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return Qrecords.internal_static_qrecords_QRecord_fieldAccessorTable
+      return Qrecords.internal_static_com_axoom_qrecords_QRecord_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               Qrecords.QRecord.class, Qrecords.QRecord.Builder.class);
     }
@@ -2323,30 +3094,30 @@ public final class Qrecords {
     public static final int HEADERS_FIELD_NUMBER = 1;
     private Qrecords.QRecordHeader headers_;
     /**
-     * <code>.qrecords.QRecordHeader headers = 1;</code>
+     * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
      */
     public boolean hasHeaders() {
       return headers_ != null;
     }
     /**
-     * <code>.qrecords.QRecordHeader headers = 1;</code>
+     * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
      */
     public Qrecords.QRecordHeader getHeaders() {
       return headers_ == null ? Qrecords.QRecordHeader.getDefaultInstance() : headers_;
     }
     /**
-     * <code>.qrecords.QRecordHeader headers = 1;</code>
+     * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
      */
     public Qrecords.QRecordHeaderOrBuilder getHeadersOrBuilder() {
       return getHeaders();
     }
 
     public static final int PAYLOAD_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString payload_;
+    private ByteString payload_;
     /**
      * <code>bytes payload = 2;</code>
      */
-    public com.google.protobuf.ByteString getPayload() {
+    public ByteString getPayload() {
       return payload_;
     }
 
@@ -2360,8 +3131,8 @@ public final class Qrecords {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
+    public void writeTo(CodedOutputStream output)
+                        throws IOException {
       if (headers_ != null) {
         output.writeMessage(1, getHeaders());
       }
@@ -2377,11 +3148,11 @@ public final class Qrecords {
 
       size = 0;
       if (headers_ != null) {
-        size += com.google.protobuf.CodedOutputStream
+        size += CodedOutputStream
           .computeMessageSize(1, getHeaders());
       }
       if (!payload_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
+        size += CodedOutputStream
           .computeBytesSize(2, payload_);
       }
       size += unknownFields.getSerializedSize();
@@ -2389,8 +3160,8 @@ public final class Qrecords {
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
@@ -2411,7 +3182,7 @@ public final class Qrecords {
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -2430,72 +3201,72 @@ public final class Qrecords {
     }
 
     public static Qrecords.QRecord parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteBuffer data)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.QRecord parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteBuffer data,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static Qrecords.QRecord parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteString data)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.QRecord parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteString data,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static Qrecords.QRecord parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.QRecord parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Qrecords.QRecord parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+    public static Qrecords.QRecord parseFrom(InputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
     public static Qrecords.QRecord parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        InputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static Qrecords.QRecord parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+    public static Qrecords.QRecord parseDelimitedFrom(InputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
     public static Qrecords.QRecord parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        InputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static Qrecords.QRecord parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        CodedInputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
     public static Qrecords.QRecord parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        CodedInputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -2511,27 +3282,27 @@ public final class Qrecords {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
-     * Protobuf type {@code qrecords.QRecord}
+     * Protobuf type {@code com.axoom.qrecords.QRecord}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:qrecords.QRecord)
+        GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.axoom.qrecords.QRecord)
         Qrecords.QRecordOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
+      public static final Descriptor
           getDescriptor() {
-        return Qrecords.internal_static_qrecords_QRecord_descriptor;
+        return Qrecords.internal_static_com_axoom_qrecords_QRecord_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return Qrecords.internal_static_qrecords_QRecord_fieldAccessorTable
+        return Qrecords.internal_static_com_axoom_qrecords_QRecord_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 Qrecords.QRecord.class, Qrecords.QRecord.Builder.class);
       }
@@ -2542,12 +3313,12 @@ public final class Qrecords {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
+        if (GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
         }
       }
@@ -2559,14 +3330,14 @@ public final class Qrecords {
           headers_ = null;
           headersBuilder_ = null;
         }
-        payload_ = com.google.protobuf.ByteString.EMPTY;
+        payload_ = ByteString.EMPTY;
 
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor
+      public Descriptor
           getDescriptorForType() {
-        return Qrecords.internal_static_qrecords_QRecord_descriptor;
+        return Qrecords.internal_static_com_axoom_qrecords_QRecord_descriptor;
       }
 
       public Qrecords.QRecord getDefaultInstanceForType() {
@@ -2597,29 +3368,29 @@ public final class Qrecords {
         return (Builder) super.clone();
       }
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+          FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
+      public Builder mergeFrom(Message other) {
         if (other instanceof Qrecords.QRecord) {
           return mergeFrom((Qrecords.QRecord)other);
         } else {
@@ -2633,7 +3404,7 @@ public final class Qrecords {
         if (other.hasHeaders()) {
           mergeHeaders(other.getHeaders());
         }
-        if (other.getPayload() != com.google.protobuf.ByteString.EMPTY) {
+        if (other.getPayload() != ByteString.EMPTY) {
           setPayload(other.getPayload());
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -2646,13 +3417,13 @@ public final class Qrecords {
       }
 
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+          CodedInputStream input,
+          ExtensionRegistryLite extensionRegistry)
+          throws IOException {
         Qrecords.QRecord parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        } catch (InvalidProtocolBufferException e) {
           parsedMessage = (Qrecords.QRecord) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
@@ -2664,16 +3435,16 @@ public final class Qrecords {
       }
 
       private Qrecords.QRecordHeader headers_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
+      private SingleFieldBuilderV3<
           Qrecords.QRecordHeader, Qrecords.QRecordHeader.Builder, Qrecords.QRecordHeaderOrBuilder> headersBuilder_;
       /**
-       * <code>.qrecords.QRecordHeader headers = 1;</code>
+       * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
        */
       public boolean hasHeaders() {
         return headersBuilder_ != null || headers_ != null;
       }
       /**
-       * <code>.qrecords.QRecordHeader headers = 1;</code>
+       * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
        */
       public Qrecords.QRecordHeader getHeaders() {
         if (headersBuilder_ == null) {
@@ -2683,7 +3454,7 @@ public final class Qrecords {
         }
       }
       /**
-       * <code>.qrecords.QRecordHeader headers = 1;</code>
+       * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
        */
       public Builder setHeaders(Qrecords.QRecordHeader value) {
         if (headersBuilder_ == null) {
@@ -2699,7 +3470,7 @@ public final class Qrecords {
         return this;
       }
       /**
-       * <code>.qrecords.QRecordHeader headers = 1;</code>
+       * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
        */
       public Builder setHeaders(
           Qrecords.QRecordHeader.Builder builderForValue) {
@@ -2713,7 +3484,7 @@ public final class Qrecords {
         return this;
       }
       /**
-       * <code>.qrecords.QRecordHeader headers = 1;</code>
+       * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
        */
       public Builder mergeHeaders(Qrecords.QRecordHeader value) {
         if (headersBuilder_ == null) {
@@ -2731,7 +3502,7 @@ public final class Qrecords {
         return this;
       }
       /**
-       * <code>.qrecords.QRecordHeader headers = 1;</code>
+       * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
        */
       public Builder clearHeaders() {
         if (headersBuilder_ == null) {
@@ -2745,7 +3516,7 @@ public final class Qrecords {
         return this;
       }
       /**
-       * <code>.qrecords.QRecordHeader headers = 1;</code>
+       * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
        */
       public Qrecords.QRecordHeader.Builder getHeadersBuilder() {
         
@@ -2753,7 +3524,7 @@ public final class Qrecords {
         return getHeadersFieldBuilder().getBuilder();
       }
       /**
-       * <code>.qrecords.QRecordHeader headers = 1;</code>
+       * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
        */
       public Qrecords.QRecordHeaderOrBuilder getHeadersOrBuilder() {
         if (headersBuilder_ != null) {
@@ -2764,13 +3535,13 @@ public final class Qrecords {
         }
       }
       /**
-       * <code>.qrecords.QRecordHeader headers = 1;</code>
+       * <code>.com.axoom.qrecords.QRecordHeader headers = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      private SingleFieldBuilderV3<
           Qrecords.QRecordHeader, Qrecords.QRecordHeader.Builder, Qrecords.QRecordHeaderOrBuilder> 
           getHeadersFieldBuilder() {
         if (headersBuilder_ == null) {
-          headersBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          headersBuilder_ = new SingleFieldBuilderV3<
               Qrecords.QRecordHeader, Qrecords.QRecordHeader.Builder, Qrecords.QRecordHeaderOrBuilder>(
                   getHeaders(),
                   getParentForChildren(),
@@ -2780,17 +3551,17 @@ public final class Qrecords {
         return headersBuilder_;
       }
 
-      private com.google.protobuf.ByteString payload_ = com.google.protobuf.ByteString.EMPTY;
+      private ByteString payload_ = ByteString.EMPTY;
       /**
        * <code>bytes payload = 2;</code>
        */
-      public com.google.protobuf.ByteString getPayload() {
+      public ByteString getPayload() {
         return payload_;
       }
       /**
        * <code>bytes payload = 2;</code>
        */
-      public Builder setPayload(com.google.protobuf.ByteString value) {
+      public Builder setPayload(ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -2809,20 +3580,20 @@ public final class Qrecords {
         return this;
       }
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+          final UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+          final UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
 
-      // @@protoc_insertion_point(builder_scope:qrecords.QRecord)
+      // @@protoc_insertion_point(builder_scope:com.axoom.qrecords.QRecord)
     }
 
-    // @@protoc_insertion_point(class_scope:qrecords.QRecord)
+    // @@protoc_insertion_point(class_scope:com.axoom.qrecords.QRecord)
     private static final Qrecords.QRecord DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new Qrecords.QRecord();
@@ -2832,22 +3603,22 @@ public final class Qrecords {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<QRecord>
-        PARSER = new com.google.protobuf.AbstractParser<QRecord>() {
+    private static final Parser<QRecord>
+        PARSER = new AbstractParser<QRecord>() {
       public QRecord parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+          CodedInputStream input,
+          ExtensionRegistryLite extensionRegistry)
+          throws InvalidProtocolBufferException {
         return new QRecord(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<QRecord> parser() {
+    public static Parser<QRecord> parser() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.google.protobuf.Parser<QRecord> getParserForType() {
+    @Override
+    public Parser<QRecord> getParserForType() {
       return PARSER;
     }
 
@@ -2858,25 +3629,43 @@ public final class Qrecords {
   }
 
   public interface QRecordHeaderOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:qrecords.QRecordHeader)
-      com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:com.axoom.qrecords.QRecordHeader)
+      MessageOrBuilder {
 
     /**
      * <pre>
-     * The data composition id
+     * The unique record ID
      * </pre>
      *
-     * <code>string dataCompositionId = 1;</code>
+     * <code>string recordId = 1;</code>
      */
-    java.lang.String getDataCompositionId();
+    String getRecordId();
     /**
      * <pre>
-     * The data composition id
+     * The unique record ID
      * </pre>
      *
-     * <code>string dataCompositionId = 1;</code>
+     * <code>string recordId = 1;</code>
      */
-    com.google.protobuf.ByteString
+    ByteString
+        getRecordIdBytes();
+
+    /**
+     * <pre>
+     * The unique data composition ID
+     * </pre>
+     *
+     * <code>string dataCompositionId = 2;</code>
+     */
+    String getDataCompositionId();
+    /**
+     * <pre>
+     * The unique data composition ID
+     * </pre>
+     *
+     * <code>string dataCompositionId = 2;</code>
+     */
+    ByteString
         getDataCompositionIdBytes();
 
     /**
@@ -2884,17 +3673,17 @@ public final class Qrecords {
      * The owner of the data composition
      * </pre>
      *
-     * <code>string owner = 2;</code>
+     * <code>string owner = 3;</code>
      */
-    java.lang.String getOwner();
+    String getOwner();
     /**
      * <pre>
      * The owner of the data composition
      * </pre>
      *
-     * <code>string owner = 2;</code>
+     * <code>string owner = 3;</code>
      */
-    com.google.protobuf.ByteString
+    ByteString
         getOwnerBytes();
 
     /**
@@ -2902,17 +3691,17 @@ public final class Qrecords {
      * The url where the schema is located
      * </pre>
      *
-     * <code>string schemaUrl = 3;</code>
+     * <code>string schemaUrl = 4;</code>
      */
-    java.lang.String getSchemaUrl();
+    String getSchemaUrl();
     /**
      * <pre>
      * The url where the schema is located
      * </pre>
      *
-     * <code>string schemaUrl = 3;</code>
+     * <code>string schemaUrl = 4;</code>
      */
-    com.google.protobuf.ByteString
+    ByteString
         getSchemaUrlBytes();
 
     /**
@@ -2920,54 +3709,55 @@ public final class Qrecords {
      * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
      * </pre>
      *
-     * <code>string timestamp = 4;</code>
+     * <code>string timestamp = 5;</code>
      */
-    java.lang.String getTimestamp();
+    String getTimestamp();
     /**
      * <pre>
      * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
      * </pre>
      *
-     * <code>string timestamp = 4;</code>
+     * <code>string timestamp = 5;</code>
      */
-    com.google.protobuf.ByteString
+    ByteString
         getTimestampBytes();
   }
   /**
-   * Protobuf type {@code qrecords.QRecordHeader}
+   * Protobuf type {@code com.axoom.qrecords.QRecordHeader}
    */
   public  static final class QRecordHeader extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:qrecords.QRecordHeader)
+      GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.axoom.qrecords.QRecordHeader)
       QRecordHeaderOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use QRecordHeader.newBuilder() to construct.
-    private QRecordHeader(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private QRecordHeader(GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
     private QRecordHeader() {
+      recordId_ = "";
       dataCompositionId_ = "";
       owner_ = "";
       schemaUrl_ = "";
       timestamp_ = "";
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
+    @Override
+    public final UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
     private QRecordHeader(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        CodedInputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+      UnknownFieldSet.Builder unknownFields =
+          UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -2984,112 +3774,160 @@ public final class Qrecords {
               break;
             }
             case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
+
+              recordId_ = s;
+              break;
+            }
+            case 18: {
+              String s = input.readStringRequireUtf8();
 
               dataCompositionId_ = s;
               break;
             }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 26: {
+              String s = input.readStringRequireUtf8();
 
               owner_ = s;
               break;
             }
-            case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 34: {
+              String s = input.readStringRequireUtf8();
 
               schemaUrl_ = s;
               break;
             }
-            case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 42: {
+              String s = input.readStringRequireUtf8();
 
               timestamp_ = s;
               break;
             }
           }
         }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      } catch (InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
+      } catch (IOException e) {
+        throw new InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
-    public static final com.google.protobuf.Descriptors.Descriptor
+    public static final Descriptor
         getDescriptor() {
-      return Qrecords.internal_static_qrecords_QRecordHeader_descriptor;
+      return Qrecords.internal_static_com_axoom_qrecords_QRecordHeader_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return Qrecords.internal_static_qrecords_QRecordHeader_fieldAccessorTable
+      return Qrecords.internal_static_com_axoom_qrecords_QRecordHeader_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               Qrecords.QRecordHeader.class, Qrecords.QRecordHeader.Builder.class);
     }
 
-    public static final int DATACOMPOSITIONID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object dataCompositionId_;
+    public static final int RECORDID_FIELD_NUMBER = 1;
+    private volatile Object recordId_;
     /**
      * <pre>
-     * The data composition id
+     * The unique record ID
      * </pre>
      *
-     * <code>string dataCompositionId = 1;</code>
+     * <code>string recordId = 1;</code>
      */
-    public java.lang.String getDataCompositionId() {
-      java.lang.Object ref = dataCompositionId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getRecordId() {
+      Object ref = recordId_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        ByteString bs = 
+            (ByteString) ref;
+        String s = bs.toStringUtf8();
+        recordId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * The unique record ID
+     * </pre>
+     *
+     * <code>string recordId = 1;</code>
+     */
+    public ByteString
+        getRecordIdBytes() {
+      Object ref = recordId_;
+      if (ref instanceof String) {
+        ByteString b = 
+            ByteString.copyFromUtf8(
+                (String) ref);
+        recordId_ = b;
+        return b;
+      } else {
+        return (ByteString) ref;
+      }
+    }
+
+    public static final int DATACOMPOSITIONID_FIELD_NUMBER = 2;
+    private volatile Object dataCompositionId_;
+    /**
+     * <pre>
+     * The unique data composition ID
+     * </pre>
+     *
+     * <code>string dataCompositionId = 2;</code>
+     */
+    public String getDataCompositionId() {
+      Object ref = dataCompositionId_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        ByteString bs = 
+            (ByteString) ref;
+        String s = bs.toStringUtf8();
         dataCompositionId_ = s;
         return s;
       }
     }
     /**
      * <pre>
-     * The data composition id
+     * The unique data composition ID
      * </pre>
      *
-     * <code>string dataCompositionId = 1;</code>
+     * <code>string dataCompositionId = 2;</code>
      */
-    public com.google.protobuf.ByteString
+    public ByteString
         getDataCompositionIdBytes() {
-      java.lang.Object ref = dataCompositionId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+      Object ref = dataCompositionId_;
+      if (ref instanceof String) {
+        ByteString b = 
+            ByteString.copyFromUtf8(
+                (String) ref);
         dataCompositionId_ = b;
         return b;
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        return (ByteString) ref;
       }
     }
 
-    public static final int OWNER_FIELD_NUMBER = 2;
-    private volatile java.lang.Object owner_;
+    public static final int OWNER_FIELD_NUMBER = 3;
+    private volatile Object owner_;
     /**
      * <pre>
      * The owner of the data composition
      * </pre>
      *
-     * <code>string owner = 2;</code>
+     * <code>string owner = 3;</code>
      */
-    public java.lang.String getOwner() {
-      java.lang.Object ref = owner_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getOwner() {
+      Object ref = owner_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        ByteString bs = 
+            (ByteString) ref;
+        String s = bs.toStringUtf8();
         owner_ = s;
         return s;
       }
@@ -3099,39 +3937,39 @@ public final class Qrecords {
      * The owner of the data composition
      * </pre>
      *
-     * <code>string owner = 2;</code>
+     * <code>string owner = 3;</code>
      */
-    public com.google.protobuf.ByteString
+    public ByteString
         getOwnerBytes() {
-      java.lang.Object ref = owner_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+      Object ref = owner_;
+      if (ref instanceof String) {
+        ByteString b = 
+            ByteString.copyFromUtf8(
+                (String) ref);
         owner_ = b;
         return b;
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        return (ByteString) ref;
       }
     }
 
-    public static final int SCHEMAURL_FIELD_NUMBER = 3;
-    private volatile java.lang.Object schemaUrl_;
+    public static final int SCHEMAURL_FIELD_NUMBER = 4;
+    private volatile Object schemaUrl_;
     /**
      * <pre>
      * The url where the schema is located
      * </pre>
      *
-     * <code>string schemaUrl = 3;</code>
+     * <code>string schemaUrl = 4;</code>
      */
-    public java.lang.String getSchemaUrl() {
-      java.lang.Object ref = schemaUrl_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getSchemaUrl() {
+      Object ref = schemaUrl_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        ByteString bs = 
+            (ByteString) ref;
+        String s = bs.toStringUtf8();
         schemaUrl_ = s;
         return s;
       }
@@ -3141,39 +3979,39 @@ public final class Qrecords {
      * The url where the schema is located
      * </pre>
      *
-     * <code>string schemaUrl = 3;</code>
+     * <code>string schemaUrl = 4;</code>
      */
-    public com.google.protobuf.ByteString
+    public ByteString
         getSchemaUrlBytes() {
-      java.lang.Object ref = schemaUrl_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+      Object ref = schemaUrl_;
+      if (ref instanceof String) {
+        ByteString b = 
+            ByteString.copyFromUtf8(
+                (String) ref);
         schemaUrl_ = b;
         return b;
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        return (ByteString) ref;
       }
     }
 
-    public static final int TIMESTAMP_FIELD_NUMBER = 4;
-    private volatile java.lang.Object timestamp_;
+    public static final int TIMESTAMP_FIELD_NUMBER = 5;
+    private volatile Object timestamp_;
     /**
      * <pre>
      * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
      * </pre>
      *
-     * <code>string timestamp = 4;</code>
+     * <code>string timestamp = 5;</code>
      */
-    public java.lang.String getTimestamp() {
-      java.lang.Object ref = timestamp_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getTimestamp() {
+      Object ref = timestamp_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        ByteString bs = 
+            (ByteString) ref;
+        String s = bs.toStringUtf8();
         timestamp_ = s;
         return s;
       }
@@ -3183,19 +4021,19 @@ public final class Qrecords {
      * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
      * </pre>
      *
-     * <code>string timestamp = 4;</code>
+     * <code>string timestamp = 5;</code>
      */
-    public com.google.protobuf.ByteString
+    public ByteString
         getTimestampBytes() {
-      java.lang.Object ref = timestamp_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+      Object ref = timestamp_;
+      if (ref instanceof String) {
+        ByteString b = 
+            ByteString.copyFromUtf8(
+                (String) ref);
         timestamp_ = b;
         return b;
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        return (ByteString) ref;
       }
     }
 
@@ -3209,19 +4047,22 @@ public final class Qrecords {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
+    public void writeTo(CodedOutputStream output)
+                        throws IOException {
+      if (!getRecordIdBytes().isEmpty()) {
+        GeneratedMessageV3.writeString(output, 1, recordId_);
+      }
       if (!getDataCompositionIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, dataCompositionId_);
+        GeneratedMessageV3.writeString(output, 2, dataCompositionId_);
       }
       if (!getOwnerBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, owner_);
+        GeneratedMessageV3.writeString(output, 3, owner_);
       }
       if (!getSchemaUrlBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, schemaUrl_);
+        GeneratedMessageV3.writeString(output, 4, schemaUrl_);
       }
       if (!getTimestampBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, timestamp_);
+        GeneratedMessageV3.writeString(output, 5, timestamp_);
       }
       unknownFields.writeTo(output);
     }
@@ -3231,25 +4072,28 @@ public final class Qrecords {
       if (size != -1) return size;
 
       size = 0;
+      if (!getRecordIdBytes().isEmpty()) {
+        size += GeneratedMessageV3.computeStringSize(1, recordId_);
+      }
       if (!getDataCompositionIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, dataCompositionId_);
+        size += GeneratedMessageV3.computeStringSize(2, dataCompositionId_);
       }
       if (!getOwnerBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, owner_);
+        size += GeneratedMessageV3.computeStringSize(3, owner_);
       }
       if (!getSchemaUrlBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, schemaUrl_);
+        size += GeneratedMessageV3.computeStringSize(4, schemaUrl_);
       }
       if (!getTimestampBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, timestamp_);
+        size += GeneratedMessageV3.computeStringSize(5, timestamp_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
@@ -3259,6 +4103,8 @@ public final class Qrecords {
       Qrecords.QRecordHeader other = (Qrecords.QRecordHeader) obj;
 
       boolean result = true;
+      result = result && getRecordId()
+          .equals(other.getRecordId());
       result = result && getDataCompositionId()
           .equals(other.getDataCompositionId());
       result = result && getOwner()
@@ -3271,13 +4117,15 @@ public final class Qrecords {
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + RECORDID_FIELD_NUMBER;
+      hash = (53 * hash) + getRecordId().hashCode();
       hash = (37 * hash) + DATACOMPOSITIONID_FIELD_NUMBER;
       hash = (53 * hash) + getDataCompositionId().hashCode();
       hash = (37 * hash) + OWNER_FIELD_NUMBER;
@@ -3292,72 +4140,72 @@ public final class Qrecords {
     }
 
     public static Qrecords.QRecordHeader parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteBuffer data)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.QRecordHeader parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteBuffer data,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static Qrecords.QRecordHeader parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteString data)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.QRecordHeader parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ByteString data,
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static Qrecords.QRecordHeader parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static Qrecords.QRecordHeader parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        ExtensionRegistryLite extensionRegistry)
+        throws InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Qrecords.QRecordHeader parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+    public static Qrecords.QRecordHeader parseFrom(InputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
     public static Qrecords.QRecordHeader parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        InputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static Qrecords.QRecordHeader parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+    public static Qrecords.QRecordHeader parseDelimitedFrom(InputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
     public static Qrecords.QRecordHeader parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        InputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static Qrecords.QRecordHeader parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        CodedInputStream input)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
     public static Qrecords.QRecordHeader parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
+        CodedInputStream input,
+        ExtensionRegistryLite extensionRegistry)
+        throws IOException {
+      return GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -3373,27 +4221,27 @@ public final class Qrecords {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
-     * Protobuf type {@code qrecords.QRecordHeader}
+     * Protobuf type {@code com.axoom.qrecords.QRecordHeader}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:qrecords.QRecordHeader)
+        GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.axoom.qrecords.QRecordHeader)
         Qrecords.QRecordHeaderOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
+      public static final Descriptor
           getDescriptor() {
-        return Qrecords.internal_static_qrecords_QRecordHeader_descriptor;
+        return Qrecords.internal_static_com_axoom_qrecords_QRecordHeader_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return Qrecords.internal_static_qrecords_QRecordHeader_fieldAccessorTable
+        return Qrecords.internal_static_com_axoom_qrecords_QRecordHeader_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 Qrecords.QRecordHeader.class, Qrecords.QRecordHeader.Builder.class);
       }
@@ -3404,17 +4252,19 @@ public final class Qrecords {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
+        if (GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
         }
       }
       public Builder clear() {
         super.clear();
+        recordId_ = "";
+
         dataCompositionId_ = "";
 
         owner_ = "";
@@ -3426,9 +4276,9 @@ public final class Qrecords {
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor
+      public Descriptor
           getDescriptorForType() {
-        return Qrecords.internal_static_qrecords_QRecordHeader_descriptor;
+        return Qrecords.internal_static_com_axoom_qrecords_QRecordHeader_descriptor;
       }
 
       public Qrecords.QRecordHeader getDefaultInstanceForType() {
@@ -3445,6 +4295,7 @@ public final class Qrecords {
 
       public Qrecords.QRecordHeader buildPartial() {
         Qrecords.QRecordHeader result = new Qrecords.QRecordHeader(this);
+        result.recordId_ = recordId_;
         result.dataCompositionId_ = dataCompositionId_;
         result.owner_ = owner_;
         result.schemaUrl_ = schemaUrl_;
@@ -3457,29 +4308,29 @@ public final class Qrecords {
         return (Builder) super.clone();
       }
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+          FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
+      public Builder mergeFrom(Message other) {
         if (other instanceof Qrecords.QRecordHeader) {
           return mergeFrom((Qrecords.QRecordHeader)other);
         } else {
@@ -3490,6 +4341,10 @@ public final class Qrecords {
 
       public Builder mergeFrom(Qrecords.QRecordHeader other) {
         if (other == Qrecords.QRecordHeader.getDefaultInstance()) return this;
+        if (!other.getRecordId().isEmpty()) {
+          recordId_ = other.recordId_;
+          onChanged();
+        }
         if (!other.getDataCompositionId().isEmpty()) {
           dataCompositionId_ = other.dataCompositionId_;
           onChanged();
@@ -3516,13 +4371,13 @@ public final class Qrecords {
       }
 
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+          CodedInputStream input,
+          ExtensionRegistryLite extensionRegistry)
+          throws IOException {
         Qrecords.QRecordHeader parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        } catch (InvalidProtocolBufferException e) {
           parsedMessage = (Qrecords.QRecordHeader) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
@@ -3533,55 +4388,144 @@ public final class Qrecords {
         return this;
       }
 
-      private java.lang.Object dataCompositionId_ = "";
+      private Object recordId_ = "";
       /**
        * <pre>
-       * The data composition id
+       * The unique record ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string recordId = 1;</code>
        */
-      public java.lang.String getDataCompositionId() {
-        java.lang.Object ref = dataCompositionId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+      public String getRecordId() {
+        Object ref = recordId_;
+        if (!(ref instanceof String)) {
+          ByteString bs =
+              (ByteString) ref;
+          String s = bs.toStringUtf8();
+          recordId_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The unique record ID
+       * </pre>
+       *
+       * <code>string recordId = 1;</code>
+       */
+      public ByteString
+          getRecordIdBytes() {
+        Object ref = recordId_;
+        if (ref instanceof String) {
+          ByteString b = 
+              ByteString.copyFromUtf8(
+                  (String) ref);
+          recordId_ = b;
+          return b;
+        } else {
+          return (ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * The unique record ID
+       * </pre>
+       *
+       * <code>string recordId = 1;</code>
+       */
+      public Builder setRecordId(
+          String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        recordId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The unique record ID
+       * </pre>
+       *
+       * <code>string recordId = 1;</code>
+       */
+      public Builder clearRecordId() {
+        
+        recordId_ = getDefaultInstance().getRecordId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The unique record ID
+       * </pre>
+       *
+       * <code>string recordId = 1;</code>
+       */
+      public Builder setRecordIdBytes(
+          ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        recordId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private Object dataCompositionId_ = "";
+      /**
+       * <pre>
+       * The unique data composition ID
+       * </pre>
+       *
+       * <code>string dataCompositionId = 2;</code>
+       */
+      public String getDataCompositionId() {
+        Object ref = dataCompositionId_;
+        if (!(ref instanceof String)) {
+          ByteString bs =
+              (ByteString) ref;
+          String s = bs.toStringUtf8();
           dataCompositionId_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string dataCompositionId = 2;</code>
        */
-      public com.google.protobuf.ByteString
+      public ByteString
           getDataCompositionIdBytes() {
-        java.lang.Object ref = dataCompositionId_;
+        Object ref = dataCompositionId_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+          ByteString b = 
+              ByteString.copyFromUtf8(
+                  (String) ref);
           dataCompositionId_ = b;
           return b;
         } else {
-          return (com.google.protobuf.ByteString) ref;
+          return (ByteString) ref;
         }
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string dataCompositionId = 2;</code>
        */
       public Builder setDataCompositionId(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -3592,10 +4536,10 @@ public final class Qrecords {
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string dataCompositionId = 2;</code>
        */
       public Builder clearDataCompositionId() {
         
@@ -3605,13 +4549,13 @@ public final class Qrecords {
       }
       /**
        * <pre>
-       * The data composition id
+       * The unique data composition ID
        * </pre>
        *
-       * <code>string dataCompositionId = 1;</code>
+       * <code>string dataCompositionId = 2;</code>
        */
       public Builder setDataCompositionIdBytes(
-          com.google.protobuf.ByteString value) {
+          ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -3622,24 +4566,24 @@ public final class Qrecords {
         return this;
       }
 
-      private java.lang.Object owner_ = "";
+      private Object owner_ = "";
       /**
        * <pre>
        * The owner of the data composition
        * </pre>
        *
-       * <code>string owner = 2;</code>
+       * <code>string owner = 3;</code>
        */
-      public java.lang.String getOwner() {
-        java.lang.Object ref = owner_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+      public String getOwner() {
+        Object ref = owner_;
+        if (!(ref instanceof String)) {
+          ByteString bs =
+              (ByteString) ref;
+          String s = bs.toStringUtf8();
           owner_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -3647,19 +4591,19 @@ public final class Qrecords {
        * The owner of the data composition
        * </pre>
        *
-       * <code>string owner = 2;</code>
+       * <code>string owner = 3;</code>
        */
-      public com.google.protobuf.ByteString
+      public ByteString
           getOwnerBytes() {
-        java.lang.Object ref = owner_;
+        Object ref = owner_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+          ByteString b = 
+              ByteString.copyFromUtf8(
+                  (String) ref);
           owner_ = b;
           return b;
         } else {
-          return (com.google.protobuf.ByteString) ref;
+          return (ByteString) ref;
         }
       }
       /**
@@ -3667,10 +4611,10 @@ public final class Qrecords {
        * The owner of the data composition
        * </pre>
        *
-       * <code>string owner = 2;</code>
+       * <code>string owner = 3;</code>
        */
       public Builder setOwner(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -3684,7 +4628,7 @@ public final class Qrecords {
        * The owner of the data composition
        * </pre>
        *
-       * <code>string owner = 2;</code>
+       * <code>string owner = 3;</code>
        */
       public Builder clearOwner() {
         
@@ -3697,10 +4641,10 @@ public final class Qrecords {
        * The owner of the data composition
        * </pre>
        *
-       * <code>string owner = 2;</code>
+       * <code>string owner = 3;</code>
        */
       public Builder setOwnerBytes(
-          com.google.protobuf.ByteString value) {
+          ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -3711,24 +4655,24 @@ public final class Qrecords {
         return this;
       }
 
-      private java.lang.Object schemaUrl_ = "";
+      private Object schemaUrl_ = "";
       /**
        * <pre>
        * The url where the schema is located
        * </pre>
        *
-       * <code>string schemaUrl = 3;</code>
+       * <code>string schemaUrl = 4;</code>
        */
-      public java.lang.String getSchemaUrl() {
-        java.lang.Object ref = schemaUrl_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+      public String getSchemaUrl() {
+        Object ref = schemaUrl_;
+        if (!(ref instanceof String)) {
+          ByteString bs =
+              (ByteString) ref;
+          String s = bs.toStringUtf8();
           schemaUrl_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -3736,19 +4680,19 @@ public final class Qrecords {
        * The url where the schema is located
        * </pre>
        *
-       * <code>string schemaUrl = 3;</code>
+       * <code>string schemaUrl = 4;</code>
        */
-      public com.google.protobuf.ByteString
+      public ByteString
           getSchemaUrlBytes() {
-        java.lang.Object ref = schemaUrl_;
+        Object ref = schemaUrl_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+          ByteString b = 
+              ByteString.copyFromUtf8(
+                  (String) ref);
           schemaUrl_ = b;
           return b;
         } else {
-          return (com.google.protobuf.ByteString) ref;
+          return (ByteString) ref;
         }
       }
       /**
@@ -3756,10 +4700,10 @@ public final class Qrecords {
        * The url where the schema is located
        * </pre>
        *
-       * <code>string schemaUrl = 3;</code>
+       * <code>string schemaUrl = 4;</code>
        */
       public Builder setSchemaUrl(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -3773,7 +4717,7 @@ public final class Qrecords {
        * The url where the schema is located
        * </pre>
        *
-       * <code>string schemaUrl = 3;</code>
+       * <code>string schemaUrl = 4;</code>
        */
       public Builder clearSchemaUrl() {
         
@@ -3786,10 +4730,10 @@ public final class Qrecords {
        * The url where the schema is located
        * </pre>
        *
-       * <code>string schemaUrl = 3;</code>
+       * <code>string schemaUrl = 4;</code>
        */
       public Builder setSchemaUrlBytes(
-          com.google.protobuf.ByteString value) {
+          ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -3800,24 +4744,24 @@ public final class Qrecords {
         return this;
       }
 
-      private java.lang.Object timestamp_ = "";
+      private Object timestamp_ = "";
       /**
        * <pre>
        * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
        * </pre>
        *
-       * <code>string timestamp = 4;</code>
+       * <code>string timestamp = 5;</code>
        */
-      public java.lang.String getTimestamp() {
-        java.lang.Object ref = timestamp_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+      public String getTimestamp() {
+        Object ref = timestamp_;
+        if (!(ref instanceof String)) {
+          ByteString bs =
+              (ByteString) ref;
+          String s = bs.toStringUtf8();
           timestamp_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -3825,19 +4769,19 @@ public final class Qrecords {
        * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
        * </pre>
        *
-       * <code>string timestamp = 4;</code>
+       * <code>string timestamp = 5;</code>
        */
-      public com.google.protobuf.ByteString
+      public ByteString
           getTimestampBytes() {
-        java.lang.Object ref = timestamp_;
+        Object ref = timestamp_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+          ByteString b = 
+              ByteString.copyFromUtf8(
+                  (String) ref);
           timestamp_ = b;
           return b;
         } else {
-          return (com.google.protobuf.ByteString) ref;
+          return (ByteString) ref;
         }
       }
       /**
@@ -3845,10 +4789,10 @@ public final class Qrecords {
        * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
        * </pre>
        *
-       * <code>string timestamp = 4;</code>
+       * <code>string timestamp = 5;</code>
        */
       public Builder setTimestamp(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -3862,7 +4806,7 @@ public final class Qrecords {
        * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
        * </pre>
        *
-       * <code>string timestamp = 4;</code>
+       * <code>string timestamp = 5;</code>
        */
       public Builder clearTimestamp() {
         
@@ -3875,10 +4819,10 @@ public final class Qrecords {
        * Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted (Example: 1972-01-01T10:00:20.021Z07:00).
        * </pre>
        *
-       * <code>string timestamp = 4;</code>
+       * <code>string timestamp = 5;</code>
        */
       public Builder setTimestampBytes(
-          com.google.protobuf.ByteString value) {
+          ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -3889,20 +4833,20 @@ public final class Qrecords {
         return this;
       }
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+          final UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+          final UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
 
-      // @@protoc_insertion_point(builder_scope:qrecords.QRecordHeader)
+      // @@protoc_insertion_point(builder_scope:com.axoom.qrecords.QRecordHeader)
     }
 
-    // @@protoc_insertion_point(class_scope:qrecords.QRecordHeader)
+    // @@protoc_insertion_point(class_scope:com.axoom.qrecords.QRecordHeader)
     private static final Qrecords.QRecordHeader DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new Qrecords.QRecordHeader();
@@ -3912,22 +4856,22 @@ public final class Qrecords {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<QRecordHeader>
-        PARSER = new com.google.protobuf.AbstractParser<QRecordHeader>() {
+    private static final Parser<QRecordHeader>
+        PARSER = new AbstractParser<QRecordHeader>() {
       public QRecordHeader parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+          CodedInputStream input,
+          ExtensionRegistryLite extensionRegistry)
+          throws InvalidProtocolBufferException {
         return new QRecordHeader(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<QRecordHeader> parser() {
+    public static Parser<QRecordHeader> parser() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.google.protobuf.Parser<QRecordHeader> getParserForType() {
+    @Override
+    public Parser<QRecordHeader> getParserForType() {
       return PARSER;
     }
 
@@ -3937,100 +4881,110 @@ public final class Qrecords {
 
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_qrecords_RecordStreamRequest_descriptor;
+  private static final Descriptor
+    internal_static_com_axoom_qrecords_RecordStreamRequest_descriptor;
   private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_qrecords_RecordStreamRequest_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_qrecords_RecordRequest_descriptor;
+    GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_axoom_qrecords_RecordStreamRequest_fieldAccessorTable;
+  private static final Descriptor
+    internal_static_com_axoom_qrecords_RecordRequest_descriptor;
   private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_qrecords_RecordRequest_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_qrecords_RecordListRequest_descriptor;
+    GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_axoom_qrecords_RecordRequest_fieldAccessorTable;
+  private static final Descriptor
+    internal_static_com_axoom_qrecords_RecordListRequest_descriptor;
   private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_qrecords_RecordListRequest_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_qrecords_QRecord_descriptor;
+    GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_axoom_qrecords_RecordListRequest_fieldAccessorTable;
+  private static final Descriptor
+    internal_static_com_axoom_qrecords_QRecord_descriptor;
   private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_qrecords_QRecord_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_qrecords_QRecordHeader_descriptor;
+    GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_axoom_qrecords_QRecord_fieldAccessorTable;
+  private static final Descriptor
+    internal_static_com_axoom_qrecords_QRecordHeader_descriptor;
   private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_qrecords_QRecordHeader_fieldAccessorTable;
+    GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_axoom_qrecords_QRecordHeader_fieldAccessorTable;
 
-  public static com.google.protobuf.Descriptors.FileDescriptor
+  public static FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static  FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
-      "\n\016qrecords.proto\022\010qrecords\"A\n\023RecordStre" +
-      "amRequest\022\031\n\021dataCompositionId\030\001 \001(\t\022\017\n\007" +
-      "timeout\030\002 \001(\r\"*\n\rRecordRequest\022\031\n\021dataCo" +
-      "mpositionId\030\001 \001(\t\"W\n\021RecordListRequest\022\031" +
-      "\n\021dataCompositionId\030\001 \001(\t\022\014\n\004from\030\002 \001(\t\022" +
-      "\n\n\002to\030\003 \001(\t\022\r\n\005limit\030\004 \001(\005\"D\n\007QRecord\022(\n" +
-      "\007headers\030\001 \001(\0132\027.qrecords.QRecordHeader\022" +
-      "\017\n\007payload\030\002 \001(\014\"_\n\rQRecordHeader\022\031\n\021dat" +
-      "aCompositionId\030\001 \001(\t\022\r\n\005owner\030\002 \001(\t\022\021\n\ts" +
-      "chemaUrl\030\003 \001(\t\022\021\n\ttimestamp\030\004 \001(\t2\221\002\n\010QR" +
-      "ecords\022?\n\tGetStream\022\035.qrecords.RecordStr" +
-      "eamRequest\032\021.qrecords.QRecord0\001\022=\n\017GetMa" +
-      "terialized\022\027.qrecords.RecordRequest\032\021.qr" +
-      "ecords.QRecord\022B\n\016ListHistorical\022\033.qreco" +
-      "rds.RecordListRequest\032\021.qrecords.QRecord" +
-      "0\001\022A\n\023GetLatestHistorical\022\027.qrecords.Rec" +
-      "ordRequest\032\021.qrecords.QRecordb\006proto3"
+    String[] descriptorData = {
+      "\n\016qrecords.proto\022\022com.axoom.qrecords\032\037go" +
+      "ogle/protobuf/timestamp.proto\"|\n\023RecordS" +
+      "treamRequest\022\017\n\007groupId\030\001 \001(\t\022\031\n\021dataCom" +
+      "positionId\030\002 \001(\t\022(\n\004from\030\003 \001(\0132\032.google." +
+      "protobuf.Timestamp\022\017\n\007timeout\030\004 \001(\r\"*\n\rR" +
+      "ecordRequest\022\031\n\021dataCompositionId\030\001 \001(\t\"" +
+      "\241\001\n\021RecordListRequest\022\020\n\010clientId\030\001 \001(\t\022" +
+      "\031\n\021dataCompositionId\030\002 \001(\t\022(\n\004from\030\003 \001(\013" +
+      "2\032.google.protobuf.Timestamp\022&\n\002to\030\004 \001(\013" +
+      "2\032.google.protobuf.Timestamp\022\r\n\005limit\030\005 " +
+      "\001(\005\"N\n\007QRecord\0222\n\007headers\030\001 \001(\0132!.com.ax" +
+      "oom.qrecords.QRecordHeader\022\017\n\007payload\030\002 " +
+      "\001(\014\"q\n\rQRecordHeader\022\020\n\010recordId\030\001 \001(\t\022\031" +
+      "\n\021dataCompositionId\030\002 \001(\t\022\r\n\005owner\030\003 \001(\t" +
+      "\022\021\n\tschemaUrl\030\004 \001(\t\022\021\n\ttimestamp\030\005 \001(\t2\341" +
+      "\002\n\010QRecords\022S\n\tGetStream\022\'.com.axoom.qre" +
+      "cords.RecordStreamRequest\032\033.com.axoom.qr" +
+      "ecords.QRecord0\001\022Q\n\017GetMaterialized\022!.co" +
+      "m.axoom.qrecords.RecordRequest\032\033.com.axo" +
+      "om.qrecords.QRecord\022V\n\016ListHistorical\022%." +
+      "com.axoom.qrecords.RecordListRequest\032\033.c" +
+      "om.axoom.qrecords.QRecord0\001\022U\n\023GetLatest" +
+      "Historical\022!.com.axoom.qrecords.RecordRe" +
+      "quest\032\033.com.axoom.qrecords.QRecordb\006prot" +
+      "o3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
+    FileDescriptor.InternalDescriptorAssigner assigner =
+        new FileDescriptor.    InternalDescriptorAssigner() {
+          public ExtensionRegistry assignDescriptors(
+              FileDescriptor root) {
             descriptor = root;
             return null;
           }
         };
-    com.google.protobuf.Descriptors.FileDescriptor
+    FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
+        new FileDescriptor[] {
+          TimestampProto.getDescriptor(),
         }, assigner);
-    internal_static_qrecords_RecordStreamRequest_descriptor =
+    internal_static_com_axoom_qrecords_RecordStreamRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_qrecords_RecordStreamRequest_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_qrecords_RecordStreamRequest_descriptor,
-        new java.lang.String[] { "DataCompositionId", "Timeout", });
-    internal_static_qrecords_RecordRequest_descriptor =
+    internal_static_com_axoom_qrecords_RecordStreamRequest_fieldAccessorTable = new
+      GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_axoom_qrecords_RecordStreamRequest_descriptor,
+        new String[] { "GroupId", "DataCompositionId", "From", "Timeout", });
+    internal_static_com_axoom_qrecords_RecordRequest_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_qrecords_RecordRequest_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_qrecords_RecordRequest_descriptor,
-        new java.lang.String[] { "DataCompositionId", });
-    internal_static_qrecords_RecordListRequest_descriptor =
+    internal_static_com_axoom_qrecords_RecordRequest_fieldAccessorTable = new
+      GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_axoom_qrecords_RecordRequest_descriptor,
+        new String[] { "DataCompositionId", });
+    internal_static_com_axoom_qrecords_RecordListRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_qrecords_RecordListRequest_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_qrecords_RecordListRequest_descriptor,
-        new java.lang.String[] { "DataCompositionId", "From", "To", "Limit", });
-    internal_static_qrecords_QRecord_descriptor =
+    internal_static_com_axoom_qrecords_RecordListRequest_fieldAccessorTable = new
+      GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_axoom_qrecords_RecordListRequest_descriptor,
+        new String[] { "ClientId", "DataCompositionId", "From", "To", "Limit", });
+    internal_static_com_axoom_qrecords_QRecord_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_qrecords_QRecord_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_qrecords_QRecord_descriptor,
-        new java.lang.String[] { "Headers", "Payload", });
-    internal_static_qrecords_QRecordHeader_descriptor =
+    internal_static_com_axoom_qrecords_QRecord_fieldAccessorTable = new
+      GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_axoom_qrecords_QRecord_descriptor,
+        new String[] { "Headers", "Payload", });
+    internal_static_com_axoom_qrecords_QRecordHeader_descriptor =
       getDescriptor().getMessageTypes().get(4);
-    internal_static_qrecords_QRecordHeader_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_qrecords_QRecordHeader_descriptor,
-        new java.lang.String[] { "DataCompositionId", "Owner", "SchemaUrl", "Timestamp", });
+    internal_static_com_axoom_qrecords_QRecordHeader_fieldAccessorTable = new
+      GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_axoom_qrecords_QRecordHeader_descriptor,
+        new String[] { "RecordId", "DataCompositionId", "Owner", "SchemaUrl", "Timestamp", });
+    TimestampProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)
