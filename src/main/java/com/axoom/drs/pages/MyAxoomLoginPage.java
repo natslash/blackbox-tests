@@ -27,10 +27,10 @@ public class MyAxoomLoginPage extends WebDriverPage {
 
   private String inputEmailFieldId = "Input_Email";
   private String inputPasswordFieldId = "Input_Password";
-  private String loginButtonId = "button-login";  
+  private String loginButtonId = "button-login";
 
   public MyAxoomLoginPage(WebDriver driver) {
-    super(driver);    
+    super(driver);
   }
 
   public void loginToMyAxoom(String email, String password) {
@@ -89,7 +89,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
     if (response.statusCode() == 200) {
       JsonPath jsonPathEvaluator = response.jsonPath();
       return jsonPathEvaluator.get("access_token");
-    }
-    return response.asString();
+    } else
+      return response.asString();
   }
 }

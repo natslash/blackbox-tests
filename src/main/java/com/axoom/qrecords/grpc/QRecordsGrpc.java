@@ -190,7 +190,7 @@ public final class QRecordsGrpc {
 
   /**
    */
-  public static abstract class QRecordsImplBase implements io.grpc.BindableService {
+  public static abstract class QRecordsImplBase implements BindableService {
 
     /**
      * <pre>
