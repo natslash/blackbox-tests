@@ -1,10 +1,12 @@
-package com.axoom.qrecords.grpc;
+package axoom.records.v1;
 
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.axoom.qrecords.Qrecords;
+import axoom.records.v1.QRecordsGrpc;
+import axoom.records.v1.Qrecords;
+import axoom.records.v1.Records.Record;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
@@ -17,10 +19,8 @@ public class QrecordsClient {
 
   /** Construct client connecting to Qrecords server at {@code host:port}. */
   public QrecordsClient(String host, int port) {
-    this(ManagedChannelBuilder.forAddress(host, port)
-        // Channels are secure by default (via SSL/TLS). For the example we disable TLS to avoid
-        // needing certificates.
-        .usePlaintext().build());    
+    this(ManagedChannelBuilder.forAddress(host, port).build());        
+        
   }
 
   /** Construct client for accessing Qrecords server using the existing channel. */
@@ -37,7 +37,7 @@ public class QrecordsClient {
   public void getRecordStream() {
 
     Qrecords.RecordStreamRequest request = Qrecords.RecordStreamRequest.newBuilder().build();
-    Iterator<Qrecords.QRecord> response;
+    Iterator<Record> response;
     try {
       response = blockingStub.getStream(request);
       while (response.hasNext()) {
