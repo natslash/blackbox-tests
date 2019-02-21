@@ -12,9 +12,7 @@ public class RestUtils {
   public static RequestSpecification prepareRequest(Map<String, String> requestParams) {
     
     String clientId = requestParams.get("clientId");
-    String secret = requestParams.get("secret");
-    String redirectUri = requestParams.get("redirectUri");
-    String authCode = requestParams.get("authCode");
+    String secret = requestParams.get("secret");    
     String authType = requestParams.get("authType");
     String contentType = requestParams.get("contentType");
     
