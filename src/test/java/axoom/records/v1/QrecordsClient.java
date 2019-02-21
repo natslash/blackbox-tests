@@ -43,7 +43,7 @@ public class QrecordsClient {
     String accessToken = RestUtils.getAccessTokenFromClientCredsFlow(requestParams);
     
     Metadata authHeaders = new Metadata();
-    authHeaders.put(Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER), accessToken);
+    authHeaders.put(Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), accessToken);
     
     blockingStub = MetadataUtils.attachHeaders(QRecordsGrpc.newBlockingStub(channel), authHeaders);
   }
