@@ -8,6 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.axoom.drs.utils.RestUtils;
 import com.google.protobuf.UnknownFieldSet;
+import axoom.records.v1.QRecordsGrpc;
+import axoom.records.v1.Qrecords;
 import axoom.records.v1.Records.Record;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -35,9 +37,9 @@ public class QrecordsClient {
     
     Map<String, String> requestParams = new HashMap<String, String>();
     requestParams.put("baseUrl", "https://account.dev.myaxoom.com/connect/token");
-    requestParams.put("scope", "records-query-scope.read");
-    requestParams.put("clientId", "mvp-records-query-api-test-client");
-    requestParams.put("clientSecret", "supersecret");
+    requestParams.put("scope", "https://apis.axoom.com/scopes/qrecords.read");
+    requestParams.put("clientId", "records-query-api-test-client");
+    requestParams.put("clientSecret", "cutMyLifeIntoPaella");
     requestParams.put("contentType", "application/x-www-form-urlencoded");
     
     String accessToken = RestUtils.getAccessTokenFromClientCredsFlow(requestParams);
@@ -55,7 +57,7 @@ public class QrecordsClient {
 
   public void getRecordStream() {     
     Qrecords.RecordStreamRequest request = Qrecords.RecordStreamRequest.newBuilder().setGroupId("1")
-        .setDataCompositionId("1").setTimeout(1).build();
+        .setDataCompositionId("dc-b33a683812494b65aa8e036ed64adcc6").setTimeout(1).build();
     Iterator<Record> response;
     try {
       response = blockingStub.getStream(request);
@@ -66,7 +68,8 @@ public class QrecordsClient {
       logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
       return;
     }
-  }
+  }  
+  
 
   public static void main(String[] args) throws Exception {
     QrecordsClient client = new QrecordsClient("qrecords.dev.myaxoom.com", 443);

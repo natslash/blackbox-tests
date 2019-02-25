@@ -40,7 +40,7 @@ public class RestUtils {
       return jsonPathEvaluator.get("access_token");
     }
     else
-      return null;
+      return response.getBody().prettyPrint();
     
   }
   

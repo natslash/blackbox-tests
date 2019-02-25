@@ -180,7 +180,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   }
 
   @Test(dependsOnMethods = {"createDeviceTest"})
-  @Description("Get a device´s details using DRS APIs")
+  @Description("Get a device details using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getDeviceDetailsTest() {
 
@@ -274,7 +274,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   }
 
   @Test(dependsOnMethods = {"deleteDeviceTest"})
-  @Description("Get a non existent device´s details using DRS APIs")
+  @Description("Get a non existent device details using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getNonExistentDeviceDetailsTest() {
 
@@ -351,5 +351,4 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     JsonArray responseJson = (JsonArray) parser.parse(response.asString());
     return responseJson.size() ;
   }
-
 }
