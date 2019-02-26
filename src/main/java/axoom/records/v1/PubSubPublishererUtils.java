@@ -20,7 +20,7 @@ import com.google.pubsub.v1.ReceivedMessage;
  * A snippet for Google Cloud Pub/Sub showing how to create a Pub/Sub topic and asynchronously
  * publish messages to it.
  */
-public class CreateTopicAndPublishMessages {
+public class PubSubPublishererUtils {
 
   public static void createTopic() throws Exception {
     ProjectTopicName topic = ProjectTopicName.of("my-project-id", "my-topic-id");
@@ -121,7 +121,7 @@ public class CreateTopicAndPublishMessages {
 
   public static void main(String... args) throws Exception {    
     publishMessages("mvp-iotcore-eval", "blackboxtest01");
-    List<ReceivedMessage> receivedMessages = SubscriberSnippets.synchronousPull("mvp-iotcore-eval", "blackboxtest01-shovel", 2);
+    List<ReceivedMessage> receivedMessages = PubSubSubscriberUtils.synchronousPull("mvp-iotcore-eval", "blackboxtest01-shovel", 2);
     for (ReceivedMessage receivedMessage : receivedMessages) {
       System.out.println(receivedMessage.getMessage().getData().toStringUtf8());
     }

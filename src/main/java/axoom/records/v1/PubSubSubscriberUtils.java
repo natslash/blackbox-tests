@@ -28,7 +28,7 @@ import com.google.pubsub.v1.PullResponse;
 import com.google.pubsub.v1.ReceivedMessage;
 
 /** This class contains snippets for the {@link Subscriber} interface. */
-public class SubscriberSnippets {
+public class PubSubSubscriberUtils {
 
   private final ProjectSubscriptionName subscriptionName;
 
@@ -36,7 +36,7 @@ public class SubscriberSnippets {
 
   private final ApiFuture<Void> done;
 
-  public SubscriberSnippets(ProjectSubscriptionName subscriptionName, MessageReceiver receiver,
+  public PubSubSubscriberUtils(ProjectSubscriptionName subscriptionName, MessageReceiver receiver,
       ApiFuture<Void> done) {
     this.subscriptionName = subscriptionName;
     this.receiver = receiver;
@@ -103,7 +103,7 @@ public class SubscriberSnippets {
     // [END pubsub_subscriber_async_pull]
   }
 
-  private Subscriber createSubscriberWithErrorListener(Subscriber subscriber) throws Exception {
+  public Subscriber createSubscriberWithErrorListener(Subscriber subscriber) throws Exception {
     // [START pubsub_subscriber_error_listener]
     subscriber.addListener(new Subscriber.Listener() {
       public void failed(Subscriber.State from, Throwable failure) {
@@ -114,7 +114,7 @@ public class SubscriberSnippets {
     return subscriber;
   }
 
-  private Subscriber createSingleThreadedSubscriber() throws Exception {
+  public Subscriber createSingleThreadedSubscriber() throws Exception {
     // [START pubsub_subscriber_concurrency_control]
     // provide a separate executor service for polling
     ExecutorProvider executorProvider =
@@ -126,7 +126,7 @@ public class SubscriberSnippets {
     return subscriber;
   }
 
-  private Subscriber createSubscriberWithCustomFlowSettings() throws Exception {
+  public Subscriber createSubscriberWithCustomFlowSettings() throws Exception {
     // [START pubsub_subscriber_flow_settings]
     FlowControlSettings flowControlSettings =
         FlowControlSettings.newBuilder().setMaxOutstandingElementCount(10_000L)
@@ -137,7 +137,7 @@ public class SubscriberSnippets {
     return subscriber;
   }
 
-  private Subscriber createSubscriberWithCustomCredentials() throws Exception {
+  public Subscriber createSubscriberWithCustomCredentials() throws Exception {
     // [START pubsub_subscriber_custom_credentials]
     CredentialsProvider credentialsProvider = FixedCredentialsProvider
         .create(ServiceAccountCredentials.fromStream(new FileInputStream("credentials.json")));

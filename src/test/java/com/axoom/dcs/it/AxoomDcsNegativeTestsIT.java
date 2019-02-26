@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -16,6 +18,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.drs.pages.MyAxoomLoginPage;
 import com.axoom.talos.framework.WebDriverTest;
+import axoom.records.v1.QrecordsClient;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -42,6 +45,7 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
   private String baseUri;
   private WebDriver driver;
   private Map<String, String> requestParams = new HashMap<>();
+  private static final Logger logger = Logger.getLogger(AxoomDcsNegativeTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass() {
@@ -133,7 +137,7 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
 
     System.out.println(request.log().all(true));
     Response response = request.get();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 404,
         "Expected status code is 404 but the status is: " + response.statusCode());
 

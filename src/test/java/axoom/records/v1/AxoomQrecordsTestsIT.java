@@ -78,5 +78,26 @@ public class AxoomQrecordsTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
   }
+  
+  @Test
+  @Description("Get QRecords from getStream")
+  @Severity(SeverityLevel.BLOCKER)
+  public void getPubSubRecordsFromTest() {
+    int count = 0;
+    try {
+      Iterator<Record> qRecords = client.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
+      while (qRecords.hasNext()) {
+        
+        System.out.println(qRecords.next().getPayload().toStringUtf8());
+        count++;
+        System.out.println("Current count is: " + count);
+      }
+      System.out.println("Number of Records " + count);
+      client.shutdown();
+    } catch (InterruptedException e) {
+      Assert.fail("Error occurred!");
+      e.printStackTrace();
+    }
+  }
 
 }
