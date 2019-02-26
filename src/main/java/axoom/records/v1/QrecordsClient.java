@@ -7,9 +7,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.axoom.drs.utils.RestUtils;
-import com.google.protobuf.UnknownFieldSet;
-import axoom.records.v1.QRecordsGrpc;
-import axoom.records.v1.Qrecords;
 import axoom.records.v1.Records.Record;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -55,28 +52,16 @@ public class QrecordsClient {
   }
 
 
-  public void getRecordStream() {     
+  public Iterator<Record> getRecordStream(String dataCompositionId) {     
     Qrecords.RecordStreamRequest request = Qrecords.RecordStreamRequest.newBuilder().setGroupId("1")
-        .setDataCompositionId("dc-b33a683812494b65aa8e036ed64adcc6").setTimeout(1).build();
-    Iterator<Record> response;
+        .setDataCompositionId(dataCompositionId).setTimeout(5).build();
+    
     try {
-      response = blockingStub.getStream(request);
-      while (response.hasNext()) {
-        System.out.println(response.next().getPayload());
-      }
+      return blockingStub.getStream(request);         
     } catch (StatusRuntimeException e) {
       logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
-      return;
+      return null;
     }
   }  
   
-
-  public static void main(String[] args) throws Exception {
-    QrecordsClient client = new QrecordsClient("qrecords.dev.myaxoom.com", 443);
-    try {
-      client.getRecordStream();
-    } finally {
-      client.shutdown();
-    }
-  }
 }

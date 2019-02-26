@@ -58,7 +58,7 @@ public class AxoomKafkaConsumer {
     consumer.close();
     watch.stop();
     System.out.println("DONE");    
-    System.out.println("Time elapsed to consume" + numOfRecords + " events: " + watch.getTime(TimeUnit.SECONDS) + " seconds.");
+    System.out.println("Time elapsed to consume " + numOfRecords + " events: " + watch.getTime(TimeUnit.SECONDS) + " seconds.");
     return numOfRecords;
   }
 }

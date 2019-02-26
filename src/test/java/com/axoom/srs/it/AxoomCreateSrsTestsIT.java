@@ -368,7 +368,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
         "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint() + "\nxxxxxxxxxxxxxxxxxxx\n");
     // String nameErrorMsg = response.getBody().jsonPath().getString("Schema");
     Assert.assertTrue(
-        response.getBody().asString().contains("Input schema is an invalid Avro schema"));
+        response.getBody().asString().contains("Invalid Avro schema"));
     Assert.assertTrue(response.statusCode() == 422,
         "Expected Status code is 400, but the actual status code is: " + response.statusCode());
   }
