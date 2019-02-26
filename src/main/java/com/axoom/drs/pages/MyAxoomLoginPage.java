@@ -84,7 +84,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
         .formParam("client_id", clientId).formParam("redirect_uri", redirectUri);
     request.header("Content-Type", contentType);
     request.header("Authorization", authType + " " + authValuesEncoded);
-
+    System.out.println(request.log().all().toString());
     Response response = request.post();
     if (response.statusCode() == 200) {
       JsonPath jsonPathEvaluator = response.jsonPath();
