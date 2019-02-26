@@ -113,8 +113,7 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
       requestParams.put("contentType", "application/x-www-form-urlencoded");
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
       context.setAttribute("accessToken", accessToken);
-      Reporter.log("Access Token Obtained: " + accessToken);
-      System.out.println(accessToken);
+      Reporter.log("Access Token Obtained: " + accessToken);      
       Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
 
     } catch (URISyntaxException e) {
@@ -135,7 +134,7 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.get();
     logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 404,
