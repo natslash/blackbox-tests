@@ -81,9 +81,8 @@ public class MyAxoomLoginPage extends WebDriverPage {
     String authValues = (clientId + ":" + secret);
     String authValuesEncoded = new String(Base64.getEncoder().encode((authValues.getBytes())));
     request.formParam("code", authCode).formParam("grant_type", "authorization_code")
-        .formParam("client_id", clientId).formParam("redirect_uri", redirectUri);
-    request.header("Content-Type", contentType);
-    request.header("Authorization", authType + " " + authValuesEncoded);
+        .formParam("client_id", clientId).formParam("redirect_uri", redirectUri).formParam("client_secret", secret);
+    request.header("Content-Type", contentType);    
     System.out.println(request.log().all().toString());
     Response response = request.post();
     if (response.statusCode() == 200) {
