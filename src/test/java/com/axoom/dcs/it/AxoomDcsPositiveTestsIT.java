@@ -132,7 +132,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   @Description("Create a Data Compositiion using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDataCompositionTest(ITestContext context) {
-
+    logger.log(Level.INFO, "Auth Code: " + authCode);
     // get total number of data compositions in the registry before creation of data composition
     numOfDataCompositions = getNumberOfDataCompositions();
 
@@ -152,14 +152,14 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     RestAssured.baseURI = baseUri + dcs_endpoint;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
-
+    logger.log(Level.INFO, "Auth Code: " + authCode);
     request.header("Content-Type", "application/json");
     request.header("authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post("/");
     if (response.statusCode() == 201) {
-      System.out.println(response.then().log().all(true));
+      logger.log(Level.INFO, response.then().log().all(true).toString());
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       dataCompositionId = response.getBody().jsonPath().getString("id");
@@ -171,7 +171,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createDataCompositionTest"})
   @Description("Verify creating an empty Data Composition using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createEmptySchemaTest() {
@@ -191,14 +191,14 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     RestAssured.baseURI = baseUri + dcs_endpoint;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
-
+    logger.log(Level.INFO, "Auth Code: " + authCode);
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post("/");
     if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
+      logger.log(Level.INFO, response.then().log().all(true).toString());
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       String responseString = response.getBody().asString();      
@@ -207,7 +207,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createDataCompositionTest"})
   @Description("Verify creating a data composition with no name using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDataCompositionWithNoNameTest() {
@@ -243,7 +243,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createDataCompositionTest"})
   @Description("Verify creating a data composition with no schema subject using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDataCompositionWithNoschemaIdTest() {
@@ -397,7 +397,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     RestAssured.baseURI = baseUri + dcs_endpoint;
     logger.log(Level.INFO, "-------------getNumberOfDataCompositions-------------\n" + RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
-    
+    request.formParam("code", authCode);
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
     logger.log(Level.INFO, request.log().all(true).toString());    
