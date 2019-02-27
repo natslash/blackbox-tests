@@ -19,5 +19,10 @@
      <class name="com.axoom.srs.it.AxoomCreateSrsTestsIT"/>
      <class name="com.axoom.srs.it.AxoomUpdateSrsTestsIT"/>
     </classes>
-  </test> 
+  </test>
+   <test name="gRPC API Integration Tests">
+    <classes>      
+     <class name="axoom.records.v1.AxoomQrecordsTestsIT"/>     
+    </classes>
+  </test>  
 </suite> <!-- Suite -->

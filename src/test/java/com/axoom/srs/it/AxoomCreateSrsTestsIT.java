@@ -117,7 +117,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
       requestParams.put("contentType", "application/x-www-form-urlencoded");
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
       Reporter.log("Access Token Obtained: " + accessToken);
-      System.out.println(accessToken);
+      logger.log(Level.INFO, "Access Token: " + accessToken);
       Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
 
     } catch (URISyntaxException e) {
@@ -171,7 +171,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createSchemaTest"})
   @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createEmptyRequestBodyTest() {
@@ -195,7 +195,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
-    Response response = request.get();    
+    Response response = request.post();    
     logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
     if (response.statusCode() == 400) {
       logger.log(Level.INFO, response.then().log().all(true).toString());
@@ -213,7 +213,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createSchemaTest"})
   @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createSchemaWithNoNameTest() {
@@ -255,7 +255,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createSchemaTest"})
   @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createSchemaWithNullSchemaTest() {
@@ -295,7 +295,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"getNumberOfSchemasTest"})
+  @Test(dependsOnMethods = {"createSchemaTest"})
   @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createSchemaWithNoTypeTest() {
@@ -340,7 +340,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createSchemaTest"})
   @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createSchemaWithInvalidSchemaTest() {
@@ -409,7 +409,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
             + ". total Number of schemas: " + numOfSchemasAfterCreation);
   }  
 
-  @Test
+  //@Test
   @Description("Get a non existent schema´s details using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getNonExistentSchemaDetailsTest() {
