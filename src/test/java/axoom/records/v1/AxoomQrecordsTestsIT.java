@@ -3,6 +3,7 @@ package axoom.records.v1;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -12,7 +13,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
+import com.google.pubsub.v1.ReceivedMessage;
 import axoom.records.v1.Records.Record;
+import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -23,7 +26,7 @@ public class AxoomQrecordsTestsIT extends WebDriverTest {
   private String clientId;
   private String redirectUri;
   private String secret;
-  private String cisUrl;  
+  private String cisUrl;
   QrecordsClient client;
   private Map<String, String> requestParams = new HashMap<>();
 
@@ -36,7 +39,7 @@ public class AxoomQrecordsTestsIT extends WebDriverTest {
     requestParams.put("clientId", clientId);
     requestParams.put("redirectUri", redirectUri);
     requestParams.put("cisUrl", cisUrl);
-    requestParams.put("secret", secret);    
+    requestParams.put("secret", secret);
 
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
@@ -44,7 +47,7 @@ public class AxoomQrecordsTestsIT extends WebDriverTest {
   }
 
   @BeforeMethod
-  public void beforeMethod() {    
+  public void beforeMethod() {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     client = new QrecordsClient("qrecords.dev.myaxoom.com", 443);
@@ -52,7 +55,7 @@ public class AxoomQrecordsTestsIT extends WebDriverTest {
   }
 
   @AfterMethod
-  public void afterMethod(ITestResult testResult) throws IOException {    
+  public void afterMethod(ITestResult testResult) throws IOException {
     Reporter.log("Stopped Test: " + this.getClass().getSimpleName());
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
@@ -61,12 +64,12 @@ public class AxoomQrecordsTestsIT extends WebDriverTest {
   @Test
   @Description("Get QRecords from getStream")
   @Severity(SeverityLevel.BLOCKER)
-  public void getQrecordsForDCTest() {
+  public void getPreProcessedQrecordsForDCTest() {
     int count = 0;
     try {
       Iterator<Record> qRecords = client.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
       while (qRecords.hasNext()) {
-        
+
         System.out.println(qRecords.next().getPayload().toStringUtf8());
         count++;
         System.out.println("Current count is: " + count);
@@ -76,18 +79,31 @@ public class AxoomQrecordsTestsIT extends WebDriverTest {
     } catch (InterruptedException e) {
       Assert.fail("Error occurred!");
       e.printStackTrace();
+    } catch (StatusRuntimeException sre) {
+      if (count >= 2 && sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
+        Assert.assertTrue(true);
+      } else {
+        Assert.fail("Error occurred!");
+        sre.printStackTrace();
+      }
     }
   }
-  
+
   @Test
   @Description("Get QRecords from getStream")
   @Severity(SeverityLevel.BLOCKER)
-  public void getPubSubRecordsFromTest() {
+  public void getPubSubRecordsFromGrpcTest() throws Exception {
+    PubSubPublishererUtils.publishMessages("mvp-iotcore-eval", "blackboxtest01");
+    List<ReceivedMessage> receivedMessages =
+        PubSubSubscriberUtils.synchronousPull("mvp-iotcore-eval", "blackboxtest01-shovel", 2);
+    for (ReceivedMessage receivedMessage : receivedMessages) {
+      System.out.println(receivedMessage.getMessage().getData().toStringUtf8());
+    }
     int count = 0;
     try {
-      Iterator<Record> qRecords = client.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
+      Iterator<Record> qRecords = client.getRecordStream("blackboxtest01");
       while (qRecords.hasNext()) {
-        
+
         System.out.println(qRecords.next().getPayload().toStringUtf8());
         count++;
         System.out.println("Current count is: " + count);
@@ -97,6 +113,13 @@ public class AxoomQrecordsTestsIT extends WebDriverTest {
     } catch (InterruptedException e) {
       Assert.fail("Error occurred!");
       e.printStackTrace();
+    } catch (StatusRuntimeException sre) {
+      if (count == 2 && sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
+        Assert.assertTrue(true);
+      } else {
+        Assert.fail("Error occurred!");
+        sre.printStackTrace();
+      }
     }
   }
 

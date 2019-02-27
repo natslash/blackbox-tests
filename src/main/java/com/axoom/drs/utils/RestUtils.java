@@ -34,14 +34,16 @@ public class RestUtils {
     .formParam("client_id", requestParams.get("clientId")).formParam("client_secret", requestParams.get("clientSecret"));
     
     request.header("Content-Type",requestParams.get("contentType"));
+    try {
     Response response = request.post();
-    if (response.statusCode() == 200) {
+    
       JsonPath jsonPathEvaluator = response.jsonPath();
       return jsonPathEvaluator.get("access_token");
-    }
-    else
-      return response.getBody().prettyPrint();
-    
+    }catch (Exception e) {
+      System.out.println(e.getMessage());
+      e.printStackTrace();
+      return null;
+    }    
   }
   
   public static void main(String[] args) {   
