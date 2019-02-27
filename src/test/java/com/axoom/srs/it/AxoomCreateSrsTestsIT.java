@@ -157,8 +157,9 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.post("/");
+    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
+    Response response = request.post();    
+    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
     if (response.statusCode() == 201) {
       System.out.println(response.then().log().all(true));
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
@@ -193,8 +194,9 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.post("/");
+    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
+    Response response = request.get();    
+    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
     if (response.statusCode() == 400) {
       logger.log(Level.INFO, response.then().log().all(true).toString());
       logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
@@ -364,9 +366,9 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.post();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
+    Response response = request.post();    
+    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
     System.out.println(
         "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint() + "\nxxxxxxxxxxxxxxxxxxx\n");
     // String nameErrorMsg = response.getBody().jsonPath().getString("Schema");
