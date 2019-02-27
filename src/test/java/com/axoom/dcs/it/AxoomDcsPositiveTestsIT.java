@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -49,6 +51,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   private WebDriver driver;
   private int numOfDataCompositions;
   private Map<String, String> requestParams = new HashMap<>();
+  private static final Logger logger = Logger.getLogger(AxoomDcsPositiveTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass() {
@@ -152,7 +155,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
+    request.header("authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
     Response response = request.post("/");
@@ -398,10 +401,10 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
 
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
-
+    logger.log(Level.INFO, request.log().all(true).toString());
     System.out.println(request.log().all(true));
-    Response response = request.get();
-    System.out.println(response.then().log().all(true));
+    Response response = request.get();    
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
     JsonParser parser = new JsonParser();
