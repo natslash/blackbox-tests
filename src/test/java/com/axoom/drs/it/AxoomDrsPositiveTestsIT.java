@@ -344,10 +344,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
-    logger.log(Level.INFO, request.log().all(true).toString());
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());    
     Response response = request.get("/");
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
     JsonParser parser = new JsonParser();

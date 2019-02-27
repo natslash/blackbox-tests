@@ -102,8 +102,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void myAxoomLoginTest(ITestContext context) throws InterruptedException {    
     
-     String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
-     
+    String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
     try {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
           .addParameter("client_id", clientId).addParameter("redirect_uri", redirectUri)
@@ -111,7 +110,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       System.out.println(loginUrl);
       getDriver().get(loginUrl.toString());
       myAxoomLoginPage = initPage(driver, MyAxoomLoginPage.class);
-      myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);      
+      myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);
       authCode = myAxoomLoginPage.selectTenantAndReturnAuthCode(tenantId);
       Reporter.log("Logged into My Axoom");
 
@@ -398,12 +397,12 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     RestAssured.baseURI = baseUri + dcs_endpoint;
     logger.log(Level.INFO, "-------------getNumberOfDataCompositions-------------\n" + RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
-    request.formParam("grant_type", "authorization_code");
-    request.header("Content-Type", "application/json");    
+    
+    request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
-    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true));    
-    Response response = request.get();    
-    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
+    logger.log(Level.INFO, request.log().all(true).toString());    
+    Response response = request.get("/");
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
     JsonParser parser = new JsonParser();
