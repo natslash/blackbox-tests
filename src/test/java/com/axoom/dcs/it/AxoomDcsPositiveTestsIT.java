@@ -398,7 +398,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     RestAssured.baseURI = baseUri + dcs_endpoint;
     logger.log(Level.INFO, "-------------getNumberOfDataCompositions-------------\n" + RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
-
+    request.formParam("grant_type", "authorization_code");
     request.header("Content-Type", "application/json");    
     request.header("Authorization", "Bearer " + accessToken);
     logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true));    

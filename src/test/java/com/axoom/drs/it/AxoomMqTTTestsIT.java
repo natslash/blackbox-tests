@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -51,6 +53,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
   private String serverAddress;
   private WebDriver driver;
   private Map<String, String> requestParams = new HashMap<>();
+  private static final Logger logger = Logger.getLogger(AxoomMqTTTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass() {
@@ -102,9 +105,9 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true));
     Response response = request.delete("/");
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 204,
         "Expected status code is 204 but the status is: " + response.statusCode());
 
@@ -207,13 +210,13 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     String[] args = {"-project_id=" + projectId, "-registry_id=" + tenantId,
         "-cloud_region=" + providerRegion, "-device_id=" + deviceId,
         "-private_key_file=" + privateKeyFilePath, "-algorithm=ES256"};
-    String topic =  tenantId + "-processed";
-    
+    String topic = tenantId + "-processed";
+
     try {
       MqttExample.main(args);
       int numOfRecords = AxoomKafkaConsumer.runConsumer(topic, serverAddress);
       Assert.assertTrue(numOfRecords >= 5, "Number of Records is less than the records sent");
-    } catch (Exception e) {      
+    } catch (Exception e) {
       Assert.fail("Sending message failed" + "\n" + e.getMessage());
     }
   }

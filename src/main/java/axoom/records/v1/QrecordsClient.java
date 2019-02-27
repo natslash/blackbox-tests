@@ -36,7 +36,7 @@ public class QrecordsClient {
     requestParams.put("baseUrl", "https://account.dev.myaxoom.com/connect/token");
     requestParams.put("scope", "https://apis.axoom.com/scopes/qrecords.read");
     requestParams.put("clientId", "records-query-api-test-client");
-    requestParams.put("clientSecret", "cutMyLifeIntoPaella");
+    requestParams.put("clientSecret", System.getenv("QREC_SECRET"));
     requestParams.put("contentType", "application/x-www-form-urlencoded");
     
     String accessToken = RestUtils.getAccessTokenFromClientCredsFlow(requestParams);
