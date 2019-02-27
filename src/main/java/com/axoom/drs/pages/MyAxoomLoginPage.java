@@ -79,7 +79,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
     String cisUrl = requestParams.get("cisUrl");
 
     RestAssured.baseURI = cisUrl + "/connect/token";
-    logger.log(Level.INFO, "-------------getAccessToken-------------\n" + RestAssured.baseURI);
+    logger.log(Level.INFO, "-------------Begin getAccessToken-------------\n" + RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
     String authValues = (clientId + ":" + secret);
     String authValuesEncoded = new String(Base64.getEncoder().encode((authValues.getBytes())));
@@ -90,10 +90,11 @@ public class MyAxoomLoginPage extends WebDriverPage {
     
     Response response = request.post();
     logger.log(Level.INFO, response.then().log().all(true).toString());
+    logger.log(Level.INFO, "-------------End getAccessToken-------------\n");
     if (response.statusCode() == 200) {
       JsonPath jsonPathEvaluator = response.jsonPath();
       return jsonPathEvaluator.get("access_token");
     } else
-      return response.asString();
+      return response.asString();    
   }
 }

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -47,6 +49,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
   private WebDriver driver;
   private int numOfSchemas;
   private Map<String, String> requestParams = new HashMap<>();
+  private static final Logger logger = Logger.getLogger(AxoomCreateSrsTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass() {
@@ -193,8 +196,8 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     System.out.println(request.log().all(true));
     Response response = request.post("/");
     if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       String nameErrorMsg = response.getBody().jsonPath().getString("Name");
       String schemaErrorMsg = response.getBody().jsonPath().getString("Schema");
@@ -443,6 +446,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
   }
 
   public int getNumberOfSchemas() {
+    logger.log(Level.INFO, "-------------getNumberOfSchemas-------------\n" + RestAssured.baseURI);
     RestAssured.baseURI = baseUri + srs_endpoint;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
@@ -450,9 +454,9 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
-    Response response = request.get("/");
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
+    Response response = request.get();    
+    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
     JsonParser parser = new JsonParser();
