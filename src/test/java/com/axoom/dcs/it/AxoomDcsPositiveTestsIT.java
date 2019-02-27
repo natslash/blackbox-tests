@@ -62,10 +62,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     redirectUri = System.getenv("DCS_REDIRECT_URI");
     scope = System.getenv("DCS_SCOPES");
     cisUrl = System.getenv("CIS_URL");
-    secret = System.getenv("SECRET");
-    authCode = null;
-    accessToken = null;
-    dataCompositionId = null;
+    secret = System.getenv("SECRET");    
     dcs_endpoint = System.getenv("DCS_API");
     baseUri = "https://data-composition-service.dev.myaxoom.com";
     numOfDataCompositions = 0;
@@ -101,7 +98,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   @Description("Perform Login UI test to get access token for API tests")
   @Severity(SeverityLevel.BLOCKER)
   public void myAxoomLoginTest(ITestContext context) throws InterruptedException {    
-    
+    logger.log(Level.INFO, "----------------Begin myAxoomLoginTest----------------");
     String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
     try {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
@@ -113,7 +110,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);
       authCode = myAxoomLoginPage.selectTenantAndReturnAuthCode(tenantId);
       Reporter.log("Logged into My Axoom");
-
+      logger.log(Level.INFO, "Auth Code: " + authCode);
       requestParams.put("authCode", authCode);
       requestParams.put("authType", "Basic");
       requestParams.put("contentType", "application/x-www-form-urlencoded");
@@ -122,7 +119,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       Reporter.log("Access Token Obtained: " + accessToken);
       System.out.println(accessToken);
       Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
-
+      logger.log(Level.INFO, "----------------End myAxoomLoginTest----------------");
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
