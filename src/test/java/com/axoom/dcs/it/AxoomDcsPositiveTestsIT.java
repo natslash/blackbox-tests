@@ -396,15 +396,14 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
 
   public int getNumberOfDataCompositions() {
     RestAssured.baseURI = baseUri + dcs_endpoint;
-    System.out.println(RestAssured.baseURI);
+    logger.log(Level.INFO, "-------------getNumberOfDataCompositions-------------\n" + RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
-    logger.log(Level.INFO, request.log().all(true).toString());
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
     Response response = request.get();    
-    logger.log(Level.INFO, response.then().log().all(true).toString());
+    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
     JsonParser parser = new JsonParser();

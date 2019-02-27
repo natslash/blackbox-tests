@@ -6,6 +6,8 @@ import java.nio.charset.Charset;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.openqa.selenium.By;
@@ -28,7 +30,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
   private String inputEmailFieldId = "Input_Email";
   private String inputPasswordFieldId = "Input_Password";
   private String loginButtonId = "button-login";
-
+  private static final Logger logger = Logger.getLogger(MyAxoomLoginPage.class.getName());
   public MyAxoomLoginPage(WebDriver driver) {
     super(driver);
   }
@@ -77,14 +79,17 @@ public class MyAxoomLoginPage extends WebDriverPage {
     String cisUrl = requestParams.get("cisUrl");
 
     RestAssured.baseURI = cisUrl + "/connect/token";
+    logger.log(Level.INFO, "-------------getAccessToken-------------\n" + RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
     String authValues = (clientId + ":" + secret);
     String authValuesEncoded = new String(Base64.getEncoder().encode((authValues.getBytes())));
     request.formParam("code", authCode).formParam("grant_type", "authorization_code")
         .formParam("client_id", clientId).formParam("redirect_uri", redirectUri).formParam("client_secret", secret);
-    request.header("Content-Type", contentType);    
-    System.out.println(request.log().all().toString());
+    request.header("Content-Type", contentType);  
+    logger.log(Level.INFO, request.log().all(true).toString());
+    
     Response response = request.post();
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     if (response.statusCode() == 200) {
       JsonPath jsonPathEvaluator = response.jsonPath();
       return jsonPathEvaluator.get("access_token");

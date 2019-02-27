@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -48,6 +50,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   private WebDriver driver;
   private int numOfDevices;
   private Map<String, String> requestParams = new HashMap<>();
+  private static final Logger logger = Logger.getLogger(AxoomDrsPositiveTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass() {
@@ -341,7 +344,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
-
+    logger.log(Level.INFO, request.log().all(true).toString());
     System.out.println(request.log().all(true));
     Response response = request.get("/");
     System.out.println(response.then().log().all(true));
