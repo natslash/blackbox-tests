@@ -54,6 +54,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
     tenantField = getDriver().findElement(By.xpath(tenantXpath));
     clickAndWaitForPageLoad(tenantField, 1);
     String urlWithAuthCode = getDriver().getCurrentUrl();
+    logger.log(Level.INFO, "urlWithAuthCode: " + urlWithAuthCode);
     String authCode = null;
     List<NameValuePair> params;
     try {
