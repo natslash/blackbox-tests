@@ -40,7 +40,7 @@ public class QrecordsClient {
     requestParams.put("contentType", "application/x-www-form-urlencoded");
     
     String accessToken = RestUtils.getAccessTokenFromClientCredsFlow(requestParams);
-    
+    logger.log(Level.INFO, "Access Token: " + accessToken);
     Metadata authHeaders = new Metadata();
     authHeaders.put(Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), accessToken);
     
