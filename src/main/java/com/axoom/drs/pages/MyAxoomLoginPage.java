@@ -2,8 +2,6 @@ package com.axoom.drs.pages;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.Charset;
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -53,8 +51,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
     String tenantXpath = "//button[contains(@formaction, 'tenant=" + tenantId + "')]";
     tenantField = getDriver().findElement(By.xpath(tenantXpath));
     clickAndWaitForPageLoad(tenantField, 1);
-    String urlWithAuthCode = getDriver().getCurrentUrl();
-    logger.log(Level.INFO, "urlWithAuthCode: " + urlWithAuthCode);
+    String urlWithAuthCode = getDriver().getCurrentUrl();    
     String authCode = null;
     List<NameValuePair> params;
     try {
@@ -74,16 +71,13 @@ public class MyAxoomLoginPage extends WebDriverPage {
     String clientId = requestParams.get("clientId");
     String secret = requestParams.get("secret");
     String redirectUri = requestParams.get("redirectUri");
-    String authCode = requestParams.get("authCode");
-    String authType = requestParams.get("authType");
+    String authCode = requestParams.get("authCode");    
     String contentType = requestParams.get("contentType");
     String cisUrl = requestParams.get("cisUrl");
 
     RestAssured.baseURI = cisUrl + "/connect/token";
     logger.log(Level.INFO, "-------------Begin getAccessToken-------------\n" + RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-    String authValues = (clientId + ":" + secret);
-    String authValuesEncoded = new String(Base64.getEncoder().encode((authValues.getBytes())));
+    RequestSpecification request = RestAssured.given();        
     request.formParam("code", authCode).formParam("grant_type", "authorization_code")
         .formParam("client_id", clientId).formParam("redirect_uri", redirectUri).formParam("client_secret", secret);
     request.header("Content-Type", contentType);  

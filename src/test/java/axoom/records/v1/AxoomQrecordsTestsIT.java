@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -29,6 +31,7 @@ public class AxoomQrecordsTestsIT extends WebDriverTest {
   private String cisUrl;
   QrecordsClient client;
   private Map<String, String> requestParams = new HashMap<>();
+  private static final Logger logger = Logger.getLogger(AxoomQrecordsTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass() {
@@ -44,6 +47,7 @@ public class AxoomQrecordsTestsIT extends WebDriverTest {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
+    logger.log(Level.INFO, "Working Directory = " + System.getProperty("user.dir"));
   }
 
   @BeforeMethod
