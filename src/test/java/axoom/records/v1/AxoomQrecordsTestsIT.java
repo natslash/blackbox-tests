@@ -29,7 +29,7 @@ public class AxoomQrecordsTestsIT extends WebDriverTest {
   private String redirectUri;
   private String secret;
   private String cisUrl;
-  QrecordsClient client;
+  private QrecordsClient client;
   private Map<String, String> requestParams = new HashMap<>();
   private static final Logger logger = Logger.getLogger(AxoomQrecordsTestsIT.class.getName());
 
