@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -47,6 +49,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
   private WebDriver driver;
   private int numOfSchemas;
   private Map<String, String> requestParams = new HashMap<>();
+  private static final Logger logger = Logger.getLogger(AxoomCreateSrsTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass() {
@@ -114,7 +117,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
       requestParams.put("contentType", "application/x-www-form-urlencoded");
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
       Reporter.log("Access Token Obtained: " + accessToken);
-      System.out.println(accessToken);
+      logger.log(Level.INFO, "Access Token: " + accessToken);
       Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
 
     } catch (URISyntaxException e) {
@@ -154,8 +157,9 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.post("/");
+    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
+    Response response = request.post();    
+    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
     if (response.statusCode() == 201) {
       System.out.println(response.then().log().all(true));
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
@@ -167,7 +171,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createSchemaTest"})
   @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createEmptyRequestBodyTest() {
@@ -190,11 +194,12 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.post("/");
+    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
+    Response response = request.post();    
+    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
     if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       String nameErrorMsg = response.getBody().jsonPath().getString("Name");
       String schemaErrorMsg = response.getBody().jsonPath().getString("Schema");
@@ -208,7 +213,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createSchemaTest"})
   @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createSchemaWithNoNameTest() {
@@ -250,7 +255,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createSchemaTest"})
   @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createSchemaWithNullSchemaTest() {
@@ -290,7 +295,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"getNumberOfSchemasTest"})
+  @Test(dependsOnMethods = {"createSchemaTest"})
   @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createSchemaWithNoTypeTest() {
@@ -335,7 +340,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createSchemaTest"})
   @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createSchemaWithInvalidSchemaTest() {
@@ -361,14 +366,14 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.post();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
+    Response response = request.post();    
+    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
     System.out.println(
         "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint() + "\nxxxxxxxxxxxxxxxxxxx\n");
     // String nameErrorMsg = response.getBody().jsonPath().getString("Schema");
     Assert.assertTrue(
-        response.getBody().asString().contains("Input schema is an invalid Avro schema"));
+        response.getBody().asString().contains("Invalid Avro schema"));
     Assert.assertTrue(response.statusCode() == 422,
         "Expected Status code is 400, but the actual status code is: " + response.statusCode());
   }
@@ -404,7 +409,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
             + ". total Number of schemas: " + numOfSchemasAfterCreation);
   }  
 
-  @Test
+  //@Test
   @Description("Get a non existent schema´s details using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getNonExistentSchemaDetailsTest() {
@@ -443,6 +448,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
   }
 
   public int getNumberOfSchemas() {
+    logger.log(Level.INFO, "-------------getNumberOfSchemas-------------\n" + RestAssured.baseURI);
     RestAssured.baseURI = baseUri + srs_endpoint;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
@@ -450,9 +456,9 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
-    Response response = request.get("/");
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
+    Response response = request.get();    
+    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
     JsonParser parser = new JsonParser();

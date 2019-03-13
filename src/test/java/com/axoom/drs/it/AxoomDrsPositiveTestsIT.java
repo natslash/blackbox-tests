@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -48,6 +50,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   private WebDriver driver;
   private int numOfDevices;
   private Map<String, String> requestParams = new HashMap<>();
+  private static final Logger logger = Logger.getLogger(AxoomDrsPositiveTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass() {
@@ -180,7 +183,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   }
 
   @Test(dependsOnMethods = {"createDeviceTest"})
-  @Description("Get a device´s details using DRS APIs")
+  @Description("Get a device details using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getDeviceDetailsTest() {
 
@@ -274,7 +277,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   }
 
   @Test(dependsOnMethods = {"deleteDeviceTest"})
-  @Description("Get a non existent device´s details using DRS APIs")
+  @Description("Get a non existent device details using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getNonExistentDeviceDetailsTest() {
 
@@ -341,15 +344,13 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
-
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());    
     Response response = request.get("/");
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
     JsonParser parser = new JsonParser();
     JsonArray responseJson = (JsonArray) parser.parse(response.asString());
     return responseJson.size() ;
   }
-
 }

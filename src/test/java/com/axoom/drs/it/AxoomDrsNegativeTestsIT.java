@@ -3,6 +3,8 @@ package com.axoom.drs.it;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
@@ -36,6 +38,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
   private String deviceId;
   private String baseUri;
   private Map<String, String> requestParams = new HashMap<>();
+  private static final Logger logger = Logger.getLogger(AxoomDrsNegativeTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass(ITestContext context) {
@@ -437,9 +440,9 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.put();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 400,
         "Expected tatus code is 400 but the status is: " + response.statusCode());
 

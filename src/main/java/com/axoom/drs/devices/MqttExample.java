@@ -241,7 +241,8 @@ public class MqttExample {
 
     // Publish numMessages messages to the MQTT bridge, at a rate of 1 per second.
     for (int i = 1; i <= options.numMessages; ++i) {
-      String payload = String.format("%s/%s-payload-%d-%d", options.registryId, options.deviceId, System.currentTimeMillis(), i);
+      String dataText = options.registryId + "/" + options.deviceId + "-payload-" + System.currentTimeMillis() + "-" + i;
+      String payload = "{\"data\":\"" + dataText + "\"}";
       System.out.format(
           "Publishing %s message %d/%d: '%s'\n",
           options.messageType, i, options.numMessages, payload);

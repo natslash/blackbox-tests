@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -49,6 +51,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   private WebDriver driver;
   private int numOfDataCompositions;
   private Map<String, String> requestParams = new HashMap<>();
+  private static final Logger logger = Logger.getLogger(AxoomDcsPositiveTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass() {
@@ -59,10 +62,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     redirectUri = System.getenv("DCS_REDIRECT_URI");
     scope = System.getenv("DCS_SCOPES");
     cisUrl = System.getenv("CIS_URL");
-    secret = System.getenv("SECRET");
-    authCode = null;
-    accessToken = null;
-    dataCompositionId = null;
+    secret = System.getenv("SECRET");    
     dcs_endpoint = System.getenv("DCS_API");
     baseUri = "https://data-composition-service.dev.myaxoom.com";
     numOfDataCompositions = 0;
@@ -98,9 +98,8 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   @Description("Perform Login UI test to get access token for API tests")
   @Severity(SeverityLevel.BLOCKER)
   public void myAxoomLoginTest(ITestContext context) throws InterruptedException {    
-    
-     String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
-     
+    logger.log(Level.INFO, "----------------Begin myAxoomLoginTest----------------");
+    String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
     try {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
           .addParameter("client_id", clientId).addParameter("redirect_uri", redirectUri)
@@ -108,10 +107,10 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       System.out.println(loginUrl);
       getDriver().get(loginUrl.toString());
       myAxoomLoginPage = initPage(driver, MyAxoomLoginPage.class);
-      myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);      
+      myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);
       authCode = myAxoomLoginPage.selectTenantAndReturnAuthCode(tenantId);
       Reporter.log("Logged into My Axoom");
-
+      logger.log(Level.INFO, "Auth Code: " + authCode);
       requestParams.put("authCode", authCode);
       requestParams.put("authType", "Basic");
       requestParams.put("contentType", "application/x-www-form-urlencoded");
@@ -120,7 +119,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       Reporter.log("Access Token Obtained: " + accessToken);
       System.out.println(accessToken);
       Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
-
+      logger.log(Level.INFO, "----------------End myAxoomLoginTest----------------");
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
@@ -130,7 +129,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   @Description("Create a Data Compositiion using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDataCompositionTest(ITestContext context) {
-
+    logger.log(Level.INFO, "Auth Code: " + authCode);
     // get total number of data compositions in the registry before creation of data composition
     numOfDataCompositions = getNumberOfDataCompositions();
 
@@ -150,14 +149,14 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     RestAssured.baseURI = baseUri + dcs_endpoint;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
-
+    logger.log(Level.INFO, "Auth Code: " + authCode);
     request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
+    request.header("authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post("/");
     if (response.statusCode() == 201) {
-      System.out.println(response.then().log().all(true));
+      logger.log(Level.INFO, response.then().log().all(true).toString());
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       dataCompositionId = response.getBody().jsonPath().getString("id");
@@ -169,7 +168,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createDataCompositionTest"})
   @Description("Verify creating an empty Data Composition using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createEmptySchemaTest() {
@@ -189,14 +188,14 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     RestAssured.baseURI = baseUri + dcs_endpoint;
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
-
+    logger.log(Level.INFO, "Auth Code: " + authCode);
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post("/");
     if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
+      logger.log(Level.INFO, response.then().log().all(true).toString());
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       String responseString = response.getBody().asString();      
@@ -205,7 +204,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createDataCompositionTest"})
   @Description("Verify creating a data composition with no name using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDataCompositionWithNoNameTest() {
@@ -241,7 +240,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"myAxoomLoginTest"})
+  @Test(dependsOnMethods = {"createDataCompositionTest"})
   @Description("Verify creating a data composition with no schema subject using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDataCompositionWithNoschemaIdTest() {
@@ -393,15 +392,14 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
 
   public int getNumberOfDataCompositions() {
     RestAssured.baseURI = baseUri + dcs_endpoint;
-    System.out.println(RestAssured.baseURI);
+    logger.log(Level.INFO, "-------------getNumberOfDataCompositions-------------\n" + RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
-
+    request.formParam("code", authCode);
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
-
-    System.out.println(request.log().all(true));
-    Response response = request.get();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());    
+    Response response = request.get("/");
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
     JsonParser parser = new JsonParser();

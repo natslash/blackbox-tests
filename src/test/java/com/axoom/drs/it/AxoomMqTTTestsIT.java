@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -17,10 +20,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.drs.devices.MqttExample;
 import com.axoom.drs.pages.MyAxoomLoginPage;
-import com.axoom.drs.utils.AxoomKafkaConsumer;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import axoom.records.v1.QrecordsClient;
+import axoom.records.v1.Records.Record;
+import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -47,10 +52,11 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
   private String deviceId;
   private String projectId;
   private String providerRegion;
-  private String baseUri;
-  private String serverAddress;
+  private String baseUri;  
   private WebDriver driver;
+  private QrecordsClient client;
   private Map<String, String> requestParams = new HashMap<>();
+  private static final Logger logger = Logger.getLogger(AxoomMqTTTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass() {
@@ -68,8 +74,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     accessToken = null;
     deviceId = null;
     drs_endpoint = System.getenv("DRS_DEVICES_API");
-    baseUri = "https://device-registration-service.dev.myaxoom.com";
-    serverAddress = System.getenv("KAFKA_SERVER");
+    baseUri = "https://device-registration-service.dev.myaxoom.com";    
     cert =
         "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+SbFi/8yDdq3rOBOSVTcja4HHUJ7DXhsKds3iqMU8cP2bX7bNkb3DSsHwO1/29bJrX2IWiC+xfXSoEePmsVQNw==\n-----END PUBLIC KEY-----";
     requestParams.put("clientId", clientId);
@@ -85,8 +90,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
   @BeforeMethod
   public void beforeMethod() {
     super.initPlatformBaseTest();
-    this.driver = super.getDriver();
-
+    this.driver = super.getDriver();    
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
@@ -102,9 +106,10 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true));
     Response response = request.delete("/");
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO,
+        "-------------Response-------------\n" + response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 204,
         "Expected status code is 204 but the status is: " + response.statusCode());
 
@@ -207,13 +212,33 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     String[] args = {"-project_id=" + projectId, "-registry_id=" + tenantId,
         "-cloud_region=" + providerRegion, "-device_id=" + deviceId,
         "-private_key_file=" + privateKeyFilePath, "-algorithm=ES256"};
-    String topic =  tenantId + "-processed";
-    
+    int count = 0;
+    client = new QrecordsClient("qrecords.dev.myaxoom.com", 443);
     try {
       MqttExample.main(args);
-      int numOfRecords = AxoomKafkaConsumer.runConsumer(topic, serverAddress);
-      Assert.assertTrue(numOfRecords >= 5, "Number of Records is less than the records sent");
-    } catch (Exception e) {      
+
+      Iterator<Record> qRecords = client.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
+      while (qRecords.hasNext()) {
+        System.out.println(qRecords.next().getPayload().toStringUtf8());
+        count++;
+      }
+      System.out.println("Number of Records " + count);
+      client.shutdown();
+    } catch (InterruptedException e) {
+      Assert.fail("Error occurred!");
+      e.printStackTrace();
+    } catch (StatusRuntimeException sre) {
+      if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
+        if (count > 0)
+          Assert.assertTrue(true);
+        else
+          Assert.fail("Count is: " + count);
+      } else {
+        Assert.fail("Error occurred!");
+        sre.printStackTrace();
+      }
+
+    } catch (Exception e) {
       Assert.fail("Sending message failed" + "\n" + e.getMessage());
     }
   }

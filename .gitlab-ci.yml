@@ -31,8 +31,9 @@ test:dev:
     - export MACHINE_IDS=machine_1,machine_2
     - export DEVICE_NAME=shashi
     - export LOG_LEVEL=DEBUG
-    - export TENANT_ID=integrationtest
+    - export TENANT_ID=blackboxtest01
     - export PROVIDER_REGION=europe-west1
+    - export GOOGLE_APPLICATION_CREDENTIALS=/iot/blackbox-integration-tests/src/test/resources/service_account.json
     - export CIS_URL=https://account.dev.myaxoom.com
     - export DRS_URL=https://device-registration-service.dev.myaxoom.com
     - export DRS_CLIENT_ID=$DEV_DRS_CLIENT_ID
