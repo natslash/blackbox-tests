@@ -149,7 +149,7 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
-    Response response = request.post("/");
+    Response response = request.post();
     if (response.statusCode() == 201) {
       System.out.println(response.then().log().all(true));
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()

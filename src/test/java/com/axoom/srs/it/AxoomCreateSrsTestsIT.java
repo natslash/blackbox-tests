@@ -241,7 +241,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
-    Response response = request.post("/");
+    Response response = request.post();
     if (response.statusCode() == 400) {
       System.out.println(response.then().log().all(true));
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
@@ -282,7 +282,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
-    Response response = request.post("/");
+    Response response = request.post();
     if (response.statusCode() == 400) {
       System.out.println(response.then().log().all(true));
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
@@ -323,7 +323,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
-    Response response = request.post("/");
+    Response response = request.post();
     if (response.statusCode() == 400) {
       System.out.println(response.then().log().all(true));
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
@@ -379,7 +379,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
   }
 
   @Test(dependsOnMethods = {"createSchemaTest"})
-  @Description("Get a schema´s details using SRS APIs")
+  @Description("Get a schemaï¿½s details using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getSchemaDetailsTest() {
 
@@ -410,7 +410,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
   }  
 
   //@Test
-  @Description("Get a non existent schema´s details using SRS APIs")
+  @Description("Get a non existent schemaï¿½s details using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getNonExistentSchemaDetailsTest() {
 
@@ -422,7 +422,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     request.header("Authorization", "Bearer " + accessToken);
 
     System.out.println(request.log().all(true));
-    Response response = request.get("/");
+    Response response = request.get();
     System.out.println(response.then().log().all(true));
     Assert.assertTrue(response.statusCode() == 404,
         "Expected status code is 404 but the status is:" + response.statusCode());

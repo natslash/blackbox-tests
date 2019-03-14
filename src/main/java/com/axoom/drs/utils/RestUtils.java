@@ -1,7 +1,6 @@
 package com.axoom.drs.utils;
 
 import java.util.Base64;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +13,7 @@ public class RestUtils {
 
   private static final Logger logger = Logger.getLogger(RestUtils.class.getName());
 
-  public static RequestSpecification prepareRequest(Map<String, String> requestParams) {
+  public static RequestSpecification getPreparedRequest(Map<String, String> requestParams) {
 
     String clientId = requestParams.get("clientId");
     String secret = requestParams.get("secret");

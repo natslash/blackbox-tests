@@ -154,7 +154,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     request.header("authorization", "Bearer " + accessToken);
     request.body(json);
     logger.log(Level.INFO, request.log().all(true).toString());
-    Response response = request.post("/");
+    Response response = request.post();
     if (response.statusCode() == 201) {
       logger.log(Level.INFO, response.then().log().all(true).toString());
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
@@ -193,7 +193,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     logger.log(Level.INFO, request.log().all(true).toString());
-    Response response = request.post("/");
+    Response response = request.post();
     if (response.statusCode() == 400) {
       logger.log(Level.INFO, response.then().log().all(true).toString());
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
@@ -230,7 +230,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
-    Response response = request.post("/");
+    Response response = request.post();
     if (response.statusCode() == 400) {
       System.out.println(response.then().log().all(true));
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
@@ -267,7 +267,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
-    Response response = request.post("/");
+    Response response = request.post();
     if (response.statusCode() == 400) {
       System.out.println(response.then().log().all(true));
       System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
@@ -278,7 +278,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   }
 
   @Test(dependsOnMethods = {"createDataCompositionTest"})
-  @Description("Get a data composition´s details using DCS APIs")
+  @Description("Get a data compositionï¿½s details using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getDataCompositionDetailsTest() {
 
@@ -351,7 +351,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   }
 
   @Test(dependsOnMethods = {"myAxoomLoginTest"})
-  @Description("Verify gettingl a non existent data composition´s details using DCS APIs")
+  @Description("Verify gettingl a non existent data compositionï¿½s details using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getNonExistentDataCompositionDetailsTest() {
 
@@ -398,7 +398,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     request.header("Content-Type", "application/json");
     request.header("Authorization", "Bearer " + accessToken);
     logger.log(Level.INFO, request.log().all(true).toString());    
-    Response response = request.get("/");
+    Response response = request.get();
     logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());

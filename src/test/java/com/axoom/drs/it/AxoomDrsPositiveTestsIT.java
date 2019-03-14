@@ -17,6 +17,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.drs.pages.MyAxoomLoginPage;
+import com.axoom.drs.utils.AxoomRequest;
+import com.axoom.drs.utils.RequestParams;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +28,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -98,9 +99,9 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
         "-----------------------------------------------------------------------------------------------");
   }
 
-  @Test(groups={"prerequisites" }, priority = 0)
+  @Test(groups = {"prerequisites"}, priority = 0)
   @Description("Perform Login UI test to get access token for API tests")
-  @Severity(SeverityLevel.BLOCKER)  
+  @Severity(SeverityLevel.BLOCKER)
   public void myAxoomLoginTest(ITestContext context) throws InterruptedException {
 
     String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
@@ -108,7 +109,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
           .addParameter("client_id", clientId).addParameter("redirect_uri", redirectUri)
           .addParameter("scope", scope);
-      System.out.println(loginUrl);
+      logger.log(Level.INFO, loginUrl.toString());
       getDriver().get(loginUrl.toString());
       myAxoomLoginPage = initPage(driver, MyAxoomLoginPage.class);
       myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);
@@ -121,7 +122,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
       context.setAttribute("accessToken", accessToken);
       Reporter.log("Access Token Obtained: " + accessToken);
-      System.out.println(accessToken);
+      logger.log(Level.INFO, accessToken);
       Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
 
     } catch (URISyntaxException e) {
@@ -134,10 +135,10 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   @Description("Create a device using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDeviceTest() {
-    
-    //get total number of devices in the registry before creation of device
+
+    // get total number of devices in the registry before creation of device
     numOfDevices = getNumberOfDevices();
-    
+
     // prepare Device Configuration Values
     Map<String, String> config = new HashMap<>();
     config.put("publicKeyFormat", "rsa_x509_pem");
@@ -158,27 +159,28 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-
-    System.out.println(json);
-    RestAssured.baseURI = baseUri + drs_endpoint;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
+    
+    String baseURI = baseUri + drs_endpoint;
+    
+    RequestParams requestParams = new RequestParams();
+    requestParams.setBaseURI(baseURI);
+    requestParams.setContentType("application/json");
+    requestParams.setAuthorization(accessToken);
+    RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.post("/");
-    if (response.statusCode() == 201) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+    
+    logger.log(Level.INFO, request.log().all(true).toString());
+    Response response = request.post();
+    
+    if (response.statusCode() == 201) {      
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       deviceId = response.getBody().jsonPath().getString("id");
       Assert.assertTrue(response.statusCode() == 201,
           "Expected tatus code is 201 but the status is: " + response.statusCode());
       Assert.assertTrue(!deviceId.isEmpty(), "Device is ID is null");
     } else {
-      System.out.println("Create device failed: " + response.statusCode());
+      logger.log(Level.SEVERE, "Create device failed: " + response.statusCode());
     }
   }
 
@@ -187,16 +189,18 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void getDeviceDetailsTest() {
 
-    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
+    String baseURI = baseUri + drs_endpoint + "/" + deviceId;
 
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
+    RequestParams requestParams = new RequestParams();
+    requestParams.setBaseURI(baseURI);
+    requestParams.setContentType("application/json");
+    requestParams.setAuthorization(accessToken);
 
-    System.out.println(request.log().all(true));
+    RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
+    logger.log(Level.INFO, request.log().all(true).toString());
+
     Response response = request.get();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
 
@@ -209,7 +213,8 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
     int numOfDevicesAfterCreation = getNumberOfDevices();
     Assert.assertTrue(numOfDevices == numOfDevicesAfterCreation - 1,
-        "The total number of devices should not be more than " + numOfDevices + ". total Number of devices: " + numOfDevicesAfterCreation);
+        "The total number of devices should not be more than " + numOfDevices
+            + ". total Number of devices: " + numOfDevicesAfterCreation);
   }
 
   @Test(dependsOnMethods = {"getDeviceDetailsTest"})
@@ -238,18 +243,18 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
-    RestAssured.baseURI =
-        baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
+    String baseURI = baseUri + drs_endpoint + "/" + deviceId;
+    RequestParams requestParams = new RequestParams();
+    requestParams.setBaseURI(baseURI);
+    requestParams.setContentType("application/json");
+    requestParams.setAuthorization(accessToken);
+    RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     request.body(json);
-    System.out.println(request.log().all(true));
-    Response response = request.put("/");
-    System.out.println(response.then().log().all(true));
+    
+    logger.log(Level.INFO, request.log().all(true).toString());
+    Response response = request.put();
+    
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected tatus code is 200 but the status is: " + response.statusCode());
 
@@ -260,17 +265,15 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void deleteDeviceTest() {
 
-    RestAssured.baseURI =
-        baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-
-    System.out.println(request.log().all(true));
-    Response response = request.delete("/");
-    System.out.println(response.then().log().all(true));
+    String baseURI = baseUri + drs_endpoint + "/" + deviceId;
+    RequestParams requestParams = new RequestParams();
+    requestParams.setBaseURI(baseURI);
+    requestParams.setContentType("application/json");
+    requestParams.setAuthorization(accessToken);
+    RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
+    
+    Response response = request.delete();
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 204,
         "Expected status code is 204 but the status is: " + response.statusCode());
 
@@ -281,16 +284,15 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void getNonExistentDeviceDetailsTest() {
 
-    RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-
-    System.out.println(request.log().all(true));
-    Response response = request.get("/");
-    System.out.println(response.then().log().all(true));
+    String baseURI = baseUri + drs_endpoint + "/" + deviceId;
+    RequestParams requestParams = new RequestParams();
+    requestParams.setBaseURI(baseURI);
+    requestParams.setContentType("application/json");
+    requestParams.setAuthorization(accessToken);
+    RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
+    
+    Response response = request.get();
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 404,
         "Expected status code is 404 but the status is:" + response.statusCode());
 
@@ -301,56 +303,55 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void deleteANonExistentDeviceTest() {
 
-    RestAssured.baseURI =
-        baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-
-    System.out.println(request.log().all(true));
-    Response response = request.delete("/");
-    System.out.println(response.then().log().all(true));
+    String baseURI = baseUri + drs_endpoint + "/" + deviceId;
+    RequestParams requestParams = new RequestParams();
+    requestParams.setBaseURI(baseURI);
+    requestParams.setContentType("application/json");
+    requestParams.setAuthorization(accessToken);
+    RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
+    
+    Response response = request.delete();
+    logger.log(Level.INFO, response.then().log().all(true).toString());
+    
     Assert.assertTrue(response.statusCode() == 404,
         "Expected tatus code is 204 but the status is: " + response.statusCode());
 
   }
 
   @Test(dependsOnMethods = {"myAxoomLoginTest"})
-  @Description("Get health details using DRS APIs")  
+  @Description("Get health details using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getHealth() {
 
-    RestAssured.baseURI = baseUri + "/health";
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "text/plain");
-    request.header("Authorization", "Bearer " + accessToken);
-
-    System.out.println(request.log().all(true));
+    String baseURI = baseUri + "/health";
+    RequestParams requestParams = new RequestParams();
+    requestParams.setBaseURI(baseURI);
+    requestParams.setContentType("text/plain");
+    requestParams.setAuthorization(accessToken);
+    RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
+    
     Response response = request.get();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
+    
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
 
   }
-  
-  public int getNumberOfDevices() {
-    RestAssured.baseURI = baseUri + drs_endpoint;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
-    logger.log(Level.INFO, request.log().all(true).toString());    
-    Response response = request.get("/");
+  public int getNumberOfDevices() {
+    String baseURI = baseUri + drs_endpoint;
+    RequestParams requestParams = new RequestParams();
+    requestParams.setBaseURI(baseURI);
+    requestParams.setContentType("application/json");
+    requestParams.setAuthorization(accessToken);
+    RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
+    
+    Response response = request.get();
     logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
     JsonParser parser = new JsonParser();
     JsonArray responseJson = (JsonArray) parser.parse(response.asString());
-    return responseJson.size() ;
+    return responseJson.size();
   }
 }
