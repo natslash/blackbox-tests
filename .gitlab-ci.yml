@@ -29,7 +29,7 @@ test:dev:
     - export IOT_PROVIDER=google
     - export MACHINE_TYPE=humidity
     - export MACHINE_IDS=machine_1,machine_2
-    - export DEVICE_NAME=shashi
+    - export DEVICE_NAME=AxoomTest
     - export LOG_LEVEL=DEBUG
     - export TENANT_ID=blackboxtest01
     - export PROVIDER_REGION=europe-west1
