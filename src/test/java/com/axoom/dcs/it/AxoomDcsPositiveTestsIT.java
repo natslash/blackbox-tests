@@ -64,7 +64,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     redirectUri = EnvVariables.DCS_REDIRECT_URI;
     scope = EnvVariables.DCS_SCOPES;
     cisUrl = EnvVariables.CIS_URL;
-    secret = EnvVariables.SECRET;    
+    secret = EnvVariables.SECRET;
     dcs_endpoint = EnvVariables.DCS_API;
     baseUri = EnvVariables.DCS_BASEURI;
     numOfDataCompositions = 0;
@@ -99,14 +99,13 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   @Test(priority = 0)
   @Description("Perform Login UI test to get access token for API tests")
   @Severity(SeverityLevel.BLOCKER)
-  public void myAxoomLoginTest(ITestContext context) throws InterruptedException {    
+  public void myAxoomLoginTest(ITestContext context) throws InterruptedException {
     logger.log(Level.INFO, "----------------Begin myAxoomLoginTest----------------");
     String baseUrl = cisUrl + "/connect/authorize";
     try {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
           .addParameter("client_id", clientId).addParameter("redirect_uri", redirectUri)
           .addParameter("scope", scope);
-      System.out.println(loginUrl);
       getDriver().get(loginUrl.toString());
       myAxoomLoginPage = initPage(driver, MyAxoomLoginPage.class);
       myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);
@@ -119,7 +118,6 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
       context.setAttribute("accessToken", accessToken);
       Reporter.log("Access Token Obtained: " + accessToken);
-      System.out.println(accessToken);
       Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
       logger.log(Level.INFO, "----------------End myAxoomLoginTest----------------");
     } catch (URISyntaxException e) {
@@ -131,7 +129,6 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   @Description("Create a Data Compositiion using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void createDataCompositionTest(ITestContext context) {
-    logger.log(Level.INFO, "Auth Code: " + authCode);
     // get total number of data compositions in the registry before creation of data composition
     numOfDataCompositions = getNumberOfDataCompositions();
 
@@ -147,11 +144,8 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + dcs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
-    logger.log(Level.INFO, "Auth Code: " + authCode);
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("authorization", "Bearer " + accessToken);
     request.body(json);
@@ -159,13 +153,13 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     Response response = request.post();
     if (response.statusCode() == 201) {
       logger.log(Level.INFO, response.then().log().all(true).toString());
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       dataCompositionId = response.getBody().jsonPath().getString("id");
       Assert.assertTrue(!dataCompositionId.isEmpty(), "DataComposition is ID is null");
       context.setAttribute("dataCompositionId", dataCompositionId);
     } else {
-      System.out.println(response.then().log().all(true));
+      logger.log(Level.INFO, response.then().log().all(true).toString());
       Assert.fail("Data Composition creation failed: " + response.statusCode());
     }
   }
@@ -186,9 +180,7 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + dcs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
     logger.log(Level.INFO, "Auth Code: " + authCode);
     request.header("Content-Type", ContentType.APPLICATION_JSON);
@@ -198,9 +190,9 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
     Response response = request.post();
     if (response.statusCode() == 400) {
       logger.log(Level.INFO, response.then().log().all(true).toString());
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
-      String responseString = response.getBody().asString();      
+      String responseString = response.getBody().asString();
       Assert.assertTrue(responseString.contains("The FriendlyName field is required"));
       Assert.assertTrue(responseString.contains("The SchemaId field is required"));
     }
@@ -223,19 +215,17 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + dcs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post();
     if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       String NameErrorMsg = response.getBody().asString();
       Assert.assertTrue(NameErrorMsg.contains("The FriendlyName field is required."));
@@ -260,19 +250,17 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + dcs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post();
     if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       String NameErrorMsg = response.getBody().asString();
       Assert.assertTrue(NameErrorMsg.contains("The SchemaId field is required."));
@@ -285,15 +273,14 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   public void getDataCompositionDetailsTest() {
 
     RestAssured.baseURI = baseUri + dcs_endpoint + "/" + dataCompositionId;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.get();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
 
@@ -336,17 +323,15 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + dcs_endpoint + "/" + dataCompositionId;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.put("/");
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected tatus code is 200 but the status is: " + response.statusCode());
 
@@ -358,15 +343,14 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   public void getNonExistentDataCompositionDetailsTest() {
 
     RestAssured.baseURI = baseUri + dcs_endpoint + "/" + 999999;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.get();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 404,
         "Expected status code is 404 but the status is:" + response.statusCode());
 
@@ -378,15 +362,14 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
   public void getHealth() {
 
     RestAssured.baseURI = baseUri + "/health";
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.PLAIN_TEXT);
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.get();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
 
@@ -394,12 +377,13 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
 
   public int getNumberOfDataCompositions() {
     RestAssured.baseURI = baseUri + dcs_endpoint;
-    logger.log(Level.INFO, "-------------getNumberOfDataCompositions-------------\n" + RestAssured.baseURI);
+    logger.log(Level.INFO,
+        "-------------getNumberOfDataCompositions-------------\n" + RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
     request.formParam("code", authCode);
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
-    logger.log(Level.INFO, request.log().all(true).toString());    
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.get();
     logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,

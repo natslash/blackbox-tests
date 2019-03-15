@@ -1,17 +1,15 @@
 /*
  * Copyright 2017 Google Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.axoom.drs.devices;
@@ -20,11 +18,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyFactory;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.time.Duration;
-import java.time.LocalTime;
-import java.time.temporal.TemporalAmount;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.lang3.time.StopWatch;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -42,15 +39,18 @@ import io.jsonwebtoken.SignatureAlgorithm;
 /**
  * Java sample of connecting to Google Cloud IoT Core vice via MQTT, using JWT.
  *
- * <p>This example connects to Google Cloud IoT Core via MQTT, using a JWT for device
- * authentication. After connecting, by default the device publishes 100 messages to the device's
- * MQTT topic at a rate of one per second, and then exits. To set state instead of publishing
- * telemetry events, set the `-message_type` flag to `state.`
+ * <p>
+ * This example connects to Google Cloud IoT Core via MQTT, using a JWT for device authentication.
+ * After connecting, by default the device publishes 100 messages to the device's MQTT topic at a
+ * rate of one per second, and then exits. To set state instead of publishing telemetry events, set
+ * the `-message_type` flag to `state.`
  *
- * <p>To run this example, first create your credentials and register your device as described in
- * the README located in the sample's parent folder.
+ * <p>
+ * To run this example, first create your credentials and register your device as described in the
+ * README located in the sample's parent folder.
  *
- * <p>After you have registered your device and generated your credentials, compile and run with the
+ * <p>
+ * After you have registered your device and generated your credentials, compile and run with the
  * corresponding algorithm flag, for example:
  *
  * <pre>
@@ -64,6 +64,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
  * </pre>
  */
 public class MqttExample {
+  private static final Logger logger = Logger.getLogger(MqttExample.class.getName());
+
   // [START iot_mqtt_jwt]
   /** Create a Cloud IoT Core JWT for the given project id, signed with the given RSA key. */
   private static String createJwtRsa(String projectId, String privateKeyFile) throws Exception {
@@ -71,11 +73,8 @@ public class MqttExample {
     // Create a JWT to authenticate this device. The device will be disconnected after the token
     // expires, and will have to reconnect with a new token. The audience field should always be set
     // to the GCP project id.
-    JwtBuilder jwtBuilder =
-        Jwts.builder()
-            .setIssuedAt(now.toDate())
-            .setExpiration(now.plusMinutes(20).toDate())
-            .setAudience(projectId);
+    JwtBuilder jwtBuilder = Jwts.builder().setIssuedAt(now.toDate())
+        .setExpiration(now.plusMinutes(20).toDate()).setAudience(projectId);
 
     byte[] keyBytes = Files.readAllBytes(Paths.get(privateKeyFile));
     PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
@@ -90,11 +89,8 @@ public class MqttExample {
     // Create a JWT to authenticate this device. The device will be disconnected after the token
     // expires, and will have to reconnect with a new token. The audience field should always be set
     // to the GCP project id.
-    JwtBuilder jwtBuilder =
-        Jwts.builder()
-            .setIssuedAt(now.toDate())
-            .setExpiration(now.plusMinutes(20).toDate())
-            .setAudience(projectId);
+    JwtBuilder jwtBuilder = Jwts.builder().setIssuedAt(now.toDate())
+        .setExpiration(now.plusMinutes(20).toDate()).setAudience(projectId);
 
     byte[] keyBytes = Files.readAllBytes(Paths.get(privateKeyFile));
     PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
@@ -118,7 +114,7 @@ public class MqttExample {
       @Override
       public void messageArrived(String topic, MqttMessage message) throws Exception {
         String payload = new String(message.getPayload());
-        System.out.println("Payload : " + payload);
+        logger.log(Level.INFO, "Payload : " + payload);
         // TODO: Insert your parsing / handling of the configuration message here.
       }
 
@@ -155,10 +151,8 @@ public class MqttExample {
 
     // Create our MQTT client. The mqttClientId is a unique string that identifies this device. For
     // Google Cloud IoT Core, it must be in the format below.
-    final String mqttClientId =
-        String.format(
-            "projects/%s/locations/%s/registries/%s/devices/%s",
-            options.projectId, options.cloudRegion, options.registryId, options.deviceId);
+    final String mqttClientId = String.format("projects/%s/locations/%s/registries/%s/devices/%s",
+        options.projectId, options.cloudRegion, options.registryId, options.deviceId);
 
     MqttConnectOptions connectOptions = new MqttConnectOptions();
     // Note that the Google Cloud IoT Core only supports MQTT 3.1.1, and Paho requires that we
@@ -177,11 +171,11 @@ public class MqttExample {
 
     DateTime iat = new DateTime();
     if (options.algorithm.equals("RS256")) {
-      connectOptions.setPassword(
-          createJwtRsa(options.projectId, options.privateKeyFile).toCharArray());
+      connectOptions
+          .setPassword(createJwtRsa(options.projectId, options.privateKeyFile).toCharArray());
     } else if (options.algorithm.equals("ES256")) {
-      connectOptions.setPassword(
-          createJwtEs(options.projectId, options.privateKeyFile).toCharArray());
+      connectOptions
+          .setPassword(createJwtEs(options.projectId, options.privateKeyFile).toCharArray());
     } else {
       throw new IllegalArgumentException(
           "Invalid algorithm " + options.algorithm + ". Should be one of 'RS256' or 'ES256'.");
@@ -210,10 +204,10 @@ public class MqttExample {
 
         // If the connection is lost or if the server cannot be connected, allow retries, but with
         // exponential backoff.
-        System.out.println("An error occurred: " + e.getMessage());
+        logger.log(Level.INFO, "An error occurred: " + e.getMessage());
         if (reason == MqttException.REASON_CODE_CONNECTION_LOST
             || reason == MqttException.REASON_CODE_SERVER_CONNECT_ERROR) {
-          System.out.println("Retrying in " + retryIntervalMs / 1000.0 + " seconds.");
+          logger.log(Level.INFO, "Retrying in " + retryIntervalMs / 1000.0 + " seconds.");
           Thread.sleep(retryIntervalMs);
           totalRetryTimeMs += retryIntervalMs;
           retryIntervalMs *= intervalMultiplier;
@@ -227,10 +221,10 @@ public class MqttExample {
     }
 
     attachCallback(client, options.deviceId);
-    
+
     StopWatch watch = new StopWatch();
-    watch.start();    
-    
+    watch.start();
+
     // Publish to the events or state topic based on the flag.
     String subTopic = options.messageType.equals("event") ? "events" : options.messageType;
 
@@ -241,11 +235,13 @@ public class MqttExample {
 
     // Publish numMessages messages to the MQTT bridge, at a rate of 1 per second.
     for (int i = 1; i <= options.numMessages; ++i) {
-      String dataText = options.registryId + "/" + options.deviceId + "-payload-" + System.currentTimeMillis() + "-" + i;
+      String dataText = options.registryId + "/" + options.deviceId + "-payload-"
+          + System.currentTimeMillis() + "-" + i;
       String payload = "{\"data\":\"" + dataText + "\"}";
-      System.out.format(
-          "Publishing %s message %d/%d: '%s'\n",
-          options.messageType, i, options.numMessages, payload);
+      System.out.format("Publishing %s message %d/%d: '%s'\n", options.messageType, i,
+          options.numMessages, payload);
+      logger.log(Level.INFO, "Publishing " + options.messageType + " message " + i
+          + options.numMessages + ": '" + payload + "'\n");
 
       // Refresh the connection credentials before the JWT expires.
       // [START iot_mqtt_jwt_refresh]
@@ -254,15 +250,14 @@ public class MqttExample {
         System.out.format("\tRefreshing token after: %d seconds\n", secsSinceRefresh);
         iat = new DateTime();
         if (options.algorithm.equals("RS256")) {
-          connectOptions.setPassword(
-              createJwtRsa(options.projectId, options.privateKeyFile).toCharArray());
+          connectOptions
+              .setPassword(createJwtRsa(options.projectId, options.privateKeyFile).toCharArray());
         } else if (options.algorithm.equals("ES256")) {
-          connectOptions.setPassword(
-              createJwtEs(options.projectId, options.privateKeyFile).toCharArray());
+          connectOptions
+              .setPassword(createJwtEs(options.projectId, options.privateKeyFile).toCharArray());
         } else {
           throw new IllegalArgumentException(
-              "Invalid algorithm " + options.algorithm
-                  + ". Should be one of 'RS256' or 'ES256'.");
+              "Invalid algorithm " + options.algorithm + ". Should be one of 'RS256' or 'ES256'.");
         }
         client.disconnect();
         client.connect();
@@ -287,10 +282,10 @@ public class MqttExample {
 
     // Wait for commands to arrive for about two minutes.
     for (int i = 1; i <= options.waitTime; ++i) {
-      System.out.print(".");
+      logger.log(Level.INFO, ".");
       Thread.sleep(1000);
     }
-    System.out.println("");
+    logger.log(Level.INFO, "");
 
 
     // Disconnect the client if still connected, and finish the run.
@@ -298,8 +293,9 @@ public class MqttExample {
       client.disconnect();
     }
     watch.stop();
-    System.out.println("Time consumed to publish events: " + watch.getTime(TimeUnit.SECONDS) + " seconds.");
-    System.out.println("Finished loop successfully. Goodbye!");
+    logger.log(Level.INFO,
+        "Time consumed to publish events: " + watch.getTime(TimeUnit.SECONDS) + " seconds.");
+    logger.log(Level.INFO, "Finished loop successfully. Goodbye!");
     client.close();
     // [END iot_mqtt_publish]
   }

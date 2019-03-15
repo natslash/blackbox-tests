@@ -21,7 +21,7 @@ public class QrecordsClient {
 
   private final ManagedChannel channel;
   private final QRecordsGrpc.QRecordsBlockingStub blockingStub;
-  
+
 
   /** Construct client connecting to Qrecords server at {@code host:port}. */
   public QrecordsClient(String host, int port) {
@@ -32,19 +32,19 @@ public class QrecordsClient {
   /** Construct client for accessing Qrecords server using the existing channel. */
   QrecordsClient(ManagedChannel channel) {
     this.channel = channel;
-    
+
     Map<String, String> requestParams = new HashMap<String, String>();
     requestParams.put("baseUrl", "https://account.dev.myaxoom.com/connect/token");
     requestParams.put("scope", "https://apis.axoom.com/scopes/qrecords.read");
     requestParams.put("clientId", "records-query-api-test-client");
     requestParams.put("clientSecret", System.getenv("QREC_SECRET"));
     requestParams.put("contentType", ContentType.FORM_URL_ENCODED);
-    
+
     String accessToken = RestUtils.getAccessTokenFromClientCredsFlow(requestParams);
     logger.log(Level.INFO, "Access Token: " + accessToken);
     Metadata authHeaders = new Metadata();
     authHeaders.put(Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), accessToken);
-    
+
     blockingStub = MetadataUtils.attachHeaders(QRecordsGrpc.newBlockingStub(channel), authHeaders);
   }
 
@@ -53,16 +53,16 @@ public class QrecordsClient {
   }
 
 
-  public Iterator<Record> getRecordStream(String dataCompositionId) {     
+  public Iterator<Record> getRecordStream(String dataCompositionId) {
     Qrecords.RecordStreamRequest request = Qrecords.RecordStreamRequest.newBuilder().setGroupId("1")
         .setDataCompositionId(dataCompositionId).setTimeout(5).build();
-    
+
     try {
-      return blockingStub.getStream(request);         
+      return blockingStub.getStream(request);
     } catch (StatusRuntimeException e) {
       logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
       return null;
     }
-  }  
-  
+  }
+
 }

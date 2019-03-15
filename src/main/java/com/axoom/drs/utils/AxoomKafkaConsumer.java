@@ -12,7 +12,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
-public class AxoomKafkaConsumer {  
+public class AxoomKafkaConsumer {
 
   private static Consumer<Long, String> createConsumer(String topic, String serverAddress) {
     final Properties props = new Properties();
@@ -36,9 +36,9 @@ public class AxoomKafkaConsumer {
     int noRecordsCount = 0;
     StopWatch watch = new StopWatch();
     watch.start();
-    
+
     while (true) {
-      final ConsumerRecords<Long, String> consumerRecords = consumer.poll(Duration.ofMillis(1000));      
+      final ConsumerRecords<Long, String> consumerRecords = consumer.poll(Duration.ofMillis(1000));
       if (consumerRecords.count() == 0) {
         noRecordsCount++;
         if (noRecordsCount > giveUp)
@@ -57,8 +57,9 @@ public class AxoomKafkaConsumer {
     }
     consumer.close();
     watch.stop();
-    System.out.println("DONE");    
-    System.out.println("Time elapsed to consume " + numOfRecords + " events: " + watch.getTime(TimeUnit.SECONDS) + " seconds.");
+    System.out.println("DONE");
+    System.out.println("Time elapsed to consume " + numOfRecords + " events: "
+        + watch.getTime(TimeUnit.SECONDS) + " seconds.");
     return numOfRecords;
   }
 }

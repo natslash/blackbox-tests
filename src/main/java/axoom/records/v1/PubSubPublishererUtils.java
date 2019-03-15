@@ -86,28 +86,25 @@ public class PubSubPublishererUtils {
         ApiFuture<String> future = publisher.publish(pubsubMessage);
 
         // Add an asynchronous callback to handle success / failure
-        ApiFutures.addCallback(
-            future,
-            new ApiFutureCallback<String>() {
+        ApiFutures.addCallback(future, new ApiFutureCallback<String>() {
 
-              @Override
-              public void onFailure(Throwable throwable) {
-                if (throwable instanceof ApiException) {
-                  ApiException apiException = ((ApiException) throwable);
-                  // details on the API exception
-                  System.out.println(apiException.getStatusCode().getCode());
-                  System.out.println(apiException.isRetryable());
-                }
-                System.out.println("Error publishing message : " + message);
-              }
+          @Override
+          public void onFailure(Throwable throwable) {
+            if (throwable instanceof ApiException) {
+              ApiException apiException = ((ApiException) throwable);
+              // details on the API exception
+              System.out.println(apiException.getStatusCode().getCode());
+              System.out.println(apiException.isRetryable());
+            }
+            System.out.println("Error publishing message : " + message);
+          }
 
-              @Override
-              public void onSuccess(String messageId) {
-                // Once published, returns server-assigned message ids (unique within the topic)
-                System.out.println(messageId);
-              }
-            },
-            MoreExecutors.directExecutor());
+          @Override
+          public void onSuccess(String messageId) {
+            // Once published, returns server-assigned message ids (unique within the topic)
+            System.out.println(messageId);
+          }
+        }, MoreExecutors.directExecutor());
       }
     } finally {
       if (publisher != null) {
@@ -119,13 +116,14 @@ public class PubSubPublishererUtils {
     // [END pubsub_publish_error_handler]
   }
 
-  public static void main(String... args) throws Exception {    
+  public static void main(String... args) throws Exception {
     publishMessages("mvp-iotcore-eval", "blackboxtest01");
-    List<ReceivedMessage> receivedMessages = PubSubSubscriberUtils.synchronousPull("mvp-iotcore-eval", "blackboxtest01-shovel", 2);
+    List<ReceivedMessage> receivedMessages =
+        PubSubSubscriberUtils.synchronousPull("mvp-iotcore-eval", "blackboxtest01-shovel", 2);
     for (ReceivedMessage receivedMessage : receivedMessages) {
       System.out.println(receivedMessage.getMessage().getData().toStringUtf8());
     }
-    
-    
+
+
   }
 }

@@ -54,7 +54,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
   private String deviceId;
   private String projectId;
   private String providerRegion;
-  private String baseUri;  
+  private String baseUri;
   private WebDriver driver;
   private QrecordsClient client;
   private Map<String, String> requestParams = new HashMap<>();
@@ -75,8 +75,8 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     drs_endpoint = EnvVariables.DRS_DEVICES_API;
     authCode = null;
     accessToken = null;
-    deviceId = null;    
-    baseUri = EnvVariables.DRS_BASEURI;   
+    deviceId = null;
+    baseUri = EnvVariables.DRS_BASEURI;
     cert =
         "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+SbFi/8yDdq3rOBOSVTcja4HHUJ7DXhsKds3iqMU8cP2bX7bNkb3DSsHwO1/29bJrX2IWiC+xfXSoEePmsVQNw==\n-----END PUBLIC KEY-----";
     requestParams.put("clientId", clientId);
@@ -92,7 +92,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
   @BeforeMethod
   public void beforeMethod() {
     super.initPlatformBaseTest();
-    this.driver = super.getDriver();    
+    this.driver = super.getDriver();
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
@@ -102,7 +102,6 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
   public void deleteDevice() {
 
     RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
@@ -135,7 +134,6 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
           .addParameter("client_id", clientId).addParameter("redirect_uri", redirectUri)
           .addParameter("scope", scope);
-      System.out.println(loginUrl);
       getDriver().get(loginUrl.toString());
       myAxoomLoginPage = initPage(driver, MyAxoomLoginPage.class);
       myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);
@@ -147,7 +145,6 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
       requestParams.put("contentType", ContentType.FORM_URL_ENCODED);
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
       Reporter.log("Access Token Obtained: " + accessToken);
-      System.out.println(accessToken);
       Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
 
     } catch (URISyntaxException e) {
@@ -181,19 +178,17 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + drs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post();
     if (response.statusCode() == 201) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       deviceId = response.getBody().jsonPath().getString("id");
       Assert.assertTrue(response.statusCode() == 201,
@@ -221,10 +216,10 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
 
       Iterator<Record> qRecords = client.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
       while (qRecords.hasNext()) {
-        System.out.println(qRecords.next().getPayload().toStringUtf8());
+        logger.log(Level.INFO, qRecords.next().getPayload().toStringUtf8());
         count++;
       }
-      System.out.println("Number of Records " + count);
+      logger.log(Level.INFO, "Number of Records " + count);
       client.shutdown();
     } catch (InterruptedException e) {
       Assert.fail("Error occurred!");

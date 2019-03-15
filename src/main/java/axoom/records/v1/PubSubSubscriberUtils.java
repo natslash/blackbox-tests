@@ -230,7 +230,7 @@ public class PubSubSubscriberUtils {
         subscriber.acknowledgeCallable().call(acknowledgeRequest);
         return pullResponse.getReceivedMessagesList();
       }
-    } catch (IOException e) {      
+    } catch (IOException e) {
       e.printStackTrace();
       return null;
     }

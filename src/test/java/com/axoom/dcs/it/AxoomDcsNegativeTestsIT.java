@@ -20,7 +20,6 @@ import com.axoom.constants.ContentType;
 import com.axoom.constants.EnvVariables;
 import com.axoom.drs.pages.MyAxoomLoginPage;
 import com.axoom.talos.framework.WebDriverTest;
-import axoom.records.v1.QrecordsClient;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -91,14 +90,14 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
   }
-  
+
   @Test(priority = 0)
   @Description("Perform Login UI test to get access token for API tests")
   @Severity(SeverityLevel.BLOCKER)
-  public void myAxoomLoginTest(ITestContext context) throws InterruptedException {    
-    
-     String baseUrl = cisUrl + "/connect/authorize";
-     
+  public void myAxoomLoginTest(ITestContext context) throws InterruptedException {
+
+    String baseUrl = cisUrl + "/connect/authorize";
+
     try {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
           .addParameter("client_id", clientId).addParameter("redirect_uri", redirectUri)
@@ -106,7 +105,7 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
       System.out.println(loginUrl);
       getDriver().get(loginUrl.toString());
       myAxoomLoginPage = initPage(driver, MyAxoomLoginPage.class);
-      myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);      
+      myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);
       authCode = myAxoomLoginPage.selectTenantAndReturnAuthCode(tenantId);
       Reporter.log("Logged into My Axoom");
 
@@ -115,7 +114,7 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
       requestParams.put("contentType", ContentType.FORM_URL_ENCODED);
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
       context.setAttribute("accessToken", accessToken);
-      Reporter.log("Access Token Obtained: " + accessToken);      
+      Reporter.log("Access Token Obtained: " + accessToken);
       Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
 
     } catch (URISyntaxException e) {
@@ -142,5 +141,5 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
     Assert.assertTrue(response.statusCode() == 404,
         "Expected status code is 404 but the status is: " + response.statusCode());
 
-  } 
+  }
 }

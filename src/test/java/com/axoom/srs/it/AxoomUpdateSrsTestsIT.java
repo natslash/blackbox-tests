@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.client.utils.URIBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -44,9 +46,10 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
   private String schemaId;
   private String schemaName;
   private String baseUri;
-  private WebDriver driver;  
+  private WebDriver driver;
   private Map<String, String> requestParams = new HashMap<>();
-
+  private static final Logger logger = Logger.getLogger(AxoomUpdateSrsTestsIT.class.getName());
+  
   @BeforeClass
   public void beforeClass() {
     inputEmail = EnvVariables.SYSTEM_INTEGRATOR_EMAIL;
@@ -101,7 +104,6 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
           .addParameter("client_id", clientId).addParameter("redirect_uri", redirectUri)
           .addParameter("scope", scope);
-      System.out.println(loginUrl);
       getDriver().get(loginUrl.toString());
       myAxoomLoginPage = initPage(driver, MyAxoomLoginPage.class);
       myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);
@@ -113,7 +115,6 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
       requestParams.put("contentType", ContentType.FORM_URL_ENCODED);
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
       Reporter.log("Access Token Obtained: " + accessToken);
-      System.out.println(accessToken);
       Assert.assertTrue(!accessToken.isEmpty(), "access token is empty");
 
     } catch (URISyntaxException e) {
@@ -125,7 +126,7 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
   @Test(dependsOnMethods = {"myAxoomLoginTest"})
   @Description("Create a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
-  public void createSchemaTest() {    
+  public void createSchemaTest() {
 
     // prepare Schema Values
     Map<String, String> schemaData = new HashMap<>();
@@ -142,19 +143,17 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + srs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post();
     if (response.statusCode() == 201) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       schemaId = response.getBody().jsonPath().getString("id");
       Assert.assertTrue(!schemaId.isEmpty(), "Schema is ID is null");
@@ -162,31 +161,30 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
     } else {
       Assert.fail("Create Schema failed: " + response.statusCode());
     }
-  }  
-  
+  }
+
   public Map<String, String> getSchemaDetailsTest() {
 
     Map<String, String> schemaDetails = new HashMap<>();
-    
+
     RestAssured.baseURI = baseUri + srs_endpoint + "/" + schemaId + "/versions" + "/latest";
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.get();
-    System.out.println(response.then().log().all(true));
-   if(response.statusCode() == 200) {
-     schemaDetails.put("schema", response.getBody().jsonPath().getString("schema"));
-     schemaDetails.put("version", response.getBody().jsonPath().getString("version"));
-    
-   }
+    logger.log(Level.INFO, response.then().log().all(true).toString());
+    if (response.statusCode() == 200) {
+      schemaDetails.put("schema", response.getBody().jsonPath().getString("schema"));
+      schemaDetails.put("version", response.getBody().jsonPath().getString("version"));
 
-   return schemaDetails;
+    }
+
+    return schemaDetails;
   }
-  
+
   @Test(dependsOnMethods = {"createSchemaTest"})
   @Description("Update a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
@@ -206,38 +204,36 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + srs_endpoint + "/" + schemaId;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.put("/");
     if (response.statusCode() == 409) {
-      System.out.println(response.then().log().all(true));
-      System.out.println(
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, 
           "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint() + "\nxxxxxxxxxxxxxxxxxxx\n");
     } else {
       Assert.fail("Update Invalid Schema failed: " + response.statusCode());
     }
 
-  } 
-  
-  
-  @Test (dependsOnMethods = {"updateWithIncompatibleSchemaTest"})
+  }
+
+
+  @Test(dependsOnMethods = {"updateWithIncompatibleSchemaTest"})
   @Description("Update a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void updateSchemaTest() {
 
     String updatedSchemaString = null;
-    String partialSchemaString = "{\"name\":\"custom\",\"type\":\"double\", \"default\":1.0}";    
-    
-    //Get schema
-    Map<String, String> schemaBeforeUpdate = getSchemaDetailsTest();    
-    
+    String partialSchemaString = "{\"name\":\"custom\",\"type\":\"double\", \"default\":1.0}";
+
+    // Get schema
+    Map<String, String> schemaBeforeUpdate = getSchemaDetailsTest();
+
     // prepare Schema Values
     Map<String, String> schemaData = new HashMap<>();
     schemaData.put("name", schemaName);
@@ -252,33 +248,31 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + srs_endpoint + "/" + schemaId;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.put("/");
     if (response.statusCode() == 201) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       updatedSchemaString = response.getBody().jsonPath().getString("schema");
       int latestVersion = Integer.parseInt(response.getBody().jsonPath().getString("version"));
       int previousVersion = Integer.parseInt(schemaBeforeUpdate.get("version"));
-      Assert.assertTrue(!schemaBeforeUpdate.get("schema").contains(partialSchemaString));      
+      Assert.assertTrue(!schemaBeforeUpdate.get("schema").contains(partialSchemaString));
       Assert.assertTrue(updatedSchemaString.contains(partialSchemaString));
       Assert.assertTrue(latestVersion - previousVersion == 1);
     } else {
       Assert.fail("Update Valid Schema failed: " + response.statusCode());
     }
 
-  }      
-  
-  
+  }
+
+
   @Test(dependsOnMethods = {"updateSchemaTest"})
   @Description("Update a schema using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
@@ -290,7 +284,7 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
     schemaData.put("schema",
         "{\"type\":\"record\",\"name\":\"DeviceMeasurement\",\"namespace\":\"com.axoom.playground.devicemeasurement\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-micros\"},{\"name\":\"value\",\"type\":\"double\"},{\"name\":\"tenant\",\"type\":\"boolean\"}]}");
     schemaData.put("type", "avro");
-    
+
     String json = null;
     try {
       json = new ObjectMapper().writeValueAsString(schemaData);
@@ -298,27 +292,26 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + srs_endpoint + "/" + schemaId;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.put("/");
     if (response.statusCode() == 201) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       schemaId = response.getBody().jsonPath().getString("id");
       String version = response.getBody().jsonPath().getString("version");
       Assert.assertTrue(!schemaId.isEmpty(), "Schema is ID is null");
-      //Changing just the name should retain the version
+      // Changing just the name should retain the version
       Assert.assertTrue(version.equals("2"), "Version is not 2");
     } else {
-      Assert.fail("Update Schema name failed: " + response.statusCode() + "\n" +  response.asString());
+      Assert
+          .fail("Update Schema name failed: " + response.statusCode() + "\n" + response.asString());
     }
-  }  
+  }
 }

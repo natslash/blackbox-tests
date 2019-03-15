@@ -29,6 +29,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
   private String inputPasswordFieldId = "Input_Password";
   private String loginButtonId = "button-login";
   private static final Logger logger = Logger.getLogger(MyAxoomLoginPage.class.getName());
+
   public MyAxoomLoginPage(WebDriver driver) {
     super(driver);
   }
@@ -51,7 +52,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
     String tenantXpath = "//button[contains(@formaction, 'tenant=" + tenantId + "')]";
     tenantField = getDriver().findElement(By.xpath(tenantXpath));
     clickAndWaitForPageLoad(tenantField, 1);
-    String urlWithAuthCode = getDriver().getCurrentUrl();    
+    String urlWithAuthCode = getDriver().getCurrentUrl();
     String authCode = null;
     List<NameValuePair> params;
     try {
@@ -60,7 +61,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
         if (param.getName().equals("code"))
           authCode = param.getValue();
       }
-    } catch (URISyntaxException e) {      
+    } catch (URISyntaxException e) {
       e.printStackTrace();
     }
     return authCode;
@@ -71,18 +72,20 @@ public class MyAxoomLoginPage extends WebDriverPage {
     String clientId = requestParams.get("clientId");
     String secret = requestParams.get("secret");
     String redirectUri = requestParams.get("redirectUri");
-    String authCode = requestParams.get("authCode");    
+    String authCode = requestParams.get("authCode");
     String contentType = requestParams.get("contentType");
     String cisUrl = requestParams.get("cisUrl");
 
     RestAssured.baseURI = cisUrl + "/connect/token";
-    logger.log(Level.INFO, "-------------Begin getAccessToken-------------\n" + RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();        
+    logger.log(Level.INFO,
+        "-------------Begin getAccessToken-------------\n" + RestAssured.baseURI);
+    RequestSpecification request = RestAssured.given();
     request.formParam("code", authCode).formParam("grant_type", "authorization_code")
-        .formParam("client_id", clientId).formParam("redirect_uri", redirectUri).formParam("client_secret", secret);
-    request.header("Content-Type", contentType);  
+        .formParam("client_id", clientId).formParam("redirect_uri", redirectUri)
+        .formParam("client_secret", secret);
+    request.header("Content-Type", contentType);
     logger.log(Level.INFO, request.log().all(true).toString());
-    
+
     Response response = request.post();
     logger.log(Level.INFO, response.then().log().all(true).toString());
     logger.log(Level.INFO, "-------------End getAccessToken-------------\n");

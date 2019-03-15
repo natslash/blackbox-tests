@@ -75,20 +75,19 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
   }
-  
-  @AfterClass 
+
+  @AfterClass
   public void deleteDevice() {
 
     RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.delete("/");
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 204,
         "Expected status code is 204 but the status is: " + response.statusCode());
 
@@ -100,7 +99,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     Reporter.log("Stopped Test: " + this.getClass().getSimpleName());
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
-  } 
+  }
 
   @Test
   @Description("Create a device with invalid provider using DRS APIs")
@@ -127,29 +126,28 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + drs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post("/");
     if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
 
       Assert.assertTrue(response.statusCode() == 400,
           "Expected tatus code is 400 but the status is: " + response.statusCode());
 
     } else {
-      System.out.println(response.statusCode());
+      Assert.fail("Error Occurred");
+      logger.log(Level.INFO, "Status is: " + response.statusCode());
     }
   }
-  
+
   @Test
   @Description("Verify creating a device with invalid certificate format using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
@@ -175,7 +173,6 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     String baseURI = baseUri + drs_endpoint;
     RequestParams requestParams = new RequestParams();
     requestParams.setBaseURI(baseURI);
@@ -183,21 +180,23 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post("/");
     if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint()
-          + "\nxxxxxxxxxxxxxxxxxxx\n");
-      String errorMessage = "The publicKeyFormat has to match one of following formats: RSA_PEM, ES256_PEM, RSA_X509_PEM, ES256_X509_PEM";
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, 
+          "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint() + "\nxxxxxxxxxxxxxxxxxxx\n");
+      String errorMessage =
+          "The publicKeyFormat has to match one of following formats: RSA_PEM, ES256_PEM, RSA_X509_PEM, ES256_X509_PEM";
       Assert.assertTrue(response.getBody().asString().contains(errorMessage));
 
     } else {
-      System.out.println(response.statusCode());
+      Assert.fail("Errror occurred");
+      logger.log(Level.INFO, "Status is: " + response.statusCode());
     }
   }
-  
-  
+
+
   @Test
   @Description("Verify creating a device with invalid certificate using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
@@ -219,29 +218,27 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     try {
       json = new ObjectMapper().writeValueAsString(deviceValues);
     } catch (JsonProcessingException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + drs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post("/");
     if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint()
-          + "\nxxxxxxxxxxxxxxxxxxx\n");
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, 
+          "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint() + "\nxxxxxxxxxxxxxxxxxxx\n");
       String errorMessage = "Invalid RS256 certificate";
       Assert.assertTrue(response.getBody().asString().contains(errorMessage));
 
     } else {
-      System.out.println(response.statusCode());
+      Assert.fail("Error occurred");
+      logger.log(Level.INFO, "Status is: " + response.statusCode());
     }
   }
 
@@ -271,19 +268,17 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + drs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post("/");
     if (response.statusCode() == 201) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       deviceId = response.getBody().jsonPath().getString("id");
       Assert.assertTrue(response.statusCode() == 201,
@@ -292,7 +287,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     } else {
       Assert.fail("Create device failed: " + response.getBody().prettyPrint());
     }
-  }  
+  }
 
   @Test(dependsOnMethods = {"createDeviceTest"})
   @Description("Update a device with wrong IoT provider using DRS APIs")
@@ -320,22 +315,20 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.put();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 400,
         "Expected tatus code is 400 but the status is: " + response.statusCode());
 
   }
-  
+
   @Test(dependsOnMethods = {"createDeviceTest"})
   @Description("Update a device with no location using DRS APIs")
   @Severity(SeverityLevel.BLOCKER)
@@ -346,8 +339,8 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     config.put("publicKeyFormat", "rsa_x509_pem");
     config.put("publicKey", cert);
 
-    Map<String, Object> deviceValues = new HashMap<>();    
-    deviceValues.put("configuration", config);    
+    Map<String, Object> deviceValues = new HashMap<>();
+    deviceValues.put("configuration", config);
 
     String json = null;
     try {
@@ -357,17 +350,15 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.put();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 400,
         "Expected tatus code is 400 but the status is: " + response.statusCode());
 
@@ -385,8 +376,8 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     config.put("location", "europe-west1");
 
 
-    Map<String, Object> deviceValues = new HashMap<>();   
-    deviceValues.put("configuration", config);   
+    Map<String, Object> deviceValues = new HashMap<>();
+    deviceValues.put("configuration", config);
 
     String json = null;
     try {
@@ -396,22 +387,20 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.put();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 400,
         "Expected tatus code is 400 but the status is: " + response.statusCode());
 
   }
-  
+
 
   @Test(dependsOnMethods = {"createDeviceTest"})
   @Description("Update a device with No config using DRS APIs")
@@ -425,8 +414,8 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     config.put("location", "");
 
 
-    Map<String, Object> deviceValues = new HashMap<>();   
-    deviceValues.put("configuration", config);   
+    Map<String, Object> deviceValues = new HashMap<>();
+    deviceValues.put("configuration", config);
 
     String json = null;
     try {
@@ -436,9 +425,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + drs_endpoint + "/" + deviceId;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);

@@ -46,7 +46,7 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
   private String secret;
   private String cisUrl;
   private String srs_endpoint;
-  private String schemaId;  
+  private String schemaId;
   private String baseUri;
   private WebDriver driver;
   private int numOfSchemas;
@@ -107,7 +107,6 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
           .addParameter("client_id", clientId).addParameter("redirect_uri", redirectUri)
           .addParameter("scope", scope);
-      System.out.println(loginUrl);
       getDriver().get(loginUrl.toString());
       myAxoomLoginPage = initPage(driver, MyAxoomLoginPage.class);
       myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);
@@ -151,20 +150,20 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + srs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
-    Response response = request.post();    
-    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
+    logger.log(Level.INFO,
+        "-------------Request-------------\n" + request.log().all(true).toString());
+    Response response = request.post();
+    logger.log(Level.INFO,
+        "-------------Response-------------\n" + response.then().log().all(true).toString());
     if (response.statusCode() == 201) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       schemaId = response.getBody().jsonPath().getString("id");
       Assert.assertTrue(!schemaId.isEmpty(), "Schema is ID is null");
@@ -188,17 +187,17 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + srs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
-    Response response = request.post();    
-    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
+    logger.log(Level.INFO,
+        "-------------Request-------------\n" + request.log().all(true).toString());
+    Response response = request.post();
+    logger.log(Level.INFO,
+        "-------------Response-------------\n" + response.then().log().all(true).toString());
     if (response.statusCode() == 400) {
       logger.log(Level.INFO, response.then().log().all(true).toString());
       logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
@@ -209,9 +208,8 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
       Assert.assertTrue(nameErrorMsg.equalsIgnoreCase("[The Name field is required.]"));
       Assert.assertTrue(schemaErrorMsg.equalsIgnoreCase("[The Schema field is required.]"));
       Assert.assertTrue(TypeErrorMsg.equalsIgnoreCase("[The field Type is invalid.]"));
-    }
-    else {
-      Assert.fail("Test createEmptyRequestBodyTest failed" + response.statusCode()); 
+    } else {
+      Assert.fail("Test createEmptyRequestBodyTest failed" + response.statusCode());
     }
   }
 
@@ -234,27 +232,24 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + srs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post();
     if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       String nameErrorMsg = response.getBody().jsonPath().getString("Name");
       Assert.assertTrue(nameErrorMsg.equalsIgnoreCase("[The Name field is required.]"));
+    } else {
+      Assert.fail("Test createSchemaWithNoNameTest failed" + response.statusCode());
     }
-    else {
-      Assert.fail("Test createSchemaWithNoNameTest failed" + response.statusCode()); 
-    }
-    
+
   }
 
   @Test(dependsOnMethods = {"createSchemaTest"})
@@ -275,25 +270,22 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + srs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post();
     if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       String schemaErrorMsg = response.getBody().jsonPath().getString("Schema");
       Assert.assertTrue(schemaErrorMsg.equalsIgnoreCase("[The Schema field is required.]"));
-    }
-    else {
-      Assert.fail("Test  createSchemaWithNullSchemaTest failed" + response.statusCode()); 
+    } else {
+      Assert.fail("Test  createSchemaWithNullSchemaTest failed" + response.statusCode());
     }
   }
 
@@ -316,29 +308,26 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + srs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post();
     if (response.statusCode() == 400) {
-      System.out.println(response.then().log().all(true));
-      System.out.println("xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       String typeErrorMsg = response.getBody().jsonPath().getString("Type");
       Assert.assertTrue(typeErrorMsg.equalsIgnoreCase("[The field Type is invalid.]"));
     }
-    
-    else if(response.statusCode() == 201){
+
+    else if (response.statusCode() == 201) {
       Assert.fail("Schema without type can be created " + response.statusCode());
-    }
-    else {
-      Assert.fail("Test  createSchemaWithNoTypeTest failed" + response.statusCode()); 
+    } else {
+      Assert.fail("Test  createSchemaWithNoTypeTest failed" + response.statusCode());
     }
   }
 
@@ -360,22 +349,21 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
       e.printStackTrace();
     }
 
-    System.out.println(json);
     RestAssured.baseURI = baseUri + srs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
-    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
-    Response response = request.post();    
-    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
-    System.out.println(
+    logger.log(Level.INFO,
+        "-------------Request-------------\n" + request.log().all(true).toString());
+    Response response = request.post();
+    logger.log(Level.INFO,
+        "-------------Response-------------\n" + response.then().log().all(true).toString());
+    logger.log(Level.INFO, 
         "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint() + "\nxxxxxxxxxxxxxxxxxxx\n");
     // String nameErrorMsg = response.getBody().jsonPath().getString("Schema");
-    Assert.assertTrue(
-        response.getBody().asString().contains("Invalid Avro schema"));
+    Assert.assertTrue(response.getBody().asString().contains("Invalid Avro schema"));
     Assert.assertTrue(response.statusCode() == 422,
         "Expected Status code is 400, but the actual status code is: " + response.statusCode());
   }
@@ -386,15 +374,14 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
   public void getSchemaDetailsTest() {
 
     RestAssured.baseURI = baseUri + srs_endpoint + "/" + schemaId + "/versions" + "/latest";
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.get();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
 
@@ -409,23 +396,23 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
     Assert.assertTrue(numOfSchemas + 1 == numOfSchemasAfterCreation,
         "The total number of scehmas should not be more than " + numOfSchemas + 1
             + ". total Number of schemas: " + numOfSchemasAfterCreation);
-  }  
+  }
 
-  //@Test
+  // @Test
   @Description("Get a non existent schema�s details using SRS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getNonExistentSchemaDetailsTest() {
 
     RestAssured.baseURI = baseUri + srs_endpoint + "/" + 999999 + "/verions/" + "1";
-    System.out.println(RestAssured.baseURI);
+    logger.log(Level.INFO, RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.get();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 404,
         "Expected status code is 404 but the status is:" + response.statusCode());
   }
@@ -436,15 +423,14 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
   public void getHealth() {
 
     RestAssured.baseURI = baseUri + "/health";
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.PLAIN_TEXT);
     request.header("Authorization", "Bearer " + accessToken);
 
-    System.out.println(request.log().all(true));
+    logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.get();
-    System.out.println(response.then().log().all(true));
+    logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
   }
@@ -452,19 +438,20 @@ public class AxoomCreateSrsTestsIT extends WebDriverTest {
   public int getNumberOfSchemas() {
     logger.log(Level.INFO, "-------------getNumberOfSchemas-------------\n" + RestAssured.baseURI);
     RestAssured.baseURI = baseUri + srs_endpoint;
-    System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
     request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
 
-    logger.log(Level.INFO, "-------------Request-------------\n" + request.log().all(true).toString());    
-    Response response = request.get();    
-    logger.log(Level.INFO, "-------------Response-------------\n" + response.then().log().all(true).toString());
+    logger.log(Level.INFO,
+        "-------------Request-------------\n" + request.log().all(true).toString());
+    Response response = request.get();
+    logger.log(Level.INFO,
+        "-------------Response-------------\n" + response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
     JsonParser parser = new JsonParser();
-    JsonObject responseJson = (JsonObject) parser.parse(response.asString());    
+    JsonObject responseJson = (JsonObject) parser.parse(response.asString());
     JsonArray schemasArray = responseJson.getAsJsonArray("elements");
     return schemasArray.size();
   }

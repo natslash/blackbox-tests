@@ -64,7 +64,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     redirectUri = EnvVariables.DRS_REDIRECT_URI;
     scope = EnvVariables.DRS_SCOPES;
     cisUrl = EnvVariables.CIS_URL;
-    secret = EnvVariables.SECRET;    
+    secret = EnvVariables.SECRET;
     drs_endpoint = EnvVariables.DRS_DEVICES_API;
     baseUri = EnvVariables.DRS_BASEURI;
     authCode = null;
@@ -161,20 +161,20 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    
+
     String baseURI = baseUri + drs_endpoint;
-    
+
     RequestParams requestParams = new RequestParams();
     requestParams.setBaseURI(baseURI);
     requestParams.setContentType(ContentType.APPLICATION_JSON);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     request.body(json);
-    
+
     logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.post();
-    
-    if (response.statusCode() == 201) {      
+
+    if (response.statusCode() == 201) {
       logger.log(Level.INFO, "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().jsonPath().prettyPrint()
           + "\nxxxxxxxxxxxxxxxxxxx\n");
       deviceId = response.getBody().jsonPath().getString("id");
@@ -251,10 +251,10 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     request.body(json);
-    
+
     logger.log(Level.INFO, request.log().all(true).toString());
     Response response = request.put();
-    
+
     logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
         "Expected tatus code is 200 but the status is: " + response.statusCode());
@@ -272,7 +272,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     requestParams.setContentType(ContentType.APPLICATION_JSON);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
-    
+
     Response response = request.delete();
     logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 204,
@@ -291,7 +291,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     requestParams.setContentType(ContentType.APPLICATION_JSON);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
-    
+
     Response response = request.get();
     logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 404,
@@ -310,10 +310,10 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     requestParams.setContentType(ContentType.APPLICATION_JSON);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
-    
+
     Response response = request.delete();
     logger.log(Level.INFO, response.then().log().all(true).toString());
-    
+
     Assert.assertTrue(response.statusCode() == 404,
         "Expected tatus code is 204 but the status is: " + response.statusCode());
 
@@ -330,10 +330,10 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     requestParams.setContentType(ContentType.PLAIN_TEXT);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
-    
+
     Response response = request.get();
     logger.log(Level.INFO, response.then().log().all(true).toString());
-    
+
     Assert.assertTrue(response.statusCode() == 200,
         "Expected status code is 200 but the status is: " + response.statusCode());
 
@@ -346,7 +346,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     requestParams.setContentType(ContentType.APPLICATION_JSON);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
-    
+
     Response response = request.get();
     logger.log(Level.INFO, response.then().log().all(true).toString());
     Assert.assertTrue(response.statusCode() == 200,
