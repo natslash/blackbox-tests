@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.axoom.drs.utils.ContentType;
 import com.axoom.drs.utils.RestUtils;
 import axoom.records.v1.Records.Record;
 import io.grpc.ManagedChannel;
@@ -37,7 +38,7 @@ public class QrecordsClient {
     requestParams.put("scope", "https://apis.axoom.com/scopes/qrecords.read");
     requestParams.put("clientId", "records-query-api-test-client");
     requestParams.put("clientSecret", System.getenv("QREC_SECRET"));
-    requestParams.put("contentType", "application/x-www-form-urlencoded");
+    requestParams.put("contentType", ContentType.FORM_URL_ENCODED);
     
     String accessToken = RestUtils.getAccessTokenFromClientCredsFlow(requestParams);
     logger.log(Level.INFO, "Access Token: " + accessToken);

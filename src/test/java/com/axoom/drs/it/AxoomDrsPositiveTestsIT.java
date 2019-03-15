@@ -18,6 +18,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.drs.pages.MyAxoomLoginPage;
 import com.axoom.drs.utils.AxoomRequest;
+import com.axoom.drs.utils.ContentType;
 import com.axoom.drs.utils.RequestParams;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -104,7 +105,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void myAxoomLoginTest(ITestContext context) throws InterruptedException {
 
-    String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
+    String baseUrl = cisUrl + "/connect/authorize";
     try {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
           .addParameter("client_id", clientId).addParameter("redirect_uri", redirectUri)
@@ -118,7 +119,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
       requestParams.put("authCode", authCode);
       requestParams.put("authType", "Basic");
-      requestParams.put("contentType", "application/x-www-form-urlencoded");
+      requestParams.put("contentType", ContentType.FORM_URL_ENCODED);
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
       context.setAttribute("accessToken", accessToken);
       Reporter.log("Access Token Obtained: " + accessToken);
@@ -164,7 +165,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     
     RequestParams requestParams = new RequestParams();
     requestParams.setBaseURI(baseURI);
-    requestParams.setContentType("application/json");
+    requestParams.setContentType(ContentType.APPLICATION_JSON);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     request.body(json);
@@ -193,7 +194,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
     RequestParams requestParams = new RequestParams();
     requestParams.setBaseURI(baseURI);
-    requestParams.setContentType("application/json");
+    requestParams.setContentType(ContentType.APPLICATION_JSON);
     requestParams.setAuthorization(accessToken);
 
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
@@ -239,14 +240,13 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     try {
       json = new ObjectMapper().writeValueAsString(deviceValues);
     } catch (JsonProcessingException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
     String baseURI = baseUri + drs_endpoint + "/" + deviceId;
     RequestParams requestParams = new RequestParams();
     requestParams.setBaseURI(baseURI);
-    requestParams.setContentType("application/json");
+    requestParams.setContentType(ContentType.APPLICATION_JSON);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     request.body(json);
@@ -268,7 +268,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     String baseURI = baseUri + drs_endpoint + "/" + deviceId;
     RequestParams requestParams = new RequestParams();
     requestParams.setBaseURI(baseURI);
-    requestParams.setContentType("application/json");
+    requestParams.setContentType(ContentType.APPLICATION_JSON);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     
@@ -287,7 +287,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     String baseURI = baseUri + drs_endpoint + "/" + deviceId;
     RequestParams requestParams = new RequestParams();
     requestParams.setBaseURI(baseURI);
-    requestParams.setContentType("application/json");
+    requestParams.setContentType(ContentType.APPLICATION_JSON);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     
@@ -306,7 +306,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     String baseURI = baseUri + drs_endpoint + "/" + deviceId;
     RequestParams requestParams = new RequestParams();
     requestParams.setBaseURI(baseURI);
-    requestParams.setContentType("application/json");
+    requestParams.setContentType(ContentType.APPLICATION_JSON);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     
@@ -326,7 +326,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     String baseURI = baseUri + "/health";
     RequestParams requestParams = new RequestParams();
     requestParams.setBaseURI(baseURI);
-    requestParams.setContentType("text/plain");
+    requestParams.setContentType(ContentType.PLAIN_TEXT);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     
@@ -342,7 +342,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     String baseURI = baseUri + drs_endpoint;
     RequestParams requestParams = new RequestParams();
     requestParams.setBaseURI(baseURI);
-    requestParams.setContentType("application/json");
+    requestParams.setContentType(ContentType.APPLICATION_JSON);
     requestParams.setAuthorization(accessToken);
     RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     

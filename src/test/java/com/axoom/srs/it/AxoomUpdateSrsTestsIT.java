@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.drs.pages.MyAxoomLoginPage;
+import com.axoom.drs.utils.ContentType;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -94,7 +95,7 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void myAxoomLoginTest() throws InterruptedException {
 
-    String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
+    String baseUrl = cisUrl + "/connect/authorize";
     try {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
           .addParameter("client_id", clientId).addParameter("redirect_uri", redirectUri)
@@ -108,7 +109,7 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
 
       requestParams.put("authCode", authCode);
       requestParams.put("authType", "Basic");
-      requestParams.put("contentType", "application/x-www-form-urlencoded");
+      requestParams.put("contentType", ContentType.FORM_URL_ENCODED);
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
       Reporter.log("Access Token Obtained: " + accessToken);
       System.out.println(accessToken);
@@ -145,7 +146,7 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
@@ -170,7 +171,7 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
 
     System.out.println(request.log().all(true));
@@ -209,7 +210,7 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
@@ -255,7 +256,7 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
@@ -301,7 +302,7 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));

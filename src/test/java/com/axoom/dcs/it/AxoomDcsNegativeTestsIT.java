@@ -17,6 +17,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.drs.pages.MyAxoomLoginPage;
+import com.axoom.drs.utils.ContentType;
 import com.axoom.talos.framework.WebDriverTest;
 import axoom.records.v1.QrecordsClient;
 import io.qameta.allure.Description;
@@ -95,7 +96,7 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void myAxoomLoginTest(ITestContext context) throws InterruptedException {    
     
-     String baseUrl = "https://account.dev.myaxoom.com/connect/authorize";
+     String baseUrl = cisUrl + "/connect/authorize";
      
     try {
       URIBuilder loginUrl = new URIBuilder(baseUrl).addParameter("response_type", "code")
@@ -110,7 +111,7 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
 
       requestParams.put("authCode", authCode);
       requestParams.put("authType", "Basic");
-      requestParams.put("contentType", "application/x-www-form-urlencoded");
+      requestParams.put("contentType", ContentType.FORM_URL_ENCODED);
       accessToken = myAxoomLoginPage.getAccessToken(requestParams);
       context.setAttribute("accessToken", accessToken);
       Reporter.log("Access Token Obtained: " + accessToken);      
@@ -122,7 +123,7 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
   }
 
   @Test(dependsOnMethods = {"myAxoomLoginTest"})
-  @Description("Get a data composition´s details from other tenant using DCS APIs")
+  @Description("Get a data compositionï¿½s details from other tenant using DCS APIs")
   @Severity(SeverityLevel.BLOCKER)
   public void getDataCompositionDetailsFromOtherTenantTest(ITestContext context) {
     dataCompositionId = (String) context.getAttribute("dataCompositionId");
@@ -131,7 +132,7 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
 
     logger.log(Level.INFO, request.log().all(true).toString());

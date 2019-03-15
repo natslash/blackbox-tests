@@ -14,6 +14,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import com.axoom.drs.utils.AxoomRequest;
+import com.axoom.drs.utils.ContentType;
+import com.axoom.drs.utils.RequestParams;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -79,7 +82,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
 
     System.out.println(request.log().all(true));
@@ -128,7 +131,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
@@ -172,12 +175,12 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     }
 
     System.out.println(json);
-    RestAssured.baseURI = baseUri + drs_endpoint;
-    System.out.println(RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-
-    request.header("Content-Type", "application/json");
-    request.header("Authorization", "Bearer " + accessToken);
+    String baseURI = baseUri + drs_endpoint;
+    RequestParams requestParams = new RequestParams();
+    requestParams.setBaseURI(baseURI);
+    requestParams.setContentType(ContentType.APPLICATION_JSON);
+    requestParams.setAuthorization(accessToken);
+    RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
     request.body(json);
     System.out.println(request.log().all(true));
     Response response = request.post("/");
@@ -224,7 +227,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
@@ -272,7 +275,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
@@ -321,7 +324,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
@@ -358,7 +361,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
@@ -397,7 +400,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     System.out.println(request.log().all(true));
@@ -437,7 +440,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     System.out.println(RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
 
-    request.header("Content-Type", "application/json");
+    request.header("Content-Type", ContentType.APPLICATION_JSON);
     request.header("Authorization", "Bearer " + accessToken);
     request.body(json);
     logger.log(Level.INFO, request.log().all(true).toString());
