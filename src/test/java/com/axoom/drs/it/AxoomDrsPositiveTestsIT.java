@@ -16,9 +16,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import com.axoom.constants.ContentType;
+import com.axoom.constants.EnvVariables;
 import com.axoom.drs.pages.MyAxoomLoginPage;
 import com.axoom.drs.utils.AxoomRequest;
-import com.axoom.drs.utils.ContentType;
 import com.axoom.drs.utils.RequestParams;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -56,19 +57,19 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
 
   @BeforeClass
   public void beforeClass() {
-    inputEmail = System.getenv("SYSTEM_INTEGRATOR_EMAIL");
-    inputPassword = System.getenv("SYSTEM_INTEGRATOR_PASSWORD");
-    tenantId = System.getenv("TENANT_ID");
-    clientId = System.getenv("DRS_CLIENT_ID");
-    redirectUri = System.getenv("DRS_REDIRECT_URI");
-    scope = System.getenv("DRS_SCOPES");
-    cisUrl = System.getenv("CIS_URL");
-    secret = System.getenv("SECRET");
+    inputEmail = EnvVariables.SYSTEM_INTEGRATOR_EMAIL;
+    inputPassword = EnvVariables.SYSTEM_INTEGRATOR_PASSWORD;
+    tenantId = EnvVariables.TENANT_ID;
+    clientId = EnvVariables.DRS_CLIENT_ID;
+    redirectUri = EnvVariables.DRS_REDIRECT_URI;
+    scope = EnvVariables.DRS_SCOPES;
+    cisUrl = EnvVariables.CIS_URL;
+    secret = EnvVariables.SECRET;    
+    drs_endpoint = EnvVariables.DRS_DEVICES_API;
+    baseUri = EnvVariables.DRS_BASEURI;
     authCode = null;
     accessToken = null;
     deviceId = null;
-    drs_endpoint = System.getenv("DRS_DEVICES_API");
-    baseUri = "https://device-registration-service.dev.myaxoom.com";
     numOfDevices = 0;
     cert =
         "-----BEGIN CERTIFICATE-----\nMIIDBTCCAe2gAwIBAgIUF1iV/9udf9JB8v2yvHbNC2A0deAwDQYJKoZIhvcNAQELBQAwETEPMA0GA1UEAwwGdW51c2VkMCAXDTE5MDEzMDE1MTc1NloYDzQ3NTYxMjI3MTUxNzU2WjARMQ8wDQYDVQQDDAZ1bnVzZWQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDtCQTYfELLfHNJWxmW5JYYnIpptHh4GWSo+/ZJOZhcRFozTR944sLQ582bdjEggosCs8XfIjXfSMCHT3Jbo2MVCgW2W/8dG1hRke/UN6T0Gz89QqCHrve4C3n/N4k+KbxOCOEfkXEZvaljGZ/uVSpnlHBztAXxxWlG9EoXqD3swj9i3jfvdLGzw1owIB19PZL7i+TKgpVDz6Kexa0f7d5n7Sp5ASxuWbcs/+UsPFRePZT8zMsuPhXp9yVSjtd2QktBNezsSI8b3JeyFg0KXgjv4VoP1RRaD+CkGhJKkLQp4afq4yVaPUiJttQwpT0dMXzdmfgP1e9w5WVLdwT0O0gjAgMBAAGjUzBRMB0GA1UdDgQWBBTE9NeokJNR2uhUQkqrQcrDlu/UajAfBgNVHSMEGDAWgBTE9NeokJNR2uhUQkqrQcrDlu/UajAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCxam8a8cYrO7XN7XAhzUlbZ1eNCYl45CeFsrM8MUBPpXmGIO7QjkVIIJhD6AWDCeXWaDL80su4YPZMMpOLwVeVsJwAMMs5KAqkieifsz1UJg4PBZVfpN6jBtkONAFBj6RcZTUEo8gvH/rI166oqD+zcKiVkkZYSS2MFzYcLZAkGbtEytefcZzycrGPCSnhOg245cDhSP7CBTNBRW54C8TuzhdaRqjAgwYeSEoQKAMiIKJCldornqHlK/XFU7A7QRuT3vTEVbisUqqMRpIfa8vilb1GMIDIJihSyhN2EWGTg7garew8uGDpIQMeFZVhgc2GHkXB8u4I68dhbpm1KUc5\n-----END CERTIFICATE-----";

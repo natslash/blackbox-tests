@@ -18,9 +18,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import com.axoom.constants.ContentType;
+import com.axoom.constants.EnvVariables;
 import com.axoom.drs.devices.MqttExample;
 import com.axoom.drs.pages.MyAxoomLoginPage;
-import com.axoom.drs.utils.ContentType;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,21 +62,21 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
 
   @BeforeClass
   public void beforeClass() {
-    inputEmail = System.getenv("SYSTEM_INTEGRATOR_EMAIL");
-    inputPassword = System.getenv("SYSTEM_INTEGRATOR_PASSWORD");
-    tenantId = System.getenv("TENANT_ID");
-    clientId = System.getenv("DRS_CLIENT_ID");
-    redirectUri = System.getenv("DRS_REDIRECT_URI");
-    scope = System.getenv("DRS_SCOPES");
-    cisUrl = System.getenv("CIS_URL");
-    secret = System.getenv("SECRET");
-    projectId = System.getenv("PROJECT_ID");
-    providerRegion = System.getenv("PROVIDER_REGION");
+    inputEmail = EnvVariables.SYSTEM_INTEGRATOR_EMAIL;
+    inputPassword = EnvVariables.SYSTEM_INTEGRATOR_PASSWORD;
+    tenantId = EnvVariables.TENANT_ID;
+    clientId = EnvVariables.DRS_CLIENT_ID;
+    redirectUri = EnvVariables.DRS_REDIRECT_URI;
+    scope = EnvVariables.DRS_SCOPES;
+    cisUrl = EnvVariables.CIS_URL;
+    secret = EnvVariables.SECRET;
+    projectId = EnvVariables.PROJECT_ID;
+    providerRegion = EnvVariables.PROVIDER_REGION;
+    drs_endpoint = EnvVariables.DRS_DEVICES_API;
     authCode = null;
     accessToken = null;
-    deviceId = null;
-    drs_endpoint = System.getenv("DRS_DEVICES_API");
-    baseUri = "https://device-registration-service.dev.myaxoom.com";    
+    deviceId = null;    
+    baseUri = EnvVariables.DRS_BASEURI;   
     cert =
         "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+SbFi/8yDdq3rOBOSVTcja4HHUJ7DXhsKds3iqMU8cP2bX7bNkb3DSsHwO1/29bJrX2IWiC+xfXSoEePmsVQNw==\n-----END PUBLIC KEY-----";
     requestParams.put("clientId", clientId);

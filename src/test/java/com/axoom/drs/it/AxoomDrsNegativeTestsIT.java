@@ -14,8 +14,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import com.axoom.constants.ContentType;
+import com.axoom.constants.EnvVariables;
 import com.axoom.drs.utils.AxoomRequest;
-import com.axoom.drs.utils.ContentType;
 import com.axoom.drs.utils.RequestParams;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -45,15 +46,15 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
 
   @BeforeClass
   public void beforeClass(ITestContext context) {
-    tenantId = System.getenv("TENANT_ID");
-    clientId = System.getenv("DRS_CLIENT_ID");
-    redirectUri = System.getenv("DRS_REDIRECT_URI");
-    cisUrl = System.getenv("CIS_URL");
-    secret = System.getenv("SECRET");
+    tenantId = EnvVariables.TENANT_ID;
+    clientId = EnvVariables.DRS_CLIENT_ID;
+    redirectUri = EnvVariables.DRS_REDIRECT_URI;
+    cisUrl = EnvVariables.CIS_URL;
+    secret = EnvVariables.SECRET;
     accessToken = (String) context.getAttribute("accessToken");
     deviceId = null;
-    drs_endpoint = System.getenv("DRS_DEVICES_API");
-    baseUri = "https://device-registration-service.dev.myaxoom.com";
+    drs_endpoint = EnvVariables.DRS_DEVICES_API;
+    baseUri = EnvVariables.DRS_BASEURI;
     cert =
         "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE+SbFi/8yDdq3rOBOSVTcja4HHUJ7DXhsKds3iqMU8cP2bX7bNkb3DSsHwO1/29bJrX2IWiC+xfXSoEePmsVQNw==\n-----END PUBLIC KEY-----";
     requestParams.put("clientId", clientId);

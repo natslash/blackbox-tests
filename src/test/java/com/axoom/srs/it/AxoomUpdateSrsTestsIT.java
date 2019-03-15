@@ -13,8 +13,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import com.axoom.constants.ContentType;
+import com.axoom.constants.EnvVariables;
 import com.axoom.drs.pages.MyAxoomLoginPage;
-import com.axoom.drs.utils.ContentType;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,20 +49,20 @@ public class AxoomUpdateSrsTestsIT extends WebDriverTest {
 
   @BeforeClass
   public void beforeClass() {
-    inputEmail = System.getenv("SYSTEM_INTEGRATOR_EMAIL");
-    inputPassword = System.getenv("SYSTEM_INTEGRATOR_PASSWORD");
-    tenantId = System.getenv("TENANT_ID");
-    clientId = System.getenv("SRS_CLIENT_ID");
-    redirectUri = System.getenv("SRS_REDIRECT_URI");
-    scope = System.getenv("SRS_SCOPES");
-    cisUrl = System.getenv("CIS_URL");
-    secret = System.getenv("SECRET");
+    inputEmail = EnvVariables.SYSTEM_INTEGRATOR_EMAIL;
+    inputPassword = EnvVariables.SYSTEM_INTEGRATOR_PASSWORD;
+    tenantId = EnvVariables.TENANT_ID;
+    clientId = EnvVariables.SRS_CLIENT_ID;
+    redirectUri = EnvVariables.SRS_REDIRECT_URI;
+    scope = EnvVariables.SRS_SCOPES;
+    cisUrl = EnvVariables.CIS_URL;
+    secret = EnvVariables.SECRET;
     authCode = null;
     accessToken = null;
     schemaId = null;
     schemaName = null;
-    srs_endpoint = System.getenv("SRS_API");
-    baseUri = "https://schema-registration-service.dev.myaxoom.com";
+    srs_endpoint = EnvVariables.SRS_API;
+    baseUri = EnvVariables.SRS_BASEURI;
     requestParams.put("clientId", clientId);
     requestParams.put("redirectUri", redirectUri);
     requestParams.put("cisUrl", cisUrl);

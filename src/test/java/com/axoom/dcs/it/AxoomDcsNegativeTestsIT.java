@@ -16,8 +16,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import com.axoom.constants.ContentType;
+import com.axoom.constants.EnvVariables;
 import com.axoom.drs.pages.MyAxoomLoginPage;
-import com.axoom.drs.utils.ContentType;
 import com.axoom.talos.framework.WebDriverTest;
 import axoom.records.v1.QrecordsClient;
 import io.qameta.allure.Description;
@@ -50,19 +51,19 @@ public class AxoomDcsNegativeTestsIT extends WebDriverTest {
 
   @BeforeClass
   public void beforeClass() {
-    inputEmail = System.getenv("SYSTEM_INTEGRATOR_EMAIL");
-    inputPassword = System.getenv("SYSTEM_INTEGRATOR_PASSWORD");
+    inputEmail = EnvVariables.SYSTEM_INTEGRATOR_EMAIL;
+    inputPassword = EnvVariables.SYSTEM_INTEGRATOR_PASSWORD;
     tenantId = "blackboxtest02";
-    clientId = System.getenv("DCS_CLIENT_ID");
-    redirectUri = System.getenv("DCS_REDIRECT_URI");
-    scope = System.getenv("DCS_SCOPES");
-    cisUrl = System.getenv("CIS_URL");
-    secret = System.getenv("SECRET");
+    clientId = EnvVariables.DCS_CLIENT_ID;
+    redirectUri = EnvVariables.DCS_REDIRECT_URI;
+    scope = EnvVariables.DCS_SCOPES;
+    cisUrl = EnvVariables.CIS_URL;
+    secret = EnvVariables.SECRET;
     authCode = null;
     accessToken = null;
     dataCompositionId = null;
-    dcs_endpoint = System.getenv("DCS_API");
-    baseUri = "https://data-composition-service.dev.myaxoom.com";
+    dcs_endpoint = EnvVariables.DCS_API;
+    baseUri = EnvVariables.DCS_BASEURI;
     requestParams.put("clientId", clientId);
     requestParams.put("redirectUri", redirectUri);
     requestParams.put("cisUrl", cisUrl);

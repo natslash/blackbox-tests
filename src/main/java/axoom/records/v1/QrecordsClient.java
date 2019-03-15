@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.axoom.drs.utils.ContentType;
+import com.axoom.constants.ContentType;
 import com.axoom.drs.utils.RestUtils;
 import axoom.records.v1.Records.Record;
 import io.grpc.ManagedChannel;

@@ -16,8 +16,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import com.axoom.constants.ContentType;
+import com.axoom.constants.EnvVariables;
 import com.axoom.drs.pages.MyAxoomLoginPage;
-import com.axoom.drs.utils.ContentType;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,16 +57,16 @@ public class AxoomDcsPositiveTestsIT extends WebDriverTest {
 
   @BeforeClass
   public void beforeClass() {
-    inputEmail = System.getenv("SYSTEM_INTEGRATOR_EMAIL");
-    inputPassword = System.getenv("SYSTEM_INTEGRATOR_PASSWORD");
-    tenantId = System.getenv("TENANT_ID");
-    clientId = System.getenv("DCS_CLIENT_ID");
-    redirectUri = System.getenv("DCS_REDIRECT_URI");
-    scope = System.getenv("DCS_SCOPES");
-    cisUrl = System.getenv("CIS_URL");
-    secret = System.getenv("SECRET");    
-    dcs_endpoint = System.getenv("DCS_API");
-    baseUri = "https://data-composition-service.dev.myaxoom.com";
+    inputEmail = EnvVariables.SYSTEM_INTEGRATOR_EMAIL;
+    inputPassword = EnvVariables.SYSTEM_INTEGRATOR_PASSWORD;
+    tenantId = EnvVariables.TENANT_ID;
+    clientId = EnvVariables.DCS_CLIENT_ID;
+    redirectUri = EnvVariables.DCS_REDIRECT_URI;
+    scope = EnvVariables.DCS_SCOPES;
+    cisUrl = EnvVariables.CIS_URL;
+    secret = EnvVariables.SECRET;    
+    dcs_endpoint = EnvVariables.DCS_API;
+    baseUri = EnvVariables.DCS_BASEURI;
     numOfDataCompositions = 0;
     requestParams.put("clientId", clientId);
     requestParams.put("redirectUri", redirectUri);

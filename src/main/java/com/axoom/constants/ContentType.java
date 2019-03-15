@@ -1,4 +1,4 @@
-package com.axoom.drs.utils;
+package com.axoom.constants;
 
 public final class ContentType {
   
