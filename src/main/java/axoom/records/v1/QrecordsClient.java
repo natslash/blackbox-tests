@@ -6,30 +6,31 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.axoom.constants.ContentType;
-import com.axoom.drs.utils.RestUtils;
-import axoom.records.v1.Records.Record;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
 import io.grpc.Metadata.Key;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.MetadataUtils;
+import com.axoom.constants.ContentType;
+import com.axoom.drs.utils.RestUtils;
+import axoom.records.v1.Records.Record;
 
 public class QrecordsClient {
+
   private static final Logger logger = Logger.getLogger(QrecordsClient.class.getName());
 
   private final ManagedChannel channel;
   private final QRecordsGrpc.QRecordsBlockingStub blockingStub;
 
 
-  /** Construct client connecting to Qrecords server at {@code host:port}. */
+  /* Construct client connecting to Qrecords server at {@code host:port}. */
   public QrecordsClient(String host, int port) {
     this(ManagedChannelBuilder.forAddress(host, port).build());
 
   }
 
-  /** Construct client for accessing Qrecords server using the existing channel. */
+  /* Construct client for accessing Qrecords server using the existing channel. */
   QrecordsClient(ManagedChannel channel) {
     this.channel = channel;
 
@@ -53,16 +54,16 @@ public class QrecordsClient {
   }
 
 
-  public Iterator<Record> getRecordStream(String dataCompositionId) {
-    Qrecords.RecordStreamRequest request = Qrecords.RecordStreamRequest.newBuilder().setGroupId("1")
-        .setDataCompositionId(dataCompositionId).setTimeout(5).build();
+  public Iterator<Record> getRecordStream(String subscriptionId) {
+    Qrecords.RecordStreamRequest request = Qrecords.RecordStreamRequest.newBuilder()
+        .setSubscriptionId(subscriptionId).build();
 
     try {
       return blockingStub.getStream(request);
+      
     } catch (StatusRuntimeException e) {
       logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
       return null;
     }
   }
-
 }

@@ -13,6 +13,11 @@ public class RestUtils {
 
   private static final Logger logger = Logger.getLogger(RestUtils.class.getName());
 
+  /**
+   * 
+   * @param requestParams
+   * @return request
+   */
   public static RequestSpecification getPreparedRequest(Map<String, String> requestParams) {
 
     String clientId = requestParams.get("clientId");
@@ -31,6 +36,11 @@ public class RestUtils {
 
   }
 
+  /**
+   * 
+   * @param requestParams
+   * @return String
+   */
   public static String getAccessTokenFromClientCredsFlow(Map<String, String> requestParams) {
     RestAssured.baseURI = requestParams.get("baseUrl");
     RequestSpecification request = RestAssured.given();

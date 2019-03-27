@@ -22,6 +22,10 @@ import com.google.pubsub.v1.ReceivedMessage;
  */
 public class PubSubPublishererUtils {
 
+  /**
+   * 
+   * @throws Exception
+   */
   public static void createTopic() throws Exception {
     ProjectTopicName topic = ProjectTopicName.of("my-project-id", "my-topic-id");
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create()) {
@@ -29,6 +33,12 @@ public class PubSubPublishererUtils {
     }
   }
 
+  /**
+   * 
+   * @param projectId
+   * @param topicId
+   * @throws Exception
+   */
   public static void publishMessages(String projectId, String topicId) throws Exception {
     // [START pubsub_publish]
     ProjectTopicName topicName = ProjectTopicName.of(projectId, topicId);
@@ -67,6 +77,10 @@ public class PubSubPublishererUtils {
     // [END pubsub_publish]
   }
 
+  /**
+   * 
+   * @throws Exception
+   */
   public static void publishMessagesWithErrorHandler() throws Exception {
     // [START pubsub_publish_error_handler]
     ProjectTopicName topicName = ProjectTopicName.of("my-project-id", "my-topic-id");
@@ -116,6 +130,11 @@ public class PubSubPublishererUtils {
     // [END pubsub_publish_error_handler]
   }
 
+  /**
+   * 
+   * @param args
+   * @throws Exception
+   */
   public static void main(String... args) throws Exception {
     publishMessages("mvp-iotcore-eval", "blackboxtest01");
     List<ReceivedMessage> receivedMessages =

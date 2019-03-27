@@ -2,6 +2,7 @@ package com.axoom.drs.pages;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -56,7 +57,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
     String authCode = null;
     List<NameValuePair> params;
     try {
-      params = URLEncodedUtils.parse(new URI(urlWithAuthCode), "UTF-8");
+      params = URLEncodedUtils.parse(new URI(urlWithAuthCode), Charset.forName("UTF-8"));
       for (NameValuePair param : params) {
         if (param.getName().equals("code"))
           authCode = param.getValue();

@@ -14,6 +14,12 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 
 public class AxoomKafkaConsumer {
 
+  /**
+   * 
+   * @param topic
+   * @param serverAddress
+   * @return
+   */
   private static Consumer<Long, String> createConsumer(String topic, String serverAddress) {
     final Properties props = new Properties();
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, serverAddress);
@@ -29,6 +35,13 @@ public class AxoomKafkaConsumer {
     return consumer;
   }
 
+  /**
+   * 
+   * @param topic
+   * @param serverAddress
+   * @return numberOfRecords
+   * @throws InterruptedException
+   */
   public static int runConsumer(String topic, String serverAddress) throws InterruptedException {
     final Consumer<Long, String> consumer = createConsumer(topic, serverAddress);
     int numOfRecords = 0;

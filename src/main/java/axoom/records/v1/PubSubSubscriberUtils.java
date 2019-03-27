@@ -43,6 +43,10 @@ public class PubSubSubscriberUtils {
     this.done = done;
   }
 
+  /**
+   * 
+   * @throws Exception
+   */
   // [TARGET startAsync()]
   public void startAndWait() throws Exception {
     Subscriber subscriber = Subscriber.newBuilder(subscriptionName, receiver).build();
@@ -74,6 +78,12 @@ public class PubSubSubscriberUtils {
     subscriber.stopAsync().awaitTerminated();
   }
 
+  /**
+   * 
+   * @param projectId
+   * @param subscriptionId
+   * @throws Exception
+   */
   private static void createSubscriber(String projectId, String subscriptionId) throws Exception {
     ProjectSubscriptionName subscriptionName =
         ProjectSubscriptionName.of(projectId, subscriptionId);
@@ -103,6 +113,12 @@ public class PubSubSubscriberUtils {
     // [END pubsub_subscriber_async_pull]
   }
 
+  /**
+   * 
+   * @param subscriber
+   * @return subscriber
+   * @throws Exception
+   */
   public Subscriber createSubscriberWithErrorListener(Subscriber subscriber) throws Exception {
     // [START pubsub_subscriber_error_listener]
     subscriber.addListener(new Subscriber.Listener() {
@@ -114,6 +130,11 @@ public class PubSubSubscriberUtils {
     return subscriber;
   }
 
+  /**
+   * 
+   * @return subscriber
+   * @throws Exception
+   */
   public Subscriber createSingleThreadedSubscriber() throws Exception {
     // [START pubsub_subscriber_concurrency_control]
     // provide a separate executor service for polling
@@ -126,6 +147,11 @@ public class PubSubSubscriberUtils {
     return subscriber;
   }
 
+  /**
+   * 
+   * @return subscriber
+   * @throws Exception
+   */
   public Subscriber createSubscriberWithCustomFlowSettings() throws Exception {
     // [START pubsub_subscriber_flow_settings]
     FlowControlSettings flowControlSettings =
@@ -137,6 +163,11 @@ public class PubSubSubscriberUtils {
     return subscriber;
   }
 
+  /**
+   * 
+   * @return subscriber
+   * @throws Exception
+   */
   public Subscriber createSubscriberWithCustomCredentials() throws Exception {
     // [START pubsub_subscriber_custom_credentials]
     CredentialsProvider credentialsProvider = FixedCredentialsProvider
@@ -148,6 +179,14 @@ public class PubSubSubscriberUtils {
     return subscriber;
   }
 
+  /**
+   * 
+   * @param projectId
+   * @param subscriptionId
+   * @param numOfMessages
+   * @return
+   * @throws Exception
+   */
   static List<ReceivedMessage> createSubscriberWithSyncPull(String projectId, String subscriptionId,
       int numOfMessages) throws Exception {
     // [START pubsub_subscriber_sync_pull]
@@ -189,6 +228,14 @@ public class PubSubSubscriberUtils {
     }
     // [END pubsub_subscriber_sync_pull]
   }
+  
+  /**
+   * 
+   * @param projectId
+   * @param subscriptionId
+   * @param numOfMessages
+   * @return
+   */
 
   public static List<ReceivedMessage> synchronousPull(String projectId, String subscriptionId,
       int numOfMessages) {
@@ -234,15 +281,5 @@ public class PubSubSubscriberUtils {
       e.printStackTrace();
       return null;
     }
-  }
-
-  public static void main(String[] args) {
-    try {
-      createSubscriber("mvp-iotcore-eval", "blackboxtest01-shovel");
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
-  }
+  }  
 }
