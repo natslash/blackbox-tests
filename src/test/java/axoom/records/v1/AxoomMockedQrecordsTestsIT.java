@@ -1,15 +1,16 @@
 package axoom.records.v1;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -17,11 +18,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.axoom.talos.framework.WebDriverTest;
-import com.google.pubsub.v1.ReceivedMessage;
-import axoom.records.v1.PubSubPublishererUtils;
-import axoom.records.v1.PubSubSubscriberUtils;
-import axoom.records.v1.QrecordsClient;
+import com.google.protobuf.ByteString;
 import axoom.records.v1.Records.Record;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
@@ -29,16 +26,15 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 
-
 @Story("Positive test cases for SRS APIs")
-public class AxoomMockedQrecordsTestsIT extends WebDriverTest {
+public class AxoomMockedQrecordsTestsIT extends PowerMockTestCase {
   private String clientId;
   private String redirectUri;
   private String secret;
   private String cisUrl;
 
   @Mock
-  QrecordsClient client;
+  QrecordsClient mockedClient;
 
   @Mock
   Iterator<Record> mockedQRecords;
@@ -68,7 +64,6 @@ public class AxoomMockedQrecordsTestsIT extends WebDriverTest {
   public void beforeMethod() {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
-    // client = new QrecordsClient("qrecords.dev.myaxoom.com", 443);
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
     MockitoAnnotations.initMocks(this);
   }
@@ -85,11 +80,18 @@ public class AxoomMockedQrecordsTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void getPreProcessedQrecordsForDCTest() throws Exception {
     int count = 0;
-
-    Mockito.when(client.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6"))
+    Record mockedRecord = mock(Record.class);
+    ByteString mockedPayLoad = ByteString.copyFromUtf8("Mocked getPreProcessedQrecordsForDCTest Message");
+    
+    when(mockedClient.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6"))
         .thenReturn(mockedQRecords);
+    when(mockedQRecords.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
+    when(mockedQRecords.next()).thenReturn(mockedRecord);
+    when(mockedRecord.getPayload()).thenReturn(mockedPayLoad);
+    
     try {
-      Iterator<Record> qRecords = client.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
+      Iterator<Record> qRecords =
+          mockedClient.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
       while (qRecords.hasNext()) {
         logger.log(Level.INFO, qRecords.next().getPayload().toStringUtf8());
         count++;
@@ -104,7 +106,7 @@ public class AxoomMockedQrecordsTestsIT extends WebDriverTest {
         sre.printStackTrace();
       }
     } finally {
-      client.shutdown();
+      mockedClient.shutdown();
     }
   }
 
@@ -112,16 +114,19 @@ public class AxoomMockedQrecordsTestsIT extends WebDriverTest {
   @Description("Get QRecords from getStream")
   @Severity(SeverityLevel.BLOCKER)
   public void getPubSubRecordsFromGrpcTest() throws Exception {
-    PubSubPublishererUtils.publishMessages("mvp-iotcore-eval", "blackboxtest01");
-    Mockito.when(client.getRecordStream("blackboxtest01")).thenReturn(mockedQRecords);
-    List<ReceivedMessage> receivedMessages =
-        PubSubSubscriberUtils.synchronousPull("mvp-iotcore-eval", "blackboxtest01-shovel", 2);
-    for (ReceivedMessage receivedMessage : receivedMessages) {
-      logger.log(Level.INFO, receivedMessage.getMessage().getData().toStringUtf8());
-    }
+    
+    Record mockedRecord = mock(Record.class);
+    ByteString mockedPayLoad = ByteString.copyFromUtf8("Mocked getPubSubRecordsFromGrpcTest Message");
+
+    when(mockedClient.getRecordStream("blackboxtest01")).thenReturn(mockedQRecords);
+    when(mockedQRecords.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
+    when(mockedQRecords.next()).thenReturn(mockedRecord);
+    when(mockedRecord.getPayload()).thenReturn(mockedPayLoad);
+
+    
     int count = 0;
     try {
-      Iterator<Record> qRecords = client.getRecordStream("blackboxtest01");
+      Iterator<Record> qRecords = mockedClient.getRecordStream("blackboxtest01");
       while (qRecords.hasNext()) {
 
         logger.log(Level.INFO, qRecords.next().getPayload().toStringUtf8());
@@ -137,7 +142,7 @@ public class AxoomMockedQrecordsTestsIT extends WebDriverTest {
         sre.printStackTrace();
       }
     } finally {
-      client.shutdown();
+      mockedClient.shutdown();
     }
   }
 
