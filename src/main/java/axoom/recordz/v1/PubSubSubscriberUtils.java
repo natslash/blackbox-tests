@@ -1,4 +1,4 @@
-package axoom.records.v1;
+package axoom.recordz.v1;
 
 import java.io.FileInputStream;
 import java.io.IOException;

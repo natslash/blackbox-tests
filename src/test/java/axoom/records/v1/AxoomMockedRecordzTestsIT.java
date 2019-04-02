@@ -16,7 +16,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.google.protobuf.ByteString;
-import axoom.records.v1.Records.Record;
+import axoom.recordz.v1.Recordz.Record;
+import axoom.recordz.v1.RecordzClient;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -24,11 +25,11 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 
 @Story("Positive test cases for SRS APIs")
-public class AxoomMockedQrecordsTestsIT extends PowerMockTestCase {
+public class AxoomMockedRecordzTestsIT extends PowerMockTestCase {
 
   //Mock client connection to server
   @Mock
-  QrecordsClient mockedClient;
+  RecordzClient mockedClient;
 
   //Mock QRecords
   @Mock
@@ -40,7 +41,7 @@ public class AxoomMockedQrecordsTestsIT extends PowerMockTestCase {
 
   ByteString mockedPayLoad = ByteString.copyFromUtf8("Mocked Payload Message");
 
-  private static final Logger logger = Logger.getLogger(AxoomMockedQrecordsTestsIT.class.getName());
+  private static final Logger logger = Logger.getLogger(AxoomMockedRecordzTestsIT.class.getName());
 
 
   @BeforeClass
@@ -66,7 +67,7 @@ public class AxoomMockedQrecordsTestsIT extends PowerMockTestCase {
     when(mockedClient.getRecordStream("blackboxtest01")).thenReturn(mockedQRecords);
     when(mockedQRecords.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
     when(mockedQRecords.next()).thenReturn(mockedRecord);
-    when(mockedRecord.getPayload()).thenReturn(mockedPayLoad);
+    when(mockedRecord.getData()).thenReturn(mockedPayLoad);
   }
 
   @AfterMethod
@@ -87,7 +88,7 @@ public class AxoomMockedQrecordsTestsIT extends PowerMockTestCase {
       Iterator<Record> qRecords =
           mockedClient.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
       while (qRecords.hasNext()) {
-        logger.log(Level.INFO, qRecords.next().getPayload().toStringUtf8());
+        logger.log(Level.INFO, qRecords.next().getData().toStringUtf8());
         count++;
       }
       logger.log(Level.INFO, "Number of Records " + count);
@@ -114,7 +115,7 @@ public class AxoomMockedQrecordsTestsIT extends PowerMockTestCase {
       Iterator<Record> qRecords = mockedClient.getRecordStream("blackboxtest01");
       while (qRecords.hasNext()) {
 
-        logger.log(Level.INFO, qRecords.next().getPayload().toStringUtf8());
+        logger.log(Level.INFO, qRecords.next().getData().toStringUtf8());
         count++;
         logger.log(Level.INFO, "Current count is: " + count);
       }

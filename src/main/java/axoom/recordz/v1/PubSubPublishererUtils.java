@@ -1,4 +1,4 @@
-package axoom.records.v1;
+package axoom.recordz.v1;
 
 import java.util.ArrayList;
 import java.util.Arrays;

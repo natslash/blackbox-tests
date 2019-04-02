@@ -4,13 +4,16 @@ import static org.testng.Assert.assertEquals;
 import java.io.IOException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import axoom.recordmetas.v1.Recordmetas.RecordMeta;
-import axoom.recordmetas.v1.RecordmetasService.RecordMetaRequest;
+import axoom.recordmetaz.v1.RecordMetasImpl;
+import axoom.recordmetaz.v1.RecordMetazGrpc;
+import axoom.recordmetaz.v1.RecordMetazGrpc.RecordMetazBlockingStub;
+import axoom.recordmetaz.v1.Recordmetaz.RecordMeta;
+import axoom.recordmetaz.v1.RecordmetazService.RecordMetaRequest;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
 import io.grpc.testing.GrpcCleanupRule;
 
-public class RecordmetasServiceTest {
+public class RecordmetazServiceTest {
   private GrpcCleanupRule grpcCleanup;
 
   @BeforeMethod
@@ -32,7 +35,7 @@ public class RecordmetasServiceTest {
     }
 
     // Create a client channel and register for automatic graceful shutdown.
-    RecordMetasGrpc.RecordMetasBlockingStub blockingStub = RecordMetasGrpc.newBlockingStub(
+    RecordMetazBlockingStub blockingStub = RecordMetazGrpc.newBlockingStub(
         grpcCleanup.register(InProcessChannelBuilder.forName(serverName).directExecutor().build()));
     RecordMetaRequest request = RecordMetaRequest.newBuilder().setSubjectId("1").build(); 
     RecordMeta recordMeta =

@@ -1,4 +1,4 @@
-package axoom.records.v1;
+package axoom.recordz.v1;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,25 +14,26 @@ import io.grpc.StatusRuntimeException;
 import io.grpc.stub.MetadataUtils;
 import com.axoom.constants.ContentType;
 import com.axoom.drs.utils.RestUtils;
-import axoom.records.v1.Records.Record;
+import axoom.recordz.v1.Recordz.Record;
+import axoom.recordz.v1.RecordzService.RecordStreamRequest;
 
-public class QrecordsClient {
+public class RecordzClient {
 
-  private static final Logger logger = Logger.getLogger(QrecordsClient.class.getName());
+  private static final Logger logger = Logger.getLogger(RecordzClient.class.getName());
 
   private final ManagedChannel channel;
-  private final QRecordsGrpc.QRecordsBlockingStub blockingStub;
+  private final RecordzGrpc.RecordzBlockingStub blockingStub;
 
 
   /* Construct client connecting to Qrecords server at {@code host:port}. */
-  public QrecordsClient(String host, int port) {
+  public RecordzClient(String host, int port) {
     //Instantiate client and connect to server
     this(ManagedChannelBuilder.forAddress(host, port).build());
 
   }
 
   /* Construct client for accessing Qrecords server using the existing channel. */
-  QrecordsClient(ManagedChannel channel) {
+  RecordzClient(ManagedChannel channel) {
     this.channel = channel;
 
     Map<String, String> requestParams = new HashMap<String, String>();
@@ -51,7 +52,7 @@ public class QrecordsClient {
     authHeaders.put(Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), accessToken);
 
     //Attach headers
-    blockingStub = MetadataUtils.attachHeaders(QRecordsGrpc.newBlockingStub(channel), authHeaders);
+    blockingStub = MetadataUtils.attachHeaders(RecordzGrpc.newBlockingStub(channel), authHeaders);
   }
 
   public void shutdown() throws InterruptedException {
@@ -60,7 +61,7 @@ public class QrecordsClient {
 
 
   public Iterator<Record> getRecordStream(String subscriptionId) {
-    Qrecords.RecordStreamRequest request = Qrecords.RecordStreamRequest.newBuilder()
+    RecordStreamRequest request = RecordStreamRequest.newBuilder()
         .setSubscriptionId(subscriptionId).build();
 
     try {

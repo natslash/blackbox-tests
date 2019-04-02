@@ -25,8 +25,8 @@ import com.axoom.drs.pages.MyAxoomLoginPage;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import axoom.records.v1.QrecordsClient;
-import axoom.records.v1.Records.Record;
+import axoom.recordz.v1.Recordz.Record;
+import axoom.recordz.v1.RecordzClient;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -56,7 +56,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
   private String providerRegion;
   private String baseUri;
   private WebDriver driver;
-  private QrecordsClient client;
+  private RecordzClient client;
   private Map<String, String> requestParams = new HashMap<>();
   private static final Logger logger = Logger.getLogger(AxoomMqTTTestsIT.class.getName());
 
@@ -210,13 +210,13 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
         "-cloud_region=" + providerRegion, "-device_id=" + deviceId,
         "-private_key_file=" + privateKeyFilePath, "-algorithm=ES256"};
     int count = 0;
-    client = new QrecordsClient("qrecords.dev.myaxoom.com", 443);
+    client = new RecordzClient("qrecords.dev.myaxoom.com", 443);
     try {
       MqttExample.main(args);
 
       Iterator<Record> qRecords = client.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
       while (qRecords.hasNext()) {
-        logger.log(Level.INFO, qRecords.next().getPayload().toStringUtf8());
+        logger.log(Level.INFO, qRecords.next().getData().toStringUtf8());
         count++;
       }
       logger.log(Level.INFO, "Number of Records " + count);

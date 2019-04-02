@@ -5,15 +5,17 @@ import java.io.IOException;
 import java.util.Iterator;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import axoom.recordmetas.v1.Recordmetas.RecordMeta;
-import axoom.recordmetas.v1.RecordmetasService.RecordMetaListRequest;
-import axoom.recordmetas.v1.RecordmetasService.RecordMetaRequest;
-import axoom.recordmetas.v1.RecordmetasService.RecordMetaStreamRequest;
+import axoom.recordmetaz.v1.RecordMetasImpl;
+import axoom.recordmetaz.v1.RecordMetazGrpc;
+import axoom.recordmetaz.v1.RecordMetazGrpc.RecordMetazBlockingStub;
+import axoom.recordmetaz.v1.Recordmetaz.RecordMeta;
+import axoom.recordmetaz.v1.RecordmetazService.RecordMetaListRequest;
+import axoom.recordmetaz.v1.RecordmetazService.RecordMetaStreamRequest;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
 import io.grpc.testing.GrpcCleanupRule;
 
-public class RecordmetasStreamServiceTest {
+public class RecordmetazStreamServiceTest {
   private GrpcCleanupRule grpcCleanup;
 
   @BeforeMethod
@@ -36,7 +38,7 @@ public class RecordmetasStreamServiceTest {
     }
 
     // Create a client channel and register for automatic graceful shutdown.
-    RecordMetasGrpc.RecordMetasBlockingStub blockingStub = RecordMetasGrpc.newBlockingStub(
+    RecordMetazBlockingStub blockingStub = RecordMetazGrpc.newBlockingStub(
         grpcCleanup.register(InProcessChannelBuilder.forName(serverName).directExecutor().build()));
 
     Iterator<RecordMeta> recordMetas =
@@ -58,7 +60,7 @@ public class RecordmetasStreamServiceTest {
     }
 
     // Create a client channel and register for automatic graceful shutdown.
-    RecordMetasGrpc.RecordMetasBlockingStub blockingStub = RecordMetasGrpc.newBlockingStub(
+    RecordMetazBlockingStub blockingStub = RecordMetazGrpc.newBlockingStub(
         grpcCleanup.register(InProcessChannelBuilder.forName(serverName).directExecutor().build()));
 
     Iterator<RecordMeta> recordMetas =

@@ -1,4 +1,4 @@
-package axoom.recordmetas.v1;
+package axoom.recordmetaz.v1;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,9 +8,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.axoom.constants.ContentType;
 import com.axoom.drs.utils.RestUtils;
-import axoom.recordmetas.v1.Recordmetas.RecordMeta;
-import axoom.recordmetas.v1.RecordmetasService.RecordMetaRequest;
-import axoom.recordmetas.v1.RecordmetasService.RecordMetaStreamRequest;
+import axoom.recordmetaz.v1.RecordMetazGrpc.RecordMetazBlockingStub;
+import axoom.recordmetaz.v1.Recordmetaz.RecordMeta;
+import axoom.recordmetaz.v1.RecordmetazService.RecordMetaRequest;
+import axoom.recordmetaz.v1.RecordmetazService.RecordMetaStreamRequest;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
@@ -22,7 +23,7 @@ public class RecordMetasClient {
   private static final Logger logger = Logger.getLogger(RecordMetasClient.class.getName());
 
   private final ManagedChannel channel;
-  private final RecordMetasGrpc.RecordMetasBlockingStub blockingStub;
+  private final RecordMetazBlockingStub blockingStub;
 
 
   /* Construct client connecting to RecordMetas server at {@code name:port}. */
@@ -44,7 +45,7 @@ public class RecordMetasClient {
     Metadata authHeaders = new Metadata();
     authHeaders.put(Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), accessToken);
 
-    blockingStub = MetadataUtils.attachHeaders(RecordMetasGrpc.newBlockingStub(channel), authHeaders);
+    blockingStub = MetadataUtils.attachHeaders(RecordMetazGrpc.newBlockingStub(channel), authHeaders);
   }
   
   public void shutdown() throws InterruptedException {
