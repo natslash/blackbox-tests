@@ -1,11 +1,8 @@
 package axoom.records.v1;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mockito.Mock;
@@ -28,32 +25,26 @@ import io.qameta.allure.Story;
 
 @Story("Positive test cases for SRS APIs")
 public class AxoomMockedQrecordsTestsIT extends PowerMockTestCase {
-  private String clientId;
-  private String redirectUri;
-  private String secret;
-  private String cisUrl;
 
+  //Mock client connection to server
   @Mock
   QrecordsClient mockedClient;
 
+  //Mock QRecords
   @Mock
   Iterator<Record> mockedQRecords;
+  
+  //Mock Record
+  @Mock
+  Record mockedRecord;
 
-  private Map<String, String> requestParams = new HashMap<>();
+  ByteString mockedPayLoad = ByteString.copyFromUtf8("Mocked Payload Message");
+
   private static final Logger logger = Logger.getLogger(AxoomMockedQrecordsTestsIT.class.getName());
 
 
   @BeforeClass
   public void beforeClass() {
-    clientId = System.getenv("SRS_CLIENT_ID");
-    redirectUri = System.getenv("SRS_REDIRECT_URI");
-    cisUrl = System.getenv("CIS_URL");
-    secret = System.getenv("SECRET");
-    requestParams.put("clientId", clientId);
-    requestParams.put("redirectUri", redirectUri);
-    requestParams.put("cisUrl", cisUrl);
-    requestParams.put("secret", secret);
-
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
@@ -65,7 +56,17 @@ public class AxoomMockedQrecordsTestsIT extends PowerMockTestCase {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
+    
+    //Initialize Mock objects
     MockitoAnnotations.initMocks(this);
+    
+    // Specify to return mock objects
+    when(mockedClient.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6"))
+        .thenReturn(mockedQRecords);
+    when(mockedClient.getRecordStream("blackboxtest01")).thenReturn(mockedQRecords);
+    when(mockedQRecords.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
+    when(mockedQRecords.next()).thenReturn(mockedRecord);
+    when(mockedRecord.getPayload()).thenReturn(mockedPayLoad);
   }
 
   @AfterMethod
@@ -74,20 +75,13 @@ public class AxoomMockedQrecordsTestsIT extends PowerMockTestCase {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
   }
+  
 
   @Test
   @Description("Get QRecords preprocessed from getStream")
   @Severity(SeverityLevel.BLOCKER)
   public void getPreProcessedQrecordsForDCTest() throws Exception {
     int count = 0;
-    Record mockedRecord = mock(Record.class);
-    ByteString mockedPayLoad = ByteString.copyFromUtf8("Mocked getPreProcessedQrecordsForDCTest Message");
-    
-    when(mockedClient.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6"))
-        .thenReturn(mockedQRecords);
-    when(mockedQRecords.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
-    when(mockedQRecords.next()).thenReturn(mockedRecord);
-    when(mockedRecord.getPayload()).thenReturn(mockedPayLoad);
     
     try {
       Iterator<Record> qRecords =
@@ -114,17 +108,8 @@ public class AxoomMockedQrecordsTestsIT extends PowerMockTestCase {
   @Description("Get QRecords from getStream")
   @Severity(SeverityLevel.BLOCKER)
   public void getPubSubRecordsFromGrpcTest() throws Exception {
-    
-    Record mockedRecord = mock(Record.class);
-    ByteString mockedPayLoad = ByteString.copyFromUtf8("Mocked getPubSubRecordsFromGrpcTest Message");
-
-    when(mockedClient.getRecordStream("blackboxtest01")).thenReturn(mockedQRecords);
-    when(mockedQRecords.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
-    when(mockedQRecords.next()).thenReturn(mockedRecord);
-    when(mockedRecord.getPayload()).thenReturn(mockedPayLoad);
-
-    
     int count = 0;
+    
     try {
       Iterator<Record> qRecords = mockedClient.getRecordStream("blackboxtest01");
       while (qRecords.hasNext()) {

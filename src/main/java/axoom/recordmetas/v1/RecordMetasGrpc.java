@@ -20,9 +20,9 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.18.0)",
     comments = "Source: recordmetas_service.proto")
-public final class RecordMetasGrpc {
+public class RecordMetasGrpc {
 
-  private RecordMetasGrpc() {}
+  RecordMetasGrpc() {}
 
   public static final String SERVICE_NAME = "axoom.recordmetas.v1.RecordMetas";
 
@@ -627,5 +627,7 @@ public final class RecordMetasGrpc {
       }
     }
     return result;
-  }
+  }  
 }
+
+
