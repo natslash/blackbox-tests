@@ -73,7 +73,7 @@ public class AxoomRecordMetazTestsIT extends WebDriverTest {
   @Test
   @Description("Get RecordMetas from getRecrodMetaStream")
   @Severity(SeverityLevel.BLOCKER)
-  public void getPubSubRecordsFromGrpcTest() throws Exception {
+  public void getRecordMetazStreamTest() throws Exception {
     //Publich messages to google pubsub
     PubSubPublishererUtils.publishMessages("mvp-iotcore-eval", "blackboxtest01");
     

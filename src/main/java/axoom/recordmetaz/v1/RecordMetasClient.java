@@ -6,10 +6,15 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bouncycastle.asn1.cms.TimeStampAndCRL;
 import com.axoom.constants.ContentType;
 import com.axoom.drs.utils.RestUtils;
+import com.google.protobuf.Timestamp;
 import axoom.recordmetaz.v1.RecordMetazGrpc.RecordMetazBlockingStub;
 import axoom.recordmetaz.v1.Recordmetaz.RecordMeta;
+import axoom.recordmetaz.v1.RecordmetazService.CreateRecordMetaRequest;
+import axoom.recordmetaz.v1.RecordmetazService.CreateRecordMetaResponse;
+import axoom.recordmetaz.v1.RecordmetazService.RecordMetaListRequest;
 import axoom.recordmetaz.v1.RecordmetazService.RecordMetaRequest;
 import axoom.recordmetaz.v1.RecordmetazService.RecordMetaStreamRequest;
 import io.grpc.ManagedChannel;
@@ -75,5 +80,37 @@ public class RecordMetasClient {
       return null;
     }
   }
+  
+  public CreateRecordMetaResponse createRecordMeta(RecordMeta recordMeta) {
+    CreateRecordMetaRequest request = CreateRecordMetaRequest.newBuilder().setRecordmeta(recordMeta).build();
+
+    try {      
+      return blockingStub.createRecordMeta(request);      
+    } catch (StatusRuntimeException e) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
+      return null;
+    }
+  }
  
+  public Iterator<RecordMeta> getHistoricalList(int limit) {
+    RecordMetaListRequest request = RecordMetaListRequest.newBuilder().setLimit(limit).build();
+
+    try {      
+      return blockingStub.listHistorical(request);     
+    } catch (StatusRuntimeException e) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
+      return null;
+    }
+  }
+  
+  public Iterator<RecordMeta> getHistoricalList(Timestamp time) {
+    RecordMetaListRequest request = RecordMetaListRequest.newBuilder().setFrom(time).build();
+
+    try {      
+      return blockingStub.listHistorical(request);     
+    } catch (StatusRuntimeException e) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
+      return null;
+    }
+  }
 }
