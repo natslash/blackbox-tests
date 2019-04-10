@@ -1,4 +1,4 @@
-package axoom.records.v1;
+package axoom.recordmetaz.v1;
 
 import static org.mockito.Mockito.when;
 import java.io.IOException;
@@ -16,8 +16,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.google.protobuf.ByteString;
-import axoom.recordz.v1.Recordz.Record;
-import axoom.recordz.v1.RecordzClient;
+import axoom.recordmetaz.v1.RecordMetasClient;
+import axoom.recordmetaz.v1.Recordmetaz.RecordMeta;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -25,23 +25,23 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 
 @Story("Positive test cases for SRS APIs")
-public class AxoomMockedRecordzTestsIT extends PowerMockTestCase {
+public class AxoomMockedRecordMetazTestsIT extends PowerMockTestCase {
 
   //Mock client connection to server
   @Mock
-  RecordzClient mockedClient;
+  RecordMetasClient mockedClient;
 
-  //Mock QRecords
+  //Mock RecordMetaz
   @Mock
-  Iterator<Record> mockedQRecords;
+  Iterator<RecordMeta> mockedRecordMetaz;
   
   //Mock Record
   @Mock
-  Record mockedRecord;
+  RecordMeta mockedRecord;
 
   ByteString mockedPayLoad = ByteString.copyFromUtf8("Mocked Payload Message");
 
-  private static final Logger logger = Logger.getLogger(AxoomMockedRecordzTestsIT.class.getName());
+  private static final Logger logger = Logger.getLogger(AxoomMockedRecordMetazTestsIT.class.getName());
 
 
   @BeforeClass
@@ -62,11 +62,11 @@ public class AxoomMockedRecordzTestsIT extends PowerMockTestCase {
     MockitoAnnotations.initMocks(this);
     
     // Specify to return mock objects
-    when(mockedClient.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6"))
-        .thenReturn(mockedQRecords);
-    when(mockedClient.getRecordStream("blackboxtest01")).thenReturn(mockedQRecords);
-    when(mockedQRecords.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
-    when(mockedQRecords.next()).thenReturn(mockedRecord);
+    when(mockedClient.getRecordMetaStream("dc-b33a683812494b65aa8e036ed64adcc6"))
+        .thenReturn(mockedRecordMetaz);
+    when(mockedClient.getRecordMetaStream("blackboxtest01")).thenReturn(mockedRecordMetaz);
+    when(mockedRecordMetaz.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
+    when(mockedRecordMetaz.next()).thenReturn(mockedRecord);
     when(mockedRecord.getData()).thenReturn(mockedPayLoad);
   }
 
@@ -79,16 +79,16 @@ public class AxoomMockedRecordzTestsIT extends PowerMockTestCase {
   
 
   @Test
-  @Description("Get QRecords preprocessed from getStream")
+  @Description("Get RecordMetaz preprocessed from getStream")
   @Severity(SeverityLevel.BLOCKER)
-  public void getPreProcessedQrecordsForDCTest() throws Exception {
+  public void getMockedRecordMetaStreamTestIT() throws Exception {
     int count = 0;
     
     try {
-      Iterator<Record> qRecords =
-          mockedClient.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
-      while (qRecords.hasNext()) {
-        logger.log(Level.INFO, qRecords.next().getData().toStringUtf8());
+      Iterator<RecordMeta> recordMetaz =
+          mockedClient.getRecordMetaStream("dc-b33a683812494b65aa8e036ed64adcc6");
+      while (recordMetaz.hasNext()) {
+        logger.log(Level.INFO, recordMetaz.next().getData().toStringUtf8());
         count++;
       }
       logger.log(Level.INFO, "Number of Records " + count);
@@ -106,16 +106,16 @@ public class AxoomMockedRecordzTestsIT extends PowerMockTestCase {
   }
 
   @Test
-  @Description("Get QRecords from getStream")
+  @Description("Get RecordMetaz from getStream")
   @Severity(SeverityLevel.BLOCKER)
-  public void getPubSubRecordsFromGrpcTest() throws Exception {
+  public void getMockedRecordMetazTestIT() throws Exception {
     int count = 0;
     
     try {
-      Iterator<Record> qRecords = mockedClient.getRecordStream("blackboxtest01");
-      while (qRecords.hasNext()) {
+      Iterator<RecordMeta> recordMetaz = mockedClient.getRecordMetaStream("blackboxtest01");
+      while (recordMetaz.hasNext()) {
 
-        logger.log(Level.INFO, qRecords.next().getData().toStringUtf8());
+        logger.log(Level.INFO, recordMetaz.next().getData().toStringUtf8());
         count++;
         logger.log(Level.INFO, "Current count is: " + count);
       }

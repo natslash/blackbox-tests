@@ -5,10 +5,10 @@
     <classes>      
       <class name="com.axoom.drs.it.AxoomDrsPositiveTestsIT"/>
       <class name="com.axoom.drs.it.AxoomDrsNegativeTestsIT"/>
-      <class name="com.axoom.drs.it.AxoomMqTTTestsIT"/>
+      <!-- <class name="com.axoom.drs.it.AxoomMqTTTestsIT"/> -->
     </classes>
   </test>
-  <test name="DCS API integration Tests">
+  <!-- <test name="DCS API integration Tests">
     <classes>      
       <class name="com.axoom.dcs.it.AxoomDcsPositiveTestsIT"/>
       <class name="com.axoom.dcs.it.AxoomDcsNegativeTestsIT"/>
@@ -24,5 +24,5 @@
     <classes>      
      <class name="axoom.records.v1.AxoomQrecordsTestsIT"/>     
     </classes>
-  </test>  
+  </test>   -->
 </suite> <!-- Suite -->

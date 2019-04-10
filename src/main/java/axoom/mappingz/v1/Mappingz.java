@@ -20,21 +20,21 @@ public final class Mappingz {
 
     /**
      * <pre>
-     * The unique identitfier
+     * The unique identitfier for the preprocessing
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>string preprocessing_id = 1;</code>
      */
-    java.lang.String getId();
+    java.lang.String getPreprocessingId();
     /**
      * <pre>
-     * The unique identitfier
+     * The unique identitfier for the preprocessing
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>string preprocessing_id = 1;</code>
      */
     com.google.protobuf.ByteString
-        getIdBytes();
+        getPreprocessingIdBytes();
 
     /**
      * <pre>
@@ -80,7 +80,7 @@ public final class Mappingz {
       super(builder);
     }
     private Mapping() {
-      id_ = "";
+      preprocessingId_ = "";
       subjectId_ = "";
     }
 
@@ -111,7 +111,7 @@ public final class Mappingz {
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              id_ = s;
+              preprocessingId_ = s;
               break;
             }
             case 18: {
@@ -165,42 +165,42 @@ public final class Mappingz {
               axoom.mappingz.v1.Mappingz.Mapping.class, axoom.mappingz.v1.Mappingz.Mapping.Builder.class);
     }
 
-    public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
+    public static final int PREPROCESSING_ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object preprocessingId_;
     /**
      * <pre>
-     * The unique identitfier
+     * The unique identitfier for the preprocessing
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>string preprocessing_id = 1;</code>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
+    public java.lang.String getPreprocessingId() {
+      java.lang.Object ref = preprocessingId_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        id_ = s;
+        preprocessingId_ = s;
         return s;
       }
     }
     /**
      * <pre>
-     * The unique identitfier
+     * The unique identitfier for the preprocessing
      * </pre>
      *
-     * <code>string id = 1;</code>
+     * <code>string preprocessing_id = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
+        getPreprocessingIdBytes() {
+      java.lang.Object ref = preprocessingId_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        id_ = b;
+        preprocessingId_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -284,8 +284,8 @@ public final class Mappingz {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      if (!getPreprocessingIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, preprocessingId_);
       }
       if (!getSubjectIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, subjectId_);
@@ -302,8 +302,8 @@ public final class Mappingz {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      if (!getPreprocessingIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, preprocessingId_);
       }
       if (!getSubjectIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, subjectId_);
@@ -328,8 +328,8 @@ public final class Mappingz {
       axoom.mappingz.v1.Mappingz.Mapping other = (axoom.mappingz.v1.Mappingz.Mapping) obj;
 
       boolean result = true;
-      result = result && getId()
-          .equals(other.getId());
+      result = result && getPreprocessingId()
+          .equals(other.getPreprocessingId());
       result = result && getSubjectId()
           .equals(other.getSubjectId());
       result = result && (hasExpression() == other.hasExpression());
@@ -348,8 +348,8 @@ public final class Mappingz {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
+      hash = (37 * hash) + PREPROCESSING_ID_FIELD_NUMBER;
+      hash = (53 * hash) + getPreprocessingId().hashCode();
       hash = (37 * hash) + SUBJECT_ID_FIELD_NUMBER;
       hash = (53 * hash) + getSubjectId().hashCode();
       if (hasExpression()) {
@@ -489,7 +489,7 @@ public final class Mappingz {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = "";
+        preprocessingId_ = "";
 
         subjectId_ = "";
 
@@ -525,7 +525,7 @@ public final class Mappingz {
       @java.lang.Override
       public axoom.mappingz.v1.Mappingz.Mapping buildPartial() {
         axoom.mappingz.v1.Mappingz.Mapping result = new axoom.mappingz.v1.Mappingz.Mapping(this);
-        result.id_ = id_;
+        result.preprocessingId_ = preprocessingId_;
         result.subjectId_ = subjectId_;
         if (expressionBuilder_ == null) {
           result.expression_ = expression_;
@@ -580,8 +580,8 @@ public final class Mappingz {
 
       public Builder mergeFrom(axoom.mappingz.v1.Mappingz.Mapping other) {
         if (other == axoom.mappingz.v1.Mappingz.Mapping.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
+        if (!other.getPreprocessingId().isEmpty()) {
+          preprocessingId_ = other.preprocessingId_;
           onChanged();
         }
         if (!other.getSubjectId().isEmpty()) {
@@ -620,21 +620,21 @@ public final class Mappingz {
         return this;
       }
 
-      private java.lang.Object id_ = "";
+      private java.lang.Object preprocessingId_ = "";
       /**
        * <pre>
-       * The unique identitfier
+       * The unique identitfier for the preprocessing
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>string preprocessing_id = 1;</code>
        */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
+      public java.lang.String getPreprocessingId() {
+        java.lang.Object ref = preprocessingId_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          id_ = s;
+          preprocessingId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -642,19 +642,19 @@ public final class Mappingz {
       }
       /**
        * <pre>
-       * The unique identitfier
+       * The unique identitfier for the preprocessing
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>string preprocessing_id = 1;</code>
        */
       public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
+          getPreprocessingIdBytes() {
+        java.lang.Object ref = preprocessingId_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          id_ = b;
+          preprocessingId_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -662,49 +662,49 @@ public final class Mappingz {
       }
       /**
        * <pre>
-       * The unique identitfier
+       * The unique identitfier for the preprocessing
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>string preprocessing_id = 1;</code>
        */
-      public Builder setId(
+      public Builder setPreprocessingId(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        id_ = value;
+        preprocessingId_ = value;
         onChanged();
         return this;
       }
       /**
        * <pre>
-       * The unique identitfier
+       * The unique identitfier for the preprocessing
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>string preprocessing_id = 1;</code>
        */
-      public Builder clearId() {
+      public Builder clearPreprocessingId() {
         
-        id_ = getDefaultInstance().getId();
+        preprocessingId_ = getDefaultInstance().getPreprocessingId();
         onChanged();
         return this;
       }
       /**
        * <pre>
-       * The unique identitfier
+       * The unique identitfier for the preprocessing
        * </pre>
        *
-       * <code>string id = 1;</code>
+       * <code>string preprocessing_id = 1;</code>
        */
-      public Builder setIdBytes(
+      public Builder setPreprocessingIdBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        id_ = value;
+        preprocessingId_ = value;
         onChanged();
         return this;
       }
@@ -1097,24 +1097,32 @@ public final class Mappingz {
     public enum Type
         implements com.google.protobuf.ProtocolMessageEnum {
       /**
-       * <pre>
-       * A declarative open-source query and transformation language for JSON data.
-       * </pre>
-       *
-       * <code>JSONATA = 0;</code>
+       * <code>UNKNOWN = 0;</code>
        */
-      JSONATA(0),
-      UNRECOGNIZED(-1),
-      ;
-
+      UNKNOWN(0),
       /**
        * <pre>
        * A declarative open-source query and transformation language for JSON data.
        * </pre>
        *
-       * <code>JSONATA = 0;</code>
+       * <code>JSONATA = 1;</code>
        */
-      public static final int JSONATA_VALUE = 0;
+      JSONATA(1),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>UNKNOWN = 0;</code>
+       */
+      public static final int UNKNOWN_VALUE = 0;
+      /**
+       * <pre>
+       * A declarative open-source query and transformation language for JSON data.
+       * </pre>
+       *
+       * <code>JSONATA = 1;</code>
+       */
+      public static final int JSONATA_VALUE = 1;
 
 
       public final int getNumber() {
@@ -1135,7 +1143,8 @@ public final class Mappingz {
 
       public static Type forNumber(int value) {
         switch (value) {
-          case 0: return JSONATA;
+          case 0: return UNKNOWN;
+          case 1: return JSONATA;
           default: return null;
         }
       }
@@ -1272,7 +1281,7 @@ public final class Mappingz {
       if (!getExpressionStringBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, expressionString_);
       }
-      if (type_ != axoom.mappingz.v1.Mappingz.Expression.Type.JSONATA.getNumber()) {
+      if (type_ != axoom.mappingz.v1.Mappingz.Expression.Type.UNKNOWN.getNumber()) {
         output.writeEnum(2, type_);
       }
       unknownFields.writeTo(output);
@@ -1287,7 +1296,7 @@ public final class Mappingz {
       if (!getExpressionStringBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, expressionString_);
       }
-      if (type_ != axoom.mappingz.v1.Mappingz.Expression.Type.JSONATA.getNumber()) {
+      if (type_ != axoom.mappingz.v1.Mappingz.Expression.Type.UNKNOWN.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(2, type_);
       }
@@ -1799,14 +1808,15 @@ public final class Mappingz {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016mappingz.proto\022\021axoom.mappingz.v1\"\\\n\007M" +
-      "apping\022\n\n\002id\030\001 \001(\t\022\022\n\nsubject_id\030\002 \001(\t\0221" +
-      "\n\nexpression\030\003 \001(\0132\035.axoom.mappingz.v1.E" +
-      "xpression\"n\n\nExpression\022\031\n\021expression_st" +
-      "ring\030\001 \001(\t\0220\n\004type\030\002 \001(\0162\".axoom.mapping" +
-      "z.v1.Expression.Type\"\023\n\004Type\022\013\n\007JSONATA\020" +
-      "\000B-Z+gitlab.axoom.tech/iot/go-rillaz/map" +
-      "pingz/v1b\006proto3"
+      "\n\016mappingz.proto\022\021axoom.mappingz.v1\"j\n\007M" +
+      "apping\022\030\n\020preprocessing_id\030\001 \001(\t\022\022\n\nsubj" +
+      "ect_id\030\002 \001(\t\0221\n\nexpression\030\003 \001(\0132\035.axoom" +
+      ".mappingz.v1.Expression\"{\n\nExpression\022\031\n" +
+      "\021expression_string\030\001 \001(\t\0220\n\004type\030\002 \001(\0162\"" +
+      ".axoom.mappingz.v1.Expression.Type\" \n\004Ty" +
+      "pe\022\013\n\007UNKNOWN\020\000\022\013\n\007JSONATA\020\001B-Z+gitlab.a" +
+      "xoom.tech/iot/go-rillaz/mappingz/v1b\006pro" +
+      "to3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1825,7 +1835,7 @@ public final class Mappingz {
     internal_static_axoom_mappingz_v1_Mapping_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_axoom_mappingz_v1_Mapping_descriptor,
-        new java.lang.String[] { "Id", "SubjectId", "Expression", });
+        new java.lang.String[] { "PreprocessingId", "SubjectId", "Expression", });
     internal_static_axoom_mappingz_v1_Expression_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_axoom_mappingz_v1_Expression_fieldAccessorTable = new

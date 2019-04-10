@@ -1,4 +1,4 @@
-package axoom.recordmetas.v1;
+package axoom.recordmetaz.v1;
 
 import static org.testng.Assert.assertEquals;
 import java.io.IOException;

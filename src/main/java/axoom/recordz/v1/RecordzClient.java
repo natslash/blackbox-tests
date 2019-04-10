@@ -38,8 +38,8 @@ public class RecordzClient {
 
     Map<String, String> requestParams = new HashMap<String, String>();
     requestParams.put("baseUrl", "https://account.dev.myaxoom.com/connect/token");
-    requestParams.put("scope", "https://apis.axoom.com/scopes/qrecords.read");
-    requestParams.put("clientId", "records-query-api-test-client");
+    requestParams.put("scope", "https://apis.axoom.com/scopes/records");
+    requestParams.put("clientId", "axoiotl-apis-test-client");
     requestParams.put("clientSecret", System.getenv("QREC_SECRET"));
     requestParams.put("contentType", ContentType.FORM_URL_ENCODED);
 

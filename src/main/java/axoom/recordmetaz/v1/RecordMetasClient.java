@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bouncycastle.asn1.cms.TimeStampAndCRL;
 import com.axoom.constants.ContentType;
 import com.axoom.drs.utils.RestUtils;
 import com.google.protobuf.Timestamp;
@@ -40,9 +39,9 @@ public class RecordMetasClient {
     this.channel = channel;
     Map<String, String> requestParams = new HashMap<String, String>();
     requestParams.put("baseUrl", "https://account.dev.myaxoom.com/connect/token");
-    requestParams.put("scope", "https://apis.axoom.com/scopes/qrecords.read");
-    requestParams.put("clientId", "records-query-api-test-client");
-    requestParams.put("clientSecret", System.getenv("QREC_SECRET"));
+    requestParams.put("scope", "https://apis.axoom.com/scopes/recordmetas");
+    requestParams.put("clientId", System.getenv("API_TEST_CLIENT"));
+    requestParams.put("clientSecret", System.getenv("API_TEST_SECRET"));
     requestParams.put("contentType", ContentType.FORM_URL_ENCODED);
 
     String accessToken = RestUtils.getAccessTokenFromClientCredsFlow(requestParams);
