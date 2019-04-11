@@ -153,6 +153,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
     deviceValues.put("configuration", config);
     deviceValues.put("ioTProvider", "google");
+    deviceValues.put("connectivity", "vertical-connect");
 
     String json = null;
     try {
@@ -236,6 +237,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     deviceValues.put("configuration", config);
     deviceValues.put("name", "ChangedName");
     deviceValues.put("ioTProvider", "google");
+    deviceValues.put("connectivity", "machine-simulator");
 
     String json = null;
     try {
@@ -354,5 +356,5 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     JsonParser parser = new JsonParser();
     JsonArray responseJson = (JsonArray) parser.parse(response.asString());
     return responseJson.size();
-  }
+  } 
 }

@@ -117,7 +117,8 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
     deviceValues.put("configuration", config);
     deviceValues.put("ioTProvider", "axoom");
-
+    deviceValues.put("connectivity", "machine-simulator");
+    
     String json = null;
     try {
       json = new ObjectMapper().writeValueAsString(deviceValues);
@@ -164,6 +165,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
     deviceValues.put("configuration", config);
     deviceValues.put("ioTProvider", "google");
+    deviceValues.put("connectivity", "machine-simulator");
 
     String json = null;
     try {
@@ -184,7 +186,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     Response response = request.post("/");
     if (response.statusCode() == 400) {
       logger.log(Level.INFO, response.then().log().all(true).toString());
-      logger.log(Level.INFO, 
+      logger.log(Level.INFO,
           "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint() + "\nxxxxxxxxxxxxxxxxxxx\n");
       String errorMessage =
           "The publicKeyFormat has to match one of following formats: RSA_PEM, ES256_PEM, RSA_X509_PEM, ES256_X509_PEM";
@@ -213,6 +215,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
     deviceValues.put("configuration", config);
     deviceValues.put("ioTProvider", "google");
+    deviceValues.put("connectivity", "machine-simulator");
 
     String json = null;
     try {
@@ -231,7 +234,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     Response response = request.post("/");
     if (response.statusCode() == 400) {
       logger.log(Level.INFO, response.then().log().all(true).toString());
-      logger.log(Level.INFO, 
+      logger.log(Level.INFO,
           "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint() + "\nxxxxxxxxxxxxxxxxxxx\n");
       String errorMessage = "Invalid RS256 certificate";
       Assert.assertTrue(response.getBody().asString().contains(errorMessage));
@@ -259,6 +262,7 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
     deviceValues.put("configuration", config);
     deviceValues.put("ioTProvider", "google");
+    deviceValues.put("connectivity", "machine-simulator");
 
     String json = null;
     try {
@@ -306,7 +310,8 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     deviceValues.put("configuration", config);
     deviceValues.put("name", "ChangedName");
     deviceValues.put("ioTProvider", "axoom");
-
+    deviceValues.put("connectivity", "machine-simulator");
+    
     String json = null;
     try {
       json = new ObjectMapper().writeValueAsString(deviceValues);
@@ -437,5 +442,104 @@ public class AxoomDrsNegativeTestsIT extends WebDriverTest {
     Assert.assertTrue(response.statusCode() == 400,
         "Expected tatus code is 400 but the status is: " + response.statusCode());
 
+  }
+
+  @Test(dependsOnMethods = {"createDeviceTest"})
+  @Description("Verify creating a device with invalid Connectivity value using DRS APIs")
+  @Severity(SeverityLevel.BLOCKER)
+  public void createDeviceWithInvalidConnectivityValueTest() {
+    // prepare Device Configuration Values
+    Map<String, String> config = new HashMap<>();
+    config.put("publicKeyFormat", "rsa_x509_pem");
+    config.put("publicKey", cert);
+    config.put("location", "europe-west1");
+
+
+    Map<String, Object> deviceValues = new HashMap<>();
+    deviceValues.put("tenant", tenantId);
+    deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
+    deviceValues.put("configuration", config);
+    deviceValues.put("ioTProvider", "google");
+    deviceValues.put("connectivity", "connect");
+
+    String json = null;
+    try {
+      json = new ObjectMapper().writeValueAsString(deviceValues);
+    } catch (JsonProcessingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    String baseURI = baseUri + drs_endpoint;
+
+    RequestParams requestParams = new RequestParams();
+    requestParams.setBaseURI(baseURI);
+    requestParams.setContentType(ContentType.APPLICATION_JSON);
+    requestParams.setAuthorization(accessToken);
+    RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
+    request.body(json);
+
+    logger.log(Level.INFO, request.log().all(true).toString());
+    Response response = request.post();
+    if (response.statusCode() == 400) {
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO,
+          "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint() + "\nxxxxxxxxxxxxxxxxxxx\n");
+      String errorMessage = "Connectivity identifier could not be found!";
+      Assert.assertTrue(response.getBody().asString().contains(errorMessage));
+
+    } else {
+      Assert.fail("Error occurred");
+      logger.log(Level.INFO, "Status is: " + response.statusCode());
+    }
+  }
+  
+  @Test(dependsOnMethods = {"createDeviceTest"})
+  @Description("Verify creating a device with invalid Connectivity value using DRS APIs")
+  @Severity(SeverityLevel.BLOCKER)
+  public void createDeviceWithNoConnectivityValueTest() {
+    // prepare Device Configuration Values
+    Map<String, String> config = new HashMap<>();
+    config.put("publicKeyFormat", "rsa_x509_pem");
+    config.put("publicKey", cert);
+    config.put("location", "europe-west1");
+
+
+    Map<String, Object> deviceValues = new HashMap<>();
+    deviceValues.put("tenant", tenantId);
+    deviceValues.put("name", "AxoomTestDevice" + System.currentTimeMillis());
+    deviceValues.put("configuration", config);
+    deviceValues.put("ioTProvider", "google");    
+
+    String json = null;
+    try {
+      json = new ObjectMapper().writeValueAsString(deviceValues);
+    } catch (JsonProcessingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    String baseURI = baseUri + drs_endpoint;
+
+    RequestParams requestParams = new RequestParams();
+    requestParams.setBaseURI(baseURI);
+    requestParams.setContentType(ContentType.APPLICATION_JSON);
+    requestParams.setAuthorization(accessToken);
+    RequestSpecification request = AxoomRequest.getPreparedRequest(requestParams);
+    request.body(json);
+
+    logger.log(Level.INFO, request.log().all(true).toString());
+    Response response = request.post();
+    if (response.statusCode() == 400) {
+      logger.log(Level.INFO, response.then().log().all(true).toString());
+      logger.log(Level.INFO,
+          "xxxxxxxxxxxxxxxxxxx\n" + response.getBody().prettyPrint() + "\nxxxxxxxxxxxxxxxxxxx\n");
+      String errorMessage = "Connectivity identifier could not be found!";
+      Assert.assertTrue(response.getBody().asString().contains(errorMessage));
+
+    } else {
+      Assert.fail("Error occurred");
+      logger.log(Level.INFO, "Status is: " + response.statusCode());
+    }
   }
 }
