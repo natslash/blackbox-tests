@@ -117,6 +117,23 @@ public class AxoomRecordMetazTestsIT extends WebDriverTest {
     }
   }
 
+  @Test(dependsOnMethods = {"createRecordMetaTest"})
+  @Description("Get Latest RecordMeta")
+  @Severity(SeverityLevel.BLOCKER)
+  public void getRecordMetaWithInvalidSubjectIdTest() throws Exception {
+    // Now, get the same RecordMeta
+    try {
+      client.getLatestRecordMeta("2");
+    } catch (StatusRuntimeException sre) {
+      if (sre.getMessage().contains("NOT_FOUND: document not found")) {
+        Assert.assertTrue(true);
+      } else {
+        Assert.fail("Error occurred!");
+        sre.printStackTrace();
+      }
+    }
+  }
+
   // getRecordMetaStream method is not implemented yet
   @Ignore // (dependsOnMethods = {"createRecordMetaTest"})
   @Description("Get RecordMeta Stream")
@@ -163,9 +180,10 @@ public class AxoomRecordMetazTestsIT extends WebDriverTest {
       }
     } catch (StatusRuntimeException sre) {
       if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
+        logger.log(Level.INFO, "RPC failed: {0}", sre.getMessage());
         Assert.assertTrue(true);
       } else {
-        System.out.println(sre.getMessage());
+        logger.log(Level.SEVERE, "RPC failed: {0}", sre.getMessage());
         Assert.fail("Error occurred!");
       }
     } finally {
@@ -183,15 +201,24 @@ public class AxoomRecordMetazTestsIT extends WebDriverTest {
     CreateRecordMetaResponse response = client.createRecordMeta(recordMeta);
     assertTrue(response.getRecordmeta().getData().toStringUtf8().isEmpty() == true);
   }
-  
+
   @Test
   @Description("Create RecordMeta without subjectID")
   @Severity(SeverityLevel.BLOCKER)
   public void createRecordMetaWithoutSubjectIdTest() throws Exception {
-    RecordMeta recordMeta = RecordMeta.newBuilder().setData(ByteString.copyFromUtf8("Example Data")).build();
-
-    // Try to create a RecordMeta without subject Id
-    CreateRecordMetaResponse response = client.createRecordMeta(recordMeta);
-    assertTrue(response == null);
+    RecordMeta recordMeta =
+        RecordMeta.newBuilder().setData(ByteString.copyFromUtf8("Example Data")).build();
+    try {
+      // Try to create a RecordMeta without subject Id
+      client.createRecordMeta(recordMeta);
+    } catch (StatusRuntimeException sre) {
+      if (sre.getMessage().contains("INVALID_ARGUMENT: subject ID not set")) {
+        logger.log(Level.INFO, "RPC failed: {0}", sre.getMessage());
+        Assert.assertTrue(true);
+      } else {
+        logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
+        Assert.fail("Error occurred!");
+      }
+    }
   }
 }

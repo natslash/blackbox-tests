@@ -64,7 +64,7 @@ public class RecordMetasClient {
       
     } catch (StatusRuntimeException e) {
       logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
-      return null;
+      throw e;
     }
   }
   
@@ -76,7 +76,7 @@ public class RecordMetasClient {
       
     } catch (StatusRuntimeException e) {
       logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
-      return null;
+      throw e;
     }
   }
   
@@ -87,7 +87,7 @@ public class RecordMetasClient {
       return blockingStub.createRecordMeta(request);      
     } catch (StatusRuntimeException e) {
       logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
-      return null;
+      throw e;
     }
   }
  
@@ -98,7 +98,7 @@ public class RecordMetasClient {
       return blockingStub.listHistorical(request);     
     } catch (StatusRuntimeException e) {
       logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
-      return null;
+      throw e;
     }
   }
   
@@ -109,7 +109,7 @@ public class RecordMetasClient {
       return blockingStub.listHistorical(request);     
     } catch (StatusRuntimeException e) {
       logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
-      return null;
+      throw e;
     }
   }
 }
