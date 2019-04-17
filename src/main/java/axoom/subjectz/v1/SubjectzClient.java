@@ -75,6 +75,11 @@ public class SubjectzClient {
     }
   }
   
+  /**
+   * 
+   * @param subjectId
+   * @return subject
+   */
   public Subject getSubject(String subjectId) {
     GetSubjectRequest request = GetSubjectRequest.newBuilder().setSubjectId(subjectId).build();
 
@@ -86,6 +91,11 @@ public class SubjectzClient {
     }
   }
   
+  /**
+   * 
+   * @param subjectTypeId
+   * @return subjectType
+   */
   public SubjectType getSubjectType(String subjectTypeId) {
     GetSubjectTypeRequest request = GetSubjectTypeRequest.newBuilder().setSubjectTypeId(subjectTypeId).build();
 
@@ -97,6 +107,10 @@ public class SubjectzClient {
     }
   }
   
+  /**
+   * 
+   * @return subjectType iterator
+   */
   public Iterator<SubjectType> getSubjectTypez() {
     GetSubjectTypezRequest request = GetSubjectTypezRequest.newBuilder().build();
 
@@ -108,6 +122,11 @@ public class SubjectzClient {
     }
   }
   
+  /**
+   * 
+   * @param subjectId
+   * @return subjectContext
+   */
   public SubjectContext getSubjectContext(String subjectId) {
     GetSubjectContextRequest request = GetSubjectContextRequest.newBuilder().setSubjectId(subjectId).build();
 
@@ -119,6 +138,11 @@ public class SubjectzClient {
     }
   }
 
+  /**
+   * 
+   * @param subjectTypeId
+   * @return subjectContext
+   */
   public SubjectTypeContext getSubjectTypeContext(String subjectTypeId) {
     GetSubjectTypeContextRequest request = GetSubjectTypeContextRequest.newBuilder().setSubjectTypeId(subjectTypeId).build();
 
@@ -130,6 +154,12 @@ public class SubjectzClient {
     }
   }
   
+  /**
+   * 
+   * @param subject
+   * @param subjectTypeId
+   * @return subject
+   */
   public Subject createSubject(Subject subject, String subjectTypeId) {
     CreateSubjectRequest request = CreateSubjectRequest.newBuilder().addInstanceOf(subjectTypeId).setSubject(subject).build();
 
@@ -141,6 +171,11 @@ public class SubjectzClient {
     }
   }
  
+  /**
+   * 
+   * @param subjectType
+   * @return subjectType
+   */
   public SubjectType createSubjectType(SubjectType subjectType) {
     CreateSubjectTypeRequest request = CreateSubjectTypeRequest.newBuilder().setSubjectType(subjectType).build();
 
@@ -150,5 +185,10 @@ public class SubjectzClient {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
       throw sre;
     }
-  }  
+  } 
+  
+  public SubjectType getSubjectTypeFromSubjectContextInstanceGraph(SubjectContext subjectContext, int index) {
+    return subjectContext.getInstanceGraph(index).getSubjectType();
+  } 
+ 
 }

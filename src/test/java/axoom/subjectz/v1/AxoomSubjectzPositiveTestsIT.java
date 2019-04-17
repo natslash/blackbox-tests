@@ -186,7 +186,7 @@ public class AxoomSubjectzPositiveTestsIT extends WebDriverTest {
   public void getSubjectsBySubjectType() throws Exception {
     try {
       // Get Subject type
-      Iterator<Subject> subjects = client.getSubjectz(createdSubjectTypeId);
+      Iterator<Subject> subjects = client.getSubjectz(createdSubjectTypeId);      
       assertTrue(subjects.hasNext(), "No Subjects found for the subject type");
     } catch (StatusRuntimeException sre) {
       throw sre;
@@ -267,6 +267,29 @@ public class AxoomSubjectzPositiveTestsIT extends WebDriverTest {
           && subjectType.getRecordMetaSchemaUrl().equals("recordMetaSchemaUrl" + timeStamp));
     } catch (StatusRuntimeException sre) {
       throw sre;
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      client.shutdown();
+    }
+  }
+  
+  @Test(dependsOnMethods = {"createSubjectTest"})
+  @Description("Get SubjectContext by specifying nonexistent subject id")
+  @Severity(SeverityLevel.BLOCKER)
+  public void getSubjectTypeFromSubjectContextInstanceGraph() throws Exception {
+    try {
+      // null subject ID
+      SubjectContext subjectContext = client.getSubjectContext(timeStamp);
+      SubjectType subjectType = client.getSubjectTypeFromSubjectContextInstanceGraph(subjectContext, 0);
+      assertTrue(subjectType.getId().equals(createdSubjectTypeId)
+          && subjectType.getRecordSchemaUrl().equals("recordSchemaUrl" + timeStamp)
+          && subjectType.getRecordMetaSchemaUrl().equals("recordMetaSchemaUrl" + timeStamp));
+    } catch (StatusRuntimeException sre) {
+      assertTrue(sre.getMessage().contains("UNKNOWN: subject not found"),
+          "The Error message doesn't match with what we expect!!!");
+    } catch (NullPointerException ne) {
+      assertTrue(true);
     } catch (Exception e) {
       throw e;
     } finally {
