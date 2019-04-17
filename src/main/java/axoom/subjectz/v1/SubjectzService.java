@@ -19,17 +19,64 @@ public final class SubjectzService {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     * The Subject to create
+     * </pre>
+     *
      * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
      */
     boolean hasSubject();
     /**
+     * <pre>
+     * The Subject to create
+     * </pre>
+     *
      * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
      */
     axoom.subjectz.v1.Subjectz.Subject getSubject();
     /**
+     * <pre>
+     * The Subject to create
+     * </pre>
+     *
      * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
      */
     axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectOrBuilder();
+
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    java.util.List<java.lang.String>
+        getInstanceOfList();
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    int getInstanceOfCount();
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    java.lang.String getInstanceOf(int index);
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getInstanceOfBytes(int index);
   }
   /**
    * Protobuf type {@code axoom.subjectz.v1.CreateSubjectRequest}
@@ -44,6 +91,7 @@ public final class SubjectzService {
       super(builder);
     }
     private CreateSubjectRequest() {
+      instanceOf_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
 
     @java.lang.Override
@@ -83,6 +131,15 @@ public final class SubjectzService {
 
               break;
             }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                instanceOf_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              instanceOf_.add(s);
+              break;
+            }
             default: {
               if (!parseUnknownFieldProto3(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -98,6 +155,9 @@ public final class SubjectzService {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          instanceOf_ = instanceOf_.getUnmodifiableView();
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -115,25 +175,83 @@ public final class SubjectzService {
               axoom.subjectz.v1.SubjectzService.CreateSubjectRequest.class, axoom.subjectz.v1.SubjectzService.CreateSubjectRequest.Builder.class);
     }
 
+    private int bitField0_;
     public static final int SUBJECT_FIELD_NUMBER = 1;
     private axoom.subjectz.v1.Subjectz.Subject subject_;
     /**
+     * <pre>
+     * The Subject to create
+     * </pre>
+     *
      * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
      */
     public boolean hasSubject() {
       return subject_ != null;
     }
     /**
+     * <pre>
+     * The Subject to create
+     * </pre>
+     *
      * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
      */
     public axoom.subjectz.v1.Subjectz.Subject getSubject() {
       return subject_ == null ? axoom.subjectz.v1.Subjectz.Subject.getDefaultInstance() : subject_;
     }
     /**
+     * <pre>
+     * The Subject to create
+     * </pre>
+     *
      * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
      */
     public axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectOrBuilder() {
       return getSubject();
+    }
+
+    public static final int INSTANCE_OF_FIELD_NUMBER = 2;
+    private com.google.protobuf.LazyStringList instanceOf_;
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getInstanceOfList() {
+      return instanceOf_;
+    }
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    public int getInstanceOfCount() {
+      return instanceOf_.size();
+    }
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    public java.lang.String getInstanceOf(int index) {
+      return instanceOf_.get(index);
+    }
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getInstanceOfBytes(int index) {
+      return instanceOf_.getByteString(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -153,6 +271,9 @@ public final class SubjectzService {
       if (subject_ != null) {
         output.writeMessage(1, getSubject());
       }
+      for (int i = 0; i < instanceOf_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, instanceOf_.getRaw(i));
+      }
       unknownFields.writeTo(output);
     }
 
@@ -165,6 +286,14 @@ public final class SubjectzService {
       if (subject_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getSubject());
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < instanceOf_.size(); i++) {
+          dataSize += computeStringSizeNoTag(instanceOf_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getInstanceOfList().size();
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -187,6 +316,8 @@ public final class SubjectzService {
         result = result && getSubject()
             .equals(other.getSubject());
       }
+      result = result && getInstanceOfList()
+          .equals(other.getInstanceOfList());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -201,6 +332,10 @@ public final class SubjectzService {
       if (hasSubject()) {
         hash = (37 * hash) + SUBJECT_FIELD_NUMBER;
         hash = (53 * hash) + getSubject().hashCode();
+      }
+      if (getInstanceOfCount() > 0) {
+        hash = (37 * hash) + INSTANCE_OF_FIELD_NUMBER;
+        hash = (53 * hash) + getInstanceOfList().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -341,6 +476,8 @@ public final class SubjectzService {
           subject_ = null;
           subjectBuilder_ = null;
         }
+        instanceOf_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -367,11 +504,19 @@ public final class SubjectzService {
       @java.lang.Override
       public axoom.subjectz.v1.SubjectzService.CreateSubjectRequest buildPartial() {
         axoom.subjectz.v1.SubjectzService.CreateSubjectRequest result = new axoom.subjectz.v1.SubjectzService.CreateSubjectRequest(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
         if (subjectBuilder_ == null) {
           result.subject_ = subject_;
         } else {
           result.subject_ = subjectBuilder_.build();
         }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          instanceOf_ = instanceOf_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.instanceOf_ = instanceOf_;
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -423,6 +568,16 @@ public final class SubjectzService {
         if (other.hasSubject()) {
           mergeSubject(other.getSubject());
         }
+        if (!other.instanceOf_.isEmpty()) {
+          if (instanceOf_.isEmpty()) {
+            instanceOf_ = other.instanceOf_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureInstanceOfIsMutable();
+            instanceOf_.addAll(other.instanceOf_);
+          }
+          onChanged();
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -451,17 +606,26 @@ public final class SubjectzService {
         }
         return this;
       }
+      private int bitField0_;
 
       private axoom.subjectz.v1.Subjectz.Subject subject_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
           axoom.subjectz.v1.Subjectz.Subject, axoom.subjectz.v1.Subjectz.Subject.Builder, axoom.subjectz.v1.Subjectz.SubjectOrBuilder> subjectBuilder_;
       /**
+       * <pre>
+       * The Subject to create
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public boolean hasSubject() {
         return subjectBuilder_ != null || subject_ != null;
       }
       /**
+       * <pre>
+       * The Subject to create
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public axoom.subjectz.v1.Subjectz.Subject getSubject() {
@@ -472,6 +636,10 @@ public final class SubjectzService {
         }
       }
       /**
+       * <pre>
+       * The Subject to create
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public Builder setSubject(axoom.subjectz.v1.Subjectz.Subject value) {
@@ -488,6 +656,10 @@ public final class SubjectzService {
         return this;
       }
       /**
+       * <pre>
+       * The Subject to create
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public Builder setSubject(
@@ -502,6 +674,10 @@ public final class SubjectzService {
         return this;
       }
       /**
+       * <pre>
+       * The Subject to create
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public Builder mergeSubject(axoom.subjectz.v1.Subjectz.Subject value) {
@@ -520,6 +696,10 @@ public final class SubjectzService {
         return this;
       }
       /**
+       * <pre>
+       * The Subject to create
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public Builder clearSubject() {
@@ -534,6 +714,10 @@ public final class SubjectzService {
         return this;
       }
       /**
+       * <pre>
+       * The Subject to create
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public axoom.subjectz.v1.Subjectz.Subject.Builder getSubjectBuilder() {
@@ -542,6 +726,10 @@ public final class SubjectzService {
         return getSubjectFieldBuilder().getBuilder();
       }
       /**
+       * <pre>
+       * The Subject to create
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectOrBuilder() {
@@ -553,6 +741,10 @@ public final class SubjectzService {
         }
       }
       /**
+       * <pre>
+       * The Subject to create
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
@@ -567,6 +759,136 @@ public final class SubjectzService {
           subject_ = null;
         }
         return subjectBuilder_;
+      }
+
+      private com.google.protobuf.LazyStringList instanceOf_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureInstanceOfIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          instanceOf_ = new com.google.protobuf.LazyStringArrayList(instanceOf_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getInstanceOfList() {
+        return instanceOf_.getUnmodifiableView();
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public int getInstanceOfCount() {
+        return instanceOf_.size();
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public java.lang.String getInstanceOf(int index) {
+        return instanceOf_.get(index);
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getInstanceOfBytes(int index) {
+        return instanceOf_.getByteString(index);
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public Builder setInstanceOf(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureInstanceOfIsMutable();
+        instanceOf_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public Builder addInstanceOf(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureInstanceOfIsMutable();
+        instanceOf_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public Builder addAllInstanceOf(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureInstanceOfIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, instanceOf_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public Builder clearInstanceOf() {
+        instanceOf_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public Builder addInstanceOfBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureInstanceOfIsMutable();
+        instanceOf_.add(value);
+        onChanged();
+        return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -616,3353 +938,6 @@ public final class SubjectzService {
 
     @java.lang.Override
     public axoom.subjectz.v1.SubjectzService.CreateSubjectRequest getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface CreateSubjectResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.CreateSubjectResponse)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-     */
-    boolean hasSubject();
-    /**
-     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-     */
-    axoom.subjectz.v1.Subjectz.Subject getSubject();
-    /**
-     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-     */
-    axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectOrBuilder();
-  }
-  /**
-   * Protobuf type {@code axoom.subjectz.v1.CreateSubjectResponse}
-   */
-  public  static final class CreateSubjectResponse extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.CreateSubjectResponse)
-      CreateSubjectResponseOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use CreateSubjectResponse.newBuilder() to construct.
-    private CreateSubjectResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private CreateSubjectResponse() {
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private CreateSubjectResponse(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-              axoom.subjectz.v1.Subjectz.Subject.Builder subBuilder = null;
-              if (subject_ != null) {
-                subBuilder = subject_.toBuilder();
-              }
-              subject_ = input.readMessage(axoom.subjectz.v1.Subjectz.Subject.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(subject_);
-                subject_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectResponse_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectResponse_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              axoom.subjectz.v1.SubjectzService.CreateSubjectResponse.class, axoom.subjectz.v1.SubjectzService.CreateSubjectResponse.Builder.class);
-    }
-
-    public static final int SUBJECT_FIELD_NUMBER = 1;
-    private axoom.subjectz.v1.Subjectz.Subject subject_;
-    /**
-     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-     */
-    public boolean hasSubject() {
-      return subject_ != null;
-    }
-    /**
-     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-     */
-    public axoom.subjectz.v1.Subjectz.Subject getSubject() {
-      return subject_ == null ? axoom.subjectz.v1.Subjectz.Subject.getDefaultInstance() : subject_;
-    }
-    /**
-     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-     */
-    public axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectOrBuilder() {
-      return getSubject();
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (subject_ != null) {
-        output.writeMessage(1, getSubject());
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (subject_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getSubject());
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.CreateSubjectResponse)) {
-        return super.equals(obj);
-      }
-      axoom.subjectz.v1.SubjectzService.CreateSubjectResponse other = (axoom.subjectz.v1.SubjectzService.CreateSubjectResponse) obj;
-
-      boolean result = true;
-      result = result && (hasSubject() == other.hasSubject());
-      if (hasSubject()) {
-        result = result && getSubject()
-            .equals(other.getSubject());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasSubject()) {
-        hash = (37 * hash) + SUBJECT_FIELD_NUMBER;
-        hash = (53 * hash) + getSubject().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.CreateSubjectResponse prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code axoom.subjectz.v1.CreateSubjectResponse}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.CreateSubjectResponse)
-        axoom.subjectz.v1.SubjectzService.CreateSubjectResponseOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectResponse_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectResponse_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                axoom.subjectz.v1.SubjectzService.CreateSubjectResponse.class, axoom.subjectz.v1.SubjectzService.CreateSubjectResponse.Builder.class);
-      }
-
-      // Construct using axoom.subjectz.v1.SubjectzService.CreateSubjectResponse.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        if (subjectBuilder_ == null) {
-          subject_ = null;
-        } else {
-          subject_ = null;
-          subjectBuilder_ = null;
-        }
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectResponse_descriptor;
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.CreateSubjectResponse getDefaultInstanceForType() {
-        return axoom.subjectz.v1.SubjectzService.CreateSubjectResponse.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.CreateSubjectResponse build() {
-        axoom.subjectz.v1.SubjectzService.CreateSubjectResponse result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.CreateSubjectResponse buildPartial() {
-        axoom.subjectz.v1.SubjectzService.CreateSubjectResponse result = new axoom.subjectz.v1.SubjectzService.CreateSubjectResponse(this);
-        if (subjectBuilder_ == null) {
-          result.subject_ = subject_;
-        } else {
-          result.subject_ = subjectBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof axoom.subjectz.v1.SubjectzService.CreateSubjectResponse) {
-          return mergeFrom((axoom.subjectz.v1.SubjectzService.CreateSubjectResponse)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.CreateSubjectResponse other) {
-        if (other == axoom.subjectz.v1.SubjectzService.CreateSubjectResponse.getDefaultInstance()) return this;
-        if (other.hasSubject()) {
-          mergeSubject(other.getSubject());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        axoom.subjectz.v1.SubjectzService.CreateSubjectResponse parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (axoom.subjectz.v1.SubjectzService.CreateSubjectResponse) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private axoom.subjectz.v1.Subjectz.Subject subject_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          axoom.subjectz.v1.Subjectz.Subject, axoom.subjectz.v1.Subjectz.Subject.Builder, axoom.subjectz.v1.Subjectz.SubjectOrBuilder> subjectBuilder_;
-      /**
-       * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-       */
-      public boolean hasSubject() {
-        return subjectBuilder_ != null || subject_ != null;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.Subject getSubject() {
-        if (subjectBuilder_ == null) {
-          return subject_ == null ? axoom.subjectz.v1.Subjectz.Subject.getDefaultInstance() : subject_;
-        } else {
-          return subjectBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-       */
-      public Builder setSubject(axoom.subjectz.v1.Subjectz.Subject value) {
-        if (subjectBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          subject_ = value;
-          onChanged();
-        } else {
-          subjectBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-       */
-      public Builder setSubject(
-          axoom.subjectz.v1.Subjectz.Subject.Builder builderForValue) {
-        if (subjectBuilder_ == null) {
-          subject_ = builderForValue.build();
-          onChanged();
-        } else {
-          subjectBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-       */
-      public Builder mergeSubject(axoom.subjectz.v1.Subjectz.Subject value) {
-        if (subjectBuilder_ == null) {
-          if (subject_ != null) {
-            subject_ =
-              axoom.subjectz.v1.Subjectz.Subject.newBuilder(subject_).mergeFrom(value).buildPartial();
-          } else {
-            subject_ = value;
-          }
-          onChanged();
-        } else {
-          subjectBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-       */
-      public Builder clearSubject() {
-        if (subjectBuilder_ == null) {
-          subject_ = null;
-          onChanged();
-        } else {
-          subject_ = null;
-          subjectBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.Subject.Builder getSubjectBuilder() {
-        
-        onChanged();
-        return getSubjectFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectOrBuilder() {
-        if (subjectBuilder_ != null) {
-          return subjectBuilder_.getMessageOrBuilder();
-        } else {
-          return subject_ == null ?
-              axoom.subjectz.v1.Subjectz.Subject.getDefaultInstance() : subject_;
-        }
-      }
-      /**
-       * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          axoom.subjectz.v1.Subjectz.Subject, axoom.subjectz.v1.Subjectz.Subject.Builder, axoom.subjectz.v1.Subjectz.SubjectOrBuilder> 
-          getSubjectFieldBuilder() {
-        if (subjectBuilder_ == null) {
-          subjectBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              axoom.subjectz.v1.Subjectz.Subject, axoom.subjectz.v1.Subjectz.Subject.Builder, axoom.subjectz.v1.Subjectz.SubjectOrBuilder>(
-                  getSubject(),
-                  getParentForChildren(),
-                  isClean());
-          subject_ = null;
-        }
-        return subjectBuilder_;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.CreateSubjectResponse)
-    }
-
-    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.CreateSubjectResponse)
-    private static final axoom.subjectz.v1.SubjectzService.CreateSubjectResponse DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.CreateSubjectResponse();
-    }
-
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectResponse getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<CreateSubjectResponse>
-        PARSER = new com.google.protobuf.AbstractParser<CreateSubjectResponse>() {
-      @java.lang.Override
-      public CreateSubjectResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CreateSubjectResponse(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<CreateSubjectResponse> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<CreateSubjectResponse> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public axoom.subjectz.v1.SubjectzService.CreateSubjectResponse getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface CreateSubjectTypeRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.CreateSubjectTypeRequest)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    boolean hasSubjectType();
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    axoom.subjectz.v1.Subjectz.SubjectType getSubjectType();
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder getSubjectTypeOrBuilder();
-
-    /**
-     * <code>repeated string implements = 2;</code>
-     */
-    java.util.List<java.lang.String>
-        getImplementsList();
-    /**
-     * <code>repeated string implements = 2;</code>
-     */
-    int getImplementsCount();
-    /**
-     * <code>repeated string implements = 2;</code>
-     */
-    java.lang.String getImplements(int index);
-    /**
-     * <code>repeated string implements = 2;</code>
-     */
-    com.google.protobuf.ByteString
-        getImplementsBytes(int index);
-  }
-  /**
-   * Protobuf type {@code axoom.subjectz.v1.CreateSubjectTypeRequest}
-   */
-  public  static final class CreateSubjectTypeRequest extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.CreateSubjectTypeRequest)
-      CreateSubjectTypeRequestOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use CreateSubjectTypeRequest.newBuilder() to construct.
-    private CreateSubjectTypeRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private CreateSubjectTypeRequest() {
-      implements_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private CreateSubjectTypeRequest(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-              axoom.subjectz.v1.Subjectz.SubjectType.Builder subBuilder = null;
-              if (subjectType_ != null) {
-                subBuilder = subjectType_.toBuilder();
-              }
-              subjectType_ = input.readMessage(axoom.subjectz.v1.Subjectz.SubjectType.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(subjectType_);
-                subjectType_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                implements_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              implements_.add(s);
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          implements_ = implements_.getUnmodifiableView();
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.class, axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.Builder.class);
-    }
-
-    private int bitField0_;
-    public static final int SUBJECT_TYPE_FIELD_NUMBER = 1;
-    private axoom.subjectz.v1.Subjectz.SubjectType subjectType_;
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    public boolean hasSubjectType() {
-      return subjectType_ != null;
-    }
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    public axoom.subjectz.v1.Subjectz.SubjectType getSubjectType() {
-      return subjectType_ == null ? axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance() : subjectType_;
-    }
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    public axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder getSubjectTypeOrBuilder() {
-      return getSubjectType();
-    }
-
-    public static final int IMPLEMENTS_FIELD_NUMBER = 2;
-    private com.google.protobuf.LazyStringList implements_;
-    /**
-     * <code>repeated string implements = 2;</code>
-     */
-    public com.google.protobuf.ProtocolStringList
-        getImplementsList() {
-      return implements_;
-    }
-    /**
-     * <code>repeated string implements = 2;</code>
-     */
-    public int getImplementsCount() {
-      return implements_.size();
-    }
-    /**
-     * <code>repeated string implements = 2;</code>
-     */
-    public java.lang.String getImplements(int index) {
-      return implements_.get(index);
-    }
-    /**
-     * <code>repeated string implements = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getImplementsBytes(int index) {
-      return implements_.getByteString(index);
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (subjectType_ != null) {
-        output.writeMessage(1, getSubjectType());
-      }
-      for (int i = 0; i < implements_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, implements_.getRaw(i));
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (subjectType_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getSubjectType());
-      }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < implements_.size(); i++) {
-          dataSize += computeStringSizeNoTag(implements_.getRaw(i));
-        }
-        size += dataSize;
-        size += 1 * getImplementsList().size();
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest)) {
-        return super.equals(obj);
-      }
-      axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest other = (axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest) obj;
-
-      boolean result = true;
-      result = result && (hasSubjectType() == other.hasSubjectType());
-      if (hasSubjectType()) {
-        result = result && getSubjectType()
-            .equals(other.getSubjectType());
-      }
-      result = result && getImplementsList()
-          .equals(other.getImplementsList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasSubjectType()) {
-        hash = (37 * hash) + SUBJECT_TYPE_FIELD_NUMBER;
-        hash = (53 * hash) + getSubjectType().hashCode();
-      }
-      if (getImplementsCount() > 0) {
-        hash = (37 * hash) + IMPLEMENTS_FIELD_NUMBER;
-        hash = (53 * hash) + getImplementsList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code axoom.subjectz.v1.CreateSubjectTypeRequest}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.CreateSubjectTypeRequest)
-        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequestOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.class, axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.Builder.class);
-      }
-
-      // Construct using axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        if (subjectTypeBuilder_ == null) {
-          subjectType_ = null;
-        } else {
-          subjectType_ = null;
-          subjectTypeBuilder_ = null;
-        }
-        implements_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_descriptor;
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest getDefaultInstanceForType() {
-        return axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest build() {
-        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest buildPartial() {
-        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest result = new axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (subjectTypeBuilder_ == null) {
-          result.subjectType_ = subjectType_;
-        } else {
-          result.subjectType_ = subjectTypeBuilder_.build();
-        }
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          implements_ = implements_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.implements_ = implements_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest) {
-          return mergeFrom((axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest other) {
-        if (other == axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.getDefaultInstance()) return this;
-        if (other.hasSubjectType()) {
-          mergeSubjectType(other.getSubjectType());
-        }
-        if (!other.implements_.isEmpty()) {
-          if (implements_.isEmpty()) {
-            implements_ = other.implements_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            ensureImplementsIsMutable();
-            implements_.addAll(other.implements_);
-          }
-          onChanged();
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private axoom.subjectz.v1.Subjectz.SubjectType subjectType_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          axoom.subjectz.v1.Subjectz.SubjectType, axoom.subjectz.v1.Subjectz.SubjectType.Builder, axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder> subjectTypeBuilder_;
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public boolean hasSubjectType() {
-        return subjectTypeBuilder_ != null || subjectType_ != null;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.SubjectType getSubjectType() {
-        if (subjectTypeBuilder_ == null) {
-          return subjectType_ == null ? axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance() : subjectType_;
-        } else {
-          return subjectTypeBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public Builder setSubjectType(axoom.subjectz.v1.Subjectz.SubjectType value) {
-        if (subjectTypeBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          subjectType_ = value;
-          onChanged();
-        } else {
-          subjectTypeBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public Builder setSubjectType(
-          axoom.subjectz.v1.Subjectz.SubjectType.Builder builderForValue) {
-        if (subjectTypeBuilder_ == null) {
-          subjectType_ = builderForValue.build();
-          onChanged();
-        } else {
-          subjectTypeBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public Builder mergeSubjectType(axoom.subjectz.v1.Subjectz.SubjectType value) {
-        if (subjectTypeBuilder_ == null) {
-          if (subjectType_ != null) {
-            subjectType_ =
-              axoom.subjectz.v1.Subjectz.SubjectType.newBuilder(subjectType_).mergeFrom(value).buildPartial();
-          } else {
-            subjectType_ = value;
-          }
-          onChanged();
-        } else {
-          subjectTypeBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public Builder clearSubjectType() {
-        if (subjectTypeBuilder_ == null) {
-          subjectType_ = null;
-          onChanged();
-        } else {
-          subjectType_ = null;
-          subjectTypeBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.SubjectType.Builder getSubjectTypeBuilder() {
-        
-        onChanged();
-        return getSubjectTypeFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder getSubjectTypeOrBuilder() {
-        if (subjectTypeBuilder_ != null) {
-          return subjectTypeBuilder_.getMessageOrBuilder();
-        } else {
-          return subjectType_ == null ?
-              axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance() : subjectType_;
-        }
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          axoom.subjectz.v1.Subjectz.SubjectType, axoom.subjectz.v1.Subjectz.SubjectType.Builder, axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder> 
-          getSubjectTypeFieldBuilder() {
-        if (subjectTypeBuilder_ == null) {
-          subjectTypeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              axoom.subjectz.v1.Subjectz.SubjectType, axoom.subjectz.v1.Subjectz.SubjectType.Builder, axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder>(
-                  getSubjectType(),
-                  getParentForChildren(),
-                  isClean());
-          subjectType_ = null;
-        }
-        return subjectTypeBuilder_;
-      }
-
-      private com.google.protobuf.LazyStringList implements_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureImplementsIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          implements_ = new com.google.protobuf.LazyStringArrayList(implements_);
-          bitField0_ |= 0x00000002;
-         }
-      }
-      /**
-       * <code>repeated string implements = 2;</code>
-       */
-      public com.google.protobuf.ProtocolStringList
-          getImplementsList() {
-        return implements_.getUnmodifiableView();
-      }
-      /**
-       * <code>repeated string implements = 2;</code>
-       */
-      public int getImplementsCount() {
-        return implements_.size();
-      }
-      /**
-       * <code>repeated string implements = 2;</code>
-       */
-      public java.lang.String getImplements(int index) {
-        return implements_.get(index);
-      }
-      /**
-       * <code>repeated string implements = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getImplementsBytes(int index) {
-        return implements_.getByteString(index);
-      }
-      /**
-       * <code>repeated string implements = 2;</code>
-       */
-      public Builder setImplements(
-          int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureImplementsIsMutable();
-        implements_.set(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string implements = 2;</code>
-       */
-      public Builder addImplements(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureImplementsIsMutable();
-        implements_.add(value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string implements = 2;</code>
-       */
-      public Builder addAllImplements(
-          java.lang.Iterable<java.lang.String> values) {
-        ensureImplementsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, implements_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string implements = 2;</code>
-       */
-      public Builder clearImplements() {
-        implements_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string implements = 2;</code>
-       */
-      public Builder addImplementsBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        ensureImplementsIsMutable();
-        implements_.add(value);
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.CreateSubjectTypeRequest)
-    }
-
-    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.CreateSubjectTypeRequest)
-    private static final axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest();
-    }
-
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<CreateSubjectTypeRequest>
-        PARSER = new com.google.protobuf.AbstractParser<CreateSubjectTypeRequest>() {
-      @java.lang.Override
-      public CreateSubjectTypeRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CreateSubjectTypeRequest(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<CreateSubjectTypeRequest> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<CreateSubjectTypeRequest> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface CreateSubjectTypeResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.CreateSubjectTypeResponse)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    boolean hasSubjectType();
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    axoom.subjectz.v1.Subjectz.SubjectType getSubjectType();
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder getSubjectTypeOrBuilder();
-  }
-  /**
-   * Protobuf type {@code axoom.subjectz.v1.CreateSubjectTypeResponse}
-   */
-  public  static final class CreateSubjectTypeResponse extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.CreateSubjectTypeResponse)
-      CreateSubjectTypeResponseOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use CreateSubjectTypeResponse.newBuilder() to construct.
-    private CreateSubjectTypeResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private CreateSubjectTypeResponse() {
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private CreateSubjectTypeResponse(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-              axoom.subjectz.v1.Subjectz.SubjectType.Builder subBuilder = null;
-              if (subjectType_ != null) {
-                subBuilder = subjectType_.toBuilder();
-              }
-              subjectType_ = input.readMessage(axoom.subjectz.v1.Subjectz.SubjectType.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(subjectType_);
-                subjectType_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeResponse_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeResponse_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse.class, axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse.Builder.class);
-    }
-
-    public static final int SUBJECT_TYPE_FIELD_NUMBER = 1;
-    private axoom.subjectz.v1.Subjectz.SubjectType subjectType_;
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    public boolean hasSubjectType() {
-      return subjectType_ != null;
-    }
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    public axoom.subjectz.v1.Subjectz.SubjectType getSubjectType() {
-      return subjectType_ == null ? axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance() : subjectType_;
-    }
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    public axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder getSubjectTypeOrBuilder() {
-      return getSubjectType();
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (subjectType_ != null) {
-        output.writeMessage(1, getSubjectType());
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (subjectType_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getSubjectType());
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse)) {
-        return super.equals(obj);
-      }
-      axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse other = (axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse) obj;
-
-      boolean result = true;
-      result = result && (hasSubjectType() == other.hasSubjectType());
-      if (hasSubjectType()) {
-        result = result && getSubjectType()
-            .equals(other.getSubjectType());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasSubjectType()) {
-        hash = (37 * hash) + SUBJECT_TYPE_FIELD_NUMBER;
-        hash = (53 * hash) + getSubjectType().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code axoom.subjectz.v1.CreateSubjectTypeResponse}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.CreateSubjectTypeResponse)
-        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponseOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeResponse_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeResponse_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse.class, axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse.Builder.class);
-      }
-
-      // Construct using axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        if (subjectTypeBuilder_ == null) {
-          subjectType_ = null;
-        } else {
-          subjectType_ = null;
-          subjectTypeBuilder_ = null;
-        }
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeResponse_descriptor;
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse getDefaultInstanceForType() {
-        return axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse build() {
-        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse buildPartial() {
-        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse result = new axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse(this);
-        if (subjectTypeBuilder_ == null) {
-          result.subjectType_ = subjectType_;
-        } else {
-          result.subjectType_ = subjectTypeBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse) {
-          return mergeFrom((axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse other) {
-        if (other == axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse.getDefaultInstance()) return this;
-        if (other.hasSubjectType()) {
-          mergeSubjectType(other.getSubjectType());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private axoom.subjectz.v1.Subjectz.SubjectType subjectType_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          axoom.subjectz.v1.Subjectz.SubjectType, axoom.subjectz.v1.Subjectz.SubjectType.Builder, axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder> subjectTypeBuilder_;
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public boolean hasSubjectType() {
-        return subjectTypeBuilder_ != null || subjectType_ != null;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.SubjectType getSubjectType() {
-        if (subjectTypeBuilder_ == null) {
-          return subjectType_ == null ? axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance() : subjectType_;
-        } else {
-          return subjectTypeBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public Builder setSubjectType(axoom.subjectz.v1.Subjectz.SubjectType value) {
-        if (subjectTypeBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          subjectType_ = value;
-          onChanged();
-        } else {
-          subjectTypeBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public Builder setSubjectType(
-          axoom.subjectz.v1.Subjectz.SubjectType.Builder builderForValue) {
-        if (subjectTypeBuilder_ == null) {
-          subjectType_ = builderForValue.build();
-          onChanged();
-        } else {
-          subjectTypeBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public Builder mergeSubjectType(axoom.subjectz.v1.Subjectz.SubjectType value) {
-        if (subjectTypeBuilder_ == null) {
-          if (subjectType_ != null) {
-            subjectType_ =
-              axoom.subjectz.v1.Subjectz.SubjectType.newBuilder(subjectType_).mergeFrom(value).buildPartial();
-          } else {
-            subjectType_ = value;
-          }
-          onChanged();
-        } else {
-          subjectTypeBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public Builder clearSubjectType() {
-        if (subjectTypeBuilder_ == null) {
-          subjectType_ = null;
-          onChanged();
-        } else {
-          subjectType_ = null;
-          subjectTypeBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.SubjectType.Builder getSubjectTypeBuilder() {
-        
-        onChanged();
-        return getSubjectTypeFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder getSubjectTypeOrBuilder() {
-        if (subjectTypeBuilder_ != null) {
-          return subjectTypeBuilder_.getMessageOrBuilder();
-        } else {
-          return subjectType_ == null ?
-              axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance() : subjectType_;
-        }
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          axoom.subjectz.v1.Subjectz.SubjectType, axoom.subjectz.v1.Subjectz.SubjectType.Builder, axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder> 
-          getSubjectTypeFieldBuilder() {
-        if (subjectTypeBuilder_ == null) {
-          subjectTypeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              axoom.subjectz.v1.Subjectz.SubjectType, axoom.subjectz.v1.Subjectz.SubjectType.Builder, axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder>(
-                  getSubjectType(),
-                  getParentForChildren(),
-                  isClean());
-          subjectType_ = null;
-        }
-        return subjectTypeBuilder_;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.CreateSubjectTypeResponse)
-    }
-
-    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.CreateSubjectTypeResponse)
-    private static final axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse();
-    }
-
-    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<CreateSubjectTypeResponse>
-        PARSER = new com.google.protobuf.AbstractParser<CreateSubjectTypeResponse>() {
-      @java.lang.Override
-      public CreateSubjectTypeResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CreateSubjectTypeResponse(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<CreateSubjectTypeResponse> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<CreateSubjectTypeResponse> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface GetAllSubjectzRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.GetAllSubjectzRequest)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>string subject_type_id = 1;</code>
-     */
-    java.lang.String getSubjectTypeId();
-    /**
-     * <code>string subject_type_id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getSubjectTypeIdBytes();
-  }
-  /**
-   * Protobuf type {@code axoom.subjectz.v1.GetAllSubjectzRequest}
-   */
-  public  static final class GetAllSubjectzRequest extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.GetAllSubjectzRequest)
-      GetAllSubjectzRequestOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use GetAllSubjectzRequest.newBuilder() to construct.
-    private GetAllSubjectzRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private GetAllSubjectzRequest() {
-      subjectTypeId_ = "";
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private GetAllSubjectzRequest(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              subjectTypeId_ = s;
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetAllSubjectzRequest_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetAllSubjectzRequest_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest.class, axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest.Builder.class);
-    }
-
-    public static final int SUBJECT_TYPE_ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object subjectTypeId_;
-    /**
-     * <code>string subject_type_id = 1;</code>
-     */
-    public java.lang.String getSubjectTypeId() {
-      java.lang.Object ref = subjectTypeId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        subjectTypeId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string subject_type_id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getSubjectTypeIdBytes() {
-      java.lang.Object ref = subjectTypeId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        subjectTypeId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!getSubjectTypeIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, subjectTypeId_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!getSubjectTypeIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, subjectTypeId_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest)) {
-        return super.equals(obj);
-      }
-      axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest other = (axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest) obj;
-
-      boolean result = true;
-      result = result && getSubjectTypeId()
-          .equals(other.getSubjectTypeId());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + SUBJECT_TYPE_ID_FIELD_NUMBER;
-      hash = (53 * hash) + getSubjectTypeId().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code axoom.subjectz.v1.GetAllSubjectzRequest}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.GetAllSubjectzRequest)
-        axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequestOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetAllSubjectzRequest_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetAllSubjectzRequest_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest.class, axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest.Builder.class);
-      }
-
-      // Construct using axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        subjectTypeId_ = "";
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetAllSubjectzRequest_descriptor;
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest getDefaultInstanceForType() {
-        return axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest build() {
-        axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest buildPartial() {
-        axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest result = new axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest(this);
-        result.subjectTypeId_ = subjectTypeId_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest) {
-          return mergeFrom((axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest other) {
-        if (other == axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest.getDefaultInstance()) return this;
-        if (!other.getSubjectTypeId().isEmpty()) {
-          subjectTypeId_ = other.subjectTypeId_;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private java.lang.Object subjectTypeId_ = "";
-      /**
-       * <code>string subject_type_id = 1;</code>
-       */
-      public java.lang.String getSubjectTypeId() {
-        java.lang.Object ref = subjectTypeId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          subjectTypeId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string subject_type_id = 1;</code>
-       */
-      public com.google.protobuf.ByteString
-          getSubjectTypeIdBytes() {
-        java.lang.Object ref = subjectTypeId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          subjectTypeId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string subject_type_id = 1;</code>
-       */
-      public Builder setSubjectTypeId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        subjectTypeId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string subject_type_id = 1;</code>
-       */
-      public Builder clearSubjectTypeId() {
-        
-        subjectTypeId_ = getDefaultInstance().getSubjectTypeId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string subject_type_id = 1;</code>
-       */
-      public Builder setSubjectTypeIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        subjectTypeId_ = value;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.GetAllSubjectzRequest)
-    }
-
-    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.GetAllSubjectzRequest)
-    private static final axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest();
-    }
-
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<GetAllSubjectzRequest>
-        PARSER = new com.google.protobuf.AbstractParser<GetAllSubjectzRequest>() {
-      @java.lang.Override
-      public GetAllSubjectzRequest parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetAllSubjectzRequest(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GetAllSubjectzRequest> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GetAllSubjectzRequest> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface GetAllSubjectzResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.GetAllSubjectzResponse)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-     */
-    java.util.List<axoom.subjectz.v1.Subjectz.Subject> 
-        getSubjectsList();
-    /**
-     * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-     */
-    axoom.subjectz.v1.Subjectz.Subject getSubjects(int index);
-    /**
-     * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-     */
-    int getSubjectsCount();
-    /**
-     * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-     */
-    java.util.List<? extends axoom.subjectz.v1.Subjectz.SubjectOrBuilder> 
-        getSubjectsOrBuilderList();
-    /**
-     * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-     */
-    axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectsOrBuilder(
-        int index);
-  }
-  /**
-   * Protobuf type {@code axoom.subjectz.v1.GetAllSubjectzResponse}
-   */
-  public  static final class GetAllSubjectzResponse extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.GetAllSubjectzResponse)
-      GetAllSubjectzResponseOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use GetAllSubjectzResponse.newBuilder() to construct.
-    private GetAllSubjectzResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private GetAllSubjectzResponse() {
-      subjects_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private GetAllSubjectzResponse(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                subjects_ = new java.util.ArrayList<axoom.subjectz.v1.Subjectz.Subject>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              subjects_.add(
-                  input.readMessage(axoom.subjectz.v1.Subjectz.Subject.parser(), extensionRegistry));
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          subjects_ = java.util.Collections.unmodifiableList(subjects_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetAllSubjectzResponse_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetAllSubjectzResponse_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse.class, axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse.Builder.class);
-    }
-
-    public static final int SUBJECTS_FIELD_NUMBER = 1;
-    private java.util.List<axoom.subjectz.v1.Subjectz.Subject> subjects_;
-    /**
-     * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-     */
-    public java.util.List<axoom.subjectz.v1.Subjectz.Subject> getSubjectsList() {
-      return subjects_;
-    }
-    /**
-     * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-     */
-    public java.util.List<? extends axoom.subjectz.v1.Subjectz.SubjectOrBuilder> 
-        getSubjectsOrBuilderList() {
-      return subjects_;
-    }
-    /**
-     * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-     */
-    public int getSubjectsCount() {
-      return subjects_.size();
-    }
-    /**
-     * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-     */
-    public axoom.subjectz.v1.Subjectz.Subject getSubjects(int index) {
-      return subjects_.get(index);
-    }
-    /**
-     * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-     */
-    public axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectsOrBuilder(
-        int index) {
-      return subjects_.get(index);
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (int i = 0; i < subjects_.size(); i++) {
-        output.writeMessage(1, subjects_.get(i));
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      for (int i = 0; i < subjects_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, subjects_.get(i));
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse)) {
-        return super.equals(obj);
-      }
-      axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse other = (axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse) obj;
-
-      boolean result = true;
-      result = result && getSubjectsList()
-          .equals(other.getSubjectsList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (getSubjectsCount() > 0) {
-        hash = (37 * hash) + SUBJECTS_FIELD_NUMBER;
-        hash = (53 * hash) + getSubjectsList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code axoom.subjectz.v1.GetAllSubjectzResponse}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.GetAllSubjectzResponse)
-        axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponseOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetAllSubjectzResponse_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetAllSubjectzResponse_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse.class, axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse.Builder.class);
-      }
-
-      // Construct using axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getSubjectsFieldBuilder();
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        if (subjectsBuilder_ == null) {
-          subjects_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-        } else {
-          subjectsBuilder_.clear();
-        }
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetAllSubjectzResponse_descriptor;
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse getDefaultInstanceForType() {
-        return axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse build() {
-        axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse buildPartial() {
-        axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse result = new axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse(this);
-        int from_bitField0_ = bitField0_;
-        if (subjectsBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
-            subjects_ = java.util.Collections.unmodifiableList(subjects_);
-            bitField0_ = (bitField0_ & ~0x00000001);
-          }
-          result.subjects_ = subjects_;
-        } else {
-          result.subjects_ = subjectsBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse) {
-          return mergeFrom((axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse other) {
-        if (other == axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse.getDefaultInstance()) return this;
-        if (subjectsBuilder_ == null) {
-          if (!other.subjects_.isEmpty()) {
-            if (subjects_.isEmpty()) {
-              subjects_ = other.subjects_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-            } else {
-              ensureSubjectsIsMutable();
-              subjects_.addAll(other.subjects_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.subjects_.isEmpty()) {
-            if (subjectsBuilder_.isEmpty()) {
-              subjectsBuilder_.dispose();
-              subjectsBuilder_ = null;
-              subjects_ = other.subjects_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-              subjectsBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getSubjectsFieldBuilder() : null;
-            } else {
-              subjectsBuilder_.addAllMessages(other.subjects_);
-            }
-          }
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private java.util.List<axoom.subjectz.v1.Subjectz.Subject> subjects_ =
-        java.util.Collections.emptyList();
-      private void ensureSubjectsIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          subjects_ = new java.util.ArrayList<axoom.subjectz.v1.Subjectz.Subject>(subjects_);
-          bitField0_ |= 0x00000001;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          axoom.subjectz.v1.Subjectz.Subject, axoom.subjectz.v1.Subjectz.Subject.Builder, axoom.subjectz.v1.Subjectz.SubjectOrBuilder> subjectsBuilder_;
-
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public java.util.List<axoom.subjectz.v1.Subjectz.Subject> getSubjectsList() {
-        if (subjectsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(subjects_);
-        } else {
-          return subjectsBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public int getSubjectsCount() {
-        if (subjectsBuilder_ == null) {
-          return subjects_.size();
-        } else {
-          return subjectsBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.Subject getSubjects(int index) {
-        if (subjectsBuilder_ == null) {
-          return subjects_.get(index);
-        } else {
-          return subjectsBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public Builder setSubjects(
-          int index, axoom.subjectz.v1.Subjectz.Subject value) {
-        if (subjectsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureSubjectsIsMutable();
-          subjects_.set(index, value);
-          onChanged();
-        } else {
-          subjectsBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public Builder setSubjects(
-          int index, axoom.subjectz.v1.Subjectz.Subject.Builder builderForValue) {
-        if (subjectsBuilder_ == null) {
-          ensureSubjectsIsMutable();
-          subjects_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          subjectsBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public Builder addSubjects(axoom.subjectz.v1.Subjectz.Subject value) {
-        if (subjectsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureSubjectsIsMutable();
-          subjects_.add(value);
-          onChanged();
-        } else {
-          subjectsBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public Builder addSubjects(
-          int index, axoom.subjectz.v1.Subjectz.Subject value) {
-        if (subjectsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureSubjectsIsMutable();
-          subjects_.add(index, value);
-          onChanged();
-        } else {
-          subjectsBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public Builder addSubjects(
-          axoom.subjectz.v1.Subjectz.Subject.Builder builderForValue) {
-        if (subjectsBuilder_ == null) {
-          ensureSubjectsIsMutable();
-          subjects_.add(builderForValue.build());
-          onChanged();
-        } else {
-          subjectsBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public Builder addSubjects(
-          int index, axoom.subjectz.v1.Subjectz.Subject.Builder builderForValue) {
-        if (subjectsBuilder_ == null) {
-          ensureSubjectsIsMutable();
-          subjects_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          subjectsBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public Builder addAllSubjects(
-          java.lang.Iterable<? extends axoom.subjectz.v1.Subjectz.Subject> values) {
-        if (subjectsBuilder_ == null) {
-          ensureSubjectsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, subjects_);
-          onChanged();
-        } else {
-          subjectsBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public Builder clearSubjects() {
-        if (subjectsBuilder_ == null) {
-          subjects_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-          onChanged();
-        } else {
-          subjectsBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public Builder removeSubjects(int index) {
-        if (subjectsBuilder_ == null) {
-          ensureSubjectsIsMutable();
-          subjects_.remove(index);
-          onChanged();
-        } else {
-          subjectsBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.Subject.Builder getSubjectsBuilder(
-          int index) {
-        return getSubjectsFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectsOrBuilder(
-          int index) {
-        if (subjectsBuilder_ == null) {
-          return subjects_.get(index);  } else {
-          return subjectsBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public java.util.List<? extends axoom.subjectz.v1.Subjectz.SubjectOrBuilder> 
-           getSubjectsOrBuilderList() {
-        if (subjectsBuilder_ != null) {
-          return subjectsBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(subjects_);
-        }
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.Subject.Builder addSubjectsBuilder() {
-        return getSubjectsFieldBuilder().addBuilder(
-            axoom.subjectz.v1.Subjectz.Subject.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.Subject.Builder addSubjectsBuilder(
-          int index) {
-        return getSubjectsFieldBuilder().addBuilder(
-            index, axoom.subjectz.v1.Subjectz.Subject.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .axoom.subjectz.v1.Subject subjects = 1;</code>
-       */
-      public java.util.List<axoom.subjectz.v1.Subjectz.Subject.Builder> 
-           getSubjectsBuilderList() {
-        return getSubjectsFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          axoom.subjectz.v1.Subjectz.Subject, axoom.subjectz.v1.Subjectz.Subject.Builder, axoom.subjectz.v1.Subjectz.SubjectOrBuilder> 
-          getSubjectsFieldBuilder() {
-        if (subjectsBuilder_ == null) {
-          subjectsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              axoom.subjectz.v1.Subjectz.Subject, axoom.subjectz.v1.Subjectz.Subject.Builder, axoom.subjectz.v1.Subjectz.SubjectOrBuilder>(
-                  subjects_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
-                  getParentForChildren(),
-                  isClean());
-          subjects_ = null;
-        }
-        return subjectsBuilder_;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.GetAllSubjectzResponse)
-    }
-
-    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.GetAllSubjectzResponse)
-    private static final axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse();
-    }
-
-    public static axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<GetAllSubjectzResponse>
-        PARSER = new com.google.protobuf.AbstractParser<GetAllSubjectzResponse>() {
-      @java.lang.Override
-      public GetAllSubjectzResponse parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetAllSubjectzResponse(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GetAllSubjectzResponse> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GetAllSubjectzResponse> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -4518,36 +1493,34 @@ public final class SubjectzService {
 
   }
 
-  public interface GetSubjectResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.GetSubjectResponse)
+  public interface GetSubjectContextRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.GetSubjectContextRequest)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
+     * <code>string subject_id = 1;</code>
      */
-    boolean hasSubject();
+    java.lang.String getSubjectId();
     /**
-     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
+     * <code>string subject_id = 1;</code>
      */
-    axoom.subjectz.v1.Subjectz.Subject getSubject();
-    /**
-     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-     */
-    axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectOrBuilder();
+    com.google.protobuf.ByteString
+        getSubjectIdBytes();
   }
   /**
-   * Protobuf type {@code axoom.subjectz.v1.GetSubjectResponse}
+   * Protobuf type {@code axoom.subjectz.v1.GetSubjectContextRequest}
    */
-  public  static final class GetSubjectResponse extends
+  public  static final class GetSubjectContextRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.GetSubjectResponse)
-      GetSubjectResponseOrBuilder {
+      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.GetSubjectContextRequest)
+      GetSubjectContextRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use GetSubjectResponse.newBuilder() to construct.
-    private GetSubjectResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use GetSubjectContextRequest.newBuilder() to construct.
+    private GetSubjectContextRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private GetSubjectResponse() {
+    private GetSubjectContextRequest() {
+      subjectId_ = "";
     }
 
     @java.lang.Override
@@ -4555,7 +1528,7 @@ public final class SubjectzService {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private GetSubjectResponse(
+    private GetSubjectContextRequest(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4575,16 +1548,9 @@ public final class SubjectzService {
               done = true;
               break;
             case 10: {
-              axoom.subjectz.v1.Subjectz.Subject.Builder subBuilder = null;
-              if (subject_ != null) {
-                subBuilder = subject_.toBuilder();
-              }
-              subject_ = input.readMessage(axoom.subjectz.v1.Subjectz.Subject.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(subject_);
-                subject_ = subBuilder.buildPartial();
-              }
+              java.lang.String s = input.readStringRequireUtf8();
 
+              subjectId_ = s;
               break;
             }
             default: {
@@ -4608,36 +1574,49 @@ public final class SubjectzService {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectResponse_descriptor;
+      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectContextRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectResponse_fieldAccessorTable
+      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectContextRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              axoom.subjectz.v1.SubjectzService.GetSubjectResponse.class, axoom.subjectz.v1.SubjectzService.GetSubjectResponse.Builder.class);
+              axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest.class, axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest.Builder.class);
     }
 
-    public static final int SUBJECT_FIELD_NUMBER = 1;
-    private axoom.subjectz.v1.Subjectz.Subject subject_;
+    public static final int SUBJECT_ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object subjectId_;
     /**
-     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
+     * <code>string subject_id = 1;</code>
      */
-    public boolean hasSubject() {
-      return subject_ != null;
+    public java.lang.String getSubjectId() {
+      java.lang.Object ref = subjectId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        subjectId_ = s;
+        return s;
+      }
     }
     /**
-     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
+     * <code>string subject_id = 1;</code>
      */
-    public axoom.subjectz.v1.Subjectz.Subject getSubject() {
-      return subject_ == null ? axoom.subjectz.v1.Subjectz.Subject.getDefaultInstance() : subject_;
-    }
-    /**
-     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
-     */
-    public axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectOrBuilder() {
-      return getSubject();
+    public com.google.protobuf.ByteString
+        getSubjectIdBytes() {
+      java.lang.Object ref = subjectId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        subjectId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     private byte memoizedIsInitialized = -1;
@@ -4654,8 +1633,8 @@ public final class SubjectzService {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (subject_ != null) {
-        output.writeMessage(1, getSubject());
+      if (!getSubjectIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, subjectId_);
       }
       unknownFields.writeTo(output);
     }
@@ -4666,9 +1645,8 @@ public final class SubjectzService {
       if (size != -1) return size;
 
       size = 0;
-      if (subject_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getSubject());
+      if (!getSubjectIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, subjectId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4680,17 +1658,14 @@ public final class SubjectzService {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.GetSubjectResponse)) {
+      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest)) {
         return super.equals(obj);
       }
-      axoom.subjectz.v1.SubjectzService.GetSubjectResponse other = (axoom.subjectz.v1.SubjectzService.GetSubjectResponse) obj;
+      axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest other = (axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest) obj;
 
       boolean result = true;
-      result = result && (hasSubject() == other.hasSubject());
-      if (hasSubject()) {
-        result = result && getSubject()
-            .equals(other.getSubject());
-      }
+      result = result && getSubjectId()
+          .equals(other.getSubjectId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -4702,78 +1677,76 @@ public final class SubjectzService {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasSubject()) {
-        hash = (37 * hash) + SUBJECT_FIELD_NUMBER;
-        hash = (53 * hash) + getSubject().hashCode();
-      }
+      hash = (37 * hash) + SUBJECT_ID_FIELD_NUMBER;
+      hash = (53 * hash) + getSubjectId().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse parseFrom(byte[] data)
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse parseFrom(java.io.InputStream input)
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse parseDelimitedFrom(java.io.InputStream input)
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse parseDelimitedFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4786,7 +1759,7 @@ public final class SubjectzService {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.GetSubjectResponse prototype) {
+    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -4802,26 +1775,26 @@ public final class SubjectzService {
       return builder;
     }
     /**
-     * Protobuf type {@code axoom.subjectz.v1.GetSubjectResponse}
+     * Protobuf type {@code axoom.subjectz.v1.GetSubjectContextRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.GetSubjectResponse)
-        axoom.subjectz.v1.SubjectzService.GetSubjectResponseOrBuilder {
+        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.GetSubjectContextRequest)
+        axoom.subjectz.v1.SubjectzService.GetSubjectContextRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectResponse_descriptor;
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectContextRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectResponse_fieldAccessorTable
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectContextRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                axoom.subjectz.v1.SubjectzService.GetSubjectResponse.class, axoom.subjectz.v1.SubjectzService.GetSubjectResponse.Builder.class);
+                axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest.class, axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest.Builder.class);
       }
 
-      // Construct using axoom.subjectz.v1.SubjectzService.GetSubjectResponse.newBuilder()
+      // Construct using axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4839,29 +1812,25 @@ public final class SubjectzService {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        if (subjectBuilder_ == null) {
-          subject_ = null;
-        } else {
-          subject_ = null;
-          subjectBuilder_ = null;
-        }
+        subjectId_ = "";
+
         return this;
       }
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectResponse_descriptor;
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectContextRequest_descriptor;
       }
 
       @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.GetSubjectResponse getDefaultInstanceForType() {
-        return axoom.subjectz.v1.SubjectzService.GetSubjectResponse.getDefaultInstance();
+      public axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest getDefaultInstanceForType() {
+        return axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest.getDefaultInstance();
       }
 
       @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.GetSubjectResponse build() {
-        axoom.subjectz.v1.SubjectzService.GetSubjectResponse result = buildPartial();
+      public axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest build() {
+        axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -4869,13 +1838,9 @@ public final class SubjectzService {
       }
 
       @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.GetSubjectResponse buildPartial() {
-        axoom.subjectz.v1.SubjectzService.GetSubjectResponse result = new axoom.subjectz.v1.SubjectzService.GetSubjectResponse(this);
-        if (subjectBuilder_ == null) {
-          result.subject_ = subject_;
-        } else {
-          result.subject_ = subjectBuilder_.build();
-        }
+      public axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest buildPartial() {
+        axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest result = new axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest(this);
+        result.subjectId_ = subjectId_;
         onBuilt();
         return result;
       }
@@ -4914,18 +1879,19 @@ public final class SubjectzService {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof axoom.subjectz.v1.SubjectzService.GetSubjectResponse) {
-          return mergeFrom((axoom.subjectz.v1.SubjectzService.GetSubjectResponse)other);
+        if (other instanceof axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest) {
+          return mergeFrom((axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.GetSubjectResponse other) {
-        if (other == axoom.subjectz.v1.SubjectzService.GetSubjectResponse.getDefaultInstance()) return this;
-        if (other.hasSubject()) {
-          mergeSubject(other.getSubject());
+      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest other) {
+        if (other == axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest.getDefaultInstance()) return this;
+        if (!other.getSubjectId().isEmpty()) {
+          subjectId_ = other.subjectId_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -4942,11 +1908,11 @@ public final class SubjectzService {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        axoom.subjectz.v1.SubjectzService.GetSubjectResponse parsedMessage = null;
+        axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (axoom.subjectz.v1.SubjectzService.GetSubjectResponse) e.getUnfinishedMessage();
+          parsedMessage = (axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -4956,16 +1922,1289 @@ public final class SubjectzService {
         return this;
       }
 
+      private java.lang.Object subjectId_ = "";
+      /**
+       * <code>string subject_id = 1;</code>
+       */
+      public java.lang.String getSubjectId() {
+        java.lang.Object ref = subjectId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          subjectId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string subject_id = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getSubjectIdBytes() {
+        java.lang.Object ref = subjectId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          subjectId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string subject_id = 1;</code>
+       */
+      public Builder setSubjectId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        subjectId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string subject_id = 1;</code>
+       */
+      public Builder clearSubjectId() {
+        
+        subjectId_ = getDefaultInstance().getSubjectId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string subject_id = 1;</code>
+       */
+      public Builder setSubjectIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        subjectId_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.GetSubjectContextRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.GetSubjectContextRequest)
+    private static final axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest();
+    }
+
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<GetSubjectContextRequest>
+        PARSER = new com.google.protobuf.AbstractParser<GetSubjectContextRequest>() {
+      @java.lang.Override
+      public GetSubjectContextRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetSubjectContextRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<GetSubjectContextRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetSubjectContextRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface GetSubjectzRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.GetSubjectzRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string subject_type_id = 1;</code>
+     */
+    java.lang.String getSubjectTypeId();
+    /**
+     * <code>string subject_type_id = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getSubjectTypeIdBytes();
+  }
+  /**
+   * Protobuf type {@code axoom.subjectz.v1.GetSubjectzRequest}
+   */
+  public  static final class GetSubjectzRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.GetSubjectzRequest)
+      GetSubjectzRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use GetSubjectzRequest.newBuilder() to construct.
+    private GetSubjectzRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private GetSubjectzRequest() {
+      subjectTypeId_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private GetSubjectzRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              subjectTypeId_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectzRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectzRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              axoom.subjectz.v1.SubjectzService.GetSubjectzRequest.class, axoom.subjectz.v1.SubjectzService.GetSubjectzRequest.Builder.class);
+    }
+
+    public static final int SUBJECT_TYPE_ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object subjectTypeId_;
+    /**
+     * <code>string subject_type_id = 1;</code>
+     */
+    public java.lang.String getSubjectTypeId() {
+      java.lang.Object ref = subjectTypeId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        subjectTypeId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string subject_type_id = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getSubjectTypeIdBytes() {
+      java.lang.Object ref = subjectTypeId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        subjectTypeId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getSubjectTypeIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, subjectTypeId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getSubjectTypeIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, subjectTypeId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.GetSubjectzRequest)) {
+        return super.equals(obj);
+      }
+      axoom.subjectz.v1.SubjectzService.GetSubjectzRequest other = (axoom.subjectz.v1.SubjectzService.GetSubjectzRequest) obj;
+
+      boolean result = true;
+      result = result && getSubjectTypeId()
+          .equals(other.getSubjectTypeId());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + SUBJECT_TYPE_ID_FIELD_NUMBER;
+      hash = (53 * hash) + getSubjectTypeId().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.GetSubjectzRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code axoom.subjectz.v1.GetSubjectzRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.GetSubjectzRequest)
+        axoom.subjectz.v1.SubjectzService.GetSubjectzRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectzRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectzRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                axoom.subjectz.v1.SubjectzService.GetSubjectzRequest.class, axoom.subjectz.v1.SubjectzService.GetSubjectzRequest.Builder.class);
+      }
+
+      // Construct using axoom.subjectz.v1.SubjectzService.GetSubjectzRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        subjectTypeId_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectzRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public axoom.subjectz.v1.SubjectzService.GetSubjectzRequest getDefaultInstanceForType() {
+        return axoom.subjectz.v1.SubjectzService.GetSubjectzRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public axoom.subjectz.v1.SubjectzService.GetSubjectzRequest build() {
+        axoom.subjectz.v1.SubjectzService.GetSubjectzRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public axoom.subjectz.v1.SubjectzService.GetSubjectzRequest buildPartial() {
+        axoom.subjectz.v1.SubjectzService.GetSubjectzRequest result = new axoom.subjectz.v1.SubjectzService.GetSubjectzRequest(this);
+        result.subjectTypeId_ = subjectTypeId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof axoom.subjectz.v1.SubjectzService.GetSubjectzRequest) {
+          return mergeFrom((axoom.subjectz.v1.SubjectzService.GetSubjectzRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.GetSubjectzRequest other) {
+        if (other == axoom.subjectz.v1.SubjectzService.GetSubjectzRequest.getDefaultInstance()) return this;
+        if (!other.getSubjectTypeId().isEmpty()) {
+          subjectTypeId_ = other.subjectTypeId_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        axoom.subjectz.v1.SubjectzService.GetSubjectzRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (axoom.subjectz.v1.SubjectzService.GetSubjectzRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object subjectTypeId_ = "";
+      /**
+       * <code>string subject_type_id = 1;</code>
+       */
+      public java.lang.String getSubjectTypeId() {
+        java.lang.Object ref = subjectTypeId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          subjectTypeId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string subject_type_id = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getSubjectTypeIdBytes() {
+        java.lang.Object ref = subjectTypeId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          subjectTypeId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string subject_type_id = 1;</code>
+       */
+      public Builder setSubjectTypeId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        subjectTypeId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string subject_type_id = 1;</code>
+       */
+      public Builder clearSubjectTypeId() {
+        
+        subjectTypeId_ = getDefaultInstance().getSubjectTypeId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string subject_type_id = 1;</code>
+       */
+      public Builder setSubjectTypeIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        subjectTypeId_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.GetSubjectzRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.GetSubjectzRequest)
+    private static final axoom.subjectz.v1.SubjectzService.GetSubjectzRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.GetSubjectzRequest();
+    }
+
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectzRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<GetSubjectzRequest>
+        PARSER = new com.google.protobuf.AbstractParser<GetSubjectzRequest>() {
+      @java.lang.Override
+      public GetSubjectzRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetSubjectzRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<GetSubjectzRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetSubjectzRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public axoom.subjectz.v1.SubjectzService.GetSubjectzRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UpdateSubjectRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.UpdateSubjectRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * The Subject to update
+     * </pre>
+     *
+     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
+     */
+    boolean hasSubject();
+    /**
+     * <pre>
+     * The Subject to update
+     * </pre>
+     *
+     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
+     */
+    axoom.subjectz.v1.Subjectz.Subject getSubject();
+    /**
+     * <pre>
+     * The Subject to update
+     * </pre>
+     *
+     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
+     */
+    axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectOrBuilder();
+
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    java.util.List<java.lang.String>
+        getInstanceOfList();
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    int getInstanceOfCount();
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    java.lang.String getInstanceOf(int index);
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getInstanceOfBytes(int index);
+  }
+  /**
+   * Protobuf type {@code axoom.subjectz.v1.UpdateSubjectRequest}
+   */
+  public  static final class UpdateSubjectRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.UpdateSubjectRequest)
+      UpdateSubjectRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UpdateSubjectRequest.newBuilder() to construct.
+    private UpdateSubjectRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UpdateSubjectRequest() {
+      instanceOf_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UpdateSubjectRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              axoom.subjectz.v1.Subjectz.Subject.Builder subBuilder = null;
+              if (subject_ != null) {
+                subBuilder = subject_.toBuilder();
+              }
+              subject_ = input.readMessage(axoom.subjectz.v1.Subjectz.Subject.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(subject_);
+                subject_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                instanceOf_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              instanceOf_.add(s);
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          instanceOf_ = instanceOf_.getUnmodifiableView();
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_UpdateSubjectRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_UpdateSubjectRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest.class, axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int SUBJECT_FIELD_NUMBER = 1;
+    private axoom.subjectz.v1.Subjectz.Subject subject_;
+    /**
+     * <pre>
+     * The Subject to update
+     * </pre>
+     *
+     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
+     */
+    public boolean hasSubject() {
+      return subject_ != null;
+    }
+    /**
+     * <pre>
+     * The Subject to update
+     * </pre>
+     *
+     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
+     */
+    public axoom.subjectz.v1.Subjectz.Subject getSubject() {
+      return subject_ == null ? axoom.subjectz.v1.Subjectz.Subject.getDefaultInstance() : subject_;
+    }
+    /**
+     * <pre>
+     * The Subject to update
+     * </pre>
+     *
+     * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
+     */
+    public axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectOrBuilder() {
+      return getSubject();
+    }
+
+    public static final int INSTANCE_OF_FIELD_NUMBER = 2;
+    private com.google.protobuf.LazyStringList instanceOf_;
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getInstanceOfList() {
+      return instanceOf_;
+    }
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    public int getInstanceOfCount() {
+      return instanceOf_.size();
+    }
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    public java.lang.String getInstanceOf(int index) {
+      return instanceOf_.get(index);
+    }
+    /**
+     * <pre>
+     * The Subject's root SubjectType IDs
+     * </pre>
+     *
+     * <code>repeated string instance_of = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getInstanceOfBytes(int index) {
+      return instanceOf_.getByteString(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (subject_ != null) {
+        output.writeMessage(1, getSubject());
+      }
+      for (int i = 0; i < instanceOf_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, instanceOf_.getRaw(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (subject_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getSubject());
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < instanceOf_.size(); i++) {
+          dataSize += computeStringSizeNoTag(instanceOf_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getInstanceOfList().size();
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest)) {
+        return super.equals(obj);
+      }
+      axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest other = (axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest) obj;
+
+      boolean result = true;
+      result = result && (hasSubject() == other.hasSubject());
+      if (hasSubject()) {
+        result = result && getSubject()
+            .equals(other.getSubject());
+      }
+      result = result && getInstanceOfList()
+          .equals(other.getInstanceOfList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasSubject()) {
+        hash = (37 * hash) + SUBJECT_FIELD_NUMBER;
+        hash = (53 * hash) + getSubject().hashCode();
+      }
+      if (getInstanceOfCount() > 0) {
+        hash = (37 * hash) + INSTANCE_OF_FIELD_NUMBER;
+        hash = (53 * hash) + getInstanceOfList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code axoom.subjectz.v1.UpdateSubjectRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.UpdateSubjectRequest)
+        axoom.subjectz.v1.SubjectzService.UpdateSubjectRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_UpdateSubjectRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_UpdateSubjectRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest.class, axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest.Builder.class);
+      }
+
+      // Construct using axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (subjectBuilder_ == null) {
+          subject_ = null;
+        } else {
+          subject_ = null;
+          subjectBuilder_ = null;
+        }
+        instanceOf_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_UpdateSubjectRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest getDefaultInstanceForType() {
+        return axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest build() {
+        axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest buildPartial() {
+        axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest result = new axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (subjectBuilder_ == null) {
+          result.subject_ = subject_;
+        } else {
+          result.subject_ = subjectBuilder_.build();
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          instanceOf_ = instanceOf_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.instanceOf_ = instanceOf_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest) {
+          return mergeFrom((axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest other) {
+        if (other == axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest.getDefaultInstance()) return this;
+        if (other.hasSubject()) {
+          mergeSubject(other.getSubject());
+        }
+        if (!other.instanceOf_.isEmpty()) {
+          if (instanceOf_.isEmpty()) {
+            instanceOf_ = other.instanceOf_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureInstanceOfIsMutable();
+            instanceOf_.addAll(other.instanceOf_);
+          }
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
       private axoom.subjectz.v1.Subjectz.Subject subject_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<
           axoom.subjectz.v1.Subjectz.Subject, axoom.subjectz.v1.Subjectz.Subject.Builder, axoom.subjectz.v1.Subjectz.SubjectOrBuilder> subjectBuilder_;
       /**
+       * <pre>
+       * The Subject to update
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public boolean hasSubject() {
         return subjectBuilder_ != null || subject_ != null;
       }
       /**
+       * <pre>
+       * The Subject to update
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public axoom.subjectz.v1.Subjectz.Subject getSubject() {
@@ -4976,6 +3215,10 @@ public final class SubjectzService {
         }
       }
       /**
+       * <pre>
+       * The Subject to update
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public Builder setSubject(axoom.subjectz.v1.Subjectz.Subject value) {
@@ -4992,6 +3235,10 @@ public final class SubjectzService {
         return this;
       }
       /**
+       * <pre>
+       * The Subject to update
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public Builder setSubject(
@@ -5006,6 +3253,10 @@ public final class SubjectzService {
         return this;
       }
       /**
+       * <pre>
+       * The Subject to update
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public Builder mergeSubject(axoom.subjectz.v1.Subjectz.Subject value) {
@@ -5024,6 +3275,10 @@ public final class SubjectzService {
         return this;
       }
       /**
+       * <pre>
+       * The Subject to update
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public Builder clearSubject() {
@@ -5038,6 +3293,10 @@ public final class SubjectzService {
         return this;
       }
       /**
+       * <pre>
+       * The Subject to update
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public axoom.subjectz.v1.Subjectz.Subject.Builder getSubjectBuilder() {
@@ -5046,6 +3305,10 @@ public final class SubjectzService {
         return getSubjectFieldBuilder().getBuilder();
       }
       /**
+       * <pre>
+       * The Subject to update
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       public axoom.subjectz.v1.Subjectz.SubjectOrBuilder getSubjectOrBuilder() {
@@ -5057,6 +3320,10 @@ public final class SubjectzService {
         }
       }
       /**
+       * <pre>
+       * The Subject to update
+       * </pre>
+       *
        * <code>.axoom.subjectz.v1.Subject subject = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
@@ -5072,6 +3339,136 @@ public final class SubjectzService {
         }
         return subjectBuilder_;
       }
+
+      private com.google.protobuf.LazyStringList instanceOf_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureInstanceOfIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          instanceOf_ = new com.google.protobuf.LazyStringArrayList(instanceOf_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getInstanceOfList() {
+        return instanceOf_.getUnmodifiableView();
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public int getInstanceOfCount() {
+        return instanceOf_.size();
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public java.lang.String getInstanceOf(int index) {
+        return instanceOf_.get(index);
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getInstanceOfBytes(int index) {
+        return instanceOf_.getByteString(index);
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public Builder setInstanceOf(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureInstanceOfIsMutable();
+        instanceOf_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public Builder addInstanceOf(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureInstanceOfIsMutable();
+        instanceOf_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public Builder addAllInstanceOf(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureInstanceOfIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, instanceOf_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public Builder clearInstanceOf() {
+        instanceOf_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The Subject's root SubjectType IDs
+       * </pre>
+       *
+       * <code>repeated string instance_of = 2;</code>
+       */
+      public Builder addInstanceOfBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureInstanceOfIsMutable();
+        instanceOf_.add(value);
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -5085,41 +3482,970 @@ public final class SubjectzService {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.GetSubjectResponse)
+      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.UpdateSubjectRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.GetSubjectResponse)
-    private static final axoom.subjectz.v1.SubjectzService.GetSubjectResponse DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.UpdateSubjectRequest)
+    private static final axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.GetSubjectResponse();
+      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest();
     }
 
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectResponse getDefaultInstance() {
+    public static axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<GetSubjectResponse>
-        PARSER = new com.google.protobuf.AbstractParser<GetSubjectResponse>() {
+    private static final com.google.protobuf.Parser<UpdateSubjectRequest>
+        PARSER = new com.google.protobuf.AbstractParser<UpdateSubjectRequest>() {
       @java.lang.Override
-      public GetSubjectResponse parsePartialFrom(
+      public UpdateSubjectRequest parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetSubjectResponse(input, extensionRegistry);
+        return new UpdateSubjectRequest(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<GetSubjectResponse> parser() {
+    public static com.google.protobuf.Parser<UpdateSubjectRequest> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<GetSubjectResponse> getParserForType() {
+    public com.google.protobuf.Parser<UpdateSubjectRequest> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public axoom.subjectz.v1.SubjectzService.GetSubjectResponse getDefaultInstanceForType() {
+    public axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface CreateSubjectTypeRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.CreateSubjectTypeRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * The SubjectType to create
+     * </pre>
+     *
+     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+     */
+    boolean hasSubjectType();
+    /**
+     * <pre>
+     * The SubjectType to create
+     * </pre>
+     *
+     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+     */
+    axoom.subjectz.v1.Subjectz.SubjectType getSubjectType();
+    /**
+     * <pre>
+     * The SubjectType to create
+     * </pre>
+     *
+     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+     */
+    axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder getSubjectTypeOrBuilder();
+
+    /**
+     * <pre>
+     * The SubjectType's implemented root SubjecType IDs
+     * </pre>
+     *
+     * <code>repeated string implements = 2;</code>
+     */
+    java.util.List<java.lang.String>
+        getImplementsList();
+    /**
+     * <pre>
+     * The SubjectType's implemented root SubjecType IDs
+     * </pre>
+     *
+     * <code>repeated string implements = 2;</code>
+     */
+    int getImplementsCount();
+    /**
+     * <pre>
+     * The SubjectType's implemented root SubjecType IDs
+     * </pre>
+     *
+     * <code>repeated string implements = 2;</code>
+     */
+    java.lang.String getImplements(int index);
+    /**
+     * <pre>
+     * The SubjectType's implemented root SubjecType IDs
+     * </pre>
+     *
+     * <code>repeated string implements = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getImplementsBytes(int index);
+  }
+  /**
+   * Protobuf type {@code axoom.subjectz.v1.CreateSubjectTypeRequest}
+   */
+  public  static final class CreateSubjectTypeRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.CreateSubjectTypeRequest)
+      CreateSubjectTypeRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use CreateSubjectTypeRequest.newBuilder() to construct.
+    private CreateSubjectTypeRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private CreateSubjectTypeRequest() {
+      implements_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private CreateSubjectTypeRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              axoom.subjectz.v1.Subjectz.SubjectType.Builder subBuilder = null;
+              if (subjectType_ != null) {
+                subBuilder = subjectType_.toBuilder();
+              }
+              subjectType_ = input.readMessage(axoom.subjectz.v1.Subjectz.SubjectType.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(subjectType_);
+                subjectType_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                implements_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              implements_.add(s);
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          implements_ = implements_.getUnmodifiableView();
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.class, axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int SUBJECT_TYPE_FIELD_NUMBER = 1;
+    private axoom.subjectz.v1.Subjectz.SubjectType subjectType_;
+    /**
+     * <pre>
+     * The SubjectType to create
+     * </pre>
+     *
+     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+     */
+    public boolean hasSubjectType() {
+      return subjectType_ != null;
+    }
+    /**
+     * <pre>
+     * The SubjectType to create
+     * </pre>
+     *
+     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+     */
+    public axoom.subjectz.v1.Subjectz.SubjectType getSubjectType() {
+      return subjectType_ == null ? axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance() : subjectType_;
+    }
+    /**
+     * <pre>
+     * The SubjectType to create
+     * </pre>
+     *
+     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+     */
+    public axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder getSubjectTypeOrBuilder() {
+      return getSubjectType();
+    }
+
+    public static final int IMPLEMENTS_FIELD_NUMBER = 2;
+    private com.google.protobuf.LazyStringList implements_;
+    /**
+     * <pre>
+     * The SubjectType's implemented root SubjecType IDs
+     * </pre>
+     *
+     * <code>repeated string implements = 2;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getImplementsList() {
+      return implements_;
+    }
+    /**
+     * <pre>
+     * The SubjectType's implemented root SubjecType IDs
+     * </pre>
+     *
+     * <code>repeated string implements = 2;</code>
+     */
+    public int getImplementsCount() {
+      return implements_.size();
+    }
+    /**
+     * <pre>
+     * The SubjectType's implemented root SubjecType IDs
+     * </pre>
+     *
+     * <code>repeated string implements = 2;</code>
+     */
+    public java.lang.String getImplements(int index) {
+      return implements_.get(index);
+    }
+    /**
+     * <pre>
+     * The SubjectType's implemented root SubjecType IDs
+     * </pre>
+     *
+     * <code>repeated string implements = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getImplementsBytes(int index) {
+      return implements_.getByteString(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (subjectType_ != null) {
+        output.writeMessage(1, getSubjectType());
+      }
+      for (int i = 0; i < implements_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, implements_.getRaw(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (subjectType_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getSubjectType());
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < implements_.size(); i++) {
+          dataSize += computeStringSizeNoTag(implements_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getImplementsList().size();
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest)) {
+        return super.equals(obj);
+      }
+      axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest other = (axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest) obj;
+
+      boolean result = true;
+      result = result && (hasSubjectType() == other.hasSubjectType());
+      if (hasSubjectType()) {
+        result = result && getSubjectType()
+            .equals(other.getSubjectType());
+      }
+      result = result && getImplementsList()
+          .equals(other.getImplementsList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasSubjectType()) {
+        hash = (37 * hash) + SUBJECT_TYPE_FIELD_NUMBER;
+        hash = (53 * hash) + getSubjectType().hashCode();
+      }
+      if (getImplementsCount() > 0) {
+        hash = (37 * hash) + IMPLEMENTS_FIELD_NUMBER;
+        hash = (53 * hash) + getImplementsList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code axoom.subjectz.v1.CreateSubjectTypeRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.CreateSubjectTypeRequest)
+        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.class, axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.Builder.class);
+      }
+
+      // Construct using axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (subjectTypeBuilder_ == null) {
+          subjectType_ = null;
+        } else {
+          subjectType_ = null;
+          subjectTypeBuilder_ = null;
+        }
+        implements_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest getDefaultInstanceForType() {
+        return axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest build() {
+        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest buildPartial() {
+        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest result = new axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (subjectTypeBuilder_ == null) {
+          result.subjectType_ = subjectType_;
+        } else {
+          result.subjectType_ = subjectTypeBuilder_.build();
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          implements_ = implements_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.implements_ = implements_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest) {
+          return mergeFrom((axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest other) {
+        if (other == axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.getDefaultInstance()) return this;
+        if (other.hasSubjectType()) {
+          mergeSubjectType(other.getSubjectType());
+        }
+        if (!other.implements_.isEmpty()) {
+          if (implements_.isEmpty()) {
+            implements_ = other.implements_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureImplementsIsMutable();
+            implements_.addAll(other.implements_);
+          }
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private axoom.subjectz.v1.Subjectz.SubjectType subjectType_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          axoom.subjectz.v1.Subjectz.SubjectType, axoom.subjectz.v1.Subjectz.SubjectType.Builder, axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder> subjectTypeBuilder_;
+      /**
+       * <pre>
+       * The SubjectType to create
+       * </pre>
+       *
+       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       */
+      public boolean hasSubjectType() {
+        return subjectTypeBuilder_ != null || subjectType_ != null;
+      }
+      /**
+       * <pre>
+       * The SubjectType to create
+       * </pre>
+       *
+       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       */
+      public axoom.subjectz.v1.Subjectz.SubjectType getSubjectType() {
+        if (subjectTypeBuilder_ == null) {
+          return subjectType_ == null ? axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance() : subjectType_;
+        } else {
+          return subjectTypeBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       * The SubjectType to create
+       * </pre>
+       *
+       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       */
+      public Builder setSubjectType(axoom.subjectz.v1.Subjectz.SubjectType value) {
+        if (subjectTypeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          subjectType_ = value;
+          onChanged();
+        } else {
+          subjectTypeBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The SubjectType to create
+       * </pre>
+       *
+       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       */
+      public Builder setSubjectType(
+          axoom.subjectz.v1.Subjectz.SubjectType.Builder builderForValue) {
+        if (subjectTypeBuilder_ == null) {
+          subjectType_ = builderForValue.build();
+          onChanged();
+        } else {
+          subjectTypeBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The SubjectType to create
+       * </pre>
+       *
+       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       */
+      public Builder mergeSubjectType(axoom.subjectz.v1.Subjectz.SubjectType value) {
+        if (subjectTypeBuilder_ == null) {
+          if (subjectType_ != null) {
+            subjectType_ =
+              axoom.subjectz.v1.Subjectz.SubjectType.newBuilder(subjectType_).mergeFrom(value).buildPartial();
+          } else {
+            subjectType_ = value;
+          }
+          onChanged();
+        } else {
+          subjectTypeBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The SubjectType to create
+       * </pre>
+       *
+       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       */
+      public Builder clearSubjectType() {
+        if (subjectTypeBuilder_ == null) {
+          subjectType_ = null;
+          onChanged();
+        } else {
+          subjectType_ = null;
+          subjectTypeBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The SubjectType to create
+       * </pre>
+       *
+       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       */
+      public axoom.subjectz.v1.Subjectz.SubjectType.Builder getSubjectTypeBuilder() {
+        
+        onChanged();
+        return getSubjectTypeFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * The SubjectType to create
+       * </pre>
+       *
+       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       */
+      public axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder getSubjectTypeOrBuilder() {
+        if (subjectTypeBuilder_ != null) {
+          return subjectTypeBuilder_.getMessageOrBuilder();
+        } else {
+          return subjectType_ == null ?
+              axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance() : subjectType_;
+        }
+      }
+      /**
+       * <pre>
+       * The SubjectType to create
+       * </pre>
+       *
+       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          axoom.subjectz.v1.Subjectz.SubjectType, axoom.subjectz.v1.Subjectz.SubjectType.Builder, axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder> 
+          getSubjectTypeFieldBuilder() {
+        if (subjectTypeBuilder_ == null) {
+          subjectTypeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              axoom.subjectz.v1.Subjectz.SubjectType, axoom.subjectz.v1.Subjectz.SubjectType.Builder, axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder>(
+                  getSubjectType(),
+                  getParentForChildren(),
+                  isClean());
+          subjectType_ = null;
+        }
+        return subjectTypeBuilder_;
+      }
+
+      private com.google.protobuf.LazyStringList implements_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureImplementsIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          implements_ = new com.google.protobuf.LazyStringArrayList(implements_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <pre>
+       * The SubjectType's implemented root SubjecType IDs
+       * </pre>
+       *
+       * <code>repeated string implements = 2;</code>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getImplementsList() {
+        return implements_.getUnmodifiableView();
+      }
+      /**
+       * <pre>
+       * The SubjectType's implemented root SubjecType IDs
+       * </pre>
+       *
+       * <code>repeated string implements = 2;</code>
+       */
+      public int getImplementsCount() {
+        return implements_.size();
+      }
+      /**
+       * <pre>
+       * The SubjectType's implemented root SubjecType IDs
+       * </pre>
+       *
+       * <code>repeated string implements = 2;</code>
+       */
+      public java.lang.String getImplements(int index) {
+        return implements_.get(index);
+      }
+      /**
+       * <pre>
+       * The SubjectType's implemented root SubjecType IDs
+       * </pre>
+       *
+       * <code>repeated string implements = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getImplementsBytes(int index) {
+        return implements_.getByteString(index);
+      }
+      /**
+       * <pre>
+       * The SubjectType's implemented root SubjecType IDs
+       * </pre>
+       *
+       * <code>repeated string implements = 2;</code>
+       */
+      public Builder setImplements(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureImplementsIsMutable();
+        implements_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The SubjectType's implemented root SubjecType IDs
+       * </pre>
+       *
+       * <code>repeated string implements = 2;</code>
+       */
+      public Builder addImplements(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureImplementsIsMutable();
+        implements_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The SubjectType's implemented root SubjecType IDs
+       * </pre>
+       *
+       * <code>repeated string implements = 2;</code>
+       */
+      public Builder addAllImplements(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureImplementsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, implements_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The SubjectType's implemented root SubjecType IDs
+       * </pre>
+       *
+       * <code>repeated string implements = 2;</code>
+       */
+      public Builder clearImplements() {
+        implements_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The SubjectType's implemented root SubjecType IDs
+       * </pre>
+       *
+       * <code>repeated string implements = 2;</code>
+       */
+      public Builder addImplementsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureImplementsIsMutable();
+        implements_.add(value);
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.CreateSubjectTypeRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.CreateSubjectTypeRequest)
+    private static final axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest();
+    }
+
+    public static axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<CreateSubjectTypeRequest>
+        PARSER = new com.google.protobuf.AbstractParser<CreateSubjectTypeRequest>() {
+      @java.lang.Override
+      public CreateSubjectTypeRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CreateSubjectTypeRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<CreateSubjectTypeRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CreateSubjectTypeRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -5675,36 +5001,34 @@ public final class SubjectzService {
 
   }
 
-  public interface GetSubjectTypeResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.GetSubjectTypeResponse)
+  public interface GetSubjectTypeContextRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.GetSubjectTypeContextRequest)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+     * <code>string subject_type_id = 1;</code>
      */
-    boolean hasSubjectType();
+    java.lang.String getSubjectTypeId();
     /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+     * <code>string subject_type_id = 1;</code>
      */
-    axoom.subjectz.v1.Subjectz.SubjectType getSubjectType();
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder getSubjectTypeOrBuilder();
+    com.google.protobuf.ByteString
+        getSubjectTypeIdBytes();
   }
   /**
-   * Protobuf type {@code axoom.subjectz.v1.GetSubjectTypeResponse}
+   * Protobuf type {@code axoom.subjectz.v1.GetSubjectTypeContextRequest}
    */
-  public  static final class GetSubjectTypeResponse extends
+  public  static final class GetSubjectTypeContextRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.GetSubjectTypeResponse)
-      GetSubjectTypeResponseOrBuilder {
+      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.GetSubjectTypeContextRequest)
+      GetSubjectTypeContextRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use GetSubjectTypeResponse.newBuilder() to construct.
-    private GetSubjectTypeResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use GetSubjectTypeContextRequest.newBuilder() to construct.
+    private GetSubjectTypeContextRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private GetSubjectTypeResponse() {
+    private GetSubjectTypeContextRequest() {
+      subjectTypeId_ = "";
     }
 
     @java.lang.Override
@@ -5712,7 +5036,7 @@ public final class SubjectzService {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private GetSubjectTypeResponse(
+    private GetSubjectTypeContextRequest(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -5732,16 +5056,9 @@ public final class SubjectzService {
               done = true;
               break;
             case 10: {
-              axoom.subjectz.v1.Subjectz.SubjectType.Builder subBuilder = null;
-              if (subjectType_ != null) {
-                subBuilder = subjectType_.toBuilder();
-              }
-              subjectType_ = input.readMessage(axoom.subjectz.v1.Subjectz.SubjectType.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(subjectType_);
-                subjectType_ = subBuilder.buildPartial();
-              }
+              java.lang.String s = input.readStringRequireUtf8();
 
+              subjectTypeId_ = s;
               break;
             }
             default: {
@@ -5765,36 +5082,49 @@ public final class SubjectzService {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypeResponse_descriptor;
+      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypeContextRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypeResponse_fieldAccessorTable
+      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypeContextRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse.class, axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse.Builder.class);
+              axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest.class, axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest.Builder.class);
     }
 
-    public static final int SUBJECT_TYPE_FIELD_NUMBER = 1;
-    private axoom.subjectz.v1.Subjectz.SubjectType subjectType_;
+    public static final int SUBJECT_TYPE_ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object subjectTypeId_;
     /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+     * <code>string subject_type_id = 1;</code>
      */
-    public boolean hasSubjectType() {
-      return subjectType_ != null;
+    public java.lang.String getSubjectTypeId() {
+      java.lang.Object ref = subjectTypeId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        subjectTypeId_ = s;
+        return s;
+      }
     }
     /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+     * <code>string subject_type_id = 1;</code>
      */
-    public axoom.subjectz.v1.Subjectz.SubjectType getSubjectType() {
-      return subjectType_ == null ? axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance() : subjectType_;
-    }
-    /**
-     * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-     */
-    public axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder getSubjectTypeOrBuilder() {
-      return getSubjectType();
+    public com.google.protobuf.ByteString
+        getSubjectTypeIdBytes() {
+      java.lang.Object ref = subjectTypeId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        subjectTypeId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     private byte memoizedIsInitialized = -1;
@@ -5811,8 +5141,8 @@ public final class SubjectzService {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (subjectType_ != null) {
-        output.writeMessage(1, getSubjectType());
+      if (!getSubjectTypeIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, subjectTypeId_);
       }
       unknownFields.writeTo(output);
     }
@@ -5823,9 +5153,8 @@ public final class SubjectzService {
       if (size != -1) return size;
 
       size = 0;
-      if (subjectType_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getSubjectType());
+      if (!getSubjectTypeIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, subjectTypeId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -5837,17 +5166,14 @@ public final class SubjectzService {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse)) {
+      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest)) {
         return super.equals(obj);
       }
-      axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse other = (axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse) obj;
+      axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest other = (axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest) obj;
 
       boolean result = true;
-      result = result && (hasSubjectType() == other.hasSubjectType());
-      if (hasSubjectType()) {
-        result = result && getSubjectType()
-            .equals(other.getSubjectType());
-      }
+      result = result && getSubjectTypeId()
+          .equals(other.getSubjectTypeId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -5859,78 +5185,76 @@ public final class SubjectzService {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasSubjectType()) {
-        hash = (37 * hash) + SUBJECT_TYPE_FIELD_NUMBER;
-        hash = (53 * hash) + getSubjectType().hashCode();
-      }
+      hash = (37 * hash) + SUBJECT_TYPE_ID_FIELD_NUMBER;
+      hash = (53 * hash) + getSubjectTypeId().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parseFrom(byte[] data)
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parseFrom(java.io.InputStream input)
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parseDelimitedFrom(java.io.InputStream input)
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parseDelimitedFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parseFrom(
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -5943,7 +5267,7 @@ public final class SubjectzService {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse prototype) {
+    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -5959,26 +5283,26 @@ public final class SubjectzService {
       return builder;
     }
     /**
-     * Protobuf type {@code axoom.subjectz.v1.GetSubjectTypeResponse}
+     * Protobuf type {@code axoom.subjectz.v1.GetSubjectTypeContextRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.GetSubjectTypeResponse)
-        axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponseOrBuilder {
+        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.GetSubjectTypeContextRequest)
+        axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypeResponse_descriptor;
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypeContextRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypeResponse_fieldAccessorTable
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypeContextRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse.class, axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse.Builder.class);
+                axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest.class, axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest.Builder.class);
       }
 
-      // Construct using axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse.newBuilder()
+      // Construct using axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -5996,29 +5320,25 @@ public final class SubjectzService {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        if (subjectTypeBuilder_ == null) {
-          subjectType_ = null;
-        } else {
-          subjectType_ = null;
-          subjectTypeBuilder_ = null;
-        }
+        subjectTypeId_ = "";
+
         return this;
       }
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypeResponse_descriptor;
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypeContextRequest_descriptor;
       }
 
       @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse getDefaultInstanceForType() {
-        return axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse.getDefaultInstance();
+      public axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest getDefaultInstanceForType() {
+        return axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest.getDefaultInstance();
       }
 
       @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse build() {
-        axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse result = buildPartial();
+      public axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest build() {
+        axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -6026,13 +5346,9 @@ public final class SubjectzService {
       }
 
       @java.lang.Override
-      public axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse buildPartial() {
-        axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse result = new axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse(this);
-        if (subjectTypeBuilder_ == null) {
-          result.subjectType_ = subjectType_;
-        } else {
-          result.subjectType_ = subjectTypeBuilder_.build();
-        }
+      public axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest buildPartial() {
+        axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest result = new axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest(this);
+        result.subjectTypeId_ = subjectTypeId_;
         onBuilt();
         return result;
       }
@@ -6071,18 +5387,19 @@ public final class SubjectzService {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse) {
-          return mergeFrom((axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse)other);
+        if (other instanceof axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest) {
+          return mergeFrom((axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse other) {
-        if (other == axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse.getDefaultInstance()) return this;
-        if (other.hasSubjectType()) {
-          mergeSubjectType(other.getSubjectType());
+      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest other) {
+        if (other == axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest.getDefaultInstance()) return this;
+        if (!other.getSubjectTypeId().isEmpty()) {
+          subjectTypeId_ = other.subjectTypeId_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -6099,11 +5416,11 @@ public final class SubjectzService {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse parsedMessage = null;
+        axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse) e.getUnfinishedMessage();
+          parsedMessage = (axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -6113,121 +5430,73 @@ public final class SubjectzService {
         return this;
       }
 
-      private axoom.subjectz.v1.Subjectz.SubjectType subjectType_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          axoom.subjectz.v1.Subjectz.SubjectType, axoom.subjectz.v1.Subjectz.SubjectType.Builder, axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder> subjectTypeBuilder_;
+      private java.lang.Object subjectTypeId_ = "";
       /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       * <code>string subject_type_id = 1;</code>
        */
-      public boolean hasSubjectType() {
-        return subjectTypeBuilder_ != null || subjectType_ != null;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.SubjectType getSubjectType() {
-        if (subjectTypeBuilder_ == null) {
-          return subjectType_ == null ? axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance() : subjectType_;
+      public java.lang.String getSubjectTypeId() {
+        java.lang.Object ref = subjectTypeId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          subjectTypeId_ = s;
+          return s;
         } else {
-          return subjectTypeBuilder_.getMessage();
+          return (java.lang.String) ref;
         }
       }
       /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       * <code>string subject_type_id = 1;</code>
        */
-      public Builder setSubjectType(axoom.subjectz.v1.Subjectz.SubjectType value) {
-        if (subjectTypeBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          subjectType_ = value;
-          onChanged();
+      public com.google.protobuf.ByteString
+          getSubjectTypeIdBytes() {
+        java.lang.Object ref = subjectTypeId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          subjectTypeId_ = b;
+          return b;
         } else {
-          subjectTypeBuilder_.setMessage(value);
+          return (com.google.protobuf.ByteString) ref;
         }
-
-        return this;
       }
       /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       * <code>string subject_type_id = 1;</code>
        */
-      public Builder setSubjectType(
-          axoom.subjectz.v1.Subjectz.SubjectType.Builder builderForValue) {
-        if (subjectTypeBuilder_ == null) {
-          subjectType_ = builderForValue.build();
-          onChanged();
-        } else {
-          subjectTypeBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public Builder mergeSubjectType(axoom.subjectz.v1.Subjectz.SubjectType value) {
-        if (subjectTypeBuilder_ == null) {
-          if (subjectType_ != null) {
-            subjectType_ =
-              axoom.subjectz.v1.Subjectz.SubjectType.newBuilder(subjectType_).mergeFrom(value).buildPartial();
-          } else {
-            subjectType_ = value;
-          }
-          onChanged();
-        } else {
-          subjectTypeBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public Builder clearSubjectType() {
-        if (subjectTypeBuilder_ == null) {
-          subjectType_ = null;
-          onChanged();
-        } else {
-          subjectType_ = null;
-          subjectTypeBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
-       */
-      public axoom.subjectz.v1.Subjectz.SubjectType.Builder getSubjectTypeBuilder() {
-        
+      public Builder setSubjectTypeId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        subjectTypeId_ = value;
         onChanged();
-        return getSubjectTypeFieldBuilder().getBuilder();
+        return this;
       }
       /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       * <code>string subject_type_id = 1;</code>
        */
-      public axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder getSubjectTypeOrBuilder() {
-        if (subjectTypeBuilder_ != null) {
-          return subjectTypeBuilder_.getMessageOrBuilder();
-        } else {
-          return subjectType_ == null ?
-              axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance() : subjectType_;
-        }
+      public Builder clearSubjectTypeId() {
+        
+        subjectTypeId_ = getDefaultInstance().getSubjectTypeId();
+        onChanged();
+        return this;
       }
       /**
-       * <code>.axoom.subjectz.v1.SubjectType subject_type = 1;</code>
+       * <code>string subject_type_id = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          axoom.subjectz.v1.Subjectz.SubjectType, axoom.subjectz.v1.Subjectz.SubjectType.Builder, axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder> 
-          getSubjectTypeFieldBuilder() {
-        if (subjectTypeBuilder_ == null) {
-          subjectTypeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              axoom.subjectz.v1.Subjectz.SubjectType, axoom.subjectz.v1.Subjectz.SubjectType.Builder, axoom.subjectz.v1.Subjectz.SubjectTypeOrBuilder>(
-                  getSubjectType(),
-                  getParentForChildren(),
-                  isClean());
-          subjectType_ = null;
-        }
-        return subjectTypeBuilder_;
+      public Builder setSubjectTypeIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        subjectTypeId_ = value;
+        onChanged();
+        return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -6242,41 +5511,453 @@ public final class SubjectzService {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.GetSubjectTypeResponse)
+      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.GetSubjectTypeContextRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.GetSubjectTypeResponse)
-    private static final axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.GetSubjectTypeContextRequest)
+    private static final axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse();
+      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest();
     }
 
-    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse getDefaultInstance() {
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<GetSubjectTypeResponse>
-        PARSER = new com.google.protobuf.AbstractParser<GetSubjectTypeResponse>() {
+    private static final com.google.protobuf.Parser<GetSubjectTypeContextRequest>
+        PARSER = new com.google.protobuf.AbstractParser<GetSubjectTypeContextRequest>() {
       @java.lang.Override
-      public GetSubjectTypeResponse parsePartialFrom(
+      public GetSubjectTypeContextRequest parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetSubjectTypeResponse(input, extensionRegistry);
+        return new GetSubjectTypeContextRequest(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<GetSubjectTypeResponse> parser() {
+    public static com.google.protobuf.Parser<GetSubjectTypeContextRequest> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<GetSubjectTypeResponse> getParserForType() {
+    public com.google.protobuf.Parser<GetSubjectTypeContextRequest> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse getDefaultInstanceForType() {
+    public axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface GetSubjectTypezRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:axoom.subjectz.v1.GetSubjectTypezRequest)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code axoom.subjectz.v1.GetSubjectTypezRequest}
+   */
+  public  static final class GetSubjectTypezRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:axoom.subjectz.v1.GetSubjectTypezRequest)
+      GetSubjectTypezRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use GetSubjectTypezRequest.newBuilder() to construct.
+    private GetSubjectTypezRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private GetSubjectTypezRequest() {
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private GetSubjectTypezRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypezRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypezRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest.class, axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest)) {
+        return super.equals(obj);
+      }
+      axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest other = (axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest) obj;
+
+      boolean result = true;
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code axoom.subjectz.v1.GetSubjectTypezRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:axoom.subjectz.v1.GetSubjectTypezRequest)
+        axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypezRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypezRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest.class, axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest.Builder.class);
+      }
+
+      // Construct using axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return axoom.subjectz.v1.SubjectzService.internal_static_axoom_subjectz_v1_GetSubjectTypezRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest getDefaultInstanceForType() {
+        return axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest build() {
+        axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest buildPartial() {
+        axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest result = new axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest) {
+          return mergeFrom((axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest other) {
+        if (other == axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:axoom.subjectz.v1.GetSubjectTypezRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:axoom.subjectz.v1.GetSubjectTypezRequest)
+    private static final axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest();
+    }
+
+    public static axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<GetSubjectTypezRequest>
+        PARSER = new com.google.protobuf.AbstractParser<GetSubjectTypezRequest>() {
+      @java.lang.Override
+      public GetSubjectTypezRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetSubjectTypezRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<GetSubjectTypezRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetSubjectTypezRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -6288,50 +5969,45 @@ public final class SubjectzService {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_axoom_subjectz_v1_CreateSubjectRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_axoom_subjectz_v1_CreateSubjectResponse_descriptor;
+    internal_static_axoom_subjectz_v1_GetSubjectRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_axoom_subjectz_v1_CreateSubjectResponse_fieldAccessorTable;
+      internal_static_axoom_subjectz_v1_GetSubjectRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_axoom_subjectz_v1_GetSubjectContextRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_axoom_subjectz_v1_GetSubjectContextRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_axoom_subjectz_v1_GetSubjectzRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_axoom_subjectz_v1_GetSubjectzRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_axoom_subjectz_v1_UpdateSubjectRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_axoom_subjectz_v1_UpdateSubjectRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_axoom_subjectz_v1_CreateSubjectTypeResponse_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_axoom_subjectz_v1_CreateSubjectTypeResponse_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_axoom_subjectz_v1_GetAllSubjectzRequest_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_axoom_subjectz_v1_GetAllSubjectzRequest_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_axoom_subjectz_v1_GetAllSubjectzResponse_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_axoom_subjectz_v1_GetAllSubjectzResponse_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_axoom_subjectz_v1_GetSubjectRequest_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_axoom_subjectz_v1_GetSubjectRequest_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_axoom_subjectz_v1_GetSubjectResponse_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_axoom_subjectz_v1_GetSubjectResponse_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_axoom_subjectz_v1_GetSubjectTypeRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_axoom_subjectz_v1_GetSubjectTypeRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_axoom_subjectz_v1_GetSubjectTypeResponse_descriptor;
+    internal_static_axoom_subjectz_v1_GetSubjectTypeContextRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_axoom_subjectz_v1_GetSubjectTypeResponse_fieldAccessorTable;
+      internal_static_axoom_subjectz_v1_GetSubjectTypeContextRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_axoom_subjectz_v1_GetSubjectTypezRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_axoom_subjectz_v1_GetSubjectTypezRequest_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -6342,38 +6018,43 @@ public final class SubjectzService {
   static {
     java.lang.String[] descriptorData = {
       "\n\026subjectz_service.proto\022\021axoom.subjectz" +
-      ".v1\032\016subjectz.proto\"C\n\024CreateSubjectRequ" +
+      ".v1\032\016subjectz.proto\"X\n\024CreateSubjectRequ" +
       "est\022+\n\007subject\030\001 \001(\0132\032.axoom.subjectz.v1" +
-      ".Subject\"D\n\025CreateSubjectResponse\022+\n\007sub" +
-      "ject\030\001 \001(\0132\032.axoom.subjectz.v1.Subject\"d" +
-      "\n\030CreateSubjectTypeRequest\0224\n\014subject_ty" +
-      "pe\030\001 \001(\0132\036.axoom.subjectz.v1.SubjectType" +
-      "\022\022\n\nimplements\030\002 \003(\t\"Q\n\031CreateSubjectTyp" +
-      "eResponse\0224\n\014subject_type\030\001 \001(\0132\036.axoom." +
-      "subjectz.v1.SubjectType\"0\n\025GetAllSubject" +
-      "zRequest\022\027\n\017subject_type_id\030\001 \001(\t\"F\n\026Get" +
-      "AllSubjectzResponse\022,\n\010subjects\030\001 \003(\0132\032." +
-      "axoom.subjectz.v1.Subject\"\'\n\021GetSubjectR" +
-      "equest\022\022\n\nsubject_id\030\001 \001(\t\"A\n\022GetSubject" +
-      "Response\022+\n\007subject\030\001 \001(\0132\032.axoom.subjec" +
-      "tz.v1.Subject\"0\n\025GetSubjectTypeRequest\022\027" +
-      "\n\017subject_type_id\030\001 \001(\t\"N\n\026GetSubjectTyp" +
-      "eResponse\0224\n\014subject_type\030\001 \001(\0132\036.axoom." +
-      "subjectz.v1.SubjectType2\207\004\n\010Subjectz\022b\n\r" +
-      "CreateSubject\022\'.axoom.subjectz.v1.Create" +
-      "SubjectRequest\032(.axoom.subjectz.v1.Creat" +
-      "eSubjectResponse\022n\n\021CreateSubjectType\022+." +
-      "axoom.subjectz.v1.CreateSubjectTypeReque" +
-      "st\032,.axoom.subjectz.v1.CreateSubjectType" +
-      "Response\022Y\n\nGetSubject\022$.axoom.subjectz." +
-      "v1.GetSubjectRequest\032%.axoom.subjectz.v1" +
-      ".GetSubjectResponse\022e\n\016GetAllSubjectz\022(." +
-      "axoom.subjectz.v1.GetAllSubjectzRequest\032" +
-      ").axoom.subjectz.v1.GetAllSubjectzRespon" +
-      "se\022e\n\016GetSubjectType\022(.axoom.subjectz.v1" +
-      ".GetSubjectTypeRequest\032).axoom.subjectz." +
-      "v1.GetSubjectTypeResponseB-Z+gitlab.axoo" +
-      "m.tech/iot/go-rillaz/subjectz/v1b\006proto3"
+      ".Subject\022\023\n\013instance_of\030\002 \003(\t\"\'\n\021GetSubj" +
+      "ectRequest\022\022\n\nsubject_id\030\001 \001(\t\".\n\030GetSub" +
+      "jectContextRequest\022\022\n\nsubject_id\030\001 \001(\t\"-" +
+      "\n\022GetSubjectzRequest\022\027\n\017subject_type_id\030" +
+      "\001 \001(\t\"X\n\024UpdateSubjectRequest\022+\n\007subject" +
+      "\030\001 \001(\0132\032.axoom.subjectz.v1.Subject\022\023\n\013in" +
+      "stance_of\030\002 \003(\t\"d\n\030CreateSubjectTypeRequ" +
+      "est\0224\n\014subject_type\030\001 \001(\0132\036.axoom.subjec" +
+      "tz.v1.SubjectType\022\022\n\nimplements\030\002 \003(\t\"0\n" +
+      "\025GetSubjectTypeRequest\022\027\n\017subject_type_i" +
+      "d\030\001 \001(\t\"7\n\034GetSubjectTypeContextRequest\022" +
+      "\027\n\017subject_type_id\030\001 \001(\t\"\030\n\026GetSubjectTy" +
+      "pezRequest2\316\006\n\010Subjectz\022T\n\rCreateSubject" +
+      "\022\'.axoom.subjectz.v1.CreateSubjectReques" +
+      "t\032\032.axoom.subjectz.v1.Subject\022N\n\nGetSubj" +
+      "ect\022$.axoom.subjectz.v1.GetSubjectReques" +
+      "t\032\032.axoom.subjectz.v1.Subject\022c\n\021GetSubj" +
+      "ectContext\022+.axoom.subjectz.v1.GetSubjec" +
+      "tContextRequest\032!.axoom.subjectz.v1.Subj" +
+      "ectContext\022R\n\013GetSubjectz\022%.axoom.subjec" +
+      "tz.v1.GetSubjectzRequest\032\032.axoom.subject" +
+      "z.v1.Subject0\001\022T\n\rUpdateSubject\022\'.axoom." +
+      "subjectz.v1.UpdateSubjectRequest\032\032.axoom" +
+      ".subjectz.v1.Subject\022`\n\021CreateSubjectTyp" +
+      "e\022+.axoom.subjectz.v1.CreateSubjectTypeR" +
+      "equest\032\036.axoom.subjectz.v1.SubjectType\022Z" +
+      "\n\016GetSubjectType\022(.axoom.subjectz.v1.Get" +
+      "SubjectTypeRequest\032\036.axoom.subjectz.v1.S" +
+      "ubjectType\022o\n\025GetSubjectTypeContext\022/.ax" +
+      "oom.subjectz.v1.GetSubjectTypeContextReq" +
+      "uest\032%.axoom.subjectz.v1.SubjectTypeCont" +
+      "ext\022^\n\017GetSubjectTypez\022).axoom.subjectz." +
+      "v1.GetSubjectTypezRequest\032\036.axoom.subjec" +
+      "tz.v1.SubjectType0\001B-Z+gitlab.axoom.tech" +
+      "/iot/go-rillaz/subjectz/v1b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6393,61 +6074,55 @@ public final class SubjectzService {
     internal_static_axoom_subjectz_v1_CreateSubjectRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_axoom_subjectz_v1_CreateSubjectRequest_descriptor,
-        new java.lang.String[] { "Subject", });
-    internal_static_axoom_subjectz_v1_CreateSubjectResponse_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_axoom_subjectz_v1_CreateSubjectResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_axoom_subjectz_v1_CreateSubjectResponse_descriptor,
-        new java.lang.String[] { "Subject", });
-    internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_descriptor,
-        new java.lang.String[] { "SubjectType", "Implements", });
-    internal_static_axoom_subjectz_v1_CreateSubjectTypeResponse_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_axoom_subjectz_v1_CreateSubjectTypeResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_axoom_subjectz_v1_CreateSubjectTypeResponse_descriptor,
-        new java.lang.String[] { "SubjectType", });
-    internal_static_axoom_subjectz_v1_GetAllSubjectzRequest_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_axoom_subjectz_v1_GetAllSubjectzRequest_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_axoom_subjectz_v1_GetAllSubjectzRequest_descriptor,
-        new java.lang.String[] { "SubjectTypeId", });
-    internal_static_axoom_subjectz_v1_GetAllSubjectzResponse_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_axoom_subjectz_v1_GetAllSubjectzResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_axoom_subjectz_v1_GetAllSubjectzResponse_descriptor,
-        new java.lang.String[] { "Subjects", });
+        new java.lang.String[] { "Subject", "InstanceOf", });
     internal_static_axoom_subjectz_v1_GetSubjectRequest_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(1);
     internal_static_axoom_subjectz_v1_GetSubjectRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_axoom_subjectz_v1_GetSubjectRequest_descriptor,
         new java.lang.String[] { "SubjectId", });
-    internal_static_axoom_subjectz_v1_GetSubjectResponse_descriptor =
-      getDescriptor().getMessageTypes().get(7);
-    internal_static_axoom_subjectz_v1_GetSubjectResponse_fieldAccessorTable = new
+    internal_static_axoom_subjectz_v1_GetSubjectContextRequest_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_axoom_subjectz_v1_GetSubjectContextRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_axoom_subjectz_v1_GetSubjectResponse_descriptor,
-        new java.lang.String[] { "Subject", });
+        internal_static_axoom_subjectz_v1_GetSubjectContextRequest_descriptor,
+        new java.lang.String[] { "SubjectId", });
+    internal_static_axoom_subjectz_v1_GetSubjectzRequest_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_axoom_subjectz_v1_GetSubjectzRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_axoom_subjectz_v1_GetSubjectzRequest_descriptor,
+        new java.lang.String[] { "SubjectTypeId", });
+    internal_static_axoom_subjectz_v1_UpdateSubjectRequest_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_axoom_subjectz_v1_UpdateSubjectRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_axoom_subjectz_v1_UpdateSubjectRequest_descriptor,
+        new java.lang.String[] { "Subject", "InstanceOf", });
+    internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_axoom_subjectz_v1_CreateSubjectTypeRequest_descriptor,
+        new java.lang.String[] { "SubjectType", "Implements", });
     internal_static_axoom_subjectz_v1_GetSubjectTypeRequest_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_axoom_subjectz_v1_GetSubjectTypeRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_axoom_subjectz_v1_GetSubjectTypeRequest_descriptor,
         new java.lang.String[] { "SubjectTypeId", });
-    internal_static_axoom_subjectz_v1_GetSubjectTypeResponse_descriptor =
-      getDescriptor().getMessageTypes().get(9);
-    internal_static_axoom_subjectz_v1_GetSubjectTypeResponse_fieldAccessorTable = new
+    internal_static_axoom_subjectz_v1_GetSubjectTypeContextRequest_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_axoom_subjectz_v1_GetSubjectTypeContextRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_axoom_subjectz_v1_GetSubjectTypeResponse_descriptor,
-        new java.lang.String[] { "SubjectType", });
+        internal_static_axoom_subjectz_v1_GetSubjectTypeContextRequest_descriptor,
+        new java.lang.String[] { "SubjectTypeId", });
+    internal_static_axoom_subjectz_v1_GetSubjectTypezRequest_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_axoom_subjectz_v1_GetSubjectTypezRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_axoom_subjectz_v1_GetSubjectTypezRequest_descriptor,
+        new java.lang.String[] { });
     axoom.subjectz.v1.Subjectz.getDescriptor();
   }
 

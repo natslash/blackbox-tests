@@ -28,21 +28,21 @@ public final class SubjectzGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.CreateSubjectRequest,
-      axoom.subjectz.v1.SubjectzService.CreateSubjectResponse> getCreateSubjectMethod;
+      axoom.subjectz.v1.Subjectz.Subject> getCreateSubjectMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "CreateSubject",
       requestType = axoom.subjectz.v1.SubjectzService.CreateSubjectRequest.class,
-      responseType = axoom.subjectz.v1.SubjectzService.CreateSubjectResponse.class,
+      responseType = axoom.subjectz.v1.Subjectz.Subject.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.CreateSubjectRequest,
-      axoom.subjectz.v1.SubjectzService.CreateSubjectResponse> getCreateSubjectMethod() {
-    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.CreateSubjectRequest, axoom.subjectz.v1.SubjectzService.CreateSubjectResponse> getCreateSubjectMethod;
+      axoom.subjectz.v1.Subjectz.Subject> getCreateSubjectMethod() {
+    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.CreateSubjectRequest, axoom.subjectz.v1.Subjectz.Subject> getCreateSubjectMethod;
     if ((getCreateSubjectMethod = SubjectzGrpc.getCreateSubjectMethod) == null) {
       synchronized (SubjectzGrpc.class) {
         if ((getCreateSubjectMethod = SubjectzGrpc.getCreateSubjectMethod) == null) {
           SubjectzGrpc.getCreateSubjectMethod = getCreateSubjectMethod = 
-              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.CreateSubjectRequest, axoom.subjectz.v1.SubjectzService.CreateSubjectResponse>newBuilder()
+              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.CreateSubjectRequest, axoom.subjectz.v1.Subjectz.Subject>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "axoom.subjectz.v1.Subjectz", "CreateSubject"))
@@ -50,7 +50,7 @@ public final class SubjectzGrpc {
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   axoom.subjectz.v1.SubjectzService.CreateSubjectRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  axoom.subjectz.v1.SubjectzService.CreateSubjectResponse.getDefaultInstance()))
+                  axoom.subjectz.v1.Subjectz.Subject.getDefaultInstance()))
                   .setSchemaDescriptor(new SubjectzMethodDescriptorSupplier("CreateSubject"))
                   .build();
           }
@@ -59,54 +59,22 @@ public final class SubjectzGrpc {
      return getCreateSubjectMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest,
-      axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse> getCreateSubjectTypeMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "CreateSubjectType",
-      requestType = axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.class,
-      responseType = axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest,
-      axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse> getCreateSubjectTypeMethod() {
-    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest, axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse> getCreateSubjectTypeMethod;
-    if ((getCreateSubjectTypeMethod = SubjectzGrpc.getCreateSubjectTypeMethod) == null) {
-      synchronized (SubjectzGrpc.class) {
-        if ((getCreateSubjectTypeMethod = SubjectzGrpc.getCreateSubjectTypeMethod) == null) {
-          SubjectzGrpc.getCreateSubjectTypeMethod = getCreateSubjectTypeMethod = 
-              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest, axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(
-                  "axoom.subjectz.v1.Subjectz", "CreateSubjectType"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse.getDefaultInstance()))
-                  .setSchemaDescriptor(new SubjectzMethodDescriptorSupplier("CreateSubjectType"))
-                  .build();
-          }
-        }
-     }
-     return getCreateSubjectTypeMethod;
-  }
-
   private static volatile io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectRequest,
-      axoom.subjectz.v1.SubjectzService.GetSubjectResponse> getGetSubjectMethod;
+      axoom.subjectz.v1.Subjectz.Subject> getGetSubjectMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetSubject",
       requestType = axoom.subjectz.v1.SubjectzService.GetSubjectRequest.class,
-      responseType = axoom.subjectz.v1.SubjectzService.GetSubjectResponse.class,
+      responseType = axoom.subjectz.v1.Subjectz.Subject.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectRequest,
-      axoom.subjectz.v1.SubjectzService.GetSubjectResponse> getGetSubjectMethod() {
-    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectRequest, axoom.subjectz.v1.SubjectzService.GetSubjectResponse> getGetSubjectMethod;
+      axoom.subjectz.v1.Subjectz.Subject> getGetSubjectMethod() {
+    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectRequest, axoom.subjectz.v1.Subjectz.Subject> getGetSubjectMethod;
     if ((getGetSubjectMethod = SubjectzGrpc.getGetSubjectMethod) == null) {
       synchronized (SubjectzGrpc.class) {
         if ((getGetSubjectMethod = SubjectzGrpc.getGetSubjectMethod) == null) {
           SubjectzGrpc.getGetSubjectMethod = getGetSubjectMethod = 
-              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.GetSubjectRequest, axoom.subjectz.v1.SubjectzService.GetSubjectResponse>newBuilder()
+              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.GetSubjectRequest, axoom.subjectz.v1.Subjectz.Subject>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "axoom.subjectz.v1.Subjectz", "GetSubject"))
@@ -114,7 +82,7 @@ public final class SubjectzGrpc {
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   axoom.subjectz.v1.SubjectzService.GetSubjectRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  axoom.subjectz.v1.SubjectzService.GetSubjectResponse.getDefaultInstance()))
+                  axoom.subjectz.v1.Subjectz.Subject.getDefaultInstance()))
                   .setSchemaDescriptor(new SubjectzMethodDescriptorSupplier("GetSubject"))
                   .build();
           }
@@ -123,54 +91,150 @@ public final class SubjectzGrpc {
      return getGetSubjectMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest,
-      axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse> getGetAllSubjectzMethod;
+  private static volatile io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest,
+      axoom.subjectz.v1.Subjectz.SubjectContext> getGetSubjectContextMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "GetAllSubjectz",
-      requestType = axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest.class,
-      responseType = axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse.class,
+      fullMethodName = SERVICE_NAME + '/' + "GetSubjectContext",
+      requestType = axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest.class,
+      responseType = axoom.subjectz.v1.Subjectz.SubjectContext.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest,
-      axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse> getGetAllSubjectzMethod() {
-    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest, axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse> getGetAllSubjectzMethod;
-    if ((getGetAllSubjectzMethod = SubjectzGrpc.getGetAllSubjectzMethod) == null) {
+  public static io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest,
+      axoom.subjectz.v1.Subjectz.SubjectContext> getGetSubjectContextMethod() {
+    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest, axoom.subjectz.v1.Subjectz.SubjectContext> getGetSubjectContextMethod;
+    if ((getGetSubjectContextMethod = SubjectzGrpc.getGetSubjectContextMethod) == null) {
       synchronized (SubjectzGrpc.class) {
-        if ((getGetAllSubjectzMethod = SubjectzGrpc.getGetAllSubjectzMethod) == null) {
-          SubjectzGrpc.getGetAllSubjectzMethod = getGetAllSubjectzMethod = 
-              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest, axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse>newBuilder()
+        if ((getGetSubjectContextMethod = SubjectzGrpc.getGetSubjectContextMethod) == null) {
+          SubjectzGrpc.getGetSubjectContextMethod = getGetSubjectContextMethod = 
+              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest, axoom.subjectz.v1.Subjectz.SubjectContext>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "axoom.subjectz.v1.Subjectz", "GetAllSubjectz"))
+                  "axoom.subjectz.v1.Subjectz", "GetSubjectContext"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest.getDefaultInstance()))
+                  axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse.getDefaultInstance()))
-                  .setSchemaDescriptor(new SubjectzMethodDescriptorSupplier("GetAllSubjectz"))
+                  axoom.subjectz.v1.Subjectz.SubjectContext.getDefaultInstance()))
+                  .setSchemaDescriptor(new SubjectzMethodDescriptorSupplier("GetSubjectContext"))
                   .build();
           }
         }
      }
-     return getGetAllSubjectzMethod;
+     return getGetSubjectContextMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectzRequest,
+      axoom.subjectz.v1.Subjectz.Subject> getGetSubjectzMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetSubjectz",
+      requestType = axoom.subjectz.v1.SubjectzService.GetSubjectzRequest.class,
+      responseType = axoom.subjectz.v1.Subjectz.Subject.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectzRequest,
+      axoom.subjectz.v1.Subjectz.Subject> getGetSubjectzMethod() {
+    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectzRequest, axoom.subjectz.v1.Subjectz.Subject> getGetSubjectzMethod;
+    if ((getGetSubjectzMethod = SubjectzGrpc.getGetSubjectzMethod) == null) {
+      synchronized (SubjectzGrpc.class) {
+        if ((getGetSubjectzMethod = SubjectzGrpc.getGetSubjectzMethod) == null) {
+          SubjectzGrpc.getGetSubjectzMethod = getGetSubjectzMethod = 
+              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.GetSubjectzRequest, axoom.subjectz.v1.Subjectz.Subject>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(
+                  "axoom.subjectz.v1.Subjectz", "GetSubjectz"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  axoom.subjectz.v1.SubjectzService.GetSubjectzRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  axoom.subjectz.v1.Subjectz.Subject.getDefaultInstance()))
+                  .setSchemaDescriptor(new SubjectzMethodDescriptorSupplier("GetSubjectz"))
+                  .build();
+          }
+        }
+     }
+     return getGetSubjectzMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest,
+      axoom.subjectz.v1.Subjectz.Subject> getUpdateSubjectMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "UpdateSubject",
+      requestType = axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest.class,
+      responseType = axoom.subjectz.v1.Subjectz.Subject.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest,
+      axoom.subjectz.v1.Subjectz.Subject> getUpdateSubjectMethod() {
+    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest, axoom.subjectz.v1.Subjectz.Subject> getUpdateSubjectMethod;
+    if ((getUpdateSubjectMethod = SubjectzGrpc.getUpdateSubjectMethod) == null) {
+      synchronized (SubjectzGrpc.class) {
+        if ((getUpdateSubjectMethod = SubjectzGrpc.getUpdateSubjectMethod) == null) {
+          SubjectzGrpc.getUpdateSubjectMethod = getUpdateSubjectMethod = 
+              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest, axoom.subjectz.v1.Subjectz.Subject>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "axoom.subjectz.v1.Subjectz", "UpdateSubject"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  axoom.subjectz.v1.Subjectz.Subject.getDefaultInstance()))
+                  .setSchemaDescriptor(new SubjectzMethodDescriptorSupplier("UpdateSubject"))
+                  .build();
+          }
+        }
+     }
+     return getUpdateSubjectMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest,
+      axoom.subjectz.v1.Subjectz.SubjectType> getCreateSubjectTypeMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "CreateSubjectType",
+      requestType = axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.class,
+      responseType = axoom.subjectz.v1.Subjectz.SubjectType.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest,
+      axoom.subjectz.v1.Subjectz.SubjectType> getCreateSubjectTypeMethod() {
+    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest, axoom.subjectz.v1.Subjectz.SubjectType> getCreateSubjectTypeMethod;
+    if ((getCreateSubjectTypeMethod = SubjectzGrpc.getCreateSubjectTypeMethod) == null) {
+      synchronized (SubjectzGrpc.class) {
+        if ((getCreateSubjectTypeMethod = SubjectzGrpc.getCreateSubjectTypeMethod) == null) {
+          SubjectzGrpc.getCreateSubjectTypeMethod = getCreateSubjectTypeMethod = 
+              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest, axoom.subjectz.v1.Subjectz.SubjectType>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "axoom.subjectz.v1.Subjectz", "CreateSubjectType"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance()))
+                  .setSchemaDescriptor(new SubjectzMethodDescriptorSupplier("CreateSubjectType"))
+                  .build();
+          }
+        }
+     }
+     return getCreateSubjectTypeMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest,
-      axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse> getGetSubjectTypeMethod;
+      axoom.subjectz.v1.Subjectz.SubjectType> getGetSubjectTypeMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetSubjectType",
       requestType = axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest.class,
-      responseType = axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse.class,
+      responseType = axoom.subjectz.v1.Subjectz.SubjectType.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest,
-      axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse> getGetSubjectTypeMethod() {
-    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest, axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse> getGetSubjectTypeMethod;
+      axoom.subjectz.v1.Subjectz.SubjectType> getGetSubjectTypeMethod() {
+    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest, axoom.subjectz.v1.Subjectz.SubjectType> getGetSubjectTypeMethod;
     if ((getGetSubjectTypeMethod = SubjectzGrpc.getGetSubjectTypeMethod) == null) {
       synchronized (SubjectzGrpc.class) {
         if ((getGetSubjectTypeMethod = SubjectzGrpc.getGetSubjectTypeMethod) == null) {
           SubjectzGrpc.getGetSubjectTypeMethod = getGetSubjectTypeMethod = 
-              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest, axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse>newBuilder()
+              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest, axoom.subjectz.v1.Subjectz.SubjectType>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "axoom.subjectz.v1.Subjectz", "GetSubjectType"))
@@ -178,13 +242,77 @@ public final class SubjectzGrpc {
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse.getDefaultInstance()))
+                  axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance()))
                   .setSchemaDescriptor(new SubjectzMethodDescriptorSupplier("GetSubjectType"))
                   .build();
           }
         }
      }
      return getGetSubjectTypeMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest,
+      axoom.subjectz.v1.Subjectz.SubjectTypeContext> getGetSubjectTypeContextMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetSubjectTypeContext",
+      requestType = axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest.class,
+      responseType = axoom.subjectz.v1.Subjectz.SubjectTypeContext.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest,
+      axoom.subjectz.v1.Subjectz.SubjectTypeContext> getGetSubjectTypeContextMethod() {
+    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest, axoom.subjectz.v1.Subjectz.SubjectTypeContext> getGetSubjectTypeContextMethod;
+    if ((getGetSubjectTypeContextMethod = SubjectzGrpc.getGetSubjectTypeContextMethod) == null) {
+      synchronized (SubjectzGrpc.class) {
+        if ((getGetSubjectTypeContextMethod = SubjectzGrpc.getGetSubjectTypeContextMethod) == null) {
+          SubjectzGrpc.getGetSubjectTypeContextMethod = getGetSubjectTypeContextMethod = 
+              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest, axoom.subjectz.v1.Subjectz.SubjectTypeContext>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "axoom.subjectz.v1.Subjectz", "GetSubjectTypeContext"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  axoom.subjectz.v1.Subjectz.SubjectTypeContext.getDefaultInstance()))
+                  .setSchemaDescriptor(new SubjectzMethodDescriptorSupplier("GetSubjectTypeContext"))
+                  .build();
+          }
+        }
+     }
+     return getGetSubjectTypeContextMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest,
+      axoom.subjectz.v1.Subjectz.SubjectType> getGetSubjectTypezMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetSubjectTypez",
+      requestType = axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest.class,
+      responseType = axoom.subjectz.v1.Subjectz.SubjectType.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest,
+      axoom.subjectz.v1.Subjectz.SubjectType> getGetSubjectTypezMethod() {
+    io.grpc.MethodDescriptor<axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest, axoom.subjectz.v1.Subjectz.SubjectType> getGetSubjectTypezMethod;
+    if ((getGetSubjectTypezMethod = SubjectzGrpc.getGetSubjectTypezMethod) == null) {
+      synchronized (SubjectzGrpc.class) {
+        if ((getGetSubjectTypezMethod = SubjectzGrpc.getGetSubjectTypezMethod) == null) {
+          SubjectzGrpc.getGetSubjectTypezMethod = getGetSubjectTypezMethod = 
+              io.grpc.MethodDescriptor.<axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest, axoom.subjectz.v1.Subjectz.SubjectType>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(
+                  "axoom.subjectz.v1.Subjectz", "GetSubjectTypez"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  axoom.subjectz.v1.Subjectz.SubjectType.getDefaultInstance()))
+                  .setSchemaDescriptor(new SubjectzMethodDescriptorSupplier("GetSubjectTypez"))
+                  .build();
+          }
+        }
+     }
+     return getGetSubjectTypezMethod;
   }
 
   /**
@@ -217,53 +345,92 @@ public final class SubjectzGrpc {
     /**
      * <pre>
      * CreateSubject creates the given Subject.
-     * If there is a subject ID part of the request, this one will be omitted and overriden by the Service.
      * </pre>
      */
     public void createSubject(axoom.subjectz.v1.SubjectzService.CreateSubjectRequest request,
-        io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.CreateSubjectResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.Subject> responseObserver) {
       asyncUnimplementedUnaryCall(getCreateSubjectMethod(), responseObserver);
     }
 
     /**
      * <pre>
-     * CreateSubjectType creates the given SubjectType.
-     * SubjectTypes cannot be modified. If an ID is part of the request, it will be omitted.
-     * </pre>
-     */
-    public void createSubjectType(axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest request,
-        io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getCreateSubjectTypeMethod(), responseObserver);
-    }
-
-    /**
-     * <pre>
-     * GetSubject returns the requested Subject
+     * GetSubject returns the requested Subject.
      * </pre>
      */
     public void getSubject(axoom.subjectz.v1.SubjectzService.GetSubjectRequest request,
-        io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.GetSubjectResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.Subject> responseObserver) {
       asyncUnimplementedUnaryCall(getGetSubjectMethod(), responseObserver);
     }
 
     /**
      * <pre>
-     * GetAllSubjectz returns a list of all accessible Subjects belonging to the given SubjectType.
+     * GetSubjectContext returns the requested Subject including the traversed graph of instances.
      * </pre>
      */
-    public void getAllSubjectz(axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest request,
-        io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getGetAllSubjectzMethod(), responseObserver);
+    public void getSubjectContext(axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest request,
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectContext> responseObserver) {
+      asyncUnimplementedUnaryCall(getGetSubjectContextMethod(), responseObserver);
     }
 
     /**
      * <pre>
-     * GetSubjectType returns the requested SubjectType
+     * GetSubjectz returns a list of all accessible Subjects belonging to the given SubjectType.
+     * </pre>
+     */
+    public void getSubjectz(axoom.subjectz.v1.SubjectzService.GetSubjectzRequest request,
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.Subject> responseObserver) {
+      asyncUnimplementedUnaryCall(getGetSubjectzMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * UpdateSubject updates a subject given by the provided ID.
+     * The complete list of `instance_of` must be provided. Removal of an instance is not allowed.
+     * </pre>
+     */
+    public void updateSubject(axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest request,
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.Subject> responseObserver) {
+      asyncUnimplementedUnaryCall(getUpdateSubjectMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * CreateSubjectType creates the given SubjectType.
+     * </pre>
+     */
+    public void createSubjectType(axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest request,
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectType> responseObserver) {
+      asyncUnimplementedUnaryCall(getCreateSubjectTypeMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * GetSubjectType returns the requested SubjectType.
      * </pre>
      */
     public void getSubjectType(axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest request,
-        io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectType> responseObserver) {
       asyncUnimplementedUnaryCall(getGetSubjectTypeMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * GetSubjectTypeContext returns the requested SubjectType including the traversed graph of implementations.
+     * </pre>
+     */
+    public void getSubjectTypeContext(axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest request,
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectTypeContext> responseObserver) {
+      asyncUnimplementedUnaryCall(getGetSubjectTypeContextMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * GetSubjectTypez returns a list of all accessible Subject Types.
+     * </pre>
+     */
+    public void getSubjectTypez(axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest request,
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectType> responseObserver) {
+      asyncUnimplementedUnaryCall(getGetSubjectTypezMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -273,36 +440,64 @@ public final class SubjectzGrpc {
             asyncUnaryCall(
               new MethodHandlers<
                 axoom.subjectz.v1.SubjectzService.CreateSubjectRequest,
-                axoom.subjectz.v1.SubjectzService.CreateSubjectResponse>(
+                axoom.subjectz.v1.Subjectz.Subject>(
                   this, METHODID_CREATE_SUBJECT)))
-          .addMethod(
-            getCreateSubjectTypeMethod(),
-            asyncUnaryCall(
-              new MethodHandlers<
-                axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest,
-                axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse>(
-                  this, METHODID_CREATE_SUBJECT_TYPE)))
           .addMethod(
             getGetSubjectMethod(),
             asyncUnaryCall(
               new MethodHandlers<
                 axoom.subjectz.v1.SubjectzService.GetSubjectRequest,
-                axoom.subjectz.v1.SubjectzService.GetSubjectResponse>(
+                axoom.subjectz.v1.Subjectz.Subject>(
                   this, METHODID_GET_SUBJECT)))
           .addMethod(
-            getGetAllSubjectzMethod(),
+            getGetSubjectContextMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest,
-                axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse>(
-                  this, METHODID_GET_ALL_SUBJECTZ)))
+                axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest,
+                axoom.subjectz.v1.Subjectz.SubjectContext>(
+                  this, METHODID_GET_SUBJECT_CONTEXT)))
+          .addMethod(
+            getGetSubjectzMethod(),
+            asyncServerStreamingCall(
+              new MethodHandlers<
+                axoom.subjectz.v1.SubjectzService.GetSubjectzRequest,
+                axoom.subjectz.v1.Subjectz.Subject>(
+                  this, METHODID_GET_SUBJECTZ)))
+          .addMethod(
+            getUpdateSubjectMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest,
+                axoom.subjectz.v1.Subjectz.Subject>(
+                  this, METHODID_UPDATE_SUBJECT)))
+          .addMethod(
+            getCreateSubjectTypeMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest,
+                axoom.subjectz.v1.Subjectz.SubjectType>(
+                  this, METHODID_CREATE_SUBJECT_TYPE)))
           .addMethod(
             getGetSubjectTypeMethod(),
             asyncUnaryCall(
               new MethodHandlers<
                 axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest,
-                axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse>(
+                axoom.subjectz.v1.Subjectz.SubjectType>(
                   this, METHODID_GET_SUBJECT_TYPE)))
+          .addMethod(
+            getGetSubjectTypeContextMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest,
+                axoom.subjectz.v1.Subjectz.SubjectTypeContext>(
+                  this, METHODID_GET_SUBJECT_TYPE_CONTEXT)))
+          .addMethod(
+            getGetSubjectTypezMethod(),
+            asyncServerStreamingCall(
+              new MethodHandlers<
+                axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest,
+                axoom.subjectz.v1.Subjectz.SubjectType>(
+                  this, METHODID_GET_SUBJECT_TYPEZ)))
           .build();
     }
   }
@@ -328,58 +523,101 @@ public final class SubjectzGrpc {
     /**
      * <pre>
      * CreateSubject creates the given Subject.
-     * If there is a subject ID part of the request, this one will be omitted and overriden by the Service.
      * </pre>
      */
     public void createSubject(axoom.subjectz.v1.SubjectzService.CreateSubjectRequest request,
-        io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.CreateSubjectResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.Subject> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getCreateSubjectMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      * <pre>
-     * CreateSubjectType creates the given SubjectType.
-     * SubjectTypes cannot be modified. If an ID is part of the request, it will be omitted.
-     * </pre>
-     */
-    public void createSubjectType(axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest request,
-        io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse> responseObserver) {
-      asyncUnaryCall(
-          getChannel().newCall(getCreateSubjectTypeMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     * <pre>
-     * GetSubject returns the requested Subject
+     * GetSubject returns the requested Subject.
      * </pre>
      */
     public void getSubject(axoom.subjectz.v1.SubjectzService.GetSubjectRequest request,
-        io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.GetSubjectResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.Subject> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetSubjectMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      * <pre>
-     * GetAllSubjectz returns a list of all accessible Subjects belonging to the given SubjectType.
+     * GetSubjectContext returns the requested Subject including the traversed graph of instances.
      * </pre>
      */
-    public void getAllSubjectz(axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest request,
-        io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse> responseObserver) {
+    public void getSubjectContext(axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest request,
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectContext> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(getGetAllSubjectzMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getGetSubjectContextMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      * <pre>
-     * GetSubjectType returns the requested SubjectType
+     * GetSubjectz returns a list of all accessible Subjects belonging to the given SubjectType.
+     * </pre>
+     */
+    public void getSubjectz(axoom.subjectz.v1.SubjectzService.GetSubjectzRequest request,
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.Subject> responseObserver) {
+      asyncServerStreamingCall(
+          getChannel().newCall(getGetSubjectzMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * UpdateSubject updates a subject given by the provided ID.
+     * The complete list of `instance_of` must be provided. Removal of an instance is not allowed.
+     * </pre>
+     */
+    public void updateSubject(axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest request,
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.Subject> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getUpdateSubjectMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * CreateSubjectType creates the given SubjectType.
+     * </pre>
+     */
+    public void createSubjectType(axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest request,
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectType> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getCreateSubjectTypeMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * GetSubjectType returns the requested SubjectType.
      * </pre>
      */
     public void getSubjectType(axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest request,
-        io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectType> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetSubjectTypeMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * GetSubjectTypeContext returns the requested SubjectType including the traversed graph of implementations.
+     * </pre>
+     */
+    public void getSubjectTypeContext(axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest request,
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectTypeContext> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getGetSubjectTypeContextMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * GetSubjectTypez returns a list of all accessible Subject Types.
+     * </pre>
+     */
+    public void getSubjectTypez(axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest request,
+        io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectType> responseObserver) {
+      asyncServerStreamingCall(
+          getChannel().newCall(getGetSubjectTypezMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -404,53 +642,94 @@ public final class SubjectzGrpc {
     /**
      * <pre>
      * CreateSubject creates the given Subject.
-     * If there is a subject ID part of the request, this one will be omitted and overriden by the Service.
      * </pre>
      */
-    public axoom.subjectz.v1.SubjectzService.CreateSubjectResponse createSubject(axoom.subjectz.v1.SubjectzService.CreateSubjectRequest request) {
+    public axoom.subjectz.v1.Subjectz.Subject createSubject(axoom.subjectz.v1.SubjectzService.CreateSubjectRequest request) {
       return blockingUnaryCall(
           getChannel(), getCreateSubjectMethod(), getCallOptions(), request);
     }
 
     /**
      * <pre>
-     * CreateSubjectType creates the given SubjectType.
-     * SubjectTypes cannot be modified. If an ID is part of the request, it will be omitted.
+     * GetSubject returns the requested Subject.
      * </pre>
      */
-    public axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse createSubjectType(axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest request) {
-      return blockingUnaryCall(
-          getChannel(), getCreateSubjectTypeMethod(), getCallOptions(), request);
-    }
-
-    /**
-     * <pre>
-     * GetSubject returns the requested Subject
-     * </pre>
-     */
-    public axoom.subjectz.v1.SubjectzService.GetSubjectResponse getSubject(axoom.subjectz.v1.SubjectzService.GetSubjectRequest request) {
+    public axoom.subjectz.v1.Subjectz.Subject getSubject(axoom.subjectz.v1.SubjectzService.GetSubjectRequest request) {
       return blockingUnaryCall(
           getChannel(), getGetSubjectMethod(), getCallOptions(), request);
     }
 
     /**
      * <pre>
-     * GetAllSubjectz returns a list of all accessible Subjects belonging to the given SubjectType.
+     * GetSubjectContext returns the requested Subject including the traversed graph of instances.
      * </pre>
      */
-    public axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse getAllSubjectz(axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest request) {
+    public axoom.subjectz.v1.Subjectz.SubjectContext getSubjectContext(axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest request) {
       return blockingUnaryCall(
-          getChannel(), getGetAllSubjectzMethod(), getCallOptions(), request);
+          getChannel(), getGetSubjectContextMethod(), getCallOptions(), request);
     }
 
     /**
      * <pre>
-     * GetSubjectType returns the requested SubjectType
+     * GetSubjectz returns a list of all accessible Subjects belonging to the given SubjectType.
      * </pre>
      */
-    public axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse getSubjectType(axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest request) {
+    public java.util.Iterator<axoom.subjectz.v1.Subjectz.Subject> getSubjectz(
+        axoom.subjectz.v1.SubjectzService.GetSubjectzRequest request) {
+      return blockingServerStreamingCall(
+          getChannel(), getGetSubjectzMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * UpdateSubject updates a subject given by the provided ID.
+     * The complete list of `instance_of` must be provided. Removal of an instance is not allowed.
+     * </pre>
+     */
+    public axoom.subjectz.v1.Subjectz.Subject updateSubject(axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getUpdateSubjectMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * CreateSubjectType creates the given SubjectType.
+     * </pre>
+     */
+    public axoom.subjectz.v1.Subjectz.SubjectType createSubjectType(axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getCreateSubjectTypeMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * GetSubjectType returns the requested SubjectType.
+     * </pre>
+     */
+    public axoom.subjectz.v1.Subjectz.SubjectType getSubjectType(axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest request) {
       return blockingUnaryCall(
           getChannel(), getGetSubjectTypeMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * GetSubjectTypeContext returns the requested SubjectType including the traversed graph of implementations.
+     * </pre>
+     */
+    public axoom.subjectz.v1.Subjectz.SubjectTypeContext getSubjectTypeContext(axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getGetSubjectTypeContextMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * GetSubjectTypez returns a list of all accessible Subject Types.
+     * </pre>
+     */
+    public java.util.Iterator<axoom.subjectz.v1.Subjectz.SubjectType> getSubjectTypez(
+        axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest request) {
+      return blockingServerStreamingCall(
+          getChannel(), getGetSubjectTypezMethod(), getCallOptions(), request);
     }
   }
 
@@ -475,10 +754,9 @@ public final class SubjectzGrpc {
     /**
      * <pre>
      * CreateSubject creates the given Subject.
-     * If there is a subject ID part of the request, this one will be omitted and overriden by the Service.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<axoom.subjectz.v1.SubjectzService.CreateSubjectResponse> createSubject(
+    public com.google.common.util.concurrent.ListenableFuture<axoom.subjectz.v1.Subjectz.Subject> createSubject(
         axoom.subjectz.v1.SubjectzService.CreateSubjectRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getCreateSubjectMethod(), getCallOptions()), request);
@@ -486,22 +764,10 @@ public final class SubjectzGrpc {
 
     /**
      * <pre>
-     * CreateSubjectType creates the given SubjectType.
-     * SubjectTypes cannot be modified. If an ID is part of the request, it will be omitted.
+     * GetSubject returns the requested Subject.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse> createSubjectType(
-        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest request) {
-      return futureUnaryCall(
-          getChannel().newCall(getCreateSubjectTypeMethod(), getCallOptions()), request);
-    }
-
-    /**
-     * <pre>
-     * GetSubject returns the requested Subject
-     * </pre>
-     */
-    public com.google.common.util.concurrent.ListenableFuture<axoom.subjectz.v1.SubjectzService.GetSubjectResponse> getSubject(
+    public com.google.common.util.concurrent.ListenableFuture<axoom.subjectz.v1.Subjectz.Subject> getSubject(
         axoom.subjectz.v1.SubjectzService.GetSubjectRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getGetSubjectMethod(), getCallOptions()), request);
@@ -509,32 +775,70 @@ public final class SubjectzGrpc {
 
     /**
      * <pre>
-     * GetAllSubjectz returns a list of all accessible Subjects belonging to the given SubjectType.
+     * GetSubjectContext returns the requested Subject including the traversed graph of instances.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse> getAllSubjectz(
-        axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<axoom.subjectz.v1.Subjectz.SubjectContext> getSubjectContext(
+        axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest request) {
       return futureUnaryCall(
-          getChannel().newCall(getGetAllSubjectzMethod(), getCallOptions()), request);
+          getChannel().newCall(getGetSubjectContextMethod(), getCallOptions()), request);
     }
 
     /**
      * <pre>
-     * GetSubjectType returns the requested SubjectType
+     * UpdateSubject updates a subject given by the provided ID.
+     * The complete list of `instance_of` must be provided. Removal of an instance is not allowed.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse> getSubjectType(
+    public com.google.common.util.concurrent.ListenableFuture<axoom.subjectz.v1.Subjectz.Subject> updateSubject(
+        axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getUpdateSubjectMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
+     * CreateSubjectType creates the given SubjectType.
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<axoom.subjectz.v1.Subjectz.SubjectType> createSubjectType(
+        axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getCreateSubjectTypeMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
+     * GetSubjectType returns the requested SubjectType.
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<axoom.subjectz.v1.Subjectz.SubjectType> getSubjectType(
         axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getGetSubjectTypeMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     * GetSubjectTypeContext returns the requested SubjectType including the traversed graph of implementations.
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<axoom.subjectz.v1.Subjectz.SubjectTypeContext> getSubjectTypeContext(
+        axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getGetSubjectTypeContextMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_CREATE_SUBJECT = 0;
-  private static final int METHODID_CREATE_SUBJECT_TYPE = 1;
-  private static final int METHODID_GET_SUBJECT = 2;
-  private static final int METHODID_GET_ALL_SUBJECTZ = 3;
-  private static final int METHODID_GET_SUBJECT_TYPE = 4;
+  private static final int METHODID_GET_SUBJECT = 1;
+  private static final int METHODID_GET_SUBJECT_CONTEXT = 2;
+  private static final int METHODID_GET_SUBJECTZ = 3;
+  private static final int METHODID_UPDATE_SUBJECT = 4;
+  private static final int METHODID_CREATE_SUBJECT_TYPE = 5;
+  private static final int METHODID_GET_SUBJECT_TYPE = 6;
+  private static final int METHODID_GET_SUBJECT_TYPE_CONTEXT = 7;
+  private static final int METHODID_GET_SUBJECT_TYPEZ = 8;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -555,23 +859,39 @@ public final class SubjectzGrpc {
       switch (methodId) {
         case METHODID_CREATE_SUBJECT:
           serviceImpl.createSubject((axoom.subjectz.v1.SubjectzService.CreateSubjectRequest) request,
-              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.CreateSubjectResponse>) responseObserver);
-          break;
-        case METHODID_CREATE_SUBJECT_TYPE:
-          serviceImpl.createSubjectType((axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest) request,
-              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.CreateSubjectTypeResponse>) responseObserver);
+              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.Subject>) responseObserver);
           break;
         case METHODID_GET_SUBJECT:
           serviceImpl.getSubject((axoom.subjectz.v1.SubjectzService.GetSubjectRequest) request,
-              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.GetSubjectResponse>) responseObserver);
+              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.Subject>) responseObserver);
           break;
-        case METHODID_GET_ALL_SUBJECTZ:
-          serviceImpl.getAllSubjectz((axoom.subjectz.v1.SubjectzService.GetAllSubjectzRequest) request,
-              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.GetAllSubjectzResponse>) responseObserver);
+        case METHODID_GET_SUBJECT_CONTEXT:
+          serviceImpl.getSubjectContext((axoom.subjectz.v1.SubjectzService.GetSubjectContextRequest) request,
+              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectContext>) responseObserver);
+          break;
+        case METHODID_GET_SUBJECTZ:
+          serviceImpl.getSubjectz((axoom.subjectz.v1.SubjectzService.GetSubjectzRequest) request,
+              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.Subject>) responseObserver);
+          break;
+        case METHODID_UPDATE_SUBJECT:
+          serviceImpl.updateSubject((axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest) request,
+              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.Subject>) responseObserver);
+          break;
+        case METHODID_CREATE_SUBJECT_TYPE:
+          serviceImpl.createSubjectType((axoom.subjectz.v1.SubjectzService.CreateSubjectTypeRequest) request,
+              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectType>) responseObserver);
           break;
         case METHODID_GET_SUBJECT_TYPE:
           serviceImpl.getSubjectType((axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest) request,
-              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.SubjectzService.GetSubjectTypeResponse>) responseObserver);
+              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectType>) responseObserver);
+          break;
+        case METHODID_GET_SUBJECT_TYPE_CONTEXT:
+          serviceImpl.getSubjectTypeContext((axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest) request,
+              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectTypeContext>) responseObserver);
+          break;
+        case METHODID_GET_SUBJECT_TYPEZ:
+          serviceImpl.getSubjectTypez((axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest) request,
+              (io.grpc.stub.StreamObserver<axoom.subjectz.v1.Subjectz.SubjectType>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -635,10 +955,14 @@ public final class SubjectzGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new SubjectzFileDescriptorSupplier())
               .addMethod(getCreateSubjectMethod())
-              .addMethod(getCreateSubjectTypeMethod())
               .addMethod(getGetSubjectMethod())
-              .addMethod(getGetAllSubjectzMethod())
+              .addMethod(getGetSubjectContextMethod())
+              .addMethod(getGetSubjectzMethod())
+              .addMethod(getUpdateSubjectMethod())
+              .addMethod(getCreateSubjectTypeMethod())
               .addMethod(getGetSubjectTypeMethod())
+              .addMethod(getGetSubjectTypeContextMethod())
+              .addMethod(getGetSubjectTypezMethod())
               .build();
         }
       }

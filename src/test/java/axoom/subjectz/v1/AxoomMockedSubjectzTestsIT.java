@@ -80,8 +80,7 @@ public class AxoomMockedSubjectzTestsIT extends PowerMockTestCase {
 
     // Specify to return mock objects
     when(mockedClient.getSubject("1")).thenReturn(mockedSubject);
-    when(mockedClient.getAllSubjectz("1")).thenReturn(mockedQSubjectsList);
-    when(mockedQSubjectsList.iterator()).thenReturn(mockedQSubjectsIterator);
+    when(mockedClient.getSubjectz("1")).thenReturn(mockedQSubjectsIterator);    
     when(mockedQSubjectsIterator.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
     when(mockedQSubjectsIterator.next()).thenReturn(mockedSubject);
     when(mockedSubject.getNameBytes()).thenReturn(mockedNameBytes);
@@ -106,7 +105,7 @@ public class AxoomMockedSubjectzTestsIT extends PowerMockTestCase {
   public void getSubjectNameBytes() throws Exception {
 
     try {
-      Iterator<Subject> subjects = mockedClient.getAllSubjectz("1").iterator();
+      Iterator<Subject> subjects = mockedClient.getSubjectz("1");
       while (subjects.hasNext()) {
         Subject subject = subjects.next();
         logger.log(Level.INFO, subject.getNameBytes().toStringUtf8());
@@ -130,7 +129,7 @@ public class AxoomMockedSubjectzTestsIT extends PowerMockTestCase {
   public void getSubjectLabels() throws Exception {
 
     try {
-      Iterator<Subject> subjects = mockedClient.getAllSubjectz("1").iterator();
+      Iterator<Subject> subjects = mockedClient.getSubjectz("1");
       while (subjects.hasNext()) {
         Subject subject = subjects.next();
         logger.log(Level.INFO, subject.getLabelsMap().get("1"));        
