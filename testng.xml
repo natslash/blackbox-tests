@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="API integration test Suite" parallel="false">
-  <test name="DRS API Integration Tests">
-    <classes>      
-      <class name="com.axoom.drs.it.AxoomDrsPositiveTestsIT"/>
-      <class name="com.axoom.drs.it.AxoomDrsNegativeTestsIT"/>
-      <!-- <class name="com.axoom.drs.it.AxoomMqTTTestsIT"/> -->
-    </classes>
-  </test>
-  <test name="DCS API integration Tests">
-    <classes>      
-      <class name="com.axoom.dcs.it.AxoomDcsPositiveTestsIT"/>
-      <class name="com.axoom.dcs.it.AxoomDcsNegativeTestsIT"/>
-    </classes>
-  </test>
-  <test name="SRS API Integration Tests">
-    <classes>      
-     <class name="com.axoom.srs.it.AxoomCreateSrsTestsIT"/>
-     <class name="com.axoom.srs.it.AxoomUpdateSrsTestsIT"/>
-    </classes>
-  </test>
-   <test name="gRPC API Integration Tests">
-    <classes>      
-     <class name="axoom.records.v1.AxoomQrecordsTestsIT"/>     
-    </classes>
-  </test>  
+	<test name="DRS API Integration Tests">
+		<classes>
+			<class name="com.axoom.drs.it.AxoomDrsPositiveTestsIT" />
+			<class name="com.axoom.drs.it.AxoomDrsNegativeTestsIT" />
+			<class name="com.axoom.drs.it.AxoomMqTTTestsIT" />
+		</classes>
+	</test>
+	<test name="DCS API integration Tests">
+		<classes>
+			<class name="com.axoom.dcs.it.AxoomDcsPositiveTestsIT" />
+			<class name="com.axoom.dcs.it.AxoomDcsNegativeTestsIT" />
+		</classes>
+	</test>
+	<test name="SRS API Integration Tests">
+		<classes>
+			<class name="com.axoom.srs.it.AxoomCreateSrsTestsIT" />
+			<class name="com.axoom.srs.it.AxoomUpdateSrsTestsIT" />
+		</classes>
+	</test>
+	<test name="gRPC API Integration Tests">
+		<classes>
+			<class name="axoom.recordz.v1.AxoomRecordzTestsIT" />			
+			<class name="axoom.recordmetaz.v1.AxoomRecordMetazTestsIT" />
+			<class name="axoom.subjectz.v1.AxoomSubjectzPositiveTestsIT" />
+			<class name="axoom.subjectz.v1.AxoomSubjectzNegativeTestsIT" />
+		</classes>
+	</test>
 </suite> <!-- Suite -->

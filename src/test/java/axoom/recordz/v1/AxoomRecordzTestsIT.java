@@ -87,8 +87,7 @@ public class AxoomRecordzTestsIT extends WebDriverTest {
         if (count > 0)
           Assert.assertTrue(true);
       } else {
-        Assert.fail("Error occurred!");
-        sre.printStackTrace();
+        throw sre;
       }
     } finally {
       client.shutdown();

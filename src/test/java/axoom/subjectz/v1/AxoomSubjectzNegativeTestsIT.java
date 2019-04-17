@@ -181,4 +181,18 @@ public class AxoomSubjectzNegativeTestsIT extends WebDriverTest {
     }
   } 
   
+  @Test
+  @Description("Update a Subject")
+  @Severity(SeverityLevel.BLOCKER)
+  public void updateNonExistentSubject() throws Exception {
+    Subject subject = Subject.newBuilder().setId("z").setName("Noname").build();
+    try {
+      client.updateSubject(subject);      
+    } catch (StatusRuntimeException sre) {
+      assertTrue(sre.getMessage().equals("UNKNOWN: subject z not found"));
+    } finally {
+      client.shutdown();
+    }
+  }
+  
 }

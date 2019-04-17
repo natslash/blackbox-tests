@@ -39,8 +39,8 @@ public class RecordzClient {
     Map<String, String> requestParams = new HashMap<String, String>();
     requestParams.put("baseUrl", "https://account.dev.myaxoom.com/connect/token");
     requestParams.put("scope", "https://apis.axoom.com/scopes/records");
-    requestParams.put("clientId", "axoiotl-apis-test-client");
-    requestParams.put("clientSecret", System.getenv("QREC_SECRET"));
+    requestParams.put("clientId", System.getenv("API_TEST_CLIENT"));
+    requestParams.put("clientSecret", System.getenv("API_TEST_SECRET"));
     requestParams.put("contentType", ContentType.FORM_URL_ENCODED);
 
     //Get Access token from client creds flow from CIS

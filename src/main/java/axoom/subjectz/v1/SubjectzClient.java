@@ -21,6 +21,7 @@ import axoom.subjectz.v1.SubjectzService.GetSubjectTypeContextRequest;
 import axoom.subjectz.v1.SubjectzService.GetSubjectTypeRequest;
 import axoom.subjectz.v1.SubjectzService.GetSubjectTypezRequest;
 import axoom.subjectz.v1.SubjectzService.GetSubjectzRequest;
+import axoom.subjectz.v1.SubjectzService.UpdateSubjectRequest;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
@@ -181,6 +182,22 @@ public class SubjectzClient {
 
     try {      
       return blockingStub.createSubjectType(request);     
+    } catch (StatusRuntimeException sre) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
+      throw sre;
+    }
+  } 
+  
+  /**
+   * 
+   * @param subject
+   * @return subject
+   */
+  public Subject updateSubject(Subject subject) {
+    UpdateSubjectRequest request = UpdateSubjectRequest.newBuilder().setSubject(subject).build();
+
+    try {      
+      return blockingStub.updateSubject(request);     
     } catch (StatusRuntimeException sre) {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
       throw sre;
