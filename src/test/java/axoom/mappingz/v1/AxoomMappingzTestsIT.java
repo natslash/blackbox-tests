@@ -1,8 +1,8 @@
 package axoom.mappingz.v1;
 
+import static org.testng.Assert.assertTrue;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -15,8 +15,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
+import axoom.mappingz.v1.Mappingz.Expression;
+import axoom.mappingz.v1.Mappingz.Expression.Type;
 import axoom.mappingz.v1.Mappingz.Mapping;
-import axoom.recordz.v1.PubSubPublishererUtils;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -32,6 +33,9 @@ public class AxoomMappingzTestsIT extends WebDriverTest {
   private MappingzClient client;
   private Map<String, String> requestParams = new HashMap<>();
   private static final Logger logger = Logger.getLogger(AxoomMappingzTestsIT.class.getName());
+  private final String subjectId = "04f856a8-c686-422c-a721-95ba53b0d233";
+  private final String preprocessing_id =
+      "d-b7f149c6438a4c7a84a81fcc4d71aeb1-axoom-devs/fission-machine01-temp2";
 
   @BeforeClass
   public void beforeClass() {
@@ -55,7 +59,7 @@ public class AxoomMappingzTestsIT extends WebDriverTest {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     //Create Client and establish connection to the server
-    client = new MappingzClient("qrecords.dev.myaxoom.com", 443);
+    client = new MappingzClient("mappings.dev.myaxoom.com", 443);
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
   }
 
@@ -68,33 +72,63 @@ public class AxoomMappingzTestsIT extends WebDriverTest {
  
 
   @Test
-  @Description("Get RecordMetas from getRecrodMetaStream")
+  @Description("Create a Mapping")
   @Severity(SeverityLevel.BLOCKER)
-  public void getRecordMetazStreamTest() throws Exception {
-    //Publich messages to google pubsub
-    PubSubPublishererUtils.publishMessages("mvp-iotcore-eval", "blackboxtest01");
+  public void createMappingTest() throws Exception {
     
-    int count = 0;
+    String expressionString =
+        "{\"temperature2\": temp, \"timestamp2\": timestamp\"}";
+    Expression expression =
+        Expression.newBuilder().setExpressionString(expressionString).setType(Type.JSONATA).build();
+    Mapping mapping = Mapping.newBuilder().setExpression(expression).setSubjectId(subjectId)
+        .setPreprocessingId(preprocessing_id).build();
     
-    //Now, get the same messages via RecordMetas API and keep count of number of messages
     try {
-      List<Mapping> mappingList = client.getMappingsList(1);
-      Iterator<Mapping> mappingIterator = mappingList.iterator();
-      while (mappingIterator.hasNext()) {
-        //TODO separate tests for the following methods
-        logger.log(Level.INFO, mappingIterator.next().getPreprocessingId());
-        logger.log(Level.INFO, mappingIterator.next().getSubjectId());
-        logger.log(Level.INFO, mappingIterator.next().getExpression().getExpressionString());
-        count++;
-        logger.log(Level.INFO, "Current count is: " + count);
-      }
-      logger.log(Level.INFO, "Number of Records " + count);
+      Mapping createdMapping = client.createMapping(mapping);      
+      assertTrue(createdMapping.getSubjectId().equals(subjectId));
     } catch (StatusRuntimeException sre) {
-      if (count == 2 && sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
+      if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
         Assert.assertTrue(true);
       } else {
         Assert.fail("Error occurred!");
         sre.printStackTrace();
+      }
+    } finally {
+      client.shutdown();
+    }
+  }
+  
+  @Test(dependsOnMethods = {"createMappingTest"})
+  @Description("Get a mapping by it's ID")
+  @Severity(SeverityLevel.BLOCKER)
+  public void getMappingTest() throws Exception {   
+    try {
+      Mapping mapping = client.getMapping(preprocessing_id);
+      
+        //TODO separate tests for the following methods        
+        logger.log(Level.INFO, mapping.getPreprocessingId());
+        logger.log(Level.INFO, mapping.getSubjectId());
+        logger.log(Level.INFO, mapping.getExpression().getExpressionString());
+        assertTrue(mapping != null);
+    } catch (StatusRuntimeException sre) {
+      if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
+       throw sre;
+      }
+    } finally {
+      client.shutdown();
+    }
+  }
+  
+  @Test(dependsOnMethods = {"createMappingTest"})
+  @Description("Get All mappings")
+  @Severity(SeverityLevel.BLOCKER)
+  public void getAllMappingsTest() throws Exception {   
+    try {
+      List<Mapping> mappings = client.getMappingsList(10, 0);
+      assertTrue(mappings.size() > 0);
+    } catch (StatusRuntimeException sre) {
+      if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
+       throw sre;
       }
     } finally {
       client.shutdown();

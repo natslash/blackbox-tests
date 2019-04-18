@@ -2694,21 +2694,21 @@ public final class MappingzService {
 
     /**
      * <pre>
-     * The requested page number
+     * The requested offset
      * </pre>
      *
-     * <code>int32 page = 1;</code>
+     * <code>int32 offset = 1;</code>
      */
-    int getPage();
+    int getOffset();
 
     /**
      * <pre>
-     * The requested page size
+     * The requested count
      * </pre>
      *
-     * <code>int32 page_size = 2;</code>
+     * <code>int32 count = 2;</code>
      */
-    int getPageSize();
+    int getCount();
   }
   /**
    * Protobuf type {@code axoom.mappingz.v1.MappingListRequest}
@@ -2723,8 +2723,8 @@ public final class MappingzService {
       super(builder);
     }
     private MappingListRequest() {
-      page_ = 0;
-      pageSize_ = 0;
+      offset_ = 0;
+      count_ = 0;
     }
 
     @java.lang.Override
@@ -2753,12 +2753,12 @@ public final class MappingzService {
               break;
             case 8: {
 
-              page_ = input.readInt32();
+              offset_ = input.readInt32();
               break;
             }
             case 16: {
 
-              pageSize_ = input.readInt32();
+              count_ = input.readInt32();
               break;
             }
             default: {
@@ -2793,30 +2793,30 @@ public final class MappingzService {
               axoom.mappingz.v1.MappingzService.MappingListRequest.class, axoom.mappingz.v1.MappingzService.MappingListRequest.Builder.class);
     }
 
-    public static final int PAGE_FIELD_NUMBER = 1;
-    private int page_;
+    public static final int OFFSET_FIELD_NUMBER = 1;
+    private int offset_;
     /**
      * <pre>
-     * The requested page number
+     * The requested offset
      * </pre>
      *
-     * <code>int32 page = 1;</code>
+     * <code>int32 offset = 1;</code>
      */
-    public int getPage() {
-      return page_;
+    public int getOffset() {
+      return offset_;
     }
 
-    public static final int PAGE_SIZE_FIELD_NUMBER = 2;
-    private int pageSize_;
+    public static final int COUNT_FIELD_NUMBER = 2;
+    private int count_;
     /**
      * <pre>
-     * The requested page size
+     * The requested count
      * </pre>
      *
-     * <code>int32 page_size = 2;</code>
+     * <code>int32 count = 2;</code>
      */
-    public int getPageSize() {
-      return pageSize_;
+    public int getCount() {
+      return count_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -2833,11 +2833,11 @@ public final class MappingzService {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (page_ != 0) {
-        output.writeInt32(1, page_);
+      if (offset_ != 0) {
+        output.writeInt32(1, offset_);
       }
-      if (pageSize_ != 0) {
-        output.writeInt32(2, pageSize_);
+      if (count_ != 0) {
+        output.writeInt32(2, count_);
       }
       unknownFields.writeTo(output);
     }
@@ -2848,13 +2848,13 @@ public final class MappingzService {
       if (size != -1) return size;
 
       size = 0;
-      if (page_ != 0) {
+      if (offset_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, page_);
+          .computeInt32Size(1, offset_);
       }
-      if (pageSize_ != 0) {
+      if (count_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, pageSize_);
+          .computeInt32Size(2, count_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2872,10 +2872,10 @@ public final class MappingzService {
       axoom.mappingz.v1.MappingzService.MappingListRequest other = (axoom.mappingz.v1.MappingzService.MappingListRequest) obj;
 
       boolean result = true;
-      result = result && (getPage()
-          == other.getPage());
-      result = result && (getPageSize()
-          == other.getPageSize());
+      result = result && (getOffset()
+          == other.getOffset());
+      result = result && (getCount()
+          == other.getCount());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -2887,10 +2887,10 @@ public final class MappingzService {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + PAGE_FIELD_NUMBER;
-      hash = (53 * hash) + getPage();
-      hash = (37 * hash) + PAGE_SIZE_FIELD_NUMBER;
-      hash = (53 * hash) + getPageSize();
+      hash = (37 * hash) + OFFSET_FIELD_NUMBER;
+      hash = (53 * hash) + getOffset();
+      hash = (37 * hash) + COUNT_FIELD_NUMBER;
+      hash = (53 * hash) + getCount();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3024,9 +3024,9 @@ public final class MappingzService {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        page_ = 0;
+        offset_ = 0;
 
-        pageSize_ = 0;
+        count_ = 0;
 
         return this;
       }
@@ -3054,8 +3054,8 @@ public final class MappingzService {
       @java.lang.Override
       public axoom.mappingz.v1.MappingzService.MappingListRequest buildPartial() {
         axoom.mappingz.v1.MappingzService.MappingListRequest result = new axoom.mappingz.v1.MappingzService.MappingListRequest(this);
-        result.page_ = page_;
-        result.pageSize_ = pageSize_;
+        result.offset_ = offset_;
+        result.count_ = count_;
         onBuilt();
         return result;
       }
@@ -3104,11 +3104,11 @@ public final class MappingzService {
 
       public Builder mergeFrom(axoom.mappingz.v1.MappingzService.MappingListRequest other) {
         if (other == axoom.mappingz.v1.MappingzService.MappingListRequest.getDefaultInstance()) return this;
-        if (other.getPage() != 0) {
-          setPage(other.getPage());
+        if (other.getOffset() != 0) {
+          setOffset(other.getOffset());
         }
-        if (other.getPageSize() != 0) {
-          setPageSize(other.getPageSize());
+        if (other.getCount() != 0) {
+          setCount(other.getCount());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -3139,78 +3139,78 @@ public final class MappingzService {
         return this;
       }
 
-      private int page_ ;
+      private int offset_ ;
       /**
        * <pre>
-       * The requested page number
+       * The requested offset
        * </pre>
        *
-       * <code>int32 page = 1;</code>
+       * <code>int32 offset = 1;</code>
        */
-      public int getPage() {
-        return page_;
+      public int getOffset() {
+        return offset_;
       }
       /**
        * <pre>
-       * The requested page number
+       * The requested offset
        * </pre>
        *
-       * <code>int32 page = 1;</code>
+       * <code>int32 offset = 1;</code>
        */
-      public Builder setPage(int value) {
+      public Builder setOffset(int value) {
         
-        page_ = value;
+        offset_ = value;
         onChanged();
         return this;
       }
       /**
        * <pre>
-       * The requested page number
+       * The requested offset
        * </pre>
        *
-       * <code>int32 page = 1;</code>
+       * <code>int32 offset = 1;</code>
        */
-      public Builder clearPage() {
+      public Builder clearOffset() {
         
-        page_ = 0;
+        offset_ = 0;
         onChanged();
         return this;
       }
 
-      private int pageSize_ ;
+      private int count_ ;
       /**
        * <pre>
-       * The requested page size
+       * The requested count
        * </pre>
        *
-       * <code>int32 page_size = 2;</code>
+       * <code>int32 count = 2;</code>
        */
-      public int getPageSize() {
-        return pageSize_;
+      public int getCount() {
+        return count_;
       }
       /**
        * <pre>
-       * The requested page size
+       * The requested count
        * </pre>
        *
-       * <code>int32 page_size = 2;</code>
+       * <code>int32 count = 2;</code>
        */
-      public Builder setPageSize(int value) {
+      public Builder setCount(int value) {
         
-        pageSize_ = value;
+        count_ = value;
         onChanged();
         return this;
       }
       /**
        * <pre>
-       * The requested page size
+       * The requested count
        * </pre>
        *
-       * <code>int32 page_size = 2;</code>
+       * <code>int32 count = 2;</code>
        */
-      public Builder clearPageSize() {
+      public Builder clearCount() {
         
-        pageSize_ = 0;
+        count_ = 0;
         onChanged();
         return this;
       }
@@ -5376,23 +5376,23 @@ public final class MappingzService {
       "uest\022+\n\007mapping\030\001 \001(\0132\032.axoom.mappingz.v" +
       "1.Mapping\"D\n\025CreateMappingResponse\022+\n\007ma" +
       "pping\030\001 \001(\0132\032.axoom.mappingz.v1.Mapping\"" +
-      "\026\n\024MappingStreamRequest\"5\n\022MappingListRe" +
-      "quest\022\014\n\004page\030\001 \001(\005\022\021\n\tpage_size\030\002 \001(\005\"C" +
-      "\n\023MappingListResponse\022,\n\010mappings\030\001 \003(\0132" +
-      "\032.axoom.mappingz.v1.Mapping\" \n\nGetReques" +
-      "t\022\022\n\nmapping_id\030\001 \001(\t\":\n\013GetResponse\022+\n\007" +
-      "mapping\030\001 \001(\0132\032.axoom.mappingz.v1.Mappin" +
-      "g2\346\002\n\010Mappingz\022b\n\rCreateMapping\022\'.axoom." +
-      "mappingz.v1.CreateMappingRequest\032(.axoom" +
-      ".mappingz.v1.CreateMappingResponse\022W\n\tGe" +
-      "tStream\022\'.axoom.mappingz.v1.MappingStrea" +
-      "mRequest\032\037.axoom.mappingz.v1.MappingEven" +
-      "t0\001\022W\n\006GetAll\022%.axoom.mappingz.v1.Mappin" +
-      "gListRequest\032&.axoom.mappingz.v1.Mapping" +
-      "ListResponse\022D\n\003Get\022\035.axoom.mappingz.v1." +
-      "GetRequest\032\036.axoom.mappingz.v1.GetRespon" +
-      "seB-Z+gitlab.axoom.tech/iot/go-rillaz/ma" +
-      "ppingz/v1b\006proto3"
+      "\026\n\024MappingStreamRequest\"3\n\022MappingListRe" +
+      "quest\022\016\n\006offset\030\001 \001(\005\022\r\n\005count\030\002 \001(\005\"C\n\023" +
+      "MappingListResponse\022,\n\010mappings\030\001 \003(\0132\032." +
+      "axoom.mappingz.v1.Mapping\" \n\nGetRequest\022" +
+      "\022\n\nmapping_id\030\001 \001(\t\":\n\013GetResponse\022+\n\007ma" +
+      "pping\030\001 \001(\0132\032.axoom.mappingz.v1.Mapping2" +
+      "\346\002\n\010Mappingz\022b\n\rCreateMapping\022\'.axoom.ma" +
+      "ppingz.v1.CreateMappingRequest\032(.axoom.m" +
+      "appingz.v1.CreateMappingResponse\022W\n\tGetS" +
+      "tream\022\'.axoom.mappingz.v1.MappingStreamR" +
+      "equest\032\037.axoom.mappingz.v1.MappingEvent0" +
+      "\001\022W\n\006GetAll\022%.axoom.mappingz.v1.MappingL" +
+      "istRequest\032&.axoom.mappingz.v1.MappingLi" +
+      "stResponse\022D\n\003Get\022\035.axoom.mappingz.v1.Ge" +
+      "tRequest\032\036.axoom.mappingz.v1.GetResponse" +
+      "B-Z+gitlab.axoom.tech/iot/go-rillaz/mapp" +
+      "ingz/v1b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5436,7 +5436,7 @@ public final class MappingzService {
     internal_static_axoom_mappingz_v1_MappingListRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_axoom_mappingz_v1_MappingListRequest_descriptor,
-        new java.lang.String[] { "Page", "PageSize", });
+        new java.lang.String[] { "Offset", "Count", });
     internal_static_axoom_mappingz_v1_MappingListResponse_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_axoom_mappingz_v1_MappingListResponse_fieldAccessorTable = new
