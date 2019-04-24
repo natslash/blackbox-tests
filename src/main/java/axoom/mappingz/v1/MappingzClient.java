@@ -66,8 +66,8 @@ public class MappingzClient {
     } catch (StatusRuntimeException e) {
       logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
       throw e;
-    }catch (Exception e) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", e.getMessage());
+    } catch (Exception e) {
+      logger.log(Level.SEVERE, e.getMessage());
       throw e;
     }
   }
@@ -87,7 +87,7 @@ public class MappingzClient {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
       throw sre;
     } catch (Exception e) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", e.getMessage());
+      logger.log(Level.SEVERE, e.getMessage());
       throw e;
     }
   }
@@ -107,13 +107,16 @@ public class MappingzClient {
    * @return mapping
    */
   public Mapping createMapping(Mapping mapping) {
-    CreateMappingRequest request = CreateMappingRequest.newBuilder().setMapping(mapping).build();
     try {
+      CreateMappingRequest request = CreateMappingRequest.newBuilder().setMapping(mapping).build();
       CreateMappingResponse response = blockingStub.createMapping(request);
       return response.getMapping();
     } catch (StatusRuntimeException sre) {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
       throw sre;
+    } catch (Exception e) {
+      logger.log(Level.SEVERE, e.getMessage());
+      throw e;
     }
   }
 
@@ -123,7 +126,7 @@ public class MappingzClient {
       GetResponse response = blockingStub.get(request);
       return response.getMapping();
     } catch (NullPointerException npe) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", npe.getMessage());
+      logger.log(Level.SEVERE, npe.getMessage());
       throw npe;
     } catch (StatusRuntimeException sre) {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
