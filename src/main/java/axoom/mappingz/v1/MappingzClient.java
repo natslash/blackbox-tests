@@ -17,7 +17,6 @@ import axoom.mappingz.v1.MappingzService.GetRequest;
 import axoom.mappingz.v1.MappingzService.GetResponse;
 import axoom.mappingz.v1.MappingzService.MappingEvent;
 import axoom.mappingz.v1.MappingzService.MappingListRequest;
-import axoom.mappingz.v1.MappingzService.MappingListResponse;
 import axoom.mappingz.v1.MappingzService.MappingStreamRequest;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -76,7 +75,7 @@ public class MappingzClient {
    * @param offset
    * @return list
    */
-  public List<Mapping> getMappingsList(int count, int offset) {
+  public List<Mapping> getMappingsList(int count, int offset) {    
     MappingListRequest request = MappingListRequest.newBuilder().setCount(count).setOffset(offset).build();
 
     try {
@@ -95,22 +94,7 @@ public class MappingzClient {
    */
   public Mapping getMappingFromEvent(MappingEvent mappingEvent) {
     return mappingEvent.getMapping();
-  }
-
-  /**
-   * 
-   * @return list
-   */
-  public List<Mapping> getMappingsList() {
-    MappingListRequest request = MappingListRequest.newBuilder().build();
-    try {
-      MappingListResponse response = blockingStub.getAll(request);      
-      return response.getMappingsList();
-    } catch (StatusRuntimeException sre) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
-      throw sre;
-    }
-  }
+  }  
 
   /**
    * 
