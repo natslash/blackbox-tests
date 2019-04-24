@@ -28,14 +28,14 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 
 @Story("Positive test cases for SRS APIs")
-public class AxoomMappingzTestsIT extends WebDriverTest {
+public class AxoomMappingzPositiveTestsIT extends WebDriverTest {
   private String clientId;
   private String redirectUri;
   private String secret;
   private String cisUrl;
   private MappingzClient client;
   private Map<String, String> requestParams = new HashMap<>();
-  private static final Logger logger = Logger.getLogger(AxoomMappingzTestsIT.class.getName());
+  private static final Logger logger = Logger.getLogger(AxoomMappingzPositiveTestsIT.class.getName());
   private final String subjectId = "04f856a8-c686-422c-a721-95ba53b0d233";
   private final String preprocessing_id =
       "d-b7f149c6438a4c7a84a81fcc4d71aeb1-axoom-devs/fission-machine01-temp2";
@@ -138,7 +138,7 @@ public class AxoomMappingzTestsIT extends WebDriverTest {
   }
 
   @Test
-  @Description("Create several Mapping")
+  @Description("Create several Mappings")
   @Severity(SeverityLevel.BLOCKER)
   public void createSeveralMappingTest() throws Exception {
     int count = 0;
@@ -165,8 +165,8 @@ public class AxoomMappingzTestsIT extends WebDriverTest {
       while (mappingIterator.hasNext()) {
         Mapping createdMapping = mappingIterator.next();
         for (int i = 0; i < 2; i++) {
-          if (createdMapping.getExpression().getExpressionString()
-              .equals(expressionStrings.get(i)) && createdMapping.getPreprocessingId().equals(preProcessingIds.get(i))) {
+          if (createdMapping.getExpression().getExpressionString().equals(expressionStrings.get(i))
+              && createdMapping.getPreprocessingId().equals(preProcessingIds.get(i))) {
             count++;
           }
         }
@@ -185,4 +185,29 @@ public class AxoomMappingzTestsIT extends WebDriverTest {
     }
   }
 
+  @Test(dependsOnMethods = {"createMappingTest"})
+  @Description("Update a Mapping")
+  @Severity(SeverityLevel.BLOCKER)
+  public void updateMappingTest() throws Exception {
+
+    String expressionString = "{\"temperature2upd\": temp, \"timestamp2upd\": timestamp\"}";
+    Expression expression =
+        Expression.newBuilder().setExpressionString(expressionString).setType(Type.JSONATA).build();
+    Mapping mapping = Mapping.newBuilder().setExpression(expression).setSubjectId(subjectId)
+        .setPreprocessingId(preprocessing_id).build();
+
+    try {
+      Mapping createdMapping = client.createMapping(mapping);
+      assertTrue(createdMapping.getExpression().getExpressionString().equals(expressionString));
+    } catch (StatusRuntimeException sre) {
+      if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
+        Assert.assertTrue(true);
+      } else {
+        Assert.fail("Error occurred!");
+        sre.printStackTrace();
+      }
+    } finally {
+      client.shutdown();
+    }
+  }
 }

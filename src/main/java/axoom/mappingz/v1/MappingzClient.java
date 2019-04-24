@@ -29,7 +29,7 @@ public class MappingzClient {
   private static final Logger logger = Logger.getLogger(MappingzClient.class.getName());
 
   private final ManagedChannel channel;
-  private final MappingzBlockingStub blockingStub;  
+  private final MappingzBlockingStub blockingStub;
 
   /* Construct client connecting to RecordMetas server at {@code name:port}. */
   public MappingzClient(String name, int port) {
@@ -65,7 +65,10 @@ public class MappingzClient {
 
     } catch (StatusRuntimeException e) {
       logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
-      return null;
+      throw e;
+    }catch (Exception e) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", e.getMessage());
+      throw e;
     }
   }
 
@@ -75,15 +78,17 @@ public class MappingzClient {
    * @param offset
    * @return list
    */
-  public List<Mapping> getMappingsList(int count, int offset) {    
-    MappingListRequest request = MappingListRequest.newBuilder().setCount(count).setOffset(offset).build();
-
+  public List<Mapping> getMappingsList(int count, int offset) {
     try {
+      MappingListRequest request =
+          MappingListRequest.newBuilder().setCount(count).setOffset(offset).build();
       return blockingStub.getAll(request).getMappingsList();
-
-    } catch (StatusRuntimeException e) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
-      return null;
+    } catch (StatusRuntimeException sre) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
+      throw sre;
+    } catch (Exception e) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", e.getMessage());
+      throw e;
     }
   }
 
@@ -94,29 +99,32 @@ public class MappingzClient {
    */
   public Mapping getMappingFromEvent(MappingEvent mappingEvent) {
     return mappingEvent.getMapping();
-  }  
+  }
 
   /**
    * 
    * @param mapping
    * @return mapping
    */
-  public Mapping createMapping(Mapping mapping) {    
+  public Mapping createMapping(Mapping mapping) {
     CreateMappingRequest request = CreateMappingRequest.newBuilder().setMapping(mapping).build();
     try {
-      CreateMappingResponse response = blockingStub.createMapping(request);      
+      CreateMappingResponse response = blockingStub.createMapping(request);
       return response.getMapping();
     } catch (StatusRuntimeException sre) {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
       throw sre;
     }
   }
-  
-  public Mapping getMapping(String mappingId) {    
-    GetRequest request = GetRequest.newBuilder().setMappingId(mappingId).build();
+
+  public Mapping getMapping(String mappingId) {
     try {
+      GetRequest request = GetRequest.newBuilder().setMappingId(mappingId).build();
       GetResponse response = blockingStub.get(request);
       return response.getMapping();
+    } catch (NullPointerException npe) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", npe.getMessage());
+      throw npe;
     } catch (StatusRuntimeException sre) {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
       throw sre;
