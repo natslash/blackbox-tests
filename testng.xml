@@ -26,6 +26,8 @@
 			<class name="axoom.recordmetaz.v1.AxoomRecordMetazTestsIT" />
 			<class name="axoom.subjectz.v1.AxoomSubjectzPositiveTestsIT" />
 			<class name="axoom.subjectz.v1.AxoomSubjectzNegativeTestsIT" />
+			<class name="axoom.mappingz.v1.AxoomMappingzPositiveTestsIT" />
+			<class name="axoom.mappingz.v1.AxoomMappingzNegativeTestsIT" />
 		</classes>
 	</test>
 </suite> <!-- Suite -->

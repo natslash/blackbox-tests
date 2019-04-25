@@ -169,18 +169,37 @@ public class AxoomMappingzNegaitiveTestsIT extends WebDriverTest {
     } finally {
       client.shutdown();
     }
-  }
-
+  }  
+  
   @Test
   @Description("Get All mappings")
   @Severity(SeverityLevel.BLOCKER)
-  public void getAllMappingsWithNegativeValuesTest() throws Exception {
+  public void getAllMappingsWithNegativeOffsetValueTest() throws Exception {
     try {
-      List<Mapping> mappings = client.getMappingsList(-1, -1);
+      List<Mapping> mappings = client.getMappingsList(0, -1);
       assertTrue(mappings == null);
     } catch (StatusRuntimeException sre) {
       if (sre.getMessage().contains(
           "LIMIT offset value is not a number or out of range (while instantiating plan)")) {
+        assertTrue(true);
+      } else {
+        Assert.fail("Error message doesn't match with expected value " + sre.getMessage());
+      }
+    } finally {
+      client.shutdown();
+    }
+  }
+  
+  @Test
+  @Description("Get All mappings")
+  @Severity(SeverityLevel.BLOCKER)
+  public void getAllMappingsWithNegativeCountValueTest() throws Exception {
+    try {
+      List<Mapping> mappings = client.getMappingsList(-1, 0);
+      assertTrue(mappings == null);
+    } catch (StatusRuntimeException sre) {
+      if (sre.getMessage().contains(
+          "LIMIT count value is not a number or out of range (while instantiating plan)")) {
         assertTrue(true);
       } else {
         Assert.fail("Error message doesn't match with expected value " + sre.getMessage());
