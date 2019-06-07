@@ -25,10 +25,19 @@ public class MyAxoomLoginPage extends WebDriverPage {
   private WebElement inputPasswordField;
   private WebElement loginButton;
   private WebElement tenantField;
+  private WebElement tenantScopesCheckBox;
+  private WebElement grantAccessButton;
+  private WebElement denyAccessButton;
+  private WebElement accessGrantedMessage;
+  private WebElement accessDeniedMessage;
 
   private String inputEmailFieldId = "Input_Email";
   private String inputPasswordFieldId = "Input_Password";
-  private String loginButtonId = "button-login";
+  private String loginButtonId = "button-login";  
+  private String grantAccessButtonXpath = "//button[contains(@id,'GrantConsent_Button')]";
+  private String denyAccessButtonXpath = "//button[contains(@id,'DenyConsent_Button')]";
+  private String accessGrantedMessageXpath = "//h1[contains(@id,'DeviceAuthorization_ConsentGranted_Title')]";
+  private String accessDeniedMessageXpath = "//h1[contains(@id,'DeviceAuthorization_ConsentDenied_Title')]";
   private static final Logger logger = Logger.getLogger(MyAxoomLoginPage.class.getName());
 
   public MyAxoomLoginPage(WebDriver driver) {
@@ -95,5 +104,32 @@ public class MyAxoomLoginPage extends WebDriverPage {
       return jsonPathEvaluator.get("access_token");
     }
     return response.asString();
+  }
+  
+  public boolean grantAccess(boolean grantAccess) {
+    String tenantScopesXpath = "//input[@id='scopes_tenant']";
+    String message = null;   
+    System.out.println(getDriver().getCurrentUrl());
+    tenantScopesCheckBox = getDriver().findElement(By.xpath(tenantScopesXpath));
+    tenantScopesCheckBox.click();
+    if(grantAccess) {
+      grantAccessButton = getDriver().findElement(By.xpath(grantAccessButtonXpath));
+      clickAndWaitForPageLoad(grantAccessButton, 2);
+      accessGrantedMessage = getDriver().findElement(By.xpath(accessGrantedMessageXpath));
+      message = accessGrantedMessage.getText(); 
+      if(message.equals("Access granted") && grantAccess) {
+        return true;
+      }
+    }else {
+      denyAccessButton = getDriver().findElement(By.xpath(denyAccessButtonXpath));
+      clickAndWaitForPageLoad(denyAccessButton, 2);
+      accessDeniedMessage = getDriver().findElement(By.xpath(accessDeniedMessageXpath));
+      message = accessDeniedMessage.getText(); 
+      if(message.equals("Consent Denied") && grantAccess) {
+        return true;
+      }
+    }  
+    
+    return false;
   }
 }

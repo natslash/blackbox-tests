@@ -60,8 +60,7 @@ public class RestUtils {
       return jsonPathEvaluator.get("access_token");
     } catch (Exception e) {
       System.out.println(e.getMessage());
-      e.printStackTrace();
-      return null;
+      throw e;      
     }
   }
 }
