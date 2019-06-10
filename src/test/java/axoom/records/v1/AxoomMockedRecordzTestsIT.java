@@ -16,8 +16,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.Timestamp;
+import axoom.filters.v1.Filter.StringPropertyFilter;
 import axoom.records.v1.Records.Record;
-import axoom.records.v1.RecordsClient;
+import axoom.records.v1.Records.RecordsSubscription;
+import axoom.records.v1.RecordsService.ListRecordsSubscriptionsResponse;
+import axoom.records.v1.RecordsService.RecordsSubscriptionsFilter;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -27,20 +31,26 @@ import io.qameta.allure.Story;
 @Story("Positive test cases for SRS APIs")
 public class AxoomMockedRecordzTestsIT extends PowerMockTestCase {
 
-  //Mock client connection to server
+  // Mock client connection to server
   @Mock
   RecordsClient mockedClient;
 
-  //Mock QRecords
+  // Mock QRecords
   @Mock
   Iterator<Record> mockedQRecords;
-  
-  //Mock Record
+
+  // Mock Record
   @Mock
-  Record mockedRecord;
+  RecordsSubscription mockedRecordSubscription;
+  
+  @Mock
+  ListRecordsSubscriptionsResponse response;
 
   ByteString mockedPayLoad = ByteString.copyFromUtf8("Mocked Payload Message");
 
+  Timestamp oneMinFromNow = null;
+  StringPropertyFilter filterProperty = null;      
+  RecordsSubscriptionsFilter filter = null;
   private static final Logger logger = Logger.getLogger(AxoomMockedRecordzTestsIT.class.getName());
 
 
@@ -57,16 +67,22 @@ public class AxoomMockedRecordzTestsIT extends PowerMockTestCase {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
-    
-    //Initialize Mock objects
+
+    // Initialize Mock objects
     MockitoAnnotations.initMocks(this);
-    
+
     // Specify to return mock objects
-    when(mockedClient.("dc-b33a683812494b65aa8e036ed64adcc6"))
-        .thenReturn(mockedQRecords);
-    when(mockedQRecords.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
-    when(mockedQRecords.next()).thenReturn(mockedRecord);
-    when(mockedRecord.getData()).thenReturn(mockedPayLoad);
+    oneMinFromNow =
+        Timestamp.newBuilder().setSeconds(System.currentTimeMillis() + 1 * 60 * 1000).build();
+    filterProperty =
+        StringPropertyFilter.newBuilder().setValue("subjectTypeName").build();
+    filter =
+        RecordsSubscriptionsFilter.newBuilder().setSubjectTypeName(filterProperty).build();
+    when(mockedClient.createRecordSubscription("1", "subjectTypeName", oneMinFromNow))
+        .thenReturn(mockedRecordSubscription);
+    when(mockedClient.listRecordsSubscriptions("subjectTypeName", filter)).thenReturn(response);
+    when(mockedRecordSubscription.getSerializedSize()).thenReturn(1);
+    when(response.getSerializedSize()).thenReturn(1);
   }
 
   @AfterMethod
@@ -75,60 +91,58 @@ public class AxoomMockedRecordzTestsIT extends PowerMockTestCase {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
   }
-  
+
 
   @Test
-  @Description("Get QRecords preprocessed from getStream")
+  @Description("create a recordSubscription")
   @Severity(SeverityLevel.BLOCKER)
-  public void getPreProcessedQrecordsForDCTest() throws Exception {
-    int count = 0;
-    
+  public void createRecordSubscriptionTest() throws Exception {
+    int size = 0;
+
     try {
-      Iterator<Record> qRecords =
-          mockedClient.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
-      while (qRecords.hasNext()) {
-        logger.log(Level.INFO, qRecords.next().getData().toStringUtf8());
-        count++;
-      }
-      logger.log(Level.INFO, "Number of Records " + count);
+      RecordsSubscription recSub =
+          mockedClient.createRecordSubscription("1", "subjectTypeName", oneMinFromNow);
+      size = recSub.getSerializedSize();
+      logger.log(Level.INFO, "Size of Record subscription " + size);
     } catch (StatusRuntimeException sre) {
       if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
-        if (count > 0)
+        if (size > 0)
           Assert.assertTrue(true);
       } else {
-        Assert.fail("Error occurred!");
-        sre.printStackTrace();
+        Assert.fail(sre.getMessage());        
       }
     } finally {
       mockedClient.shutdown();
     }
   }
+
 
   @Test
-  @Description("Get QRecords from getStream")
-  @Severity(SeverityLevel.BLOCKER)
-  public void getPubSubRecordsFromGrpcTest() throws Exception {
-    int count = 0;
-    
-    try {
-      Iterator<Record> qRecords = mockedClient.getRecordStream("blackboxtest01");
-      while (qRecords.hasNext()) {
 
-        logger.log(Level.INFO, qRecords.next().getData().toStringUtf8());
-        count++;
-        logger.log(Level.INFO, "Current count is: " + count);
-      }
-      logger.log(Level.INFO, "Number of Records " + count);
+  @Description("list Record subscriptions")
+
+  @Severity(SeverityLevel.BLOCKER)
+  public void listRecordSubscriptions() throws Exception {
+    int size = 0;
+    StringPropertyFilter filterProperty =
+        StringPropertyFilter.newBuilder().setValue("subjectTypeName").build();
+    RecordsSubscriptionsFilter filter =
+        RecordsSubscriptionsFilter.newBuilder().setSubjectTypeName(filterProperty).build();
+    try {
+      ListRecordsSubscriptionsResponse recSubList =
+          mockedClient.listRecordsSubscriptions("subjectTypeName", filter);
+      size = recSubList.getSerializedSize();
+      logger.log(Level.INFO, "Number of Records " + size);
     } catch (StatusRuntimeException sre) {
-      if (count == 2 && sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
+      if (size == 1 && sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
         Assert.assertTrue(true);
       } else {
-        Assert.fail("Error occurred!");
-        sre.printStackTrace();
+        Assert.fail(sre.getMessage());
       }
     } finally {
       mockedClient.shutdown();
     }
   }
+
 
 }

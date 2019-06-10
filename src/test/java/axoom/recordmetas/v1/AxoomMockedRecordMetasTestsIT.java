@@ -74,13 +74,30 @@ public class AxoomMockedRecordMetasTestsIT extends PowerMockTestCase {
   @Test
   @Description("Get RecordMetaz preprocessed from getStream")
   @Severity(SeverityLevel.BLOCKER)
-  public void getLatestRecordMeta() throws Exception {
+  public void getLatestRecordMetaTest() throws Exception {
     RecordMeta recordMetaz = null;
     try {
       recordMetaz = mockedClient.getLatestRecordMeta("dc-b33a683812494b65aa8e036ed64adcc6");
     } catch (StatusRuntimeException sre) {
       if (sre.getMessage().contains("RESOURCE_EXHAUSTED") && recordMetaz != null) {
         assertTrue(recordMetaz.getSubjectId().equals("dc-b33a683812494b65aa8e036ed64adcc6"));
+      }
+    } finally {
+      mockedClient.shutdown();
+    }
+  }
+  
+  @Test
+  @Description("Get RecordMetaz preprocessed from getStream")
+  @Severity(SeverityLevel.BLOCKER)
+  public void createLatestRecordMetaTest() throws Exception {
+    RecordMeta recordMeta = null;
+    RecordMeta recordMetaToCreate = RecordMeta.newBuilder().setId("1").setSubjectId("dc-b33a683812494b65aa8e036ed64adcc6").setData(mockedPayLoad).build();
+    try {
+      recordMeta = mockedClient.createRecordMeta(recordMetaToCreate);
+    } catch (StatusRuntimeException sre) {
+      if (sre.getMessage().contains("RESOURCE_EXHAUSTED") && recordMeta != null) {
+        assertTrue(recordMeta.getSubjectId().equals("dc-b33a683812494b65aa8e036ed64adcc6"));
       }
     } finally {
       mockedClient.shutdown();

@@ -1,9 +1,7 @@
 package axoom.mappings.v1;
 
-import static org.testng.Assert.assertTrue;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,10 +13,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
-import axoom.mappings.v1.MappingzClient;
-import axoom.mappings.v1.Mappingz.Expression;
-import axoom.mappings.v1.Mappingz.Mapping;
-import axoom.mappings.v1.Mappingz.Expression.Type;
+import axoom.mappings.v1.Mappings.Expression;
+import axoom.mappings.v1.Mappings.Expression.Type;
+import axoom.mappings.v1.Mappings.Mapping;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -26,18 +23,17 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 
 @Story("Positive test cases for SRS APIs")
-public class AxoomMappingzNegaitiveTestsIT extends WebDriverTest {
+public class AxoomMappingsNegaitiveTestsIT extends WebDriverTest {
   private String clientId;
   private String redirectUri;
   private String secret;
   private String cisUrl;
-  private MappingzClient client;
+  private MappingsClient client;
   private Map<String, String> requestParams = new HashMap<>();
   private static final Logger logger =
-      Logger.getLogger(AxoomMappingzNegaitiveTestsIT.class.getName());
+      Logger.getLogger(AxoomMappingsNegaitiveTestsIT.class.getName());
   private final String subjectId = "04f856a8-c686-422c-a721-95ba53b0d233";
-  private final String deviceId = "d-25368c9089bb4a3986030386b4ac6e6e";
-  private final String sensorId = "123"; 
+  private final String deviceId = "d-25368c9089bb4a3986030386b4ac6e6e";  
 
   @BeforeClass
   public void beforeClass() {
@@ -61,7 +57,7 @@ public class AxoomMappingzNegaitiveTestsIT extends WebDriverTest {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     // Create Client and establish connection to the server
-    client = new MappingzClient("mappings.dev.myaxoom.com", 443);
+    client = new MappingsClient("mappings.dev.myaxoom.com", 443);
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
   }
 
@@ -82,7 +78,7 @@ public class AxoomMappingzNegaitiveTestsIT extends WebDriverTest {
       Expression expression = Expression.newBuilder().setExpressionString(expressionString)
           .setType(Type.JSONATA).build();
       Mapping mapping = Mapping.newBuilder().setExpression(expression).setSubjectId(subjectId)
-          .setDeviceId(deviceId).setSensorId(sensorId).build();
+          .setDeviceId(deviceId).build();
 
       client.createMapping(mapping);
     } catch (StatusRuntimeException sre) {
@@ -114,27 +110,8 @@ public class AxoomMappingzNegaitiveTestsIT extends WebDriverTest {
     } finally {
       client.shutdown();
     }
-  }
+  } 
   
-  @Test
-  @Description("Create a Mapping with invalid expression string")
-  @Severity(SeverityLevel.BLOCKER)
-  public void createMappingWithNullSensorIdTest() throws Exception {
-
-    try {
-      String expressionString = "{\"temperature2\": temp, \"timestamp2\": timestamp\"}";
-      Expression expression = Expression.newBuilder().setExpressionString(expressionString)
-          .setType(Type.JSONATA).build();
-      Mapping mapping = Mapping.newBuilder().setExpression(expression).setSubjectId(subjectId)
-          .setDeviceId(deviceId).setSensorId(null).build();
-
-      client.createMapping(mapping);
-    } catch (NullPointerException npe) {
-      Assert.assertTrue(true);
-    } finally {
-      client.shutdown();
-    }
-  }
 
   @Test
   @Description("Create a Mapping with invalid expression string")
@@ -146,7 +123,7 @@ public class AxoomMappingzNegaitiveTestsIT extends WebDriverTest {
       Expression expression = Expression.newBuilder().setExpressionString(expressionString)
           .setType(Type.JSONATA).build();
       Mapping mapping = Mapping.newBuilder().setExpression(expression).setSubjectId(null)
-          .setDeviceId(deviceId).setSensorId(sensorId).build();
+          .setDeviceId(deviceId).build();
 
       client.createMapping(mapping);
     } catch (NullPointerException npe) {
@@ -154,76 +131,5 @@ public class AxoomMappingzNegaitiveTestsIT extends WebDriverTest {
     } finally {
       client.shutdown();
     }
-  }
-
-  @Test
-  @Description("Try getting a non existent mapping")
-  @Severity(SeverityLevel.BLOCKER)
-  public void getNonExistentMappingTest() throws Exception {
-    try {
-      client.getMapping(deviceId, sensorId);
-    } catch (StatusRuntimeException sre) {
-      if (sre.getMessage().contains("NOT_FOUND: could not find mapping with id: xyz")) {
-        assertTrue(true);
-      }
-
-      else {
-        Assert.fail("Error message doesn't match with expected value " + sre.getMessage());
-      }
-    } finally {
-      client.shutdown();
-    }
-  }
-
-  @Test
-  @Description("Try getting by using null as mapping Id")
-  @Severity(SeverityLevel.BLOCKER)
-  public void getMappingByNullMappingIdTest() throws Exception {
-    try {
-      Mapping mapping = client.getMapping(null, null);
-      assertTrue(mapping == null);
-    } catch (NullPointerException npe) {
-      assertTrue(true);
-    } finally {
-      client.shutdown();
-    }
   }  
-  
-  @Test
-  @Description("Get All mappings")
-  @Severity(SeverityLevel.BLOCKER)
-  public void getAllMappingsWithNegativeOffsetValueTest() throws Exception {
-    try {
-      List<Mapping> mappings = client.getMappingsList(0, -1);
-      assertTrue(mappings == null);
-    } catch (StatusRuntimeException sre) {
-      if (sre.getMessage().contains(
-          "LIMIT offset value is not a number or out of range (while instantiating plan)")) {
-        assertTrue(true);
-      } else {
-        Assert.fail("Error message doesn't match with expected value " + sre.getMessage());
-      }
-    } finally {
-      client.shutdown();
-    }
-  }
-  
-  @Test
-  @Description("Get All mappings")
-  @Severity(SeverityLevel.BLOCKER)
-  public void getAllMappingsWithNegativeCountValueTest() throws Exception {
-    try {
-      List<Mapping> mappings = client.getMappingsList(-1, 0);
-      assertTrue(mappings == null);
-    } catch (StatusRuntimeException sre) {
-      if (sre.getMessage().contains(
-          "LIMIT count value is not a number or out of range (while instantiating plan)")) {
-        assertTrue(true);
-      } else {
-        Assert.fail("Error message doesn't match with expected value " + sre.getMessage());
-      }
-    } finally {
-      client.shutdown();
-    }
-  }
 }

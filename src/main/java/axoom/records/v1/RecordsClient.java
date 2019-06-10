@@ -55,24 +55,19 @@ public class RecordsClient {
 
     //Put access token in auth headers for gRPC 
     Metadata authHeaders = new Metadata();
-    authHeaders.put(Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), accessToken);
+    authHeaders.put(Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), ": Bearer " + accessToken);
 
     //Attach headers
     blockingStub = MetadataUtils.attachHeaders(RecordsGrpc.newBlockingStub(channel), authHeaders);
   }
 
-  public RecordsSubscription createRecordSubscription(String subjectTypeName, Timestamp expiryTimeStamp) {
-    //long twoMinsFromNow = System.currentTimeMillis()+2*60*1000;
-    //Timestamp timeStamp = Timestamp.newBuilder().setSeconds(twoMinsFromNow).build();
-    RecordsSubscription subscription = RecordsSubscription.newBuilder().setId("1").setExpiry(expiryTimeStamp).setSubjectTypeName("subjectTypeName").build();
+  public RecordsSubscription createRecordSubscription(String id, String subjectTypeName, Timestamp expiryTimeStamp) {    
+    RecordsSubscription subscription = RecordsSubscription.newBuilder().setId(id).setExpiry(expiryTimeStamp).setSubjectTypeName("subjectTypeName").build();
     CreateRecordsSubscriptionRequest request = CreateRecordsSubscriptionRequest.newBuilder().setRecordsSubscription(subscription).build();
     return blockingStub.createRecordsSubscription(request);    
   }
   
-  public ListRecordsSubscriptionsResponse listRecordsSubscriptions(String subjectTypeName, RecordsSubscriptionsFilter filter) {
-    //StringPropertyFilter filterProperty = StringPropertyFilter.newBuilder().setValue("subjectTypeName").build();        
-    //RecordsSubscriptionsFilter filter = RecordsSubscriptionsFilter.newBuilder().setSubjectTypeName(filterProperty).build();
-    
+  public ListRecordsSubscriptionsResponse listRecordsSubscriptions(String subjectTypeName, RecordsSubscriptionsFilter filter) {    
     ListRecordsSubscriptionsRequest request = ListRecordsSubscriptionsRequest.newBuilder().setFilter(filter).build();
     ListRecordsSubscriptionsResponse response = blockingStub.listRecordsSubscriptions(request);
     return response;

@@ -15,7 +15,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import axoom.mappings.v1.MappingzClient;
+import axoom.mappings.v1.MappingsClient;
 import axoom.mappings.v1.Mappingz.Mapping;
 import axoom.mappings.v1.MappingzService.MappingEvent;
 import io.grpc.StatusRuntimeException;
@@ -25,11 +25,11 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 
 @Story("Positive test cases for SRS APIs")
-public class AxoomMockedMappingzTestsIT extends PowerMockTestCase {
+public class AxoomMockedMappingsTestsIT extends PowerMockTestCase {
 
   //Mock client connection to server
   @Mock
-  MappingzClient mockedClient;
+  MappingsClient mockedClient;
 
   //Mock RecordMetaz
   @Mock
@@ -42,7 +42,7 @@ public class AxoomMockedMappingzTestsIT extends PowerMockTestCase {
   @Mock
   Mapping mockedMapping;
 
-  private static final Logger logger = Logger.getLogger(AxoomMockedMappingzTestsIT.class.getName());
+  private static final Logger logger = Logger.getLogger(AxoomMockedMappingsTestsIT.class.getName());
 
 
   @BeforeClass

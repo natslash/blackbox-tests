@@ -3,10 +3,12 @@ package axoom.mappings.v1;
 import static org.testng.Assert.assertTrue;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -15,10 +17,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
-import axoom.mappings.v1.MappingzClient;
-import axoom.mappings.v1.Mappingz.Expression;
-import axoom.mappings.v1.Mappingz.Mapping;
-import axoom.mappings.v1.Mappingz.Expression.Type;
+import axoom.mappings.v1.Mappings.Expression;
+import axoom.mappings.v1.Mappings.Expression.Type;
+import axoom.mappings.v1.Mappings.Mapping;
+import axoom.mappings.v1.MappingsService.ListMappingsResponse;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -26,17 +28,19 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 
 @Story("Positive test cases for SRS APIs")
-public class AxoomMappingzPositiveTestsIT extends WebDriverTest {
+public class AxoomMappingsPositiveTestsIT extends WebDriverTest {
   private String clientId;
   private String redirectUri;
   private String secret;
   private String cisUrl;
-  private MappingzClient client;
+  private MappingsClient client;
   private Map<String, String> requestParams = new HashMap<>();
-  private static final Logger logger = Logger.getLogger(AxoomMappingzPositiveTestsIT.class.getName());
+  private String preProcessingId = null;
   private final String subjectId = "04f856a8-c686-422c-a721-95ba53b0d233";
   private final String deviceId = "d-25368c9089bb4a3986030386b4ac6e6e";
-  private final String sensorId = "123"; 
+
+  private static final Logger logger =
+      Logger.getLogger(AxoomMappingsPositiveTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass() {
@@ -48,6 +52,11 @@ public class AxoomMappingzPositiveTestsIT extends WebDriverTest {
     requestParams.put("redirectUri", redirectUri);
     requestParams.put("cisUrl", cisUrl);
     requestParams.put("secret", secret);
+    int length = 10;
+    boolean useLetters = true;
+    boolean useNumbers = true;
+    String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);
+    preProcessingId = generatedString;
 
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
@@ -60,7 +69,7 @@ public class AxoomMappingzPositiveTestsIT extends WebDriverTest {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     // Create Client and establish connection to the server
-    client = new MappingzClient("mappings.dev.myaxoom.com", 443);
+    client = new MappingsClient("mappings.dev.myaxoom.com", 443);
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
   }
 
@@ -81,90 +90,36 @@ public class AxoomMappingzPositiveTestsIT extends WebDriverTest {
     Expression expression =
         Expression.newBuilder().setExpressionString(expressionString).setType(Type.JSONATA).build();
     Mapping mapping = Mapping.newBuilder().setExpression(expression).setSubjectId(subjectId)
-        .setDeviceId(deviceId).build();
+        .setDeviceId(deviceId).setPreprocessingId(preProcessingId).build();
 
     try {
       Mapping createdMapping = client.createMapping(mapping);
       assertTrue(createdMapping.getSubjectId().equals(subjectId));
-    } catch (StatusRuntimeException sre) {
-      if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
-        Assert.assertTrue(true);
-      } else {
-        throw sre;
-      }
+    } catch (Exception e) {      
+        throw e;      
     } finally {
       client.shutdown();
     }
   }
 
-  @Test(dependsOnMethods = {"createMappingTest"})
-  @Description("Get a mapping by it's ID")
+  @Test
+  @Description("List Mappings")
   @Severity(SeverityLevel.BLOCKER)
-  public void getMappingTest() throws Exception {
-    try {
-      Mapping mapping = client.getMapping(deviceId);
+  public void listMappingTest() throws Exception {
 
-      // TODO separate tests for the following methods
-      logger.log(Level.INFO, mapping.getDeviceId());
-      logger.log(Level.INFO, mapping.getSubjectId());
-      logger.log(Level.INFO, mapping.getExpression().getExpressionString());
-      assertTrue(mapping != null);
-    } catch (StatusRuntimeException sre) {
-      if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
-        throw sre;
-      }
-    } finally {
-      client.shutdown();
+    ListMappingsResponse mappings = client.listMappings(deviceId, preProcessingId);
+    List<Mapping> mappingsList = mappings.getMappingsList();
+    logger.log(Level.INFO, "Size of the list " + mappingsList.size());
+    Iterator<Mapping> mappingsIterator = mappingsList.iterator();
+    if (mappingsIterator.hasNext()) {
+      Mapping mapping = mappingsIterator.next();
+      assertTrue(mapping.getDeviceId().equals(deviceId));
     }
+
+    client.shutdown();
+
   }
 
-  @Test(dependsOnMethods = {"createMappingTest"})
-  @Description("Get All mappings")
-  @Severity(SeverityLevel.BLOCKER)
-  public void getAllMappingsTest() throws Exception {
-    try {
-      List<Mapping> mappings = client.getMappingsList(10, 0);
-      assertTrue(mappings.size() > 0);
-    } catch (StatusRuntimeException sre) {
-      if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
-        throw sre;
-      }
-    } finally {
-      client.shutdown();
-    }
-  }
-
-  /*
-   * @Test
-   * 
-   * @Description("Create several Mappings")
-   * 
-   * @Severity(SeverityLevel.BLOCKER) public void createSeveralMappingTest() throws Exception { int
-   * count = 0; int counter = 0; Random rand = new Random(); List<String> expressionStrings = new
-   * ArrayList<>(); expressionStrings.add("{\"temperature1\": temp, \"timestamp1\": timestamp\"}");
-   * expressionStrings.add("{\"temperature2\": temp, \"timestamp2\": timestamp\"}");
-   * 
-   * Map<String, String> deviceSensorMap = new HashMap<>(); deviceSensorMap.put(deviceId, sensorId);
-   * deviceSensorMap.put(deviceId+1, sensorId+1); Iterator<Entry<String, String>>
-   * deviceSensorMapIterator = deviceSensorMap.entrySet().iterator();
-   * 
-   * List<Mapping> mappings = new ArrayList<>(); try { while(deviceSensorMapIterator.hasNext()) {
-   * Expression expression = Expression.newBuilder()
-   * .setExpressionString(expressionStrings.get(counter)).setType(Type.JSONATA).build();
-   * Map.Entry<String, String> pair = deviceSensorMapIterator.next(); Mapping mapping =
-   * Mapping.newBuilder().setExpression(expression).setSubjectId(subjectId)
-   * .setDeviceId(pair.getKey()).setSensorId(pair.getValue()).build();
-   * mappings.add(client.createMapping(mapping)); counter++; }
-   * 
-   * Iterator<Mapping> mappingIterator = mappings.iterator(); while (mappingIterator.hasNext()) {
-   * Mapping createdMapping = mappingIterator.next(); for (int i = 0; i < 2; i++) { if
-   * (createdMapping.getExpression().getExpressionString().equals(expressionStrings.get(i)) &&
-   * createdMapping.getDeviceId().equals(preProcessingIds.get(i))) { count++; } } } assertTrue(count
-   * == 2, "Expression strings didn't match the expected value(s), count: " + count); } catch
-   * (StatusRuntimeException sre) { if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
-   * Assert.assertTrue(true); } else { Assert.fail("Error occurred!"); sre.printStackTrace(); } }
-   * finally { client.shutdown(); } }
-   */
 
   @Test(dependsOnMethods = {"createMappingTest"})
   @Description("Update a Mapping")
@@ -175,7 +130,7 @@ public class AxoomMappingzPositiveTestsIT extends WebDriverTest {
     Expression expression =
         Expression.newBuilder().setExpressionString(expressionString).setType(Type.JSONATA).build();
     Mapping mapping = Mapping.newBuilder().setExpression(expression).setSubjectId(subjectId)
-        .setDeviceId(deviceId).build();
+        .setDeviceId(deviceId).setPreprocessingId(preProcessingId).build();
 
     try {
       Mapping createdMapping = client.createMapping(mapping);
@@ -184,7 +139,7 @@ public class AxoomMappingzPositiveTestsIT extends WebDriverTest {
       if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
         Assert.assertTrue(true);
       } else {
-        Assert.fail("Error occurred!");
+        Assert.fail(sre.getLocalizedMessage());
         sre.printStackTrace();
       }
     } finally {

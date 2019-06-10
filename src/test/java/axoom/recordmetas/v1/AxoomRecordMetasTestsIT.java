@@ -1,6 +1,7 @@
 package axoom.recordmetas.v1;
 
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,7 +72,7 @@ public class AxoomRecordMetasTestsIT extends WebDriverTest {
   @Description("Create RecordMeta")
   @Severity(SeverityLevel.BLOCKER)
   public void createRecordMetaTest() throws Exception {
-    RecordMeta recordMeta = RecordMeta.newBuilder().setSubjectId("1")
+    RecordMeta recordMeta = RecordMeta.newBuilder().setId("1").setSubjectId("dc-b33a683812494b65aa8e036ed64adcc6")
         .setData(ByteString.copyFromUtf8("Example Data")).build();
 
     // Create a RecordMeta via API
@@ -82,8 +83,9 @@ public class AxoomRecordMetasTestsIT extends WebDriverTest {
       System.out.println("Id: " + response.getIdBytes().toStringUtf8());
       System.out.println("Subject Id: " + response.getSubjectId());
       System.out.println("Data: " + response.getData().toStringUtf8());
+      assertTrue(response.getSerializedSize() > 0);
     } catch (StatusRuntimeException sre) {
-      throw sre;
+      fail(sre.getMessage());
     } finally {
       client.shutdown();
     }
