@@ -1,8 +1,11 @@
 package axoom.mappings.v1;
 
 import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertTrue;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mockito.Mock;
@@ -15,9 +18,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import axoom.mappings.v1.MappingsClient;
-import axoom.mappings.v1.Mappingz.Mapping;
-import axoom.mappings.v1.MappingzService.MappingEvent;
+import axoom.mappings.v1.Mappings.Mapping;
+import axoom.mappings.v1.MappingsService.ListMappingsResponse;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -27,18 +29,21 @@ import io.qameta.allure.Story;
 @Story("Positive test cases for SRS APIs")
 public class AxoomMockedMappingsTestsIT extends PowerMockTestCase {
 
-  //Mock client connection to server
+  // Mock client connection to server
   @Mock
   MappingsClient mockedClient;
 
-  //Mock RecordMetaz
+  // Mock ListMappingsResponse
   @Mock
-  Iterator<MappingEvent> mockedMappingEvents;
-  
+  ListMappingsResponse mappingsResponse;
+
   @Mock
-  MappingEvent mockedMappingEvent;
-  
-  //Mock Record
+  List<Mapping> mappingsList = new ArrayList<>();
+
+  @Mock
+  Iterator<Mapping> mappIterator;
+
+  // Mock Mapping
   @Mock
   Mapping mockedMapping;
 
@@ -51,6 +56,7 @@ public class AxoomMockedMappingsTestsIT extends PowerMockTestCase {
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
     logger.log(Level.INFO, "Working Directory = " + System.getProperty("user.dir"));
+    mappingsList.add(mockedMapping);
   }
 
   @BeforeMethod
@@ -58,17 +64,15 @@ public class AxoomMockedMappingsTestsIT extends PowerMockTestCase {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
-    
-    //Initialize Mock objects
+
+    // Initialize Mock objects
     MockitoAnnotations.initMocks(this);
-    
-    // Specify to return mock objects
-    when(mockedClient.getMappingEvents("dc-b33a683812494b65aa8e036ed64adcc6"))
-        .thenReturn(mockedMappingEvents);
-    when(mockedClient.getMappingEvents("blackboxtest01")).thenReturn(mockedMappingEvents);
-    when(mockedMappingEvents.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
-    when(mockedMappingEvents.next()).thenReturn(mockedMappingEvent);
-    when(mockedMappingEvent.getMapping()).thenReturn(mockedMapping);
+    when(mockedClient.createMapping(mockedMapping)).thenReturn(mockedMapping);
+    when(mockedClient.listMappings("1", "preprocessingId")).thenReturn(mappingsResponse);
+    when(mappingsResponse.getMappingsList()).thenReturn(mappingsList);
+    when(mappingsList.iterator()).thenReturn(mappIterator);
+    when(mappIterator.hasNext()).thenReturn(true).thenReturn(false);
+    when(mappIterator.next()).thenReturn(mockedMapping);
     when(mockedMapping.getDeviceId()).thenReturn("1");
   }
 
@@ -78,19 +82,38 @@ public class AxoomMockedMappingsTestsIT extends PowerMockTestCase {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
   }
-  
+
   @Test
-  @Description("Get RecordMetaz preprocessed from getStream")
+  @Description("Create a mapping")
   @Severity(SeverityLevel.BLOCKER)
-  public void getMockedRecordMetaStreamTestIT() throws Exception {
-    int count = 0;
-    
+  public void createMappingTest() throws Exception {
+
     try {
-      Iterator<MappingEvent> mappingEvents =
-          mockedClient.getMappingEvents("blackboxtest01");
-      while (mappingEvents.hasNext()) {
-        logger.log(Level.INFO, mappingEvents.next().getMapping().toString());
-        count++;
+      Mapping mapping = mockedClient.createMapping(mockedMapping);
+      assertTrue(mapping.getDeviceId().equals("1"));
+    } catch (StatusRuntimeException sre) {
+      throw sre;
+    } finally {
+      mockedClient.shutdown();
+    }
+  }
+
+
+  @Test
+  @Description("List all mappings")
+  @Severity(SeverityLevel.BLOCKER)
+  public void listMappingsTest() throws Exception {
+    int count = 0;
+
+    try {
+      ListMappingsResponse mappings = mockedClient.listMappings("1", "preprocessingId");
+      List<Mapping> mapList = mappings.getMappingsList();
+      Iterator<Mapping> mappingIterator = mapList.iterator();
+      while (mappingIterator.hasNext()) {
+        Mapping mapping = mappingIterator.next();
+        if (mapping.getDeviceId().equals("1")) {
+          count++;
+        }
       }
       logger.log(Level.INFO, "Number of Records " + count);
     } catch (StatusRuntimeException sre) {
@@ -98,8 +121,7 @@ public class AxoomMockedMappingsTestsIT extends PowerMockTestCase {
         if (count > 0)
           Assert.assertTrue(true);
       } else {
-        Assert.fail("Error occurred!");
-        sre.printStackTrace();
+        throw sre;
       }
     } finally {
       mockedClient.shutdown();

@@ -57,10 +57,40 @@ public class MappingsClient {
     return blockingStub.createMapping(request);    
   }
   
-  public ListMappingsResponse listMappings(String deviceId, String preProcessingId) {
+  public ListMappingsResponse listMappings(String deviceId, String preProcessingId, String subjectId) {
+    StringPropertyFilter deviceIdFilter = StringPropertyFilter.newBuilder().setValue(deviceId).build();
+    StringPropertyFilter preProcessingIdFilter = StringPropertyFilter.newBuilder().setValue(preProcessingId).build();
+    StringPropertyFilter subjectIdFilter = StringPropertyFilter.newBuilder().setValue(subjectId).build();
+    MappingFilter mappingFilter = MappingFilter.newBuilder().setDeviceId(deviceIdFilter).setPreprocessingId(preProcessingIdFilter).setSubjectId(subjectIdFilter).build();
+    ListMappingsRequest request = ListMappingsRequest.newBuilder().setFilter(mappingFilter).build();    
+    return blockingStub.listMappings(request);    
+  }
+  
+  public ListMappingsResponse listMappingsWithDeviceAndPreProcessingIds(String deviceId, String preProcessingId) {
     StringPropertyFilter deviceIdFilter = StringPropertyFilter.newBuilder().setValue(deviceId).build();
     StringPropertyFilter preProcessingIdFilter = StringPropertyFilter.newBuilder().setValue(preProcessingId).build();
     MappingFilter mappingFilter = MappingFilter.newBuilder().setDeviceId(deviceIdFilter).setPreprocessingId(preProcessingIdFilter).build();
+    ListMappingsRequest request = ListMappingsRequest.newBuilder().setFilter(mappingFilter).build();    
+    return blockingStub.listMappings(request);    
+  }
+  
+  public ListMappingsResponse listMappingsWithDeviceId(String deviceId) {
+    StringPropertyFilter deviceIdFilter = StringPropertyFilter.newBuilder().setValue(deviceId).build();    
+    MappingFilter mappingFilter = MappingFilter.newBuilder().setDeviceId(deviceIdFilter).build();
+    ListMappingsRequest request = ListMappingsRequest.newBuilder().setFilter(mappingFilter).build();    
+    return blockingStub.listMappings(request);    
+  }
+  
+  public ListMappingsResponse listMappingsWithPreProcessingId(String preProcessingId) {
+    StringPropertyFilter preProcessingIdFilter = StringPropertyFilter.newBuilder().setValue(preProcessingId).build();
+    MappingFilter mappingFilter = MappingFilter.newBuilder().setPreprocessingId(preProcessingIdFilter).build();
+    ListMappingsRequest request = ListMappingsRequest.newBuilder().setFilter(mappingFilter).build();    
+    return blockingStub.listMappings(request);    
+  }
+  
+  public ListMappingsResponse listMappingsWithSubjectId(String subjectId) {
+    StringPropertyFilter subjectIdFilter = StringPropertyFilter.newBuilder().setValue(subjectId).build();
+    MappingFilter mappingFilter = MappingFilter.newBuilder().setSubjectId(subjectIdFilter).build();
     ListMappingsRequest request = ListMappingsRequest.newBuilder().setFilter(mappingFilter).build();    
     return blockingStub.listMappings(request);    
   }
