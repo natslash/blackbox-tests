@@ -1,27 +1,24 @@
 package axoom.subjects.v1;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.axoom.constants.ContentType;
 import com.axoom.drs.utils.RestUtils;
-import axoom.subjects.v1.Subjectz.Subject;
-import axoom.subjects.v1.Subjectz.SubjectContext;
-import axoom.subjects.v1.Subjectz.SubjectType;
-import axoom.subjects.v1.Subjectz.SubjectTypeContext;
-import axoom.subjects.v1.SubjectzGrpc.SubjectzBlockingStub;
-import axoom.subjects.v1.SubjectzService.CreateSubjectRequest;
-import axoom.subjects.v1.SubjectzService.CreateSubjectTypeRequest;
-import axoom.subjects.v1.SubjectzService.GetSubjectContextRequest;
-import axoom.subjects.v1.SubjectzService.GetSubjectRequest;
-import axoom.subjects.v1.SubjectzService.GetSubjectTypeContextRequest;
-import axoom.subjects.v1.SubjectzService.GetSubjectTypeRequest;
-import axoom.subjects.v1.SubjectzService.GetSubjectTypezRequest;
-import axoom.subjects.v1.SubjectzService.GetSubjectzRequest;
-import axoom.subjects.v1.SubjectzService.UpdateSubjectRequest;
+import axoom.subjects.v1.Subjects.Subject;
+import axoom.subjects.v1.Subjects.SubjectContext;
+import axoom.subjects.v1.Subjects.SubjectType;
+import axoom.subjects.v1.Subjects.SubjectTypeContext;
+import axoom.subjects.v1.SubjectsGrpc.SubjectsBlockingStub;
+import axoom.subjects.v1.SubjectsService.CreateSubjectRequest;
+import axoom.subjects.v1.SubjectsService.CreateSubjectTypeRequest;
+import axoom.subjects.v1.SubjectsService.GetSubjectContextRequest;
+import axoom.subjects.v1.SubjectsService.GetSubjectRequest;
+import axoom.subjects.v1.SubjectsService.GetSubjectTypeContextRequest;
+import axoom.subjects.v1.SubjectsService.GetSubjectTypeRequest;
+import axoom.subjects.v1.SubjectsService.UpdateSubjectRequest;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
@@ -33,7 +30,7 @@ public class SubjectzClient {
   private static final Logger logger = Logger.getLogger(SubjectzClient.class.getName());
 
   private final ManagedChannel channel;
-  private final SubjectzBlockingStub blockingStub;
+  private final SubjectsBlockingStub blockingStub;
 
 
   /* Construct client connecting to RecordMetas server at {@code name:port}. */
@@ -55,114 +52,21 @@ public class SubjectzClient {
     Metadata authHeaders = new Metadata();
     authHeaders.put(Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), accessToken);
 
-    blockingStub = MetadataUtils.attachHeaders(SubjectzGrpc.newBlockingStub(channel), authHeaders);
+    blockingStub = MetadataUtils.attachHeaders(SubjectsGrpc.newBlockingStub(channel), authHeaders);
   }
   
   public void shutdown() throws InterruptedException {
     channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-  } 
-  
-  public Iterator<Subject> getSubjectz(String subjectTypeId) {
-    GetSubjectzRequest request = GetSubjectzRequest.newBuilder().setSubjectTypeId(subjectTypeId).build();
-
-    try {      
-      return blockingStub.getSubjectz(request);      
-    } catch (StatusRuntimeException sre) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
-      throw sre;
-    }catch (Exception e) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", e.getMessage());
-      throw e;
-    }
-  }
-  
-  /**
-   * 
-   * @param subjectId
-   * @return subject
-   */
-  public Subject getSubject(String subjectId) {
-    GetSubjectRequest request = GetSubjectRequest.newBuilder().setSubjectId(subjectId).build();
-
-    try {      
-      return blockingStub.getSubject(request);
-    } catch (StatusRuntimeException sre) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
-      throw sre;
-    }
-  }
-  
-  /**
-   * 
-   * @param subjectTypeId
-   * @return subjectType
-   */
-  public SubjectType getSubjectType(String subjectTypeId) {
-    GetSubjectTypeRequest request = GetSubjectTypeRequest.newBuilder().setSubjectTypeId(subjectTypeId).build();
-
-    try {      
-      return blockingStub.getSubjectType(request);
-    } catch (StatusRuntimeException sre) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
-      throw sre;
-    }
-  }
-  
-  /**
-   * 
-   * @return subjectType iterator
-   */
-  public Iterator<SubjectType> getSubjectTypez() {
-    GetSubjectTypezRequest request = GetSubjectTypezRequest.newBuilder().build();
-
-    try {      
-      return blockingStub.getSubjectTypez(request);
-    } catch (StatusRuntimeException sre) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
-      throw sre;
-    }
-  }
-  
-  /**
-   * 
-   * @param subjectId
-   * @return subjectContext
-   */
-  public SubjectContext getSubjectContext(String subjectId) {
-    GetSubjectContextRequest request = GetSubjectContextRequest.newBuilder().setSubjectId(subjectId).build();
-
-    try {      
-      return blockingStub.getSubjectContext(request);
-    } catch (StatusRuntimeException sre) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
-      throw sre;
-    }
-  }
-
-  /**
-   * 
-   * @param subjectTypeId
-   * @return subjectContext
-   */
-  public SubjectTypeContext getSubjectTypeContext(String subjectTypeId) {
-    GetSubjectTypeContextRequest request = GetSubjectTypeContextRequest.newBuilder().setSubjectTypeId(subjectTypeId).build();
-
-    try {      
-      return blockingStub.getSubjectTypeContext(request);
-    } catch (StatusRuntimeException sre) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
-      throw sre;
-    }
-  }
+  }    
   
   /**
    * 
    * @param subject
-   * @param subjectTypeId
+   * @param subjectTypeName
    * @return subject
    */
-  public Subject createSubject(Subject subject, String subjectTypeId) {
-    CreateSubjectRequest request = CreateSubjectRequest.newBuilder().addInstanceOf(subjectTypeId).setSubject(subject).build();
+  public Subject createSubject(String subjectTypeName) {
+    CreateSubjectRequest request = CreateSubjectRequest.newBuilder().setName(subjectTypeName).build();
 
     try {      
       return blockingStub.createSubject(request);      
@@ -186,7 +90,7 @@ public class SubjectzClient {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
       throw sre;
     }
-  } 
+  }   
   
   /**
    * 
@@ -194,18 +98,78 @@ public class SubjectzClient {
    * @return subject
    */
   public Subject updateSubject(Subject subject) {
-    UpdateSubjectRequest request = UpdateSubjectRequest.newBuilder().setSubject(subject).build();
-
+    UpdateSubjectRequest request = UpdateSubjectRequest.newBuilder().setSubject(subject).build();    
     try {      
       return blockingStub.updateSubject(request);     
     } catch (StatusRuntimeException sre) {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
       throw sre;
     }
-  } 
+  }  
   
-  public SubjectType getSubjectTypeFromSubjectContextInstanceGraph(SubjectContext subjectContext, int index) {
-    return subjectContext.getInstanceGraph(index).getSubjectType();
+  /**
+   * 
+   * @param subjectId
+   * @return subject
+   */
+  public Subject getSubject(String subjectId) {
+    GetSubjectRequest request = GetSubjectRequest.newBuilder().setSubjectId(subjectId).build();
+
+    try {      
+      return blockingStub.getSubject(request);
+    } catch (StatusRuntimeException sre) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
+      throw sre;
+    }
+  }
+  
+  /**
+   * 
+   * @param subjectTypeName
+   * @return subjectType
+   */
+  public SubjectType getSubjectType(String subjectTypeName) {
+    GetSubjectTypeRequest request = GetSubjectTypeRequest.newBuilder().setSubjectTypeName(subjectTypeName).build();
+
+    try {      
+      return blockingStub.getSubjectType(request);
+    } catch (StatusRuntimeException sre) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
+      throw sre;
+    }
   } 
+ 
+  
+  /**
+   * 
+   * @param subjectId
+   * @return subjectContext
+   */
+  public SubjectContext getSubjectContext(String subjectId) {
+    GetSubjectContextRequest request = GetSubjectContextRequest.newBuilder().setSubjectId(subjectId).build();
+
+    try {      
+      return blockingStub.getSubjectContext(request);
+    } catch (StatusRuntimeException sre) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
+      throw sre;
+    }
+  }
+
+  /**
+   * 
+   * @param subjectTypeName
+   * @return subjectContext
+   */
+  public SubjectTypeContext getSubjectTypeContext(String subjectTypeName) {
+    GetSubjectTypeContextRequest request = GetSubjectTypeContextRequest.newBuilder().setSubjectTypeName(subjectTypeName).build();
+
+    try {      
+      return blockingStub.getSubjectTypeContext(request);
+    } catch (StatusRuntimeException sre) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
+      throw sre;
+    }
+  }
  
 }
