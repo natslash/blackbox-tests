@@ -25,10 +25,18 @@ public class MyAxoomLoginPage extends WebDriverPage {
   private WebElement inputPasswordField;
   private WebElement loginButton;
   private WebElement tenantField;
+  private WebElement tenantCheckBox;
+  private WebElement grantAccessButton;
+  private WebElement denyAccessButton;
 
   private String inputEmailFieldId = "Input_Email";
   private String inputPasswordFieldId = "Input_Password";
   private String loginButtonId = "button-login";
+  private String tennantCheckBoxId = "scopes_tenant";
+  private String grantAccessButtonId =
+      "DeviceAuthorization_UserCodeConfirmation_GrantConsent_Button";
+  private String denyAccessButtonId = "DeviceAuthorization_UserCodeConfirmation_DenyConsent_Button";
+
   private static final Logger logger = Logger.getLogger(MyAxoomLoginPage.class.getName());
 
   public MyAxoomLoginPage(WebDriver driver) {
@@ -95,5 +103,22 @@ public class MyAxoomLoginPage extends WebDriverPage {
       return jsonPathEvaluator.get("access_token");
     }
     return response.asString();
+  }
+
+  public boolean grantAccess(boolean isGrant) {
+    String tenantCheckBoxXpath = "//input[@id='" + tennantCheckBoxId + "']";
+    tenantCheckBox = getDriver().findElement(By.xpath(tenantCheckBoxXpath));
+    tenantCheckBox.click();
+    if (isGrant) {
+      String granTAccessButtonXpath = "//button[@id='" + grantAccessButtonId + "']";
+      grantAccessButton = getDriver().findElement(By.xpath(granTAccessButtonXpath));
+      clickAndWaitForPageLoad(grantAccessButton, 1);
+      return true;
+    } else {
+      String denyAccessButtonXpath = "//button[@id='" + denyAccessButtonId + "']";
+      denyAccessButton = getDriver().findElement(By.xpath(denyAccessButtonXpath));
+      clickAndWaitForPageLoad(denyAccessButton, 1);
+      return false;
+    }
   }
 }
