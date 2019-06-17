@@ -68,7 +68,7 @@ public class AxoomMockedMappingsTestsIT extends PowerMockTestCase {
     // Initialize Mock objects
     MockitoAnnotations.initMocks(this);
     when(mockedClient.createMapping(mockedMapping)).thenReturn(mockedMapping);
-    when(mockedClient.listMappings("1", "preprocessingId")).thenReturn(mappingsResponse);
+    when(mockedClient.listMappings("1", "preprocessingId", "subjectId")).thenReturn(mappingsResponse);
     when(mappingsResponse.getMappingsList()).thenReturn(mappingsList);
     when(mappingsList.iterator()).thenReturn(mappIterator);
     when(mappIterator.hasNext()).thenReturn(true).thenReturn(false);
@@ -106,7 +106,7 @@ public class AxoomMockedMappingsTestsIT extends PowerMockTestCase {
     int count = 0;
 
     try {
-      ListMappingsResponse mappings = mockedClient.listMappings("1", "preprocessingId");
+      ListMappingsResponse mappings = mockedClient.listMappings("1", "preprocessingId", "subjectId");
       List<Mapping> mapList = mappings.getMappingsList();
       Iterator<Mapping> mappingIterator = mapList.iterator();
       while (mappingIterator.hasNext()) {

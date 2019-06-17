@@ -13,9 +13,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
-import axoom.subjects.v1.SubjectzClient;
-import axoom.subjects.v1.Subjectz.Subject;
-import axoom.subjects.v1.Subjectz.SubjectType;
+import axoom.subjects.v1.SubjectsClient;
+import axoom.subjects.v1.Subjects.Subject;
+import axoom.subjects.v1.Subjects.SubjectType;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -23,15 +23,15 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 
 @Story("Positive test cases for SRS APIs")
-public class AxoomSubjectzNegativeTestsIT extends WebDriverTest {
+public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {
   private String timeStamp;
   private String clientId;
   private String redirectUri;
   private String secret;
   private String cisUrl;
-  private SubjectzClient client;
+  private SubjectsClient client;
   private Map<String, String> requestParams = new HashMap<>();
-  private static final Logger logger = Logger.getLogger(AxoomSubjectzNegativeTestsIT.class.getName());
+  private static final Logger logger = Logger.getLogger(AxoomSubjectsNegativeTestsIT.class.getName());
   private String createdSubjectTypeId = null;
 
   @BeforeClass
@@ -56,7 +56,7 @@ public class AxoomSubjectzNegativeTestsIT extends WebDriverTest {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     // Create Client and establish connection to the server
-    client = new SubjectzClient("subjects.dev.myaxoom.com", 443);
+    client = new SubjectsClient("subjects.dev.myaxoom.com", 443);
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
   }
 
@@ -72,12 +72,11 @@ public class AxoomSubjectzNegativeTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void createSubjectTypeTest() throws Exception {
     SubjectType subjectType =
-        SubjectType.newBuilder().setId(timeStamp).setRecordSchemaUrl("recordSchemaUrl" + timeStamp)
+        SubjectType.newBuilder().setName(timeStamp).setRecordSchemaUrl("recordSchemaUrl" + timeStamp)
             .setRecordMetaSchemaUrl("recordMetaSchemaUrl" + timeStamp).build();
     try {
       SubjectType createdSubjectType = client.createSubjectType(subjectType);
-      logger.log(Level.INFO, "SubjectType created " + createdSubjectType.getId());
-      createdSubjectTypeId = createdSubjectType.getId();
+      logger.log(Level.INFO, "SubjectType created " + createdSubjectType.getName());      
       assertTrue(createdSubjectType != null);
     } catch (Exception e) {
       throw e;

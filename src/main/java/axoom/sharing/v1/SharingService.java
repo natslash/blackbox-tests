@@ -2255,6 +2255,600 @@ public final class SharingService {
 
   }
 
+  public interface DeleteClientShareRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:axoom.sharing.v1.DeleteClientShareRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * identifies the client
+     * </pre>
+     *
+     * <code>string client_id = 1;</code>
+     */
+    java.lang.String getClientId();
+    /**
+     * <pre>
+     * identifies the client
+     * </pre>
+     *
+     * <code>string client_id = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getClientIdBytes();
+  }
+  /**
+   * <pre>
+   * Request for deletion of a client share
+   * </pre>
+   *
+   * Protobuf type {@code axoom.sharing.v1.DeleteClientShareRequest}
+   */
+  public  static final class DeleteClientShareRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:axoom.sharing.v1.DeleteClientShareRequest)
+      DeleteClientShareRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use DeleteClientShareRequest.newBuilder() to construct.
+    private DeleteClientShareRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private DeleteClientShareRequest() {
+      clientId_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private DeleteClientShareRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              clientId_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return axoom.sharing.v1.SharingService.internal_static_axoom_sharing_v1_DeleteClientShareRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return axoom.sharing.v1.SharingService.internal_static_axoom_sharing_v1_DeleteClientShareRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              axoom.sharing.v1.SharingService.DeleteClientShareRequest.class, axoom.sharing.v1.SharingService.DeleteClientShareRequest.Builder.class);
+    }
+
+    public static final int CLIENT_ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object clientId_;
+    /**
+     * <pre>
+     * identifies the client
+     * </pre>
+     *
+     * <code>string client_id = 1;</code>
+     */
+    public java.lang.String getClientId() {
+      java.lang.Object ref = clientId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        clientId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * identifies the client
+     * </pre>
+     *
+     * <code>string client_id = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getClientIdBytes() {
+      java.lang.Object ref = clientId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        clientId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getClientIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, clientId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getClientIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, clientId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof axoom.sharing.v1.SharingService.DeleteClientShareRequest)) {
+        return super.equals(obj);
+      }
+      axoom.sharing.v1.SharingService.DeleteClientShareRequest other = (axoom.sharing.v1.SharingService.DeleteClientShareRequest) obj;
+
+      boolean result = true;
+      result = result && getClientId()
+          .equals(other.getClientId());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + CLIENT_ID_FIELD_NUMBER;
+      hash = (53 * hash) + getClientId().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(axoom.sharing.v1.SharingService.DeleteClientShareRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * Request for deletion of a client share
+     * </pre>
+     *
+     * Protobuf type {@code axoom.sharing.v1.DeleteClientShareRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:axoom.sharing.v1.DeleteClientShareRequest)
+        axoom.sharing.v1.SharingService.DeleteClientShareRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return axoom.sharing.v1.SharingService.internal_static_axoom_sharing_v1_DeleteClientShareRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return axoom.sharing.v1.SharingService.internal_static_axoom_sharing_v1_DeleteClientShareRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                axoom.sharing.v1.SharingService.DeleteClientShareRequest.class, axoom.sharing.v1.SharingService.DeleteClientShareRequest.Builder.class);
+      }
+
+      // Construct using axoom.sharing.v1.SharingService.DeleteClientShareRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        clientId_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return axoom.sharing.v1.SharingService.internal_static_axoom_sharing_v1_DeleteClientShareRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public axoom.sharing.v1.SharingService.DeleteClientShareRequest getDefaultInstanceForType() {
+        return axoom.sharing.v1.SharingService.DeleteClientShareRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public axoom.sharing.v1.SharingService.DeleteClientShareRequest build() {
+        axoom.sharing.v1.SharingService.DeleteClientShareRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public axoom.sharing.v1.SharingService.DeleteClientShareRequest buildPartial() {
+        axoom.sharing.v1.SharingService.DeleteClientShareRequest result = new axoom.sharing.v1.SharingService.DeleteClientShareRequest(this);
+        result.clientId_ = clientId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof axoom.sharing.v1.SharingService.DeleteClientShareRequest) {
+          return mergeFrom((axoom.sharing.v1.SharingService.DeleteClientShareRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(axoom.sharing.v1.SharingService.DeleteClientShareRequest other) {
+        if (other == axoom.sharing.v1.SharingService.DeleteClientShareRequest.getDefaultInstance()) return this;
+        if (!other.getClientId().isEmpty()) {
+          clientId_ = other.clientId_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        axoom.sharing.v1.SharingService.DeleteClientShareRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (axoom.sharing.v1.SharingService.DeleteClientShareRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object clientId_ = "";
+      /**
+       * <pre>
+       * identifies the client
+       * </pre>
+       *
+       * <code>string client_id = 1;</code>
+       */
+      public java.lang.String getClientId() {
+        java.lang.Object ref = clientId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          clientId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * identifies the client
+       * </pre>
+       *
+       * <code>string client_id = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getClientIdBytes() {
+        java.lang.Object ref = clientId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          clientId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * identifies the client
+       * </pre>
+       *
+       * <code>string client_id = 1;</code>
+       */
+      public Builder setClientId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        clientId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * identifies the client
+       * </pre>
+       *
+       * <code>string client_id = 1;</code>
+       */
+      public Builder clearClientId() {
+        
+        clientId_ = getDefaultInstance().getClientId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * identifies the client
+       * </pre>
+       *
+       * <code>string client_id = 1;</code>
+       */
+      public Builder setClientIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        clientId_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:axoom.sharing.v1.DeleteClientShareRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:axoom.sharing.v1.DeleteClientShareRequest)
+    private static final axoom.sharing.v1.SharingService.DeleteClientShareRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new axoom.sharing.v1.SharingService.DeleteClientShareRequest();
+    }
+
+    public static axoom.sharing.v1.SharingService.DeleteClientShareRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<DeleteClientShareRequest>
+        PARSER = new com.google.protobuf.AbstractParser<DeleteClientShareRequest>() {
+      @java.lang.Override
+      public DeleteClientShareRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DeleteClientShareRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<DeleteClientShareRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DeleteClientShareRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public axoom.sharing.v1.SharingService.DeleteClientShareRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface CreateTenantShareRequestOrBuilder extends
       // @@protoc_insertion_point(interface_extends:axoom.sharing.v1.CreateTenantShareRequest)
       com.google.protobuf.MessageOrBuilder {
@@ -4436,6 +5030,600 @@ public final class SharingService {
 
   }
 
+  public interface DeleteTenantShareRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:axoom.sharing.v1.DeleteTenantShareRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * identifies the tenant
+     * </pre>
+     *
+     * <code>string tenant_id = 1;</code>
+     */
+    java.lang.String getTenantId();
+    /**
+     * <pre>
+     * identifies the tenant
+     * </pre>
+     *
+     * <code>string tenant_id = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getTenantIdBytes();
+  }
+  /**
+   * <pre>
+   * Request for deletion of a client share
+   * </pre>
+   *
+   * Protobuf type {@code axoom.sharing.v1.DeleteTenantShareRequest}
+   */
+  public  static final class DeleteTenantShareRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:axoom.sharing.v1.DeleteTenantShareRequest)
+      DeleteTenantShareRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use DeleteTenantShareRequest.newBuilder() to construct.
+    private DeleteTenantShareRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private DeleteTenantShareRequest() {
+      tenantId_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private DeleteTenantShareRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              tenantId_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return axoom.sharing.v1.SharingService.internal_static_axoom_sharing_v1_DeleteTenantShareRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return axoom.sharing.v1.SharingService.internal_static_axoom_sharing_v1_DeleteTenantShareRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              axoom.sharing.v1.SharingService.DeleteTenantShareRequest.class, axoom.sharing.v1.SharingService.DeleteTenantShareRequest.Builder.class);
+    }
+
+    public static final int TENANT_ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object tenantId_;
+    /**
+     * <pre>
+     * identifies the tenant
+     * </pre>
+     *
+     * <code>string tenant_id = 1;</code>
+     */
+    public java.lang.String getTenantId() {
+      java.lang.Object ref = tenantId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        tenantId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * identifies the tenant
+     * </pre>
+     *
+     * <code>string tenant_id = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTenantIdBytes() {
+      java.lang.Object ref = tenantId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        tenantId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getTenantIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, tenantId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getTenantIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, tenantId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof axoom.sharing.v1.SharingService.DeleteTenantShareRequest)) {
+        return super.equals(obj);
+      }
+      axoom.sharing.v1.SharingService.DeleteTenantShareRequest other = (axoom.sharing.v1.SharingService.DeleteTenantShareRequest) obj;
+
+      boolean result = true;
+      result = result && getTenantId()
+          .equals(other.getTenantId());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TENANT_ID_FIELD_NUMBER;
+      hash = (53 * hash) + getTenantId().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(axoom.sharing.v1.SharingService.DeleteTenantShareRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * Request for deletion of a client share
+     * </pre>
+     *
+     * Protobuf type {@code axoom.sharing.v1.DeleteTenantShareRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:axoom.sharing.v1.DeleteTenantShareRequest)
+        axoom.sharing.v1.SharingService.DeleteTenantShareRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return axoom.sharing.v1.SharingService.internal_static_axoom_sharing_v1_DeleteTenantShareRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return axoom.sharing.v1.SharingService.internal_static_axoom_sharing_v1_DeleteTenantShareRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                axoom.sharing.v1.SharingService.DeleteTenantShareRequest.class, axoom.sharing.v1.SharingService.DeleteTenantShareRequest.Builder.class);
+      }
+
+      // Construct using axoom.sharing.v1.SharingService.DeleteTenantShareRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        tenantId_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return axoom.sharing.v1.SharingService.internal_static_axoom_sharing_v1_DeleteTenantShareRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public axoom.sharing.v1.SharingService.DeleteTenantShareRequest getDefaultInstanceForType() {
+        return axoom.sharing.v1.SharingService.DeleteTenantShareRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public axoom.sharing.v1.SharingService.DeleteTenantShareRequest build() {
+        axoom.sharing.v1.SharingService.DeleteTenantShareRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public axoom.sharing.v1.SharingService.DeleteTenantShareRequest buildPartial() {
+        axoom.sharing.v1.SharingService.DeleteTenantShareRequest result = new axoom.sharing.v1.SharingService.DeleteTenantShareRequest(this);
+        result.tenantId_ = tenantId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof axoom.sharing.v1.SharingService.DeleteTenantShareRequest) {
+          return mergeFrom((axoom.sharing.v1.SharingService.DeleteTenantShareRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(axoom.sharing.v1.SharingService.DeleteTenantShareRequest other) {
+        if (other == axoom.sharing.v1.SharingService.DeleteTenantShareRequest.getDefaultInstance()) return this;
+        if (!other.getTenantId().isEmpty()) {
+          tenantId_ = other.tenantId_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        axoom.sharing.v1.SharingService.DeleteTenantShareRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (axoom.sharing.v1.SharingService.DeleteTenantShareRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object tenantId_ = "";
+      /**
+       * <pre>
+       * identifies the tenant
+       * </pre>
+       *
+       * <code>string tenant_id = 1;</code>
+       */
+      public java.lang.String getTenantId() {
+        java.lang.Object ref = tenantId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          tenantId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * identifies the tenant
+       * </pre>
+       *
+       * <code>string tenant_id = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTenantIdBytes() {
+        java.lang.Object ref = tenantId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          tenantId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * identifies the tenant
+       * </pre>
+       *
+       * <code>string tenant_id = 1;</code>
+       */
+      public Builder setTenantId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        tenantId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * identifies the tenant
+       * </pre>
+       *
+       * <code>string tenant_id = 1;</code>
+       */
+      public Builder clearTenantId() {
+        
+        tenantId_ = getDefaultInstance().getTenantId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * identifies the tenant
+       * </pre>
+       *
+       * <code>string tenant_id = 1;</code>
+       */
+      public Builder setTenantIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        tenantId_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:axoom.sharing.v1.DeleteTenantShareRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:axoom.sharing.v1.DeleteTenantShareRequest)
+    private static final axoom.sharing.v1.SharingService.DeleteTenantShareRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new axoom.sharing.v1.SharingService.DeleteTenantShareRequest();
+    }
+
+    public static axoom.sharing.v1.SharingService.DeleteTenantShareRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<DeleteTenantShareRequest>
+        PARSER = new com.google.protobuf.AbstractParser<DeleteTenantShareRequest>() {
+      @java.lang.Override
+      public DeleteTenantShareRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DeleteTenantShareRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<DeleteTenantShareRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DeleteTenantShareRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public axoom.sharing.v1.SharingService.DeleteTenantShareRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface ClientShareFilterOrBuilder extends
       // @@protoc_insertion_point(interface_extends:axoom.sharing.v1.ClientShareFilter)
       com.google.protobuf.MessageOrBuilder {
@@ -6548,6 +7736,11 @@ public final class SharingService {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_axoom_sharing_v1_ListClientSharesResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_axoom_sharing_v1_DeleteClientShareRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_axoom_sharing_v1_DeleteClientShareRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_axoom_sharing_v1_CreateTenantShareRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -6562,6 +7755,11 @@ public final class SharingService {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_axoom_sharing_v1_ListTenantSharesResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_axoom_sharing_v1_DeleteTenantShareRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_axoom_sharing_v1_DeleteTenantShareRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_axoom_sharing_v1_ClientShareFilter_descriptor;
   private static final 
@@ -6583,40 +7781,48 @@ public final class SharingService {
     java.lang.String[] descriptorData = {
       "\n\025sharing_service.proto\022\020axoom.sharing.v" +
       "1\032\rsharing.proto\032\026filter/v1/filter.proto" +
-      "\"O\n\030CreateClientShareRequest\0223\n\014client_s" +
-      "hare\030\001 \001(\0132\035.axoom.sharing.v1.ClientShar" +
-      "e\"N\n\027ListClientSharesRequest\0223\n\006filter\030\001" +
-      " \001(\0132#.axoom.sharing.v1.ClientShareFilte" +
-      "r\"i\n\030ListClientSharesResponse\0224\n\rclient_" +
-      "shares\030\001 \003(\0132\035.axoom.sharing.v1.ClientSh" +
-      "are\022\027\n\017next_page_token\030\002 \001(\t\"O\n\030CreateTe" +
-      "nantShareRequest\0223\n\014tenant_share\030\001 \001(\0132\035" +
-      ".axoom.sharing.v1.TenantShare\"N\n\027ListTen" +
-      "antSharesRequest\0223\n\006filter\030\001 \001(\0132#.axoom" +
-      ".sharing.v1.TenantShareFilter\"i\n\030ListTen" +
-      "antSharesResponse\0224\n\rtenant_shares\030\001 \003(\013" +
-      "2\035.axoom.sharing.v1.TenantShare\022\027\n\017next_" +
-      "page_token\030\002 \001(\t\"\305\001\n\021ClientShareFilter\0229" +
-      "\n\tclient_id\030\001 \001(\0132&.axoom.filters.v1.Str" +
-      "ingPropertyFilter\0229\n\ttenant_id\030\002 \001(\0132&.a" +
-      "xoom.filters.v1.StringPropertyFilter\022:\n\n" +
-      "subject_id\030\003 \001(\0132&.axoom.filters.v1.Stri" +
-      "ngPropertyFilter\"\212\001\n\021TenantShareFilter\0229" +
-      "\n\ttenant_id\030\001 \001(\0132&.axoom.filters.v1.Str" +
-      "ingPropertyFilter\022:\n\nsubject_id\030\002 \001(\0132&." +
-      "axoom.filters.v1.StringPropertyFilter2\237\003" +
-      "\n\007Sharing\022^\n\021CreateClientShare\022*.axoom.s" +
-      "haring.v1.CreateClientShareRequest\032\035.axo" +
-      "om.sharing.v1.ClientShare\022i\n\020ListClientS" +
-      "hares\022).axoom.sharing.v1.ListClientShare" +
-      "sRequest\032*.axoom.sharing.v1.ListClientSh" +
-      "aresResponse\022^\n\021CreateTenantShare\022*.axoo" +
-      "m.sharing.v1.CreateTenantShareRequest\032\035." +
-      "axoom.sharing.v1.TenantShare\022i\n\020ListTena" +
-      "ntShares\022).axoom.sharing.v1.ListTenantSh" +
-      "aresRequest\032*.axoom.sharing.v1.ListTenan" +
-      "tSharesResponseB,Z*gitlab.axoom.tech/iot" +
-      "/go-rillaz/sharing/v1b\006proto3"
+      "\032\033google/protobuf/empty.proto\"O\n\030CreateC" +
+      "lientShareRequest\0223\n\014client_share\030\001 \001(\0132" +
+      "\035.axoom.sharing.v1.ClientShare\"N\n\027ListCl" +
+      "ientSharesRequest\0223\n\006filter\030\001 \001(\0132#.axoo" +
+      "m.sharing.v1.ClientShareFilter\"i\n\030ListCl" +
+      "ientSharesResponse\0224\n\rclient_shares\030\001 \003(" +
+      "\0132\035.axoom.sharing.v1.ClientShare\022\027\n\017next" +
+      "_page_token\030\002 \001(\t\"-\n\030DeleteClientShareRe" +
+      "quest\022\021\n\tclient_id\030\001 \001(\t\"O\n\030CreateTenant" +
+      "ShareRequest\0223\n\014tenant_share\030\001 \001(\0132\035.axo" +
+      "om.sharing.v1.TenantShare\"N\n\027ListTenantS" +
+      "haresRequest\0223\n\006filter\030\001 \001(\0132#.axoom.sha" +
+      "ring.v1.TenantShareFilter\"i\n\030ListTenantS" +
+      "haresResponse\0224\n\rtenant_shares\030\001 \003(\0132\035.a" +
+      "xoom.sharing.v1.TenantShare\022\027\n\017next_page" +
+      "_token\030\002 \001(\t\"-\n\030DeleteTenantShareRequest" +
+      "\022\021\n\ttenant_id\030\001 \001(\t\"\305\001\n\021ClientShareFilte" +
+      "r\0229\n\tclient_id\030\001 \001(\0132&.axoom.filters.v1." +
+      "StringPropertyFilter\0229\n\ttenant_id\030\002 \001(\0132" +
+      "&.axoom.filters.v1.StringPropertyFilter\022" +
+      ":\n\nsubject_id\030\003 \001(\0132&.axoom.filters.v1.S" +
+      "tringPropertyFilter\"\212\001\n\021TenantShareFilte" +
+      "r\0229\n\ttenant_id\030\001 \001(\0132&.axoom.filters.v1." +
+      "StringPropertyFilter\022:\n\nsubject_id\030\002 \001(\013" +
+      "2&.axoom.filters.v1.StringPropertyFilter" +
+      "2\321\004\n\007Sharing\022^\n\021CreateClientShare\022*.axoo" +
+      "m.sharing.v1.CreateClientShareRequest\032\035." +
+      "axoom.sharing.v1.ClientShare\022i\n\020ListClie" +
+      "ntShares\022).axoom.sharing.v1.ListClientSh" +
+      "aresRequest\032*.axoom.sharing.v1.ListClien" +
+      "tSharesResponse\022^\n\021CreateTenantShare\022*.a" +
+      "xoom.sharing.v1.CreateTenantShareRequest" +
+      "\032\035.axoom.sharing.v1.TenantShare\022i\n\020ListT" +
+      "enantShares\022).axoom.sharing.v1.ListTenan" +
+      "tSharesRequest\032*.axoom.sharing.v1.ListTe" +
+      "nantSharesResponse\022W\n\021DeleteClientShare\022" +
+      "*.axoom.sharing.v1.DeleteClientShareRequ" +
+      "est\032\026.google.protobuf.Empty\022W\n\021DeleteTen" +
+      "antShare\022*.axoom.sharing.v1.DeleteTenant" +
+      "ShareRequest\032\026.google.protobuf.EmptyB,Z*" +
+      "gitlab.axoom.tech/iot/go-rillaz/sharing/" +
+      "v1b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6631,6 +7837,7 @@ public final class SharingService {
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           axoom.sharing.v1.Sharing.getDescriptor(),
           axoom.filters.v1.Filter.getDescriptor(),
+          com.google.protobuf.EmptyProto.getDescriptor(),
         }, assigner);
     internal_static_axoom_sharing_v1_CreateClientShareRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -6650,38 +7857,51 @@ public final class SharingService {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_axoom_sharing_v1_ListClientSharesResponse_descriptor,
         new java.lang.String[] { "ClientShares", "NextPageToken", });
-    internal_static_axoom_sharing_v1_CreateTenantShareRequest_descriptor =
+    internal_static_axoom_sharing_v1_DeleteClientShareRequest_descriptor =
       getDescriptor().getMessageTypes().get(3);
+    internal_static_axoom_sharing_v1_DeleteClientShareRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_axoom_sharing_v1_DeleteClientShareRequest_descriptor,
+        new java.lang.String[] { "ClientId", });
+    internal_static_axoom_sharing_v1_CreateTenantShareRequest_descriptor =
+      getDescriptor().getMessageTypes().get(4);
     internal_static_axoom_sharing_v1_CreateTenantShareRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_axoom_sharing_v1_CreateTenantShareRequest_descriptor,
         new java.lang.String[] { "TenantShare", });
     internal_static_axoom_sharing_v1_ListTenantSharesRequest_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_axoom_sharing_v1_ListTenantSharesRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_axoom_sharing_v1_ListTenantSharesRequest_descriptor,
         new java.lang.String[] { "Filter", });
     internal_static_axoom_sharing_v1_ListTenantSharesResponse_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_axoom_sharing_v1_ListTenantSharesResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_axoom_sharing_v1_ListTenantSharesResponse_descriptor,
         new java.lang.String[] { "TenantShares", "NextPageToken", });
+    internal_static_axoom_sharing_v1_DeleteTenantShareRequest_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_axoom_sharing_v1_DeleteTenantShareRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_axoom_sharing_v1_DeleteTenantShareRequest_descriptor,
+        new java.lang.String[] { "TenantId", });
     internal_static_axoom_sharing_v1_ClientShareFilter_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_axoom_sharing_v1_ClientShareFilter_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_axoom_sharing_v1_ClientShareFilter_descriptor,
         new java.lang.String[] { "ClientId", "TenantId", "SubjectId", });
     internal_static_axoom_sharing_v1_TenantShareFilter_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_axoom_sharing_v1_TenantShareFilter_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_axoom_sharing_v1_TenantShareFilter_descriptor,
         new java.lang.String[] { "TenantId", "SubjectId", });
     axoom.sharing.v1.Sharing.getDescriptor();
     axoom.filters.v1.Filter.getDescriptor();
+    com.google.protobuf.EmptyProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

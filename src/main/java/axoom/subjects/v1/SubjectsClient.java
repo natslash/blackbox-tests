@@ -34,19 +34,19 @@ import io.grpc.Metadata.Key;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.MetadataUtils;
 
-public class SubjectzClient {
-  private static final Logger logger = Logger.getLogger(SubjectzClient.class.getName());
+public class SubjectsClient {
+  private static final Logger logger = Logger.getLogger(SubjectsClient.class.getName());
 
   private final ManagedChannel channel;
   private final SubjectsBlockingStub blockingStub;
 
 
   /* Construct client connecting to RecordMetas server at {@code name:port}. */
-  public SubjectzClient(String name, int port) {
+  public SubjectsClient(String name, int port) {
     this(ManagedChannelBuilder.forAddress(name, port).build());
   }
   
-  public SubjectzClient(ManagedChannel channel) {
+  public SubjectsClient(ManagedChannel channel) {
     this.channel = channel;
     Map<String, String> requestParams = new HashMap<String, String>();
     requestParams.put("baseUrl", "https://account.dev.myaxoom.com/connect/token");
@@ -58,7 +58,7 @@ public class SubjectzClient {
     String accessToken = RestUtils.getAccessTokenFromClientCredsFlow(requestParams);
     logger.log(Level.INFO, "Access Token: " + accessToken);
     Metadata authHeaders = new Metadata();
-    authHeaders.put(Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER), accessToken);
+    authHeaders.put(Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER),  ": Bearer " + accessToken);
 
     blockingStub = MetadataUtils.attachHeaders(SubjectsGrpc.newBlockingStub(channel), authHeaders);
   }
@@ -73,8 +73,8 @@ public class SubjectzClient {
    * @param subjectTypeName
    * @return subject
    */
-  public Subject createSubject(String subjectTypeName) {
-    CreateSubjectRequest request = CreateSubjectRequest.newBuilder().setName(subjectTypeName).build();
+  public Subject createSubject(String name, int indexValue, String implementsValue) {
+    CreateSubjectRequest request = CreateSubjectRequest.newBuilder().setName(name).addImplements(implementsValue).build();
 
     try {      
       return blockingStub.createSubject(request);      
@@ -98,7 +98,8 @@ public class SubjectzClient {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
       throw sre;
     }
-  }   
+  }     
+  
   
   /**
    * 
