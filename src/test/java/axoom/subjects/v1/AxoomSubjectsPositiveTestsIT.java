@@ -1,9 +1,9 @@
 package axoom.subjects.v1;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,11 +14,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
-import axoom.subjects.v1.SubjectsClient;
 import axoom.subjects.v1.Subjects.Subject;
-import axoom.subjects.v1.Subjects.SubjectContext;
 import axoom.subjects.v1.Subjects.SubjectType;
-import axoom.subjects.v1.Subjects.SubjectTypeContext;
+import axoom.subjects.v1.SubjectsService.ListSubjectTypesResponse;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -39,8 +37,8 @@ public class AxoomSubjectsPositiveTestsIT extends WebDriverTest {
   private SubjectsClient client;
   private Map<String, String> requestParams = new HashMap<>();
   private static final Logger logger =
-      Logger.getLogger(AxoomSubjectsPositiveTestsIT.class.getName());
-  private String createdSubjectTypeId = null;
+      Logger.getLogger(AxoomSubjectsPositiveTestsIT.class.getName());  
+  private String createdSubjectId = null;
 
   @BeforeClass
   public void beforeClass() {
@@ -57,6 +55,8 @@ public class AxoomSubjectsPositiveTestsIT extends WebDriverTest {
     updatedSubjectName = "updatedSubject" + timeStamp;
     recordSchemaUrl = "recordSchemaUrl" + timeStamp;
     recordMetaSchemaUrl = "recordMetaSchemaUrl" + timeStamp;
+    createdSubjectId = "Subject" + timeStamp;
+    
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
@@ -79,119 +79,31 @@ public class AxoomSubjectsPositiveTestsIT extends WebDriverTest {
         "-----------------------------------------------------------------------------------------------");
   }
 
-  /*
-   * @Test
-   * 
-   * @Description("Create SubjectType")
-   * 
-   * @Severity(SeverityLevel.BLOCKER) public void createSubjectTypeTest() throws Exception {
-   * SubjectType subjectType =
-   * SubjectType.newBuilder().setId(timeStamp).setRecordSchemaUrl("recordSchemaUrl" + timeStamp)
-   * .setRecordMetaSchemaUrl(recordMetaSchemaUrl).build(); try { SubjectType createdSubjectType =
-   * client.createSubjectType(subjectType); logger.log(Level.INFO, "SubjectType created " +
-   * createdSubjectType.getId()); createdSubjectTypeId = createdSubjectType.getId();
-   * assertTrue(createdSubjectType != null); } catch (Exception e) { throw e; } finally {
-   * client.shutdown(); } }
-   */
-
-  /*
-   * @Test(dependsOnMethods = {"createSubjectTypeTest"})
-   * 
-   * @Description("Get SubjectType's RecordSchemaUrl")
-   * 
-   * @Severity(SeverityLevel.BLOCKER) public void getSubjectTypeRecordSchemaUrl() throws Exception {
-   * try { // Get Subject type SubjectType subjectType =
-   * client.getSubjectType(createdSubjectTypeId);
-   * 
-   * logger.log(Level.INFO, subjectType.getRecordSchemaUrl());
-   * assertTrue(subjectType.getRecordSchemaUrl().equals("recordSchemaUrl" + timeStamp));
-   * 
-   * } catch (StatusRuntimeException sre) { throw sre; } catch (Exception e) { throw e; } finally {
-   * client.shutdown(); } }
-   * 
-   * @Test(dependsOnMethods = {"createSubjectTypeTest"})
-   * 
-   * @Description("Get SubjectType's RecordMetaSchemaUrl")
-   * 
-   * @Severity(SeverityLevel.BLOCKER) public void getSubjectTypeRecordMetaSchemaUrl() throws
-   * Exception { try { // Get Subject type SubjectType subjectType =
-   * client.getSubjectType(createdSubjectTypeId);
-   * 
-   * logger.log(Level.INFO, subjectType.getRecordMetaSchemaUrl());
-   * assertTrue(subjectType.getRecordMetaSchemaUrl().equals(recordMetaSchemaUrl));
-   * 
-   * } catch (StatusRuntimeException sre) { throw sre; } catch (Exception e) { throw e; } finally {
-   * client.shutdown(); } }
-   */
-
-  /*
-   * @Test(dependsOnMethods = {"createSubjectTest"})
-   * 
-   * @Description("Get SubjectTypez")
-   * 
-   * @Severity(SeverityLevel.BLOCKER) public void getSubjectTypes() throws Exception { try { // Get
-   * Subject type Iterator<SubjectType> subjectTypes = client.getSubjectTypes();
-   * assertTrue(subjectTypes.hasNext(), "No SubjectTypes found for the subject type"); } catch
-   * (StatusRuntimeException sre) { throw sre; } catch (Exception e) { throw e; } finally {
-   * client.shutdown(); } }
-   */
-  
-  @Test()
-  @Description("Create Subject Type")
-  @Severity(SeverityLevel.BLOCKER)
-  public void createSubjectTypeTest() throws Exception {    
-    try {
-      SubjectType subType = SubjectType.newBuilder().setName("SubjectType" + timeStamp).setRecordMetaSchemaUrl("recordMetaSchemaURL").setRecordSchemaUrl("recordSchemaUrl").build();
-      SubjectType createdSubjectType = client.createSubjectType(subType);
-      assertTrue(createdSubjectType.getName().equals("SubjectType" + timeStamp));
-    } catch (Exception e) {
-      throw e;
-    } finally {
-      client.shutdown();
-    }
-  }
-  
-  @Test(dependsOnMethods = {"createSubjectTypeTest"})
+  @Test(dependsOnMethods = {"createSubjectTypeWithoutExtendsTest"})
   @Description("Create Subject")
   @Severity(SeverityLevel.BLOCKER)
-  public void createSubjectTest() throws Exception {    
+  public void createSubjectTest() throws Exception {
+    Map<String, String> labels = new HashMap<>();
+    labels.put("label-" + createdSubjectId, "value-" + createdSubjectId);
     try {
-      Subject createdSubject = client.createSubject(timeStamp, 0, "SubjectType" + timeStamp);
-      assertTrue(createdSubject.getName().equals(timeStamp));
+      Subject createdSubject = client.createSubject(createdSubjectId, createdSubjectId + "implements", labels);
+      assertTrue(createdSubject.getName().equals(createdSubjectId));
     } catch (Exception e) {
       throw e;
     } finally {
       client.shutdown();
     }
   }
-
-  @Test(dependsOnMethods = {"createSubjectTypeTest"})
-  @Description("Get Subject Type by it's name")
-  @Severity(SeverityLevel.BLOCKER)
-  public void getSubjectTypeByName() throws Exception {
-    try {
-      // Get all subjects with SubjectTypeId
-      SubjectType subjectType = client.getSubjectType("SubjectType" + timeStamp);
-      logger.log(Level.INFO, subjectType.getName());
-      assertTrue(
-          subjectType.getName().equals("SubjectType" + timeStamp));
-    } catch (Exception e) {
-      throw e;
-    } finally {
-      client.shutdown();
-    }
-  }
-
+  
   @Test(dependsOnMethods = {"createSubjectTest"})
   @Description("Get Subject by it's ID")
   @Severity(SeverityLevel.BLOCKER)
   public void getSubjectById() throws Exception {
     try {
-      // Get all subjects with SubjectTypeId
       Subject subject = client.getSubject(timeStamp);
       logger.log(Level.INFO, subject.getId());
       assertTrue(
-          subject.getId().equals(timeStamp) && subject.getName().equals(originalSubjectName));
+          subject.getId().equals(createdSubjectId) && subject.getName().equals(originalSubjectName));
     } catch (Exception e) {
       throw e;
     } finally {
@@ -214,7 +126,7 @@ public class AxoomSubjectsPositiveTestsIT extends WebDriverTest {
       client.shutdown();
     }
   }
-  
+
   @Test(dependsOnMethods = {"createSubjectTest"})
   @Description("Update a Subject")
   @Severity(SeverityLevel.BLOCKER)
@@ -230,87 +142,4 @@ public class AxoomSubjectsPositiveTestsIT extends WebDriverTest {
       client.shutdown();
     }
   }
-
-  /*
-   * @Test(dependsOnMethods = {"updateSubjectTest"})
-   * 
-   * @Description("Get Subjects for a subjectType")
-   * 
-   * @Severity(SeverityLevel.BLOCKER) public void getSubjectsBySubjectType() throws Exception { try
-   * { // Get Subject type Iterator<Subject> subjects = client.getSubjectz(createdSubjectTypeId);
-   * assertTrue(subjects.hasNext(), "No Subjects found for the subject type"); } catch
-   * (StatusRuntimeException sre) { throw sre; } catch (Exception e) { throw e; } finally {
-   * client.shutdown(); } }
-   */
-
-  /*
-   * @Test(dependsOnMethods = {"updateSubjectTest"})
-   * 
-   * @Description("Get SubjectContext by specifying a subject id")
-   * 
-   * @Severity(SeverityLevel.BLOCKER) public void getSubjectContextForASubject() throws Exception {
-   * try { // get subject context by subject ID SubjectContext subjectContext =
-   * client.getSubjectContext(timeStamp);
-   * assertTrue(subjectContext.getSubject().getId().equals(timeStamp) &&
-   * subjectContext.getSubject().getName().equals(updatedSubjectName)); } catch
-   * (StatusRuntimeException sre) { throw sre; } catch (NullPointerException ne) { assertTrue(true);
-   * } catch (Exception e) { throw e; } finally { client.shutdown(); } }
-   * 
-   * @Test(dependsOnMethods = {"updateSubjectTest"})
-   * 
-   * @Description("Get SubjectContext by specifying nonexistent subject id")
-   * 
-   * @Severity(SeverityLevel.BLOCKER) public void getSubjectContextForNonexistentSubject() throws
-   * Exception { try { // null subject ID client.getSubjectContext("x"); } catch
-   * (StatusRuntimeException sre) {
-   * assertTrue(sre.getMessage().contains("UNKNOWN: subject not found"),
-   * "The Error message doesn't match with what we expect!!!"); } catch (NullPointerException ne) {
-   * assertTrue(true); } catch (Exception e) { throw e; } finally { client.shutdown(); } }
-   */
-
-  /*
-   * @Test(dependsOnMethods = {"createSubjectTypeTest"})
-   * 
-   * @Description("Get SubjectTypeContext for a non existent subjectType")
-   * 
-   * @Severity(SeverityLevel.BLOCKER) public void getSubjectContextForNonExistentSubjectType()
-   * throws Exception { try { // Get Subject type context by subject type ID
-   * client.getSubjectTypeContext("x"); } catch (StatusRuntimeException sre) {
-   * assertTrue(sre.getMessage().contains("UNKNOWN: subject type not found"),
-   * "The Error message doesn't match with what we expect!!!"); } catch (Exception e) { throw e; }
-   * finally { client.shutdown(); } }
-   */
-
-  /*
-   * @Test(dependsOnMethods = {"createSubjectTypeTest"})
-   * 
-   * @Description("Get SubjectTypeContext for SubjectType")
-   * 
-   * @Severity(SeverityLevel.BLOCKER) public void getSubjectTypeContextBySubjectTypeId() throws
-   * Exception { try { // Get Subject type context by subject type ID SubjectTypeContext
-   * subjectTypeContext = client.getSubjectTypeContext(createdSubjectTypeId);
-   * 
-   * SubjectType subjectType = subjectTypeContext.getSubjectType();
-   * assertTrue(subjectType.getId().equals(createdSubjectTypeId) &&
-   * subjectType.getRecordSchemaUrl().equals(recordSchemaUrl) &&
-   * subjectType.getRecordMetaSchemaUrl().equals(recordMetaSchemaUrl)); } catch
-   * (StatusRuntimeException sre) { throw sre; } catch (Exception e) { throw e; } finally {
-   * client.shutdown(); } }
-   * 
-   * @Test(dependsOnMethods = {"createSubjectTest"})
-   * 
-   * @Description("Get SubjectContext by specifying nonexistent subject id")
-   * 
-   * @Severity(SeverityLevel.BLOCKER) public void getSubjectTypeFromSubjectContextInstanceGraph()
-   * throws Exception { try { // null subject ID SubjectContext subjectContext =
-   * client.getSubjectContext(timeStamp); SubjectType subjectType =
-   * client.getSubjectTypeFromSubjectContextInstanceGraph(subjectContext, 0);
-   * assertTrue(subjectType.getId().equals(createdSubjectTypeId) &&
-   * subjectType.getRecordSchemaUrl().equals(recordSchemaUrl) &&
-   * subjectType.getRecordMetaSchemaUrl().equals(recordMetaSchemaUrl)); } catch
-   * (StatusRuntimeException sre) {
-   * assertTrue(sre.getMessage().contains("UNKNOWN: subject not found"),
-   * "The Error message doesn't match with what we expect!!!"); } catch (NullPointerException ne) {
-   * assertTrue(true); } catch (Exception e) { throw e; } finally { client.shutdown(); } }
-   */
 }

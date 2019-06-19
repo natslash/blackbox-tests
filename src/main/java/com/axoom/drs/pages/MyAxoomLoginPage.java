@@ -38,6 +38,7 @@ public class MyAxoomLoginPage extends WebDriverPage {
   private String denyAccessButtonXpath = "//button[contains(@id,'DenyConsent_Button')]";
   private String accessGrantedMessageXpath = "//h1[contains(@id,'DeviceAuthorization_ConsentGranted_Title')]";
   private String accessDeniedMessageXpath = "//h1[contains(@id,'DeviceAuthorization_ConsentDenied_Title')]";
+  private String tenantScopesXpath = "//input[@id='scopes_tenant']";
   private static final Logger logger = Logger.getLogger(MyAxoomLoginPage.class.getName());
 
   public MyAxoomLoginPage(WebDriver driver) {
@@ -104,10 +105,10 @@ public class MyAxoomLoginPage extends WebDriverPage {
       return jsonPathEvaluator.get("access_token");
     }
     return response.asString();
-  }
+  }  
   
-  public boolean grantAccess(boolean grantAccess) {
-    String tenantScopesXpath = "//input[@id='scopes_tenant']";
+  
+  public boolean grantAccess(boolean grantAccess) {    
     String message = null;   
     System.out.println(getDriver().getCurrentUrl());
     tenantScopesCheckBox = getDriver().findElement(By.xpath(tenantScopesXpath));
@@ -131,5 +132,5 @@ public class MyAxoomLoginPage extends WebDriverPage {
     }  
     
     return false;
-  }
+  }  
 }

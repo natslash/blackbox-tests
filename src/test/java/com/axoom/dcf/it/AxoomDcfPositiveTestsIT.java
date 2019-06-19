@@ -19,6 +19,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import com.axoom.codeflow.CodeFlows;
 import com.axoom.constants.EnvVariables;
 import com.axoom.drs.pages.MyAxoomLoginPage;
 import com.axoom.talos.framework.WebDriverTest;
@@ -26,20 +27,17 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
-@Story("Positive test cases for DRS APIs")
+@Story("Positive test cases for Device Code Flow")
 public class AxoomDcfPositiveTestsIT extends WebDriverTest {
   private MyAxoomLoginPage myAxoomLoginPage;
   private String inputEmail;
   private String inputPassword;
   private String tenantId;
   private String clientId;
-  private String redirectUri;
-  private String scope;
+  private String redirectUri;  
   private String accessToken;
   private String idToken;
   private String secret;
@@ -57,7 +55,6 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
     tenantId = EnvVariables.TENANT_ID;
     clientId = EnvVariables.DRS_CLIENT_ID;
     redirectUri = EnvVariables.DRS_REDIRECT_URI;
-    scope = "openid tenant";
     cisUrl = EnvVariables.CIS_URL;
     secret = EnvVariables.SECRET;
     accessToken = null;
@@ -97,7 +94,7 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
   @Description("Get device & user codes")
   @Severity(SeverityLevel.BLOCKER)
   public void getCodesTest() {
-    Response response = getUserNDeviceCodes();
+    Response response = CodeFlows.getUserNDeviceCodes();
     logger.log(Level.INFO, response.then().log().all(true).toString());
     logger.log(Level.INFO, "-------------End getAccessToken-------------\n");
     if (response.statusCode() == 200) {
@@ -115,15 +112,15 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
   @Test(dependsOnMethods = {"getCodesTest"})
   @Description("Perform Login UI test to grant access for user code")
   @Severity(SeverityLevel.BLOCKER)
-  public void grantAccessTest(ITestContext context) throws InterruptedException {    
+  public void grantAccessTest(ITestContext context) throws InterruptedException {
     assertTrue(grantOrDenyAccess(true, userCode));
   }
 
   @Test(dependsOnMethods = {"grantAccessTest"})
   @Description("Test to get access token from device code")
   @Severity(SeverityLevel.BLOCKER)
-  public void getAccessTokenTest() {    
-    Response response = getAccessToken(deviceCode);
+  public void getAccessTokenTest() {
+    Response response = CodeFlows.getAccessToken(deviceCode);
     logger.log(Level.INFO, response.then().log().all(true).toString());
     if (response.statusCode() == 200) {
       JsonPath jsonPathEvaluator = response.jsonPath();
@@ -139,8 +136,8 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
   @Test(dependsOnMethods = {"getAccessTokenTest"})
   @Description("Test to get access token from an already used device code")
   @Severity(SeverityLevel.BLOCKER)
-  public void getAccessTokenForUsedCode() {  
-    Response response = getAccessToken(deviceCode);
+  public void getAccessTokenForUsedCode() {
+    Response response = CodeFlows.getAccessToken(deviceCode);
     logger.log(Level.INFO, response.then().log().all(true).toString());
     if (response.statusCode() == 400) {
       JsonPath jsonPathEvaluator = response.jsonPath();
@@ -150,14 +147,14 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
       fail(response.then().log().all(true).toString());
     }
   }
-  
+
   @Test
   @Description("Test to get access token from an already used device code")
   @Severity(SeverityLevel.BLOCKER)
-  public void getAccessTokenForExpiredCode() {  
+  public void getAccessTokenForExpiredCode() {
     String localDeviceCode = null;
     String localUserCode = null;
-    Response response = getUserNDeviceCodes();
+    Response response = CodeFlows.getUserNDeviceCodes();
     logger.log(Level.INFO, response.then().log().all(true).toString());
     logger.log(Level.INFO, "-------------End getAccessToken-------------\n");
     if (response.statusCode() == 200) {
@@ -165,15 +162,15 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
       localDeviceCode = jsonPathEvaluator.get("device_code");
       localUserCode = jsonPathEvaluator.get("user_code");
     }
-    if(grantOrDenyAccess(true, localUserCode)) {
+    if (grantOrDenyAccess(true, localUserCode)) {
       try {
         TimeUnit.SECONDS.sleep(60);
-      } catch (InterruptedException e) {        
+      } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      response = getAccessToken(localDeviceCode);
+      response = CodeFlows.getAccessToken(localDeviceCode);
     }
-    
+
     if (response.statusCode() == 400) {
       JsonPath jsonPathEvaluator = response.jsonPath();
       String errorMessage = deviceCode = jsonPathEvaluator.get("error");
@@ -183,22 +180,22 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
     }
   }
 
-  
+
   @Test
   @Description("Test to get access token from an already used device code")
   @Severity(SeverityLevel.BLOCKER)
-  public void getAccessTokenForUnconfirmedCode() {  
-    String localDeviceCode = null;    
-    Response response = getUserNDeviceCodes();
+  public void getAccessTokenForUnconfirmedCode() {
+    String localDeviceCode = null;
+    Response response = CodeFlows.getUserNDeviceCodes();
     logger.log(Level.INFO, response.then().log().all(true).toString());
     logger.log(Level.INFO, "-------------End getAccessToken-------------\n");
     if (response.statusCode() == 200) {
       JsonPath jsonPathEvaluator = response.jsonPath();
-      localDeviceCode = jsonPathEvaluator.get("device_code");      
+      localDeviceCode = jsonPathEvaluator.get("device_code");
     }
-    
-    response = getAccessToken(localDeviceCode);
-      
+
+    response = CodeFlows.getAccessToken(localDeviceCode);
+
     if (response.statusCode() == 400) {
       JsonPath jsonPathEvaluator = response.jsonPath();
       String errorMessage = deviceCode = jsonPathEvaluator.get("error");
@@ -206,19 +203,6 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
     } else {
       fail(response.then().log().all(true).toString());
     }
-  }
-
-  public Response getUserNDeviceCodes() {
-    RestAssured.baseURI = cisUrl + "/connect/deviceauthorization";
-    logger.log(Level.INFO,
-        "-------------Begin getAccessToken-------------\n" + RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-    request.formParam("client_id", "blackboxtest01-test1").formParam("scope", "openid tenant")
-        .formParam("client_secret", secret);
-    request.header("Content-Type", "application/x-www-form-urlencoded");
-    logger.log(Level.INFO, request.log().all(true).toString());
-
-    return request.post();
   }
 
   public boolean grantOrDenyAccess(boolean isGrant, String userCode) {
@@ -236,18 +220,5 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
       fail("Test failed");
       return false;
     }
-  }
-  
-  public Response getAccessToken(String deviceCode) {
-    RestAssured.baseURI = cisUrl + "/connect/token";
-    logger.log(Level.INFO,
-        "-------------Begin getAccessToken-------------\n" + RestAssured.baseURI);
-    RequestSpecification request = RestAssured.given();
-    request.formParam("client_id", "blackboxtest01-test1").formParam("scope", scope)
-        .formParam("client_secret", secret).formParam("device_code", deviceCode)
-        .formParam("grant_type", "urn:ietf:params:oauth:grant-type:device_code");
-    request.header("Content-Type", "application/x-www-form-urlencoded");
-    logger.log(Level.INFO, request.log().all(true).toString());
-    return request.post();    
   }
 }
