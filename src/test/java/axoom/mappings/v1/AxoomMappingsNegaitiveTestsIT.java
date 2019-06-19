@@ -107,6 +107,26 @@ public class AxoomMappingsNegaitiveTestsIT extends WebDriverTest {
   @Test
   @Description("Create a Mapping")
   @Severity(SeverityLevel.BLOCKER)
+  public void createMappingWithInvalidExpressionTypeTest() throws Exception {
+
+    String expressionString = "{\"temperature2\": temp, \"timestamp2\": timestamp\"}";
+    Expression expression =
+        Expression.newBuilder().setExpressionString(expressionString).setType(Type.TYPE_UNSPECIFIED).build();
+    Mapping mapping = Mapping.newBuilder().setExpression(expression).setSubjectId(subjectId)
+        .setDeviceId(deviceId).setPreprocessingId(preProcessingId).build();
+
+    try {
+      client.createMapping(mapping);      
+    } catch (StatusRuntimeException sre) {
+      assertTrue(sre.getMessage().equals("INVALID_ARGUMENT: Not a valid Mapping. Expression_Type is missing"));
+    } finally {
+      client.shutdown();
+    }
+  }
+  
+  @Test
+  @Description("Create a Mapping")
+  @Severity(SeverityLevel.BLOCKER)
   public void createMappingWithEmptyValuesTest() throws Exception {
 
     String expressionString = "{\"temperature2\": temp, \"timestamp2\": timestamp\"}";
