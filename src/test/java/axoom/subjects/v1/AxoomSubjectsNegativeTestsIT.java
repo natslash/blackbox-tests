@@ -33,6 +33,8 @@ public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {
   private Map<String, String> requestParams = new HashMap<>();
   private static final Logger logger = Logger.getLogger(AxoomSubjectsNegativeTestsIT.class.getName());
   private String createdSubjectTypeId = null;
+  Map<String, String> labels = new HashMap<>();
+  
 
   @BeforeClass
   public void beforeClass() {
@@ -45,6 +47,7 @@ public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {
     requestParams.put("cisUrl", cisUrl);
     requestParams.put("secret", secret);
     timeStamp = Long.toString(System.currentTimeMillis());
+    labels.put("label", "labelValue");
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
@@ -89,10 +92,9 @@ public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {
   @Test(dependsOnMethods = {"createSubjectTypeTest"})
   @Description("Try Creating a Subject without ID")
   @Severity(SeverityLevel.BLOCKER)
-  public void createSubjectWithoutIdTest() throws Exception {
-    Subject subject = Subject.newBuilder().setName("FirstSubject" + timeStamp).build();
+  public void createSubjectWithoutIdTest() throws Exception {   
     try {
-      client.createSubject(subject, createdSubjectTypeId);      
+      client.createSubject("FirstSubject", createdSubjectTypeId, labels);      
     } catch (StatusRuntimeException sre) {
       assertTrue(sre.getMessage().contains("INVALID_ARGUMENT: subject id not specified"),
           "The Error message doesn't match with what we expect!!!");
@@ -107,10 +109,9 @@ public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {
   @Test(dependsOnMethods = {"createSubjectTypeTest"})
   @Description("Try Creating a Subject without Name")
   @Severity(SeverityLevel.BLOCKER)
-  public void createSubjectWithoutNameTest() throws Exception {
-    Subject subject = Subject.newBuilder().setId(timeStamp).build();
+  public void createSubjectWithoutNameTest() throws Exception {    
     try {
-      client.createSubject(subject, createdSubjectTypeId);      
+      client.createSubject(null, createdSubjectTypeId, labels);      
     } catch (StatusRuntimeException sre) {
       assertTrue(sre.getMessage().contains("INVALID_ARGUMENT: subject name not specified"),
           "The Error message doesn't match with what we expect!!!");
@@ -145,7 +146,7 @@ public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {
   @Description("Create SubjectType Without RecordSchemaUrl")
   @Severity(SeverityLevel.BLOCKER)
   public void createSubjectTypeWithoutRecordSchemaUrlTest() throws Exception {
-    SubjectType subjectType = SubjectType.newBuilder().setId(timeStamp)
+    SubjectType subjectType = SubjectType.newBuilder().setName(timeStamp)
         .setRecordMetaSchemaUrl("recordMetaSchemaUrl" + timeStamp).build();
     try {
       client.createSubjectType(subjectType);
@@ -166,7 +167,7 @@ public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void createSubjectTypeWithoutRecordMetaSchemaUrlTest() throws Exception {
     SubjectType subjectType =
-        SubjectType.newBuilder().setId(timeStamp).setRecordSchemaUrl("recordSchemaUrl").build();
+        SubjectType.newBuilder().setName(timeStamp).setRecordSchemaUrl("recordSchemaUrl").build();
     try {
       client.createSubjectType(subjectType);
     } catch (StatusRuntimeException sre) {

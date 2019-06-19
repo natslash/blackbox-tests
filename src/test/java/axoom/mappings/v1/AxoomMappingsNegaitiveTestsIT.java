@@ -94,7 +94,7 @@ public class AxoomMappingsNegaitiveTestsIT extends WebDriverTest {
 
       client.createMapping(mapping);
     } catch (StatusRuntimeException sre) {
-      if (sre.getMessage().contains("Mapping Expression is not valid")) {
+      if (sre.getMessage().contains("INVALID_ARGUMENT: Not a valid JSONata Expression")) {
         Assert.assertTrue(true);
       } else {
         throw sre;
@@ -116,10 +116,9 @@ public class AxoomMappingsNegaitiveTestsIT extends WebDriverTest {
         .setDeviceId("").setPreprocessingId("").build();
 
     try {
-      Mapping createdMapping = client.createMapping(mapping);
-      assertTrue(createdMapping.getSubjectId().equals(subjectId));
-    } catch (Exception e) {
-      throw e;
+      client.createMapping(mapping);
+    } catch (StatusRuntimeException sre) {
+      assertTrue(sre.getMessage().equals("INVALID_ARGUMENT: SubjectID must be valid and not empty"));
     } finally {
       client.shutdown();
     }
@@ -137,10 +136,9 @@ public class AxoomMappingsNegaitiveTestsIT extends WebDriverTest {
         .setDeviceId("").setPreprocessingId(preProcessingId).build();
 
     try {
-      Mapping createdMapping = client.createMapping(mapping);
-      assertTrue(createdMapping.getSubjectId().equals(subjectId));
-    } catch (Exception e) {
-      throw e;
+      client.createMapping(mapping);      
+    } catch (StatusRuntimeException sre) {
+      assertTrue(sre.getMessage().equals("INVALID_ARGUMENT: DeviceID must be valid and not empty"));
     } finally {
       client.shutdown();
     }
@@ -158,10 +156,9 @@ public class AxoomMappingsNegaitiveTestsIT extends WebDriverTest {
         .setDeviceId(deviceId).setPreprocessingId(preProcessingId).build();
 
     try {
-      Mapping createdMapping = client.createMapping(mapping);
-      assertTrue(createdMapping.getSubjectId().equals(subjectId));
-    } catch (Exception e) {
-      throw e;
+      client.createMapping(mapping);      
+    } catch (StatusRuntimeException sre) {
+      assertTrue(sre.getMessage().equals("INVALID_ARGUMENT: SubjectID must be valid and not empty"));
     } finally {
       client.shutdown();
     }
@@ -179,10 +176,9 @@ public class AxoomMappingsNegaitiveTestsIT extends WebDriverTest {
         .setDeviceId(deviceId).setPreprocessingId("").build();
 
     try {
-      Mapping createdMapping = client.createMapping(mapping);
-      assertTrue(createdMapping.getSubjectId().equals(subjectId));
-    } catch (Exception e) {
-      throw e;
+      client.createMapping(mapping);      
+    } catch (StatusRuntimeException sre) {
+      assertTrue(sre.getMessage().equals("INVALID_ARGUMENT: PreprocessingID must be valid and not empty"));
     } finally {
       client.shutdown();
     }
