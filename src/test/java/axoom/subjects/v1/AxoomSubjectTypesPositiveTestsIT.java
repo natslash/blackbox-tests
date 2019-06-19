@@ -28,11 +28,12 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
   private String redirectUri;
   private String secret;
   private String cisUrl;
-  private SubjectsClient client;
+  private SubjectTypesClient client;
   private Map<String, String> requestParams = new HashMap<>();
   private static final Logger logger =
       Logger.getLogger(AxoomSubjectTypesPositiveTestsIT.class.getName());
   private String createdSubjectTypeName = null; 
+  private String createdSubjectTypeWithExtenderName = null;
   private String recordMetaSchemaUrl = "recordMetaSchemaURL";
   private String recordSchemaUrl = "recordSchemaUrl";
 
@@ -47,7 +48,8 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
     requestParams.put("cisUrl", cisUrl);
     requestParams.put("secret", secret);
     timeStamp = Long.toString(System.currentTimeMillis());
-    createdSubjectTypeName = "SubjectType" + timeStamp;    
+    createdSubjectTypeName = "SubjectType" + timeStamp; 
+    createdSubjectTypeWithExtenderName = "SubjectTypeWithoutExtender" + timeStamp;    
     
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
@@ -60,7 +62,7 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     // Create Client and establish connection to the server
-    client = new SubjectsClient("subjects.dev.myaxoom.com", 443);
+    client = new SubjectTypesClient("subjects.dev.myaxoom.com", 443);
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
   }
 
@@ -79,11 +81,11 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
     try {
       Map<String, String> labels = new HashMap<>();
       labels.put("label1", "labelValue2");
-      SubjectType subType = SubjectType.newBuilder().setName(createdSubjectTypeName)
+      SubjectType subType = SubjectType.newBuilder().setName(createdSubjectTypeWithExtenderName)
           .setRecordMetaSchemaUrl(recordMetaSchemaUrl).setRecordSchemaUrl(recordSchemaUrl)
           .putAllLabels(labels).build();
       SubjectType createdSubjectType = client.createSubjectType("Hello", subType);
-      assertTrue(createdSubjectType.getName().equals(createdSubjectTypeName));
+      assertTrue(createdSubjectType.getName().equals(createdSubjectTypeWithExtenderName));
     } catch (Exception e) {
       throw e;
     } finally {

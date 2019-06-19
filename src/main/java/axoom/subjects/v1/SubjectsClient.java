@@ -73,8 +73,8 @@ public class SubjectsClient {
    * @param subjectTypeName
    * @return subject
    */
-  public Subject createSubject(String name, int indexValue, String implementsValue) {
-    CreateSubjectRequest request = CreateSubjectRequest.newBuilder().setName(name).addImplements(implementsValue).build();
+  public Subject createSubject(String name, String implementsValue, Map<String, String> labels) {
+    CreateSubjectRequest request = CreateSubjectRequest.newBuilder().putAllLabels(labels).setName(name).addImplements(implementsValue).build();
 
     try {      
       return blockingStub.createSubject(request);      
