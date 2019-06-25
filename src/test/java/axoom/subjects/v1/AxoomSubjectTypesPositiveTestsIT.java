@@ -165,7 +165,7 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
   @Test(dependsOnMethods = {"createSubjectTypeWithoutExtendsTest"})
   @Description("Get Subject Type by it's name")
   @Severity(SeverityLevel.BLOCKER)
-  public void listSubjectTypesWithFilter() throws Exception {
+  public void listSubjectTypesWithNonExistentFilter() throws Exception {
     try {
       ListSubjectTypesResponse subjectTypes = client.listSubjectTypes("mySubjectTypeLabel", "mySubjectType");
       int count = subjectTypes.getSubjectTypesCount();
@@ -176,7 +176,11 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
     } finally {
       client.shutdown();
     }
-  }
+  }  
+ 
+  /**
+   * set SubjectTypeLabels Test
+   */
 
   @Test(dependsOnMethods = {"createSubjectTypeWithExtendsTest"})
   @Description("Set label to a SubjectType")
@@ -189,7 +193,30 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
     assertTrue(createdlabels.containsKey(labelKey) && createdlabels.containsValue(labelValue));
   } 
   
+  /**
+   * 
+   * @throws Exception
+   */
   @Test(dependsOnMethods = {"setSubjectTypeLabelsTest"})
+  @Description("Get Subject Type by it's name")
+  @Severity(SeverityLevel.BLOCKER)
+  public void listSubjectTypesWithFilter() throws Exception {
+    try {
+      ListSubjectTypesResponse subjectTypes = client.listSubjectTypes(labelKey, labelValue);
+      int count = subjectTypes.getSubjectTypesCount();
+      logger.log(Level.INFO, "count " + subjectTypes.getSubjectTypesList().size());
+      assertTrue(count > 0);
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      client.shutdown();
+    }
+  }
+  
+  /**
+   * Remove subject TypeLabels Test
+   */
+  @Test(dependsOnMethods = {"listSubjectTypesWithFilter"})
   @Description("Remove label to a SubjectType")
   @Severity(SeverityLevel.BLOCKER)
   public void removeSubjectTypeLabelsTest() {
