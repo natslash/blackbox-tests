@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.axoom.constants.ContentType;
 import com.axoom.drs.utils.RestUtils;
 import axoom.filters.v1.Filter.KeyValueFilter;
+import axoom.filters.v1.Filter.KeyValueFilter.Operation;
 import axoom.filters.v1.Filter.StringPropertyFilter;
 import axoom.subjects.v1.Subjects.Subject;
 import axoom.subjects.v1.Subjects.SubjectContext;
@@ -275,7 +276,7 @@ public class SubjectTypesClient {
    * @return
    */
   public ListSubjectTypesResponse listSubjectTypes(String key, String value) {  
-    KeyValueFilter keyValueFilter = KeyValueFilter.newBuilder().setKey(key).setValue(value).build();    
+    KeyValueFilter keyValueFilter = KeyValueFilter.newBuilder().setKey(key).setValue(value).setOperation(Operation.EQUALS).build();    
     SubjectTypeFilter filter = SubjectTypeFilter.newBuilder().addLabels(keyValueFilter).build();
     ListSubjectTypesRequest request = ListSubjectTypesRequest.newBuilder().setFilter(filter).build();
 
