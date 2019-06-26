@@ -94,7 +94,7 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
   @Description("Get device & user codes")
   @Severity(SeverityLevel.BLOCKER)
   public void getCodesTest() {
-    Response response = CodeFlows.getUserNDeviceCodes();
+    Response response = CodeFlows.getUserNDeviceCodes("blackboxtest01-test1", "openid tenant");
     logger.log(Level.INFO, response.then().log().all(true).toString());
     logger.log(Level.INFO, "-------------End getAccessToken-------------\n");
     if (response.statusCode() == 200) {
@@ -154,7 +154,7 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
   public void getAccessTokenForExpiredCode() {
     String localDeviceCode = null;
     String localUserCode = null;
-    Response response = CodeFlows.getUserNDeviceCodes();
+    Response response = CodeFlows.getUserNDeviceCodes("blackboxtest01-test1", "openid tenant");
     logger.log(Level.INFO, response.then().log().all(true).toString());
     logger.log(Level.INFO, "-------------End getAccessToken-------------\n");
     if (response.statusCode() == 200) {
@@ -186,7 +186,7 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void getAccessTokenForUnconfirmedCode() {
     String localDeviceCode = null;
-    Response response = CodeFlows.getUserNDeviceCodes();
+    Response response = CodeFlows.getUserNDeviceCodes("blackboxtest01-test1", "openid tenant");
     logger.log(Level.INFO, response.then().log().all(true).toString());
     logger.log(Level.INFO, "-------------End getAccessToken-------------\n");
     if (response.statusCode() == 200) {

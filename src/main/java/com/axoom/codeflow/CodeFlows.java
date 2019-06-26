@@ -14,12 +14,12 @@ public class CodeFlows {
   private static String scope = "openid tenant";  
   private static final Logger logger = Logger.getLogger(CodeFlows.class.getName()); 
   
-  public static Response getUserNDeviceCodes() {
+  public static Response getUserNDeviceCodes(String clientId, String scope) {
     RestAssured.baseURI = cisUrl + "/connect/deviceauthorization";
     logger.log(Level.INFO,
         "-------------Begin getAccessToken-------------\n" + RestAssured.baseURI);
     RequestSpecification request = RestAssured.given();
-    request.formParam("client_id", "blackboxtest01-test1").formParam("scope", "openid tenant")
+    request.formParam(clientId, scope)
         .formParam("client_secret", secret);
     request.header("Content-Type", "application/x-www-form-urlencoded");
     logger.log(Level.INFO, request.log().all(true).toString());
