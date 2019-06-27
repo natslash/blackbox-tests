@@ -1,6 +1,10 @@
 package axoom.subjects.v1;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,8 +40,14 @@ public class SubjectsClient {
 
   private final ManagedChannel channel;
   private final SubjectsBlockingStub blockingStub;
-  private String accessTokenFromCodeFlow = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ1RDRGN0E0ODJGMkVEMjM5QkJBRkEwODQ1N0Q5RDYwRTdCQzRDMjIiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJSZFQzcElMeTdTT2J1dm9JUlgyZFlPZThUQ0kifQ.eyJuYmYiOjE1NjE2MjUxNzMsImV4cCI6MTU2MTYyODc3MywiaXNzIjoiaHR0cHM6Ly9hY2NvdW50LmRldi5teWF4b29tLmNvbSIsImF1ZCI6WyJodHRwczovL2FjY291bnQuZGV2Lm15YXhvb20uY29tL3Jlc291cmNlcyIsImh0dHBzOi8vYXBpcy5heG9vbS5jb20vYXV0aC9zdWJqZWN0cyJdLCJjbGllbnRfaWQiOiJibGFja2JveHRlc3QwMS10ZXN0MSIsInN1YiI6IjUwNmE5ZDMxLTc1M2MtNGMwOS05M2I5LTNlOWY2NmJkZGJkNSIsImF1dGhfdGltZSI6MTU2MTYyNTE2MywiaWRwIjoiaHR0cHM6Ly9hY2NvdW50LmRldi5teWF4b29tLmNvbS8iLCJhY2Nlc3MiOlsiZGF0YS1jb21wb3NpdGlvbi1zZXJ2aWNlIiwic2NoZW1hLXJlZ2lzdHJhdGlvbi1zZXJ2aWNlIiwiZGV2aWNlLXJlZ2lzdHJhdGlvbi1zZXJ2aWNlIiwidXNlcm1hbmFnZW1lbnQiXSwidGVuYW50IjoiYmxhY2tib3h0ZXN0MDEiLCJzY29wZSI6WyJvcGVuaWQiLCJodHRwczovL2FwaXMuYXhvb20uY29tL2F1dGgvc3ViamVjdHMiXSwiYW1yIjpbImV4dGVybmFsIl19.B5sgGCC1WIC0pFSZqK39slut1P_BEWHzalm-oBmrXQX0PhgZ8BY7d41c0r5gDW5ayRciGg-toXRh4M1_aVZRjwqu7EHzBpjUSl0p9bwiE76L7sSHesrEXOFws-pcQ3lmuEmbM-pgZ2uC9z44zUs926jk4ML-2BUmcHoqsBeuLN5HCXq7g_IveKB7GuU23281OnPNSXPToHjnVJZKb8RQ0FQ-IYeRL29Og5CGr6vKac9HAAf86aH0GMeCNmr08xG9qBKfU04YHPfopm6iSuADuqY1hR55zGODupL1Ae-30lAZF34P_EI_AV3XAH_xKjWWiGBSAd8MkgqpAifXlSwA65DIObLg9gf5RWHUJj--rtHpAY0qbaRJVYXrqxLPJXVn6W_mt_HywPuaHQ3KwOGDpOFSgIKvNbyeWV6RizVjQ3yxxeg5So7d1--_jxMmtEYMFnRZzQ1OO6cIOhAA0hRSVgS3LSgIXnR1rNWYGK0FLykMRvfDPL25oS5M_uiIolqbId2PNDYzWfqIxyUyxwYjnM3561ACOUDNV7eIMVm9yjtlcQmU-MpyCPlwOPhgJBDhuS0CnoNTMEHaIUpcCY2fpQER_8cs599BG1k3rsTaTWPtVzARF3I8MguDsomUzPFKV4yblK0WlaunmdpFUIhNdaV_J6zudFyf2QVlfKaveBU";
-
+  private String accessTokenFromCodeFlow = null;
+  
+  //Get file from resources folder
+  private File resourcesDirectory = new File("src/test/resources/");
+  private String subjectsPropertiesFilePath;
+  private Properties prop;  
+  private InputStream input;
+  
 
   /* Construct client connecting to RecordMetas server at {@code name:port}. */
   public SubjectsClient(String name, int port, String accessTokenFromCodeFlow) {    
@@ -46,7 +56,18 @@ public class SubjectsClient {
   
   public SubjectsClient(ManagedChannel channel) {
     this.channel = channel;   
-    logger.log(Level.INFO, "Access Token: " + accessTokenFromCodeFlow);
+    subjectsPropertiesFilePath = resourcesDirectory.getAbsolutePath() + "/" + "subjects.properties";
+    prop = new Properties();
+    
+    try {
+      input = new FileInputStream(subjectsPropertiesFilePath);
+      prop.load(input);  
+      accessTokenFromCodeFlow = prop.getProperty("accessToken");
+    } catch (Exception e) {      
+      e.printStackTrace();
+    }
+        
+    logger.log(Level.INFO, "Access Token from code flow: " + accessTokenFromCodeFlow);
     Metadata authHeaders = new Metadata();
     authHeaders.put(Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER),  ": Bearer " + accessTokenFromCodeFlow);
 

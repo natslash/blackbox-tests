@@ -3,10 +3,14 @@ package com.axoom.dcf.it;
 
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,7 +51,13 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
   private WebDriver driver;
   private Map<String, String> requestParams = new HashMap<>();
   private static final Logger logger = Logger.getLogger(AxoomDcfPositiveTestsIT.class.getName());
-
+  
+  //Get file from resources folder
+  private File resourcesDirectory = new File("src/test/resources/");
+  private String subjectsPropertiesFilePath;
+  private Properties prop;
+  private OutputStream output;
+  
   @BeforeClass
   public void beforeClass() {
     inputEmail = EnvVariables.SYSTEM_INTEGRATOR_EMAIL;
@@ -61,6 +71,8 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
     idToken = null;
     deviceCode = null;
     userCode = null;
+    subjectsPropertiesFilePath = resourcesDirectory.getAbsolutePath() + "/" + "subjects.properties";
+    prop = new Properties();    
     requestParams.put("clientId", clientId);
     requestParams.put("redirectUri", redirectUri);
     requestParams.put("cisUrl", cisUrl);
@@ -126,9 +138,17 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
       JsonPath jsonPathEvaluator = response.jsonPath();
       idToken = deviceCode = jsonPathEvaluator.get("id_token");
       accessToken = jsonPathEvaluator.get("access_token");
-      context.setAttribute("accessTokenFromCodeFlow", accessToken);
+      prop.setProperty("idToken", idToken);
+      prop.setProperty("accessToken", accessToken);
       assertTrue(!idToken.isEmpty());
-      assertTrue(!accessToken.isEmpty());      
+      assertTrue(!accessToken.isEmpty()); 
+      // save properties to project root folder
+      try {
+        output = new FileOutputStream(subjectsPropertiesFilePath);
+        prop.store(output, null);
+      } catch (IOException e) {         
+        e.printStackTrace();
+      }
     } else {
       fail(response.then().log().all(true).toString());
     }
