@@ -22,7 +22,7 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.19.0)",
-    comments = "Source: mappings_service.proto")
+    comments = "Source: mappings/v1/mappings_service.proto")
 public final class MappingsGrpc {
 
   private MappingsGrpc() {}

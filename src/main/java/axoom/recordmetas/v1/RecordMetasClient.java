@@ -11,6 +11,7 @@ import axoom.recordmetas.v1.RecordMetasGrpc.RecordMetasBlockingStub;
 import axoom.recordmetas.v1.Recordmetas.RecordMeta;
 import axoom.recordmetas.v1.RecordmetasService.CreateRecordMetaRequest;
 import axoom.recordmetas.v1.RecordmetasService.GetLatestRecordMetaRequest;
+import axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
@@ -58,9 +59,20 @@ public class RecordMetasClient {
     GetLatestRecordMetaRequest request =
         GetLatestRecordMetaRequest.newBuilder().setSubjectId(subjectId).build();
 
-    try {
+    try {          
       return blockingStub.getLatestRecordMeta(request);
+    } catch (StatusRuntimeException e) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
+      throw e;
+    }
+  }
+  
+  public RecordMeta getRecordMeta(String subjectId) {
+    GetRecordMetaRequest request =
+        GetRecordMetaRequest.newBuilder().setId(subjectId).build();
 
+    try {          
+      return blockingStub.getRecordMeta(request);
     } catch (StatusRuntimeException e) {
       logger.log(Level.SEVERE, "RPC failed: {0}", e.getStatus());
       throw e;

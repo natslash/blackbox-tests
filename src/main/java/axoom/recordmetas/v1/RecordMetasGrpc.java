@@ -1,25 +1,17 @@
 package axoom.recordmetas.v1;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
-import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
-import static io.grpc.stub.ClientCalls.asyncClientStreamingCall;
-import static io.grpc.stub.ClientCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ClientCalls.asyncUnaryCall;
-import static io.grpc.stub.ClientCalls.blockingServerStreamingCall;
 import static io.grpc.stub.ClientCalls.blockingUnaryCall;
 import static io.grpc.stub.ClientCalls.futureUnaryCall;
-import static io.grpc.stub.ServerCalls.asyncBidiStreamingCall;
-import static io.grpc.stub.ServerCalls.asyncClientStreamingCall;
-import static io.grpc.stub.ServerCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
-import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 /**
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.19.0)",
-    comments = "Source: recordmetas_service.proto")
+    comments = "Source: recordmetas/v1/recordmetas_service.proto")
 public final class RecordMetasGrpc {
 
   private RecordMetasGrpc() {}
@@ -91,6 +83,38 @@ public final class RecordMetasGrpc {
      return getGetLatestRecordMetaMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest,
+      axoom.recordmetas.v1.Recordmetas.RecordMeta> getGetRecordMetaMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetRecordMeta",
+      requestType = axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest.class,
+      responseType = axoom.recordmetas.v1.Recordmetas.RecordMeta.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest,
+      axoom.recordmetas.v1.Recordmetas.RecordMeta> getGetRecordMetaMethod() {
+    io.grpc.MethodDescriptor<axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest, axoom.recordmetas.v1.Recordmetas.RecordMeta> getGetRecordMetaMethod;
+    if ((getGetRecordMetaMethod = RecordMetasGrpc.getGetRecordMetaMethod) == null) {
+      synchronized (RecordMetasGrpc.class) {
+        if ((getGetRecordMetaMethod = RecordMetasGrpc.getGetRecordMetaMethod) == null) {
+          RecordMetasGrpc.getGetRecordMetaMethod = getGetRecordMetaMethod = 
+              io.grpc.MethodDescriptor.<axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest, axoom.recordmetas.v1.Recordmetas.RecordMeta>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "axoom.recordmetas.v1.RecordMetas", "GetRecordMeta"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  axoom.recordmetas.v1.Recordmetas.RecordMeta.getDefaultInstance()))
+                  .setSchemaDescriptor(new RecordMetasMethodDescriptorSupplier("GetRecordMeta"))
+                  .build();
+          }
+        }
+     }
+     return getGetRecordMetaMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -138,6 +162,16 @@ public final class RecordMetasGrpc {
       asyncUnimplementedUnaryCall(getGetLatestRecordMetaMethod(), responseObserver);
     }
 
+    /**
+     * <pre>
+     * GetRecordMeta returns the requested RecordMeta
+     * </pre>
+     */
+    public void getRecordMeta(axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest request,
+        io.grpc.stub.StreamObserver<axoom.recordmetas.v1.Recordmetas.RecordMeta> responseObserver) {
+      asyncUnimplementedUnaryCall(getGetRecordMetaMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -154,6 +188,13 @@ public final class RecordMetasGrpc {
                 axoom.recordmetas.v1.RecordmetasService.GetLatestRecordMetaRequest,
                 axoom.recordmetas.v1.Recordmetas.RecordMeta>(
                   this, METHODID_GET_LATEST_RECORD_META)))
+          .addMethod(
+            getGetRecordMetaMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest,
+                axoom.recordmetas.v1.Recordmetas.RecordMeta>(
+                  this, METHODID_GET_RECORD_META)))
           .build();
     }
   }
@@ -197,6 +238,17 @@ public final class RecordMetasGrpc {
       asyncUnaryCall(
           getChannel().newCall(getGetLatestRecordMetaMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     * <pre>
+     * GetRecordMeta returns the requested RecordMeta
+     * </pre>
+     */
+    public void getRecordMeta(axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest request,
+        io.grpc.stub.StreamObserver<axoom.recordmetas.v1.Recordmetas.RecordMeta> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getGetRecordMetaMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -235,6 +287,16 @@ public final class RecordMetasGrpc {
     public axoom.recordmetas.v1.Recordmetas.RecordMeta getLatestRecordMeta(axoom.recordmetas.v1.RecordmetasService.GetLatestRecordMetaRequest request) {
       return blockingUnaryCall(
           getChannel(), getGetLatestRecordMetaMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * GetRecordMeta returns the requested RecordMeta
+     * </pre>
+     */
+    public axoom.recordmetas.v1.Recordmetas.RecordMeta getRecordMeta(axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getGetRecordMetaMethod(), getCallOptions(), request);
     }
   }
 
@@ -277,10 +339,22 @@ public final class RecordMetasGrpc {
       return futureUnaryCall(
           getChannel().newCall(getGetLatestRecordMetaMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     * GetRecordMeta returns the requested RecordMeta
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<axoom.recordmetas.v1.Recordmetas.RecordMeta> getRecordMeta(
+        axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getGetRecordMetaMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_CREATE_RECORD_META = 0;
   private static final int METHODID_GET_LATEST_RECORD_META = 1;
+  private static final int METHODID_GET_RECORD_META = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -305,6 +379,10 @@ public final class RecordMetasGrpc {
           break;
         case METHODID_GET_LATEST_RECORD_META:
           serviceImpl.getLatestRecordMeta((axoom.recordmetas.v1.RecordmetasService.GetLatestRecordMetaRequest) request,
+              (io.grpc.stub.StreamObserver<axoom.recordmetas.v1.Recordmetas.RecordMeta>) responseObserver);
+          break;
+        case METHODID_GET_RECORD_META:
+          serviceImpl.getRecordMeta((axoom.recordmetas.v1.RecordmetasService.GetRecordMetaRequest) request,
               (io.grpc.stub.StreamObserver<axoom.recordmetas.v1.Recordmetas.RecordMeta>) responseObserver);
           break;
         default:
@@ -370,6 +448,7 @@ public final class RecordMetasGrpc {
               .setSchemaDescriptor(new RecordMetasFileDescriptorSupplier())
               .addMethod(getCreateRecordMetaMethod())
               .addMethod(getGetLatestRecordMetaMethod())
+              .addMethod(getGetRecordMetaMethod())
               .build();
         }
       }

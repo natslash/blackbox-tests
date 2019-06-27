@@ -35,6 +35,9 @@ public class AxoomRecordMetasTestsIT extends WebDriverTest {
   private Map<String, String> requestParams = new HashMap<>();
   private static final Logger logger = Logger.getLogger(AxoomRecordMetasTestsIT.class.getName());
 
+  private String createdSubjectId = null;
+  private long timeStamp;
+  
   @BeforeClass
   public void beforeClass() {
     clientId = System.getenv("SRS_CLIENT_ID");
@@ -45,7 +48,7 @@ public class AxoomRecordMetasTestsIT extends WebDriverTest {
     requestParams.put("redirectUri", redirectUri);
     requestParams.put("cisUrl", cisUrl);
     requestParams.put("secret", secret);
-
+    timeStamp = System.currentTimeMillis();
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
@@ -72,17 +75,13 @@ public class AxoomRecordMetasTestsIT extends WebDriverTest {
   @Description("Create RecordMeta")
   @Severity(SeverityLevel.BLOCKER)
   public void createRecordMetaTest() throws Exception {
-    RecordMeta recordMeta = RecordMeta.newBuilder().setId("1").setSubjectId("dc-b33a683812494b65aa8e036ed64adcc6")
+    RecordMeta recordMeta = RecordMeta.newBuilder().setId("recordMeta" + timeStamp).setSubjectId("dc-b33a683812494b65aa8e036ed64adcc6")
         .setData(ByteString.copyFromUtf8("Example Data")).build();
 
     // Create a RecordMeta via API
     try {
-      RecordMeta response = client.createRecordMeta(recordMeta);
-      Timestamp timeStamp = response.getTimestamp();
-      System.out.println("TimeStamp: " + timeStamp.toString());
-      System.out.println("Id: " + response.getIdBytes().toStringUtf8());
-      System.out.println("Subject Id: " + response.getSubjectId());
-      System.out.println("Data: " + response.getData().toStringUtf8());
+      RecordMeta response = client.createRecordMeta(recordMeta);      
+      createdSubjectId = response.getId();
       assertTrue(response.getSerializedSize() > 0);
     } catch (StatusRuntimeException sre) {
       fail(sre.getMessage());
@@ -94,7 +93,7 @@ public class AxoomRecordMetasTestsIT extends WebDriverTest {
   @Test(dependsOnMethods = {"createRecordMetaTest"})
   @Description("Get Latest RecordMeta")
   @Severity(SeverityLevel.BLOCKER)
-  public void getRecordMetaTest() throws Exception {
+  public void getLatestRecordMetaTest() throws Exception {
     // Now, get the same RecordMeta
     try {
       RecordMeta recordMeta = client.getLatestRecordMeta("1");
@@ -108,8 +107,47 @@ public class AxoomRecordMetasTestsIT extends WebDriverTest {
       if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
         Assert.assertTrue(true);
       } else {
-        Assert.fail("Error occurred!");
-        sre.printStackTrace();
+        throw sre;
+      }
+    } finally {
+      client.shutdown();
+    }
+  }
+
+  @Test(dependsOnMethods = {"createRecordMetaTest"})
+  @Description("Get Latest RecordMeta")
+  @Severity(SeverityLevel.BLOCKER)
+  public void getLatestRecordMetaWithInvalidSubjectIdTest() throws Exception {
+    // Now, get the same RecordMeta
+    try {
+      client.getLatestRecordMeta("2");
+    } catch (StatusRuntimeException sre) {
+      if (sre.getMessage().contains("NOT_FOUND: could not retrieve latest recordmeta: no latest recordmeta found: document not found")) {
+        Assert.assertTrue(true);
+      } else {
+        throw sre;
+      }
+    }
+  }
+  
+  @Test(dependsOnMethods = {"createRecordMetaTest"})
+  @Description("Get Latest RecordMeta")
+  @Severity(SeverityLevel.BLOCKER)
+  public void getRecordMetaTest() throws Exception {
+    // Now, get the same RecordMeta
+    try {
+      RecordMeta recordMeta = client.getRecordMeta(createdSubjectId);
+      Timestamp timeStamp = recordMeta.getTimestamp();
+      System.out.println("TimeStamp: " + timeStamp);
+      System.out.println("Id: " + recordMeta.getIdBytes().toStringUtf8());
+      System.out.println("Subject Id: " + recordMeta.getSubjectId());
+      System.out.println("Data: " + recordMeta.getData().toStringUtf8());
+      assertTrue(recordMeta.getId().equals(createdSubjectId));
+    } catch (StatusRuntimeException sre) {
+      if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
+        Assert.assertTrue(true);
+      } else {
+        throw sre;
       }
     } finally {
       client.shutdown();
@@ -122,18 +160,15 @@ public class AxoomRecordMetasTestsIT extends WebDriverTest {
   public void getRecordMetaWithInvalidSubjectIdTest() throws Exception {
     // Now, get the same RecordMeta
     try {
-      client.getLatestRecordMeta("2");
+      client.getRecordMeta("2");
     } catch (StatusRuntimeException sre) {
-      if (sre.getMessage().contains("NOT_FOUND: could not retrieve latest recordmeta: no recordmeta found: document not found")) {
+      if (sre.getMessage().contains("NOT_FOUND: could not retrieve recordmeta: no recordmeta with id: 2: document not found")) {
         Assert.assertTrue(true);
       } else {
-        Assert.fail("Error occurred!");
-        sre.printStackTrace();
+        throw sre;
       }
     }
   }
-  
-
   
 
   @Test

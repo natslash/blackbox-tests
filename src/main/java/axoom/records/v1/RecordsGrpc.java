@@ -19,7 +19,7 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.19.0)",
-    comments = "Source: records_service.proto")
+    comments = "Source: records/v1/records_service.proto")
 public final class RecordsGrpc {
 
   private RecordsGrpc() {}
@@ -175,6 +175,7 @@ public final class RecordsGrpc {
      * <pre>
      * WatchRecords returns an unbounded stream of Records matching the given Subscription. 
      * The stream closes automatically when the OAuth token expires and returns gRPC status `ResourceExhausted`.
+     * Using the same Subscription from more processes leads to work stealing.
      * </pre>
      */
     public void watchRecords(axoom.records.v1.RecordsService.WatchRecordsRequest request,
@@ -254,6 +255,7 @@ public final class RecordsGrpc {
      * <pre>
      * WatchRecords returns an unbounded stream of Records matching the given Subscription. 
      * The stream closes automatically when the OAuth token expires and returns gRPC status `ResourceExhausted`.
+     * Using the same Subscription from more processes leads to work stealing.
      * </pre>
      */
     public void watchRecords(axoom.records.v1.RecordsService.WatchRecordsRequest request,
@@ -306,6 +308,7 @@ public final class RecordsGrpc {
      * <pre>
      * WatchRecords returns an unbounded stream of Records matching the given Subscription. 
      * The stream closes automatically when the OAuth token expires and returns gRPC status `ResourceExhausted`.
+     * Using the same Subscription from more processes leads to work stealing.
      * </pre>
      */
     public java.util.Iterator<axoom.records.v1.Records.Record> watchRecords(
