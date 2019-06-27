@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
@@ -78,10 +79,10 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
   }
  
 
-  @Test()
+  @Test(groups = {"subjects"})
   @Description("Create Subject Type with Extends")
   @Severity(SeverityLevel.BLOCKER)
-  public void createSubjectTypeWithExtendsTest() throws Exception {
+  public void createSubjectTypeWithExtendsTest(ITestContext context) throws Exception {
     try {
       Map<String, String> labels = new HashMap<>();
       labels.put("label1", "labelValue2");
@@ -90,6 +91,7 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
           .putAllLabels(labels).build();
       SubjectType createdSubjectType = client.createSubjectType("mySubjectType", subType);
       assertTrue(createdSubjectType.getName().equals(createdSubjectTypeWithExtenderName));
+      context.setAttribute("subjectTypeName", createdSubjectTypeWithExtenderName);
     } catch (Exception e) {
       throw e;
     } finally {

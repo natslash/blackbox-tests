@@ -68,66 +68,44 @@ public class AxoomRecordzTestsIT extends WebDriverTest {
         "-----------------------------------------------------------------------------------------------");
   }
 
-  @Test
-  @Description("Get QRecords preprocessed from getStream")
-  @Severity(SeverityLevel.BLOCKER)
-  public void getPreProcessedQrecordsForDCTest() throws Exception {
-    int count = 0;
-    try {
-      //Get recrod streams from Qrecords client for the Data Composition ID
-      Iterator<Record> qRecords = client.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
-      while (qRecords.hasNext()) {
-        logger.log(Level.INFO, qRecords.next().getData().toStringUtf8());
-        count++;
-      }
-      logger.log(Level.INFO, "Number of Records " + count);
-    } catch (StatusRuntimeException sre) {
-      if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
-        if (count > 0)
-          Assert.assertTrue(true);
-      } else {
-        throw sre;
-      }
-    } finally {
-      client.shutdown();
-    }
-  }
+  /*
+   * @Test
+   * 
+   * @Description("Get QRecords preprocessed from getStream")
+   * 
+   * @Severity(SeverityLevel.BLOCKER) public void getPreProcessedQrecordsForDCTest() throws
+   * Exception { int count = 0; try { //Get recrod streams from Qrecords client for the Data
+   * Composition ID Iterator<Record> qRecords =
+   * client.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6"); while (qRecords.hasNext()) {
+   * logger.log(Level.INFO, qRecords.next().getData().toStringUtf8()); count++; }
+   * logger.log(Level.INFO, "Number of Records " + count); } catch (StatusRuntimeException sre) { if
+   * (sre.getMessage().contains("RESOURCE_EXHAUSTED")) { if (count > 0) Assert.assertTrue(true); }
+   * else { throw sre; } } finally { client.shutdown(); } }
+   */
 
-  @Test
-  @Description("Get QRecords from getStream")
-  @Severity(SeverityLevel.BLOCKER)
-  public void getPubSubRecordsFromGrpcTest() throws Exception {
-    //Publich messages to google pubsub
-    PubSubPublishererUtils.publishMessages("mvp-iotcore-eval", "axoiotl-apis-test-client");
-    
-    //Receive messages from google pubsub directly
-    List<ReceivedMessage> receivedMessages =
-        PubSubSubscriberUtils.synchronousPull("mvp-iotcore-eval", "axoiotl-apis-test-client-shovel", 2);
-    for (ReceivedMessage receivedMessage : receivedMessages) {
-      logger.log(Level.INFO, receivedMessage.getMessage().getData().toStringUtf8());
-    }
-    int count = 0;
-    
-    //Now, get the same messages via Qrecords API and keep count of number of messages
-    try {
-      Iterator<Record> qRecords = client.getRecordStream("axoiotl-apis-test-client");
-      while (qRecords.hasNext()) {
-
-        logger.log(Level.INFO, qRecords.next().getData().toStringUtf8());
-        count++;
-        logger.log(Level.INFO, "Current count is: " + count);
-      }
-      logger.log(Level.INFO, "Number of Records " + count);
-    } catch (StatusRuntimeException sre) {
-      if (count == 2 && sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
-        Assert.assertTrue(true);
-      } else {
-        Assert.fail("Error occurred!");
-        sre.printStackTrace();
-      }
-    } finally {
-      client.shutdown();
-    }
-  }
+  /*
+   * @Test
+   * 
+   * @Description("Get QRecords from getStream")
+   * 
+   * @Severity(SeverityLevel.BLOCKER) public void getPubSubRecordsFromGrpcTest() throws Exception {
+   * //Publich messages to google pubsub PubSubPublishererUtils.publishMessages("mvp-iotcore-eval",
+   * "axoiotl-apis-test-client");
+   * 
+   * //Receive messages from google pubsub directly List<ReceivedMessage> receivedMessages =
+   * PubSubSubscriberUtils.synchronousPull("mvp-iotcore-eval", "axoiotl-apis-test-client-shovel",
+   * 2); for (ReceivedMessage receivedMessage : receivedMessages) { logger.log(Level.INFO,
+   * receivedMessage.getMessage().getData().toStringUtf8()); } int count = 0;
+   * 
+   * //Now, get the same messages via Qrecords API and keep count of number of messages try {
+   * Iterator<Record> qRecords = client.getRecordStream("axoiotl-apis-test-client"); while
+   * (qRecords.hasNext()) {
+   * 
+   * logger.log(Level.INFO, qRecords.next().getData().toStringUtf8()); count++;
+   * logger.log(Level.INFO, "Current count is: " + count); } logger.log(Level.INFO,
+   * "Number of Records " + count); } catch (StatusRuntimeException sre) { if (count == 2 &&
+   * sre.getMessage().contains("RESOURCE_EXHAUSTED")) { Assert.assertTrue(true); } else {
+   * Assert.fail("Error occurred!"); sre.printStackTrace(); } } finally { client.shutdown(); } }
+   */
 
 }

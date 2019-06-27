@@ -59,7 +59,7 @@ public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     // Create Client and establish connection to the server
-    client = new SubjectsClient("subjects.dev.myaxoom.com", 443);
+    client = new SubjectsClient("subjects.dev.myaxoom.com", 443, "");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
   }
 
