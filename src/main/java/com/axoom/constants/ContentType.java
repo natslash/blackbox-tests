@@ -1,6 +1,6 @@
 package com.axoom.constants;
 
-public final class ContentType {
+public class ContentType {
 
   // restricting instantiation
   private ContentType() {}

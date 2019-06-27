@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +24,10 @@ import com.axoom.drs.pages.MyAxoomLoginPage;
 import com.axoom.talos.framework.WebDriverTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import axoom.recordz.v1.Recordz.Record;
-import axoom.recordz.v1.RecordzClient;
+import axoom.filters.v1.Filter.StringPropertyFilter;
+import axoom.records.v1.RecordsClient;
+import axoom.records.v1.RecordsService.ListRecordsSubscriptionsResponse;
+import axoom.records.v1.RecordsService.RecordsSubscriptionsFilter;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -56,7 +57,7 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
   private String providerRegion;
   private String baseUri;
   private WebDriver driver;
-  private RecordzClient client;
+  private RecordsClient client;
   private Map<String, String> requestParams = new HashMap<>();
   private static final Logger logger = Logger.getLogger(AxoomMqTTTestsIT.class.getName());
 
@@ -209,27 +210,26 @@ public class AxoomMqTTTestsIT extends WebDriverTest {
     String[] args = {"-project_id=" + projectId, "-registry_id=" + tenantId,
         "-cloud_region=" + providerRegion, "-device_id=" + deviceId,
         "-private_key_file=" + privateKeyFilePath, "-algorithm=ES256"};
-    int count = 0;
-    client = new RecordzClient("qrecords.dev.myaxoom.com", 443);
+    int size = 0;
+    
+    client = new RecordsClient("qrecords.dev.myaxoom.com", 443);
     try {
       MqttExample.main(args);
 
-      Iterator<Record> qRecords = client.getRecordStream("dc-b33a683812494b65aa8e036ed64adcc6");
-      while (qRecords.hasNext()) {
-        logger.log(Level.INFO, qRecords.next().getData().toStringUtf8());
-        count++;
-      }
-      logger.log(Level.INFO, "Number of Records " + count);
+      StringPropertyFilter value = StringPropertyFilter.newBuilder().setValue("value").build();
+      RecordsSubscriptionsFilter filter = RecordsSubscriptionsFilter.newBuilder().setSubjectTypeName(value ).build();
+      ListRecordsSubscriptionsResponse recSubResponse = client.listRecordsSubscriptions("subject", filter );
+      size = recSubResponse.getSerializedSize();
       client.shutdown();
     } catch (InterruptedException e) {
       Assert.fail("Error occurred!");
       e.printStackTrace();
     } catch (StatusRuntimeException sre) {
       if (sre.getMessage().contains("RESOURCE_EXHAUSTED")) {
-        if (count > 0)
+        if (size > 0)
           Assert.assertTrue(true);
         else
-          Assert.fail("Count is: " + count);
+          Assert.fail("Count is: " + size);
       } else {
         Assert.fail("Error occurred!");
         sre.printStackTrace();

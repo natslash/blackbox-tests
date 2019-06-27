@@ -25,17 +25,18 @@ public class MyAxoomLoginPage extends WebDriverPage {
   private WebElement inputPasswordField;
   private WebElement loginButton;
   private WebElement tenantField;
-  private WebElement tenantCheckBox;
-  private WebElement grantAccessButton;
-  private WebElement denyAccessButton;
+  private WebElement scopeCheckBox;
+  private WebElement grantAccessButton;  
+  private WebElement accessGrantedMessage;  
+
 
   private String inputEmailFieldId = "Input_Email";
   private String inputPasswordFieldId = "Input_Password";
   private String loginButtonId = "button-login";
-  private String tennantCheckBoxId = "scopes_tenant";
-  private String grantAccessButtonId =
-      "DeviceAuthorization_UserCodeConfirmation_GrantConsent_Button";
-  private String denyAccessButtonId = "DeviceAuthorization_UserCodeConfirmation_DenyConsent_Button";
+  private String grantAccessButtonXpath = "//button[contains(@id,'GrantConsent_Button')]";  
+  private String accessGrantedMessageXpath =
+      "//h1[contains(@id,'DeviceAuthorization_ConsentGranted_Title')]";
+ 
 
   private static final Logger logger = Logger.getLogger(MyAxoomLoginPage.class.getName());
 
@@ -105,19 +106,19 @@ public class MyAxoomLoginPage extends WebDriverPage {
     return response.asString();
   }
 
-  public boolean grantAccess(boolean isGrant) {
-    String tenantCheckBoxXpath = "//input[@id='" + tennantCheckBoxId + "']";
-    tenantCheckBox = getDriver().findElement(By.xpath(tenantCheckBoxXpath));
-    tenantCheckBox.click();
-    if (isGrant) {
-      String granTAccessButtonXpath = "//button[@id='" + grantAccessButtonId + "']";
-      grantAccessButton = getDriver().findElement(By.xpath(granTAccessButtonXpath));
-      clickAndWaitForPageLoad(grantAccessButton, 1);
+  public boolean grantAccess(String scope) {
+    String message = null;
+    String scopeCheckBoxXpath = "//input[contains(@value, '" + scope + "')]";
+    scopeCheckBox = getDriver().findElement(By.xpath(scopeCheckBoxXpath));
+    scopeCheckBox.click();
+
+    grantAccessButton = getDriver().findElement(By.xpath(grantAccessButtonXpath));
+    clickAndWaitForPageLoad(grantAccessButton, 2);
+    accessGrantedMessage = getDriver().findElement(By.xpath(accessGrantedMessageXpath));
+    message = accessGrantedMessage.getText();
+    if (message.equals("Access granted")) {
       return true;
     } else {
-      String denyAccessButtonXpath = "//button[@id='" + denyAccessButtonId + "']";
-      denyAccessButton = getDriver().findElement(By.xpath(denyAccessButtonXpath));
-      clickAndWaitForPageLoad(denyAccessButton, 1);
       return false;
     }
   }
