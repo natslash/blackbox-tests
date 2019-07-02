@@ -103,7 +103,7 @@ public class SharingClient {
    * @param tenantId
    * @return
    */
-  public ListTenantSharesResponse listTenantShares(String clientId, String subjectId, String tenantId) {    
+  public ListTenantSharesResponse listTenantShares(String subjectId, String tenantId) {    
     StringPropertyFilter subjectIdFilter = StringPropertyFilter.newBuilder().setValue("subjectIdFilter").setOperation(Operation.EQUALS).build();
     StringPropertyFilter tenantIdFilter = StringPropertyFilter.newBuilder().setValue(tenantId).setOperation(Operation.EQUALS).build();
     TenantShareFilter clientShareFilter = TenantShareFilter.newBuilder().setSubjectId(subjectIdFilter).setTenantId(tenantIdFilter).build();
