@@ -37,6 +37,24 @@ public final class Sharing {
         getClientIdBytes();
 
     /**
+     * <pre>
+     * Defines the tenantID.
+     * </pre>
+     *
+     * <code>string tenant_id = 2;</code>
+     */
+    java.lang.String getTenantId();
+    /**
+     * <pre>
+     * Defines the tenantID.
+     * </pre>
+     *
+     * <code>string tenant_id = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getTenantIdBytes();
+
+    /**
      * <code>string subject_id = 3;</code>
      */
     java.lang.String getSubjectId();
@@ -60,6 +78,7 @@ public final class Sharing {
     }
     private ClientShare() {
       clientId_ = "";
+      tenantId_ = "";
       subjectId_ = "";
     }
 
@@ -91,6 +110,12 @@ public final class Sharing {
               java.lang.String s = input.readStringRequireUtf8();
 
               clientId_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              tenantId_ = s;
               break;
             }
             case 26: {
@@ -173,6 +198,48 @@ public final class Sharing {
       }
     }
 
+    public static final int TENANT_ID_FIELD_NUMBER = 2;
+    private volatile java.lang.Object tenantId_;
+    /**
+     * <pre>
+     * Defines the tenantID.
+     * </pre>
+     *
+     * <code>string tenant_id = 2;</code>
+     */
+    public java.lang.String getTenantId() {
+      java.lang.Object ref = tenantId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        tenantId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * Defines the tenantID.
+     * </pre>
+     *
+     * <code>string tenant_id = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTenantIdBytes() {
+      java.lang.Object ref = tenantId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        tenantId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     public static final int SUBJECT_ID_FIELD_NUMBER = 3;
     private volatile java.lang.Object subjectId_;
     /**
@@ -224,6 +291,9 @@ public final class Sharing {
       if (!getClientIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, clientId_);
       }
+      if (!getTenantIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, tenantId_);
+      }
       if (!getSubjectIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, subjectId_);
       }
@@ -238,6 +308,9 @@ public final class Sharing {
       size = 0;
       if (!getClientIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, clientId_);
+      }
+      if (!getTenantIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, tenantId_);
       }
       if (!getSubjectIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, subjectId_);
@@ -260,6 +333,8 @@ public final class Sharing {
       boolean result = true;
       result = result && getClientId()
           .equals(other.getClientId());
+      result = result && getTenantId()
+          .equals(other.getTenantId());
       result = result && getSubjectId()
           .equals(other.getSubjectId());
       result = result && unknownFields.equals(other.unknownFields);
@@ -275,6 +350,8 @@ public final class Sharing {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + CLIENT_ID_FIELD_NUMBER;
       hash = (53 * hash) + getClientId().hashCode();
+      hash = (37 * hash) + TENANT_ID_FIELD_NUMBER;
+      hash = (53 * hash) + getTenantId().hashCode();
       hash = (37 * hash) + SUBJECT_ID_FIELD_NUMBER;
       hash = (53 * hash) + getSubjectId().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -412,6 +489,8 @@ public final class Sharing {
         super.clear();
         clientId_ = "";
 
+        tenantId_ = "";
+
         subjectId_ = "";
 
         return this;
@@ -441,6 +520,7 @@ public final class Sharing {
       public axoom.sharing.v1.Sharing.ClientShare buildPartial() {
         axoom.sharing.v1.Sharing.ClientShare result = new axoom.sharing.v1.Sharing.ClientShare(this);
         result.clientId_ = clientId_;
+        result.tenantId_ = tenantId_;
         result.subjectId_ = subjectId_;
         onBuilt();
         return result;
@@ -492,6 +572,10 @@ public final class Sharing {
         if (other == axoom.sharing.v1.Sharing.ClientShare.getDefaultInstance()) return this;
         if (!other.getClientId().isEmpty()) {
           clientId_ = other.clientId_;
+          onChanged();
+        }
+        if (!other.getTenantId().isEmpty()) {
+          tenantId_ = other.tenantId_;
           onChanged();
         }
         if (!other.getSubjectId().isEmpty()) {
@@ -612,6 +696,95 @@ public final class Sharing {
   checkByteStringIsUtf8(value);
         
         clientId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object tenantId_ = "";
+      /**
+       * <pre>
+       * Defines the tenantID.
+       * </pre>
+       *
+       * <code>string tenant_id = 2;</code>
+       */
+      public java.lang.String getTenantId() {
+        java.lang.Object ref = tenantId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          tenantId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * Defines the tenantID.
+       * </pre>
+       *
+       * <code>string tenant_id = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTenantIdBytes() {
+        java.lang.Object ref = tenantId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          tenantId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * Defines the tenantID.
+       * </pre>
+       *
+       * <code>string tenant_id = 2;</code>
+       */
+      public Builder setTenantId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        tenantId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Defines the tenantID.
+       * </pre>
+       *
+       * <code>string tenant_id = 2;</code>
+       */
+      public Builder clearTenantId() {
+        
+        tenantId_ = getDefaultInstance().getTenantId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Defines the tenantID.
+       * </pre>
+       *
+       * <code>string tenant_id = 2;</code>
+       */
+      public Builder setTenantIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        tenantId_ = value;
         onChanged();
         return this;
       }
@@ -1444,11 +1617,11 @@ public final class Sharing {
   static {
     java.lang.String[] descriptorData = {
       "\n\030sharing/v1/sharing.proto\022\020axoom.sharin" +
-      "g.v1\"4\n\013ClientShare\022\021\n\tclient_id\030\001 \001(\t\022\022" +
-      "\n\nsubject_id\030\003 \001(\t\"4\n\013TenantShare\022\021\n\tten" +
-      "ant_id\030\001 \001(\t\022\022\n\nsubject_id\030\002 \001(\tB,Z*gitl" +
-      "ab.axoom.tech/iot/go-rillaz/sharing/v1b\006" +
-      "proto3"
+      "g.v1\"G\n\013ClientShare\022\021\n\tclient_id\030\001 \001(\t\022\021" +
+      "\n\ttenant_id\030\002 \001(\t\022\022\n\nsubject_id\030\003 \001(\t\"4\n" +
+      "\013TenantShare\022\021\n\ttenant_id\030\001 \001(\t\022\022\n\nsubje" +
+      "ct_id\030\002 \001(\tB,Z*gitlab.axoom.tech/iot/go-" +
+      "rillaz/sharing/v1b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1467,7 +1640,7 @@ public final class Sharing {
     internal_static_axoom_sharing_v1_ClientShare_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_axoom_sharing_v1_ClientShare_descriptor,
-        new java.lang.String[] { "ClientId", "SubjectId", });
+        new java.lang.String[] { "ClientId", "TenantId", "SubjectId", });
     internal_static_axoom_sharing_v1_TenantShare_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_axoom_sharing_v1_TenantShare_fieldAccessorTable = new
