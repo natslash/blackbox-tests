@@ -25,7 +25,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 
-@Story("Positive test cases for SRS APIs")
+@Story("Positive test cases for Sharing service APIs")
 public class AxoomMockedSharingTestsIT extends PowerMockTestCase {
 
   // Mock client connection to server

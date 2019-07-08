@@ -43,7 +43,7 @@ public class SharingClient {
     this.channel = channel;
     Map<String, String> requestParams = new HashMap<String, String>();
     requestParams.put("baseUrl", "https://account.dev.myaxoom.com/connect/token");
-    requestParams.put("scope", "https://apis.axoom.com/auth/sharing");
+    requestParams.put("scope", "https://apis.axoom.com/auth/shares");
     requestParams.put("clientId", System.getenv("API_TEST_CLIENT"));
     requestParams.put("clientSecret", System.getenv("API_TEST_SECRET"));
     requestParams.put("contentType", ContentType.FORM_URL_ENCODED);
