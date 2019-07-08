@@ -16,6 +16,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
 import axoom.subjects.v1.Subjects.Subject;
+import axoom.subjects.v1.Subjects.SubjectContext;
 import axoom.subjects.v1.SubjectsService.ListSubjectsResponse;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
@@ -82,11 +83,12 @@ public class AxoomSubjectsPositiveTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void createSubjectTest(ITestContext context) throws Exception {
     Map<String, String> labels = new HashMap<>();
-    labels.put("label-" + createdSubjectId, "value-" + createdSubjectId);
+    labels.put("label-" + originalSubjectName, "value-" + originalSubjectName);
     String subjectTypeName = (String) context.getAttribute("subjectTypeName");
     try {
       Subject createdSubject = client.createSubject(originalSubjectName, subjectTypeName, labels);
       createdSubjectId = createdSubject.getId();
+      logger.log(Level.INFO, "Subject created with ID: " + createdSubjectId + " , Name: " + createdSubject.getName());
       assertTrue(createdSubject.getName().equals(originalSubjectName));
     } catch (Exception e) {
       throw e;
@@ -96,20 +98,42 @@ public class AxoomSubjectsPositiveTestsIT extends WebDriverTest {
   }
   
   @Test (dependsOnMethods = {"createSubjectTest"})
-  @Description("List Subjects")
+  @Description("List Subjects with name filter")
   @Severity(SeverityLevel.BLOCKER)
-  public void listSubjectsTest(ITestContext context) throws Exception {
+  public void listSubjectsWithNameFilterTest(ITestContext context) throws Exception {
     int count = 0;
     try {      
-      ListSubjectsResponse subjectsReponse = client.listSubjects(originalSubjectName);
+      ListSubjectsResponse subjectsReponse = client.listSubjectsWithNameFilter(originalSubjectName);
       List<Subject> subjectsList = subjectsReponse.getSubjectsList();
       for (Subject subject : subjectsList) {
-        if(subject.getName().equals(createdSubjectId)) {
+        if(subject.getName().equals(originalSubjectName)) { //this should be originalSubjectName
           count++;
         }
       }
       
-      assertTrue(count == 1);
+      assertTrue(count > 0);
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      client.shutdown();
+    }
+  }
+  
+  @Test (dependsOnMethods = {"createSubjectTest"})
+  @Description("List Subjects without filter")
+  @Severity(SeverityLevel.BLOCKER)
+  public void listSubjectsWithoutFilterTest(ITestContext context) throws Exception {
+    int count = 0;
+    try {      
+      ListSubjectsResponse subjectsReponse = client.listSubjectsWithoutFilter();
+      List<Subject> subjectsList = subjectsReponse.getSubjectsList();
+      for (Subject subject : subjectsList) {
+        if(subject.getName().equals(originalSubjectName)) {
+          count++;
+        }
+      }
+      
+      assertTrue(count > 0);
     } catch (Exception e) {
       throw e;
     } finally {
@@ -132,15 +156,36 @@ public class AxoomSubjectsPositiveTestsIT extends WebDriverTest {
       client.shutdown();
     }
   }
-
+  
+  /**
+   * 
+   * @throws Exception
+   */
   @Test(dependsOnMethods = {"createSubjectTest"})
+  @Description("Get Subject context by it's ID")
+  @Severity(SeverityLevel.BLOCKER)
+  public void getSubjectContextById() throws Exception {
+    try {
+      SubjectContext subjectContext = client.getSubjectContext(createdSubjectId);
+      logger.log(Level.INFO, "Subject Context's subject ID: " + subjectContext.getSubject().getId());
+      logger.log(Level.INFO, "Subject Context's Implementation Graph count: " + subjectContext.getImplementationGraphCount());
+      assertTrue(
+          subjectContext.getImplementationGraphList().size() > 0);
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      client.shutdown();
+    }
+  }
+
+  @Test(dependsOnMethods = {"listSubjectsWithoutFilterTest"})
   @Description("Update a Subject")
   @Severity(SeverityLevel.BLOCKER)
   public void updateSubjectTest() throws Exception {
     String subjectId = client.getSubject(createdSubjectId).getId();
     Subject subject = Subject.newBuilder().setId(subjectId).setName(updatedSubjectName).build();
     try {
-      Subject updatedSubject = client.updateSubject(subject);
+      Subject updatedSubject = client.updateSubject(subject, "name");
       assertTrue(updatedSubject.getId().equals(createdSubjectId));
     } catch (Exception e) {
       throw e;
@@ -149,16 +194,17 @@ public class AxoomSubjectsPositiveTestsIT extends WebDriverTest {
     }
   }
 
-  @Test(dependsOnMethods = {"createSubjectTest"})
+  @Test(dependsOnMethods = {"listSubjectsWithoutFilterTest"})
   @Description("Update a Subject")
   @Severity(SeverityLevel.BLOCKER)
   public void updateSubjectWithoutNameTest() throws Exception {
     String subjectId = client.getSubject(createdSubjectId).getId();
     Subject subject = Subject.newBuilder().setId(subjectId).build();
     try {
-      Subject updatedSubject = client.updateSubject(subject);
+      Subject updatedSubject = client.updateSubject(subject, "name");
       assertTrue(updatedSubject.getId().equals(createdSubjectId));
     } catch (StatusRuntimeException sre) {
+      logger.log(Level.INFO, "updateSubjectWithoutNameTest: " + sre.getLocalizedMessage());
       assertTrue(sre.getMessage().equals("INVALID_ARGUMENT: subject name not specified"));
     } finally {
       client.shutdown();

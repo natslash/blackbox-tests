@@ -16,6 +16,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
 import axoom.subjects.v1.Subjects.SubjectType;
+import axoom.subjects.v1.Subjects.SubjectTypeContext;
 import axoom.subjects.v1.SubjectsService.ListSubjectTypesResponse;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -24,7 +25,7 @@ import io.qameta.allure.Story;
 
 @Story("Positive test cases for SRS APIs")
 public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
-  private String timeStamp;  
+  private String timeStamp;
   private String clientId;
   private String redirectUri;
   private String secret;
@@ -33,7 +34,7 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
   private Map<String, String> requestParams = new HashMap<>();
   private static final Logger logger =
       Logger.getLogger(AxoomSubjectTypesPositiveTestsIT.class.getName());
-  private String subjectTypeName = null; 
+  private String subjectTypeName = null;
   private SubjectType createdSubjectType = null;
   private String createdSubjectTypeWithExtenderName = null;
   private String recordMetaSchemaUrl = "recordMetaSchemaURL";
@@ -52,11 +53,11 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
     requestParams.put("cisUrl", cisUrl);
     requestParams.put("secret", secret);
     timeStamp = Long.toString(System.currentTimeMillis());
-    subjectTypeName = "SubjectType" + timeStamp; 
-    createdSubjectTypeWithExtenderName = "SubjectTypeWithoutExtender" + timeStamp;
+    subjectTypeName = "SubjectType" + timeStamp;
+    createdSubjectTypeWithExtenderName = "SubjectTypeWithExtender" + timeStamp;
     labelKey = "label" + timeStamp;
     labelValue = "label-" + subjectTypeName;
-    
+
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
@@ -78,7 +79,7 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
   }
-  
+
 
   @Test(groups = {"subjects"})
   @Description("Create Subject Type without extends")
@@ -99,7 +100,7 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
       client.shutdown();
     }
   }
-  
+
   /**
    * 
    * @throws Exception
@@ -119,26 +120,50 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
       client.shutdown();
     }
   }
-  
-  //@Test(groups = {"subjects"}, dependsOnMethods = {"getSubjectTypeByName"})
+
+  /**
+   * 
+   * @param context
+   * @throws Exception
+   */
+  @Test(groups = {"subjects"}, dependsOnMethods = {"getSubjectTypeByName"})
   @Description("Create Subject Type with Extends")
   @Severity(SeverityLevel.BLOCKER)
-  public void createSubjectTypeWithExtendsTest(ITestContext context) throws Exception {
+  public void createSubjectTypeWithExtendsTest() throws Exception {
     try {
       Map<String, String> labels = new HashMap<>();
       labels.put("label1", "labelValue2");
       SubjectType subType = SubjectType.newBuilder().setName(createdSubjectTypeWithExtenderName)
-          .setRecordMetaSchemaUrl(recordMetaSchemaUrl).setRecordSchemaUrl(recordSchemaUrl)
-          .putAllLabels(labels).build();
+          .setRecordMetaSchemaUrl(recordMetaSchemaUrl).setRecordSchemaUrl(recordSchemaUrl).build();
       SubjectType createdSubjectType = client.createSubjectType(subjectTypeName, subType);
       assertTrue(createdSubjectType.getName().equals(createdSubjectTypeWithExtenderName));
-      context.setAttribute("subjectTypeName", createdSubjectTypeWithExtenderName);
     } catch (Exception e) {
       throw e;
     } finally {
       client.shutdown();
     }
-  }  
+  }
+
+  /**
+   * 
+   * @throws Exception
+   */
+  @Test(dependsOnMethods = {"createSubjectTypeWithExtendsTest"})
+  @Description("Get Subject Type by it's name")
+  @Severity(SeverityLevel.BLOCKER)
+  public void getSubjectTypeContext() throws Exception {
+    try {
+      SubjectTypeContext subjectTypeContext =
+          client.getSubjectTypeContext(createdSubjectTypeWithExtenderName);
+
+      logger.log(Level.INFO, "SubjectTypeContext extends: " + subjectTypeContext.getExtends(0));
+      assertTrue(subjectTypeContext != null);
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      client.shutdown();
+    }
+  }
 
   /**
    * 
@@ -170,7 +195,8 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
   @Severity(SeverityLevel.BLOCKER)
   public void listSubjectTypesWithNonExistentFilter() throws Exception {
     try {
-      ListSubjectTypesResponse subjectTypes = client.listSubjectTypes("mySubjectTypeLabel", "mySubjectType");
+      ListSubjectTypesResponse subjectTypes =
+          client.listSubjectTypes("mySubjectTypeLabel", "mySubjectType");
       int count = subjectTypes.getSubjectTypesCount();
       logger.log(Level.INFO, "count " + subjectTypes.getSubjectTypesList().size());
       assertTrue(count == 0);
@@ -179,28 +205,39 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
     } finally {
       client.shutdown();
     }
-  }  
- 
+  }
+
   /**
    * set SubjectTypeLabels Test
+   * 
+   * @throws InterruptedException
    */
 
   @Test(dependsOnMethods = {"getSubjectTypeByName"})
   @Description("Set label to a SubjectType")
   @Severity(SeverityLevel.BLOCKER)
-  public void setSubjectTypeLabelsTest() {
-    Map<String, String> labels = new HashMap<>();
-    labels.put(labelKey, labelValue);
-    SubjectType subjectType = client.setSubjectTypeLabel(subjectTypeName, labels);
-    Map<String, String> createdlabels = subjectType.getLabelsMap();
-    assertTrue(createdlabels.containsKey(labelKey) && createdlabels.containsValue(labelValue));
-  } 
-  
+  public void setSubjectTypeLabelsTest() throws InterruptedException {
+    Map<String, String> newLabel = new HashMap<>();
+    newLabel.put(labelKey, labelValue);
+    try {
+      SubjectType subjectType = client.setSubjectTypeLabel(subjectTypeName, newLabel);
+      Map<String, String> createdlabels = subjectType.getLabelsMap();
+      for (Map.Entry<String, String> label : createdlabels.entrySet()) {
+        logger.log(Level.INFO, "Label Key & Value " + label.getKey() + " : " + label.getValue());
+      }
+      assertTrue(createdlabels.containsKey(labelKey) && createdlabels.containsValue(labelValue));
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      client.shutdown();
+    }
+  }
+
   /**
    * 
    * @throws Exception
    */
-  //@Test(dependsOnMethods = {"setSubjectTypeLabelsTest"})
+  @Test(dependsOnMethods = {"setSubjectTypeLabelsTest"})
   @Description("Get Subject Type by it's lables")
   @Severity(SeverityLevel.BLOCKER)
   public void listSubjectTypesWithFilter() throws Exception {
@@ -215,18 +252,25 @@ public class AxoomSubjectTypesPositiveTestsIT extends WebDriverTest {
       client.shutdown();
     }
   }
-  
+
   /**
    * Remove subject TypeLabels Test
+   * @throws InterruptedException 
    */
   @Test(dependsOnMethods = {"setSubjectTypeLabelsTest"})
   @Description("Remove label to a SubjectType")
   @Severity(SeverityLevel.BLOCKER)
-  public void removeSubjectTypeLabelsTest() {
+  public void removeSubjectTypeLabelsTest() throws InterruptedException {
     Map<String, String> labels = new HashMap<>();
     labels.put(labelKey, labelValue);
-    SubjectType subjectType = client.removeSubjectTypeLabel(subjectTypeName, labelKey);
-    Map<String, String> createdlabels = subjectType.getLabelsMap();
-    assertFalse(createdlabels.containsKey(labelKey) && createdlabels.containsValue(labelValue));
-  }  
+    try {
+      SubjectType subjectType = client.removeSubjectTypeLabel(subjectTypeName, labelKey);
+      Map<String, String> createdlabels = subjectType.getLabelsMap();
+      assertFalse(createdlabels.containsKey(labelKey) && createdlabels.containsValue(labelValue));
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      client.shutdown();
+    }
+  }
 }

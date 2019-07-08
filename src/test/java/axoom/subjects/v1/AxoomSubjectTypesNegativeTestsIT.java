@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
 import axoom.subjects.v1.Subjects.Subject;
+import axoom.subjects.v1.Subjects.SubjectType;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -21,15 +22,16 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 
 @Story("Positive test cases for SRS APIs")
-public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {  
+public class AxoomSubjectTypesNegativeTestsIT extends WebDriverTest {
+  private String timeStamp;
   private String clientId;
   private String redirectUri;
   private String secret;
   private String cisUrl;
-  private SubjectsClient client;
+  private SubjectTypesClient client;
   private Map<String, String> requestParams = new HashMap<>();
   private static final Logger logger =
-      Logger.getLogger(AxoomSubjectsNegativeTestsIT.class.getName());
+      Logger.getLogger(AxoomSubjectTypesNegativeTestsIT.class.getName());
   private String createdSubjectTypeId = null;
   Map<String, String> labels = new HashMap<>();
 
@@ -43,7 +45,8 @@ public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {
     requestParams.put("clientId", clientId);
     requestParams.put("redirectUri", redirectUri);
     requestParams.put("cisUrl", cisUrl);
-    requestParams.put("secret", secret);    
+    requestParams.put("secret", secret);
+    timeStamp = Long.toString(System.currentTimeMillis());
     labels.put("label", "labelValue");
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
@@ -56,7 +59,7 @@ public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     // Create Client and establish connection to the server
-    client = new SubjectsClient("subjects.dev.myaxoom.com", 443, "");
+    client = new SubjectTypesClient("subjects.dev.myaxoom.com", 443);
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
   }
 
@@ -65,6 +68,24 @@ public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {
     Reporter.log("Stopped Test: " + this.getClass().getSimpleName());
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
+  }
+
+  @Test
+  @Description("Create SubjectType")
+  @Severity(SeverityLevel.BLOCKER)
+  public void createSubjectTypeTest() throws Exception {
+    SubjectType subjectType = SubjectType.newBuilder().setName(timeStamp)
+        .setRecordSchemaUrl("recordSchemaUrl" + timeStamp)
+        .setRecordMetaSchemaUrl("recordMetaSchemaUrl" + timeStamp).build();
+    try {
+      SubjectType createdSubjectType = client.createSubjectType("extends", subjectType);
+      logger.log(Level.INFO, "SubjectType created " + createdSubjectType.getName());
+      assertTrue(createdSubjectType != null);
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      client.shutdown();
+    }
   }
 
 
@@ -103,12 +124,79 @@ public class AxoomSubjectsNegativeTestsIT extends WebDriverTest {
 
 
   @Test
+
+  @Description("Create SubjectType Without ID")
+
+  @Severity(SeverityLevel.BLOCKER)
+  public void createSubjectTypeWithoutIdTest() throws Exception {
+    SubjectType subjectType =
+        SubjectType.newBuilder().setRecordSchemaUrl("recordSchemaUrl" + timeStamp)
+            .setRecordMetaSchemaUrl("recordMetaSchemaUrl" + timeStamp).build();
+    try {
+      SubjectType createdSubjectType = client.createSubjectType("extends", subjectType);
+      assertTrue(createdSubjectType == null);
+    } catch (StatusRuntimeException sre) {
+      assertTrue(sre.getMessage().contains("INVALID_ARGUMENT: subject type id not specified"),
+          "The Error message doesn't match with what we expect!!!");
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      client.shutdown();
+    }
+  }
+
+  @Test
+
+  @Description("Create SubjectType Without RecordSchemaUrl")
+
+  @Severity(SeverityLevel.BLOCKER)
+  public void createSubjectTypeWithoutRecordSchemaUrlTest() throws Exception {
+    SubjectType subjectType = SubjectType.newBuilder().setName(timeStamp)
+        .setRecordMetaSchemaUrl("recordMetaSchemaUrl" + timeStamp).build();
+    try {
+      client.createSubjectType("extends", subjectType);
+    } catch (StatusRuntimeException sre) {
+      assertTrue(
+          sre.getMessage()
+              .contains("INVALID_ARGUMENT: subject type record schema url not specified"),
+          "The Error message doesn't match with what we expect!!!");
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      client.shutdown();
+    }
+  }
+
+  @Test
+
+  @Description("Create SubjectType Without RecordMetaSchemaUrl")
+
+  @Severity(SeverityLevel.BLOCKER)
+  public void createSubjectTypeWithoutRecordMetaSchemaUrlTest() throws Exception {
+    SubjectType subjectType =
+        SubjectType.newBuilder().setName(timeStamp).setRecordSchemaUrl("recordSchemaUrl").build();
+    try {
+      client.createSubjectType("extends", subjectType);
+    } catch (StatusRuntimeException sre) {
+      assertTrue(
+          sre.getMessage()
+              .contains("INVALID_ARGUMENT: subject type record meta schema url not specified"),
+          "The Error message doesn't match with what we expect!!!");
+    } catch (Exception sre) {
+      throw sre;
+    } finally {
+      client.shutdown();
+    }
+  }
+
+
+  @Test
   @Description("Update a Subject")
   @Severity(SeverityLevel.BLOCKER)
   public void updateNonExistentSubject() throws Exception {
     Subject subject = Subject.newBuilder().setId("z").setName("Noname").build();
     try {
-      client.updateSubject(subject, "name");
+      client.updateSubject(subject);
     } catch (StatusRuntimeException sre) {
       assertTrue(sre.getMessage().equals("UNKNOWN: subject z not found"));
     } finally {

@@ -8,25 +8,23 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.google.protobuf.FieldMask;
 import axoom.filters.v1.Filter.KeyValueFilter;
 import axoom.filters.v1.Filter.StringPropertyFilter;
+import axoom.filters.v1.Filter.StringPropertyFilter.Operation;
 import axoom.subjects.v1.Subjects.Subject;
 import axoom.subjects.v1.Subjects.SubjectContext;
-import axoom.subjects.v1.Subjects.SubjectType;
 import axoom.subjects.v1.Subjects.SubjectTypeContext;
 import axoom.subjects.v1.SubjectsGrpc.SubjectsBlockingStub;
 import axoom.subjects.v1.SubjectsService.CreateSubjectRequest;
-import axoom.subjects.v1.SubjectsService.CreateSubjectTypeRequest;
 import axoom.subjects.v1.SubjectsService.GetSubjectContextRequest;
 import axoom.subjects.v1.SubjectsService.GetSubjectRequest;
 import axoom.subjects.v1.SubjectsService.GetSubjectTypeContextRequest;
-import axoom.subjects.v1.SubjectsService.GetSubjectTypeRequest;
-import axoom.subjects.v1.SubjectsService.ListSubjectTypesRequest;
-import axoom.subjects.v1.SubjectsService.ListSubjectTypesResponse;
 import axoom.subjects.v1.SubjectsService.ListSubjectsRequest;
 import axoom.subjects.v1.SubjectsService.ListSubjectsResponse;
+import axoom.subjects.v1.SubjectsService.RemoveSubjectLabelsRequest;
+import axoom.subjects.v1.SubjectsService.SetSubjectLabelsRequest;
 import axoom.subjects.v1.SubjectsService.SubjectFilter;
-import axoom.subjects.v1.SubjectsService.SubjectTypeFilter;
 import axoom.subjects.v1.SubjectsService.UpdateSubjectRequest;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -86,30 +84,13 @@ public class SubjectsClient {
    */
   public Subject createSubject(String name, String implementsValue, Map<String, String> labels) {
     CreateSubjectRequest request = CreateSubjectRequest.newBuilder().putAllLabels(labels).setName(name).addImplements(implementsValue).build();
-
     try {      
       return blockingStub.createSubject(request);      
     } catch (StatusRuntimeException sre) {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
       throw sre;
     }
-  }
- 
-  /**
-   * 
-   * @param subjectType
-   * @return subjectType
-   */
-  public SubjectType createSubjectType(SubjectType subjectType) {
-    CreateSubjectTypeRequest request = CreateSubjectTypeRequest.newBuilder().setSubjectType(subjectType).build();
-
-    try {      
-      return blockingStub.createSubjectType(request);     
-    } catch (StatusRuntimeException sre) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
-      throw sre;
-    }
-  }     
+  } 
   
   
   /**
@@ -117,8 +98,9 @@ public class SubjectsClient {
    * @param subject
    * @return subject
    */
-  public Subject updateSubject(Subject subject) {
-    UpdateSubjectRequest request = UpdateSubjectRequest.newBuilder().setSubject(subject).build();    
+  public Subject updateSubject(Subject subject, String fieldName) {    
+    FieldMask fieldMask = FieldMask.newBuilder().addPaths("subject." + fieldName).build();
+    UpdateSubjectRequest request = UpdateSubjectRequest.newBuilder().setSubject(subject).setUpdateMask(fieldMask).build();    
     try {      
       return blockingStub.updateSubject(request);     
     } catch (StatusRuntimeException sre) {
@@ -141,23 +123,7 @@ public class SubjectsClient {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
       throw sre;
     }
-  }
-  
-  /**
-   * 
-   * @param subjectTypeName
-   * @return subjectType
-   */
-  public SubjectType getSubjectType(String subjectTypeName) {
-    GetSubjectTypeRequest request = GetSubjectTypeRequest.newBuilder().setSubjectTypeName(subjectTypeName).build();
-
-    try {      
-      return blockingStub.getSubjectType(request);
-    } catch (StatusRuntimeException sre) {
-      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
-      throw sre;
-    }
-  } 
+  }  
  
   
   /**
@@ -197,8 +163,8 @@ public class SubjectsClient {
    * @param subjectName
    * @return listSubjectsResponse
    */
-  public ListSubjectsResponse listSubjects(String subjectName) {
-    StringPropertyFilter filter = StringPropertyFilter.newBuilder().setValue(subjectName).build();
+  public ListSubjectsResponse listSubjectsWithNameFilter(String subjectName) {
+    StringPropertyFilter filter = StringPropertyFilter.newBuilder().setValue(subjectName).setOperation(Operation.EQUALS).build();
     SubjectFilter subjectFilter = SubjectFilter.newBuilder().setName(filter).build();
     ListSubjectsRequest request = ListSubjectsRequest.newBuilder().setFilter(subjectFilter).build();
 
@@ -211,17 +177,100 @@ public class SubjectsClient {
   }
   
   
-  public ListSubjectTypesResponse listSubjectTypes(String subjectTypeName) {
-    KeyValueFilter filter = KeyValueFilter.newBuilder().setKey("label").setValue(subjectTypeName).build();
-    SubjectTypeFilter subjectFilter = SubjectTypeFilter.newBuilder().setLabels(0, filter).build();
-    ListSubjectTypesRequest request = ListSubjectTypesRequest.newBuilder().setFilter(subjectFilter).build();
+  /** 
+  * @param owner
+  * @return listSubjectsResponse
+  */
+ public ListSubjectsResponse listSubjectsWithOwnerFilter(String owner) {
+   StringPropertyFilter filter = StringPropertyFilter.newBuilder().setValue(owner).setOperation(Operation.EQUALS).build();
+   SubjectFilter subjectFilter = SubjectFilter.newBuilder().setOwner(filter).build();
+   ListSubjectsRequest request = ListSubjectsRequest.newBuilder().setFilter(subjectFilter).build();
 
+   try {      
+     return blockingStub.listSubjects(request);
+   } catch (StatusRuntimeException sre) {
+     logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
+     throw sre;
+   }
+ }
+ 
+ /** 
+  * @param label
+  * @return listSubjectsResponse
+  */
+ public ListSubjectsResponse listSubjectsWithLabelsFilter(String labelKey, String labelValue) {
+   KeyValueFilter filter = KeyValueFilter.newBuilder().setKey(labelKey).setValue(labelValue).build();
+   SubjectFilter subjectFilter = SubjectFilter.newBuilder().setLabels(0, filter).build();
+   ListSubjectsRequest request = ListSubjectsRequest.newBuilder().setFilter(subjectFilter).build();
+
+   try {      
+     return blockingStub.listSubjects(request);
+   } catch (StatusRuntimeException sre) {
+     logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
+     throw sre;
+   }
+ }
+  
+  
+  public ListSubjectsResponse listSubjectsWithoutFilter() {    
+    ListSubjectsRequest request = ListSubjectsRequest.newBuilder().build();    
     try {      
-      return blockingStub.listSubjectTypes(request);
+      return blockingStub.listSubjects(request);
     } catch (StatusRuntimeException sre) {
       logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
       throw sre;
     }
   }
+  
+  /**
+   * 
+   * @param subjectId
+   * @param labelKey
+   * @param labelValue
+   * @return subject
+   */
+  public Subject setSubjectsLabel(String subjectId, String labelKey, String labelValue) {
+    SetSubjectLabelsRequest request = SetSubjectLabelsRequest.newBuilder().setSubjectId(subjectId).putLabels(labelKey, labelValue).build();    
+    try {      
+      return blockingStub.setSubjectLabels(request);
+    } catch (StatusRuntimeException sre) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
+      throw sre;
+    }
+  }
+  
+  /**
+   * 
+   * @param subjectId
+   * @param labels
+   * @return subject
+   */
+  public Subject setSubjectsLabels(String subjectId, Map<String, String> labels) {
+    SetSubjectLabelsRequest request = SetSubjectLabelsRequest.newBuilder().setSubjectId(subjectId).putAllLabels(labels).build();
+
+    try {      
+      return blockingStub.setSubjectLabels(request);
+    } catch (StatusRuntimeException sre) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
+      throw sre;
+    }
+  }
+  
+  /**
+   * 
+   * @param subjectId
+   * @param labelKey
+   * @return subject
+   */
+  public Subject removeSubjectLabels(String subjectId, String labelKey) {
+    RemoveSubjectLabelsRequest request = RemoveSubjectLabelsRequest.newBuilder().setSubjectId(subjectId).addLabels(labelKey).build();
+    
+    try {      
+      return blockingStub.removeSubjectLabels(request);
+    } catch (StatusRuntimeException sre) {
+      logger.log(Level.SEVERE, "RPC failed: {0}", sre.getStatus());
+      throw sre;
+    }
+  }  
  
 }

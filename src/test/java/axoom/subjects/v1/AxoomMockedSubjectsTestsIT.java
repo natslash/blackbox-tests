@@ -82,8 +82,7 @@ public class AxoomMockedSubjectsTestsIT extends PowerMockTestCase {
     when(mockedClient.getSubject("1")).thenReturn(mockedSubject);    
     when(mockedQSubjectsIterator.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
     when(mockedQSubjectsIterator.next()).thenReturn(mockedSubject);
-    when(mockedSubject.getNameBytes()).thenReturn(mockedNameBytes);
-    when(mockedClient.getSubjectType("1")).thenReturn(mockedSubjectType);
+    when(mockedSubject.getNameBytes()).thenReturn(mockedNameBytes);    
     when(mockedSubjectType.getName()).thenReturn("100101");
     when(mockedSubjectType.getRecordSchemaUrl()).thenReturn("recordSchemaUrl");
     when(mockedSubjectType.getRecordMetaSchemaUrl()).thenReturn("recordMetaSchemaUrl");
@@ -135,56 +134,4 @@ public class AxoomMockedSubjectsTestsIT extends PowerMockTestCase {
       mockedClient.shutdown();
     }
   }
-
-  @Test
-  @Description("Get Subject's ID")
-  @Severity(SeverityLevel.BLOCKER)
-  public void getSubjectTypeRecordSchemaUrl() throws Exception {
-
-    try {
-      SubjectType subjectType = mockedClient.getSubjectType("1");
-
-      logger.log(Level.INFO, subjectType.getRecordSchemaUrl());
-      assertTrue(subjectType.getRecordSchemaUrl().equals("recordSchemaUrl"));
-    } catch (StatusRuntimeException sre) {
-      throw sre;
-    } finally {
-      mockedClient.shutdown();
-    }
-  }
-
-  @Test
-  @Description("Get Subject's ID")
-  @Severity(SeverityLevel.BLOCKER)
-  public void getSubjectTypeRecordMetaSchemaUrl() throws Exception {
-
-    try {
-      SubjectType subjectType = mockedClient.getSubjectType("1");
-
-      logger.log(Level.INFO, subjectType.getRecordSchemaUrl());
-      assertTrue(subjectType.getRecordMetaSchemaUrl().equals("recordMetaSchemaUrl"));
-    } catch (StatusRuntimeException sre) {
-      throw sre;
-    } finally {
-      mockedClient.shutdown();
-    }
-  }
-
-  @Test
-  @Description("Get Subject's ID")
-  @Severity(SeverityLevel.BLOCKER)
-  public void getSubjectTypeName() throws Exception {
-
-    try {
-      SubjectType subjectType = mockedClient.getSubjectType("1");
-
-      logger.log(Level.INFO, subjectType.getName());
-      assertTrue(subjectType.getName().equals("100101"));
-    } catch (StatusRuntimeException sre) {
-      throw sre;
-    } finally {
-      mockedClient.shutdown();
-    }
-  }
-
 }

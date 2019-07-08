@@ -169,7 +169,7 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
     }
   }
 
-  @Test
+  //@Test
   @Description("Test to get access token from an already used device code")
   @Severity(SeverityLevel.BLOCKER)
   public void getAccessTokenForExpiredCode() {
