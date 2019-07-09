@@ -133,15 +133,46 @@ public class AxoomClientSharesTestsIT extends WebDriverTest {
   @Test
   @Description("Create Client Shares")
   @Severity(SeverityLevel.BLOCKER)
-  public void deleteNonExistentClientShares() throws Exception {
+  public void deleteClientSharesWithNonExistentSubjectID() throws Exception {
 
     try {
       ClientShare clientShare =
           ClientShare.newBuilder().setTenantId(tenantId).setClientId(clientId).setSubjectId(subjectId + "1").build();
-      Empty response = client.deleteShare(clientShare);
-      System.out.println(response.toString());
+      client.deleteShare(clientShare);
     } catch (StatusRuntimeException sre) {
-      assertTrue(true, "SRE exception: " + sre.getLocalizedMessage()); 
+      throw sre; 
+    } finally {
+      client.shutdown();
+    }
+  }
+  
+  @Test
+  @Description("Create Client Shares")
+  @Severity(SeverityLevel.BLOCKER)
+  public void deleteClientSharesWithNonExistentClientID() throws Exception {
+
+    try {
+      ClientShare clientShare =
+          ClientShare.newBuilder().setTenantId(tenantId).setClientId(clientId + "1").setSubjectId(subjectId).build();
+      client.deleteShare(clientShare);      
+    } catch (StatusRuntimeException sre) {
+      assertTrue(sre.getLocalizedMessage().contains("INTERNAL: internal server error")); 
+    } finally {
+      client.shutdown();
+    }
+  }
+  
+  @Test
+  @Description("Create Client Shares")
+  @Severity(SeverityLevel.BLOCKER)
+  public void deleteClientSharesWithNonExistentTenantID() throws Exception {
+
+    try {
+      ClientShare clientShare =
+          ClientShare.newBuilder().setTenantId(tenantId + "1").setClientId(clientId).setSubjectId(subjectId).build();
+      client.deleteShare(clientShare);      
+    } catch (StatusRuntimeException sre) {
+      assertTrue(sre.getLocalizedMessage().contains("PERMISSION_DENIED: missing tenant information in access token")); 
     } finally {
       client.shutdown();
     }

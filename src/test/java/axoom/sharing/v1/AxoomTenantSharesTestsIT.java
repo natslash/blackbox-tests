@@ -14,7 +14,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
-import com.google.protobuf.Empty;
 import axoom.sharing.v1.Sharing.TenantShare;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
@@ -143,14 +142,28 @@ public class AxoomTenantSharesTestsIT extends WebDriverTest {
   @Test
   @Description("Create Tenant Shares")
   @Severity(SeverityLevel.BLOCKER)
-  public void deleteNonExistentTenantShares() throws Exception {
+  public void deleteTenantSharesWithNonExistentSubjectId() throws Exception {
 
     try {
       TenantShare tenantShare = TenantShare.newBuilder().setTenantId(tenantId).setSubjectId(subjectId + "1").build();
-      Empty response = client.deleteShare(tenantShare);
-      System.out.println(response.toString());
+      client.deleteShare(tenantShare);
     } catch (StatusRuntimeException sre) {
-      assertTrue(true, "SRE exception: " + sre.getLocalizedMessage());
+     throw sre;
+    } finally {
+      client.shutdown();
+    }
+  }
+  
+  @Test
+  @Description("Create Tenant Shares")
+  @Severity(SeverityLevel.BLOCKER)
+  public void deleteTenantSharesWithNonExistentTenantId() throws Exception {
+
+    try {
+      TenantShare tenantShare = TenantShare.newBuilder().setTenantId(tenantId + "1").setSubjectId(subjectId).build();
+      client.deleteShare(tenantShare);      
+    } catch (StatusRuntimeException sre) {
+      assertTrue(sre.getLocalizedMessage().contains("INTERNAL: internal server error"));
     } finally {
       client.shutdown();
     }
