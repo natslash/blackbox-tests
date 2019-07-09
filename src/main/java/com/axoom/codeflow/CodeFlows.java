@@ -11,7 +11,7 @@ public class CodeFlows {
   
   private static String cisUrl = EnvVariables.CIS_URL;
   private static String secret = EnvVariables.SECRET;
-  //private static String scope = "openid tenant identityapi.tenant https://apis.axoom.com/auth/subjects";
+  //private static String scope = "openid tenant identityapi.tenant https://apis.axoom.com/auth/subjects https://apis.axoom.com/auth/shares";
   private static String scope = "";
   private static final Logger logger = Logger.getLogger(CodeFlows.class.getName()); 
   

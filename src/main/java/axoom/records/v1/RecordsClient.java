@@ -31,7 +31,7 @@ public class RecordsClient {
   private final RecordsBlockingStub blockingStub;
 
 
-  /* Construct client connecting to Qrecords server at {@code host:port}. */
+  /* Construct client connecting to Records service at {@code host:port}. */
   public RecordsClient(String host, int port) {
     //Instantiate client and connect to server
     this(ManagedChannelBuilder.forAddress(host, port).build());

@@ -14,7 +14,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
-import axoom.sharing.v1.Sharing.ClientShare;
 import axoom.sharing.v1.Sharing.TenantShare;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
@@ -23,17 +22,17 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 
 @Story("Positive test cases for Sharing service APIs")
-public class AxoomSharingTestsIT extends WebDriverTest {
+public class AxoomTenantSharesTestsIT extends WebDriverTest {
   private String clientId;
   private String tenantId;
   private String redirectUri;
   private String secret;
   private String cisUrl;
-  private SharingClient client;
+  private TenantShareService client;
   private long timeStamp;
   private String subjectId;
   private Map<String, String> requestParams = new HashMap<>();
-  private static final Logger logger = Logger.getLogger(AxoomSharingTestsIT.class.getName());
+  private static final Logger logger = Logger.getLogger(AxoomTenantSharesTestsIT.class.getName());
 
   @BeforeClass
   public void beforeClass() {
@@ -60,7 +59,7 @@ public class AxoomSharingTestsIT extends WebDriverTest {
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
     //Create Client and establish connection to the server
-    client = new SharingClient("sharing.dev.myaxoom.com", 443);
+    client = new TenantShareService("sharing.dev.myaxoom.com", 443);
     Reporter.log("Started Test: " + this.getClass().getSimpleName());
   }
 
@@ -69,27 +68,7 @@ public class AxoomSharingTestsIT extends WebDriverTest {
     Reporter.log("Stopped Test: " + this.getClass().getSimpleName());
     Reporter.log(
         "-----------------------------------------------------------------------------------------------");
-  }
-
-  //@Test
-  @Description("List Client Shares")
-  @Severity(SeverityLevel.BLOCKER)
-  public void listClientShares() throws Exception {
-
-    try {
-      List<ClientShare> clientSharesList =
-          client.listClientShares("1", "1", "1").getClientSharesList();
-      clientSharesList.get(0).getClientId();
-
-      assertTrue(clientSharesList.get(0).getClientId().equals("1"));
-
-
-    } catch (StatusRuntimeException sre) {
-      throw sre;
-    } finally {
-      client.shutdown();
-    }
-  }
+  }  
 
   //@Test
   @Description("List Tenant Shares")
@@ -109,54 +88,19 @@ public class AxoomSharingTestsIT extends WebDriverTest {
     } finally {
       client.shutdown();
     }
-  }
+  }    
+  
   
   @Test
   @Description("Create Client Shares")
   @Severity(SeverityLevel.BLOCKER)
-  public void createClientShares() throws Exception {
+  public void createTenantSharesWithNullSubjectId() throws Exception {
 
     try {
-      ClientShare clientShare = ClientShare.newBuilder().setClientId(tenantId).setSubjectId(subjectId).build();
-      ClientShare createdClientShare = client.createClientShare(clientShare);
-      logger.log(Level.INFO, "clientShareID: " + createdClientShare.getClientId() + " Subject ID: " + createdClientShare.getSubjectId());
-      assertTrue(createdClientShare.getClientId().equals(tenantId));
-
-    } catch (StatusRuntimeException sre) {
-      throw sre;
-    } finally {
-      client.shutdown();
-    }
-  }
-  
-  @Test (dependsOnMethods = {"createClientShares"})
-  @Description("Create Client Shares")
-  @Severity(SeverityLevel.BLOCKER)
-  public void deleteClientShares() throws Exception {
-
-    try {
-      ClientShare clientShare = ClientShare.newBuilder().setClientId(tenantId).setSubjectId(subjectId).build();
-      client.deleteClientShare(clientShare);
-    } catch (StatusRuntimeException sre) {
-      throw sre;
-    } finally {
-      client.shutdown();
-    }
-  }
-  
-  @Test
-  @Description("Create Client Shares")
-  @Severity(SeverityLevel.BLOCKER)
-  public void createClientSharesWithNullSubjectId() throws Exception {
-
-    try {
-      ClientShare clientShare = ClientShare.newBuilder().setClientId(tenantId).setSubjectId(null).build();
-      ClientShare createdClientShare = client.createClientShare(clientShare);
-      logger.log(Level.INFO, "clientShareID: " + createdClientShare.getClientId());
-      assertTrue(createdClientShare.getClientId().equals(tenantId));
-
-    } catch (StatusRuntimeException sre) {
-      throw sre;
+      TenantShare clientShare = TenantShare.newBuilder().setTenantId(tenantId).setSubjectId(null).build();
+      client.createShare(clientShare);
+    } catch (NullPointerException ne) {
+      assertTrue(true);
     } finally {
       client.shutdown();
     }
@@ -169,7 +113,7 @@ public class AxoomSharingTestsIT extends WebDriverTest {
 
     try {
       TenantShare tenantShare = TenantShare.newBuilder().setTenantId(tenantId).setSubjectId(subjectId).build();
-      TenantShare createdTenantShare = client.createTenantShare(tenantShare);
+      TenantShare createdTenantShare = (TenantShare) client.createShare(tenantShare);
       logger.log(Level.INFO, "TenantShareId: " + createdTenantShare.getTenantId() + " Subject ID: " + createdTenantShare.getSubjectId());
       assertTrue(createdTenantShare.getTenantId().equals(tenantId));
 
@@ -187,7 +131,7 @@ public class AxoomSharingTestsIT extends WebDriverTest {
 
     try {
       TenantShare tenantShare = TenantShare.newBuilder().setTenantId(tenantId).setSubjectId(subjectId).build();
-      client.deleteTenantShare(tenantShare);
+      client.deleteShare(tenantShare);
     } catch (StatusRuntimeException sre) {
       throw sre;
     } finally {

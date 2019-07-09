@@ -26,7 +26,7 @@ public class MappingsClient {
   private final ManagedChannel channel;
   private final MappingsBlockingStub blockingStub;  
   
-  /* Construct client connecting to RecordMetas server at {@code name:port}. */
+  /* Construct client connecting to Mappings service at {@code name:port}. */
   public MappingsClient(String name, int port) {
     this(ManagedChannelBuilder.forAddress(name, port).build());
   }

@@ -61,6 +61,7 @@ public class AxoomDrsPositiveTestsIT extends WebDriverTest {
     inputPassword = EnvVariables.SYSTEM_INTEGRATOR_PASSWORD;
     tenantId = EnvVariables.TENANT_ID;
     clientId = EnvVariables.DRS_CLIENT_ID;
+    //clientId = "blackboxtest01";
     redirectUri = EnvVariables.DRS_REDIRECT_URI;
     scope = EnvVariables.DRS_SCOPES;
     cisUrl = EnvVariables.CIS_URL;

@@ -47,7 +47,7 @@ public class SubjectsClient {
   private InputStream input;
   
 
-  /* Construct client connecting to RecordMetas server at {@code name:port}. */
+  /* Construct client connecting to subjects service at {@code name:port}. */
   public SubjectsClient(String name, int port, String accessTokenFromCodeFlow) {    
     this(ManagedChannelBuilder.forAddress(name, port).build());    
   }

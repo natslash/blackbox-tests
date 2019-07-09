@@ -30,7 +30,7 @@ public class AxoomMockedSharingTestsIT extends PowerMockTestCase {
 
   // Mock client connection to server
   @Mock
-  SharingClient mockedClient;
+  ClientShareService mockedClient;
 
   @Mock
   ListClientSharesResponse mockedListClientShareResponse;
@@ -71,8 +71,7 @@ public class AxoomMockedSharingTestsIT extends PowerMockTestCase {
     MockitoAnnotations.initMocks(this);
 
     // Specify to return mock objects
-    when(mockedClient.listClientShares("1", "1", "1")).thenReturn(mockedListClientShareResponse);
-    when(mockedClient.listTenantShares("1", "1")).thenReturn(mockedListTenantSharesResponse);
+    when(mockedClient.listClientShares("1", "1", "1")).thenReturn(mockedListClientShareResponse);    
     when(mockedListClientShareResponse.getClientSharesList()).thenReturn(mockedClientSharesList);
     when(mockedListTenantSharesResponse.getTenantSharesList()).thenReturn(mockedTenantSharesList);
     when(mockedClientSharesList.get(0)).thenReturn(mockedClientShare);
@@ -107,25 +106,6 @@ public class AxoomMockedSharingTestsIT extends PowerMockTestCase {
     } finally {
       mockedClient.shutdown();
     }
-  }
+  }  
   
-  @Test
-  @Description("List Tenant Shares")
-  @Severity(SeverityLevel.BLOCKER)
-  public void listTenantShares() throws Exception {
-
-    try {
-      List<TenantShare> tenantSharesList =
-          mockedClient.listTenantShares("1", "1").getTenantSharesList();
-      tenantSharesList.get(0).getTenantId();
-
-      assertTrue(tenantSharesList.get(0).getTenantId().equals("1"));
-
-
-    } catch (StatusRuntimeException sre) {
-      throw sre;
-    } finally {
-      mockedClient.shutdown();
-    }
-  }
 }

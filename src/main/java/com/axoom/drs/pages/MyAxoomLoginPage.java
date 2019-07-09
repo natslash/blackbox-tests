@@ -3,6 +3,7 @@ package com.axoom.drs.pages;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -106,11 +107,14 @@ public class MyAxoomLoginPage extends WebDriverPage {
     return response.asString();
   }
 
-  public boolean grantAccess(String scope) {
+  public boolean grantAccess(List<String> scopesList) {
     String message = null;
-    String scopeCheckBoxXpath = "//input[contains(@value, '" + scope + "')]";
-    scopeCheckBox = getDriver().findElement(By.xpath(scopeCheckBoxXpath));
-    scopeCheckBox.click();
+    for (String scope : scopesList) {
+      String scopeCheckBoxXpath = "//input[contains(@value, '" + scope + "')]";
+      scopeCheckBox = getDriver().findElement(By.xpath(scopeCheckBoxXpath));
+      scopeCheckBox.click();  
+    }
+    
 
     grantAccessButton = getDriver().findElement(By.xpath(grantAccessButtonXpath));
     clickAndWaitForPageLoad(grantAccessButton, 2);

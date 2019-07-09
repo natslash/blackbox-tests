@@ -26,7 +26,7 @@ public class RecordMetasClient {
   private final RecordMetasBlockingStub blockingStub;
 
 
-  /* Construct client connecting to RecordMetas server at {@code name:port}. */
+  /* Construct client connecting to RecordMetas service at {@code name:port}. */
   public RecordMetasClient(String name, int port) {
     this(ManagedChannelBuilder.forAddress(name, port).build());
   }

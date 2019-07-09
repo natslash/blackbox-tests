@@ -8,7 +8,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -185,7 +187,7 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
     }
     if (grantOrDenyAccess("mappings", localUserCode)) {
       try {
-        TimeUnit.SECONDS.sleep(60);
+        TimeUnit.SECONDS.sleep(91);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -235,7 +237,10 @@ public class AxoomDcfPositiveTestsIT extends WebDriverTest {
       myAxoomLoginPage = initPage(driver, MyAxoomLoginPage.class);
       myAxoomLoginPage.loginToMyAxoom(inputEmail, inputPassword);
       myAxoomLoginPage.selectTenantAndReturnAuthCode(tenantId);
-      return myAxoomLoginPage.grantAccess("subjects");
+      List<String> scopesList = new ArrayList<>();
+      scopesList.add("subjects");
+      scopesList.add("shares");
+      return myAxoomLoginPage.grantAccess(scopesList);
     } catch (URISyntaxException e) {
       e.printStackTrace();
       fail("Test failed");

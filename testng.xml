@@ -22,9 +22,11 @@
 	</test> -->
 	<test name="gRPC API Integration Tests">
 		<classes>
-			<class name="com.axoom.dcf.it.AxoomDcfPositiveTestsIT" />
 			<class name="axoom.subjects.v1.AxoomSubjectTypesPositiveTestsIT" />
+			<class name="com.axoom.dcf.it.AxoomDcfPositiveTestsIT" />
 			<class name="axoom.subjects.v1.AxoomSubjectsPositiveTestsIT" />
-		</classes>
+			<class name="axoom.sharing.v1.AxoomClientSharesTestsIT" />
+			<class name="axoom.sharing.v1.AxoomTenantSharesTestsIT" />
+		</classes> 
 	</test>
 </suite> <!-- Suite -->
