@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.axoom.constants.ContentType;
 import com.axoom.drs.utils.RestUtils;
+import com.google.protobuf.Empty;
 import com.google.protobuf.GeneratedMessageV3;
 import axoom.filters.v1.Filter.StringPropertyFilter;
 import axoom.filters.v1.Filter.StringPropertyFilter.Operation;
@@ -80,8 +81,8 @@ public class TenantShareService implements ShareInterface{
     return blockingStub.listTenantShares(request);    
   }
   
-  public void deleteShare(GeneratedMessageV3 tenantShare) {   
+  public Empty deleteShare(GeneratedMessageV3 tenantShare) {   
     DeleteTenantShareRequest request = DeleteTenantShareRequest.newBuilder().setTenantShare((TenantShare) tenantShare).build();     
-    blockingStub.deleteTenantShare(request);    
+    return blockingStub.deleteTenantShare(request);    
   }  
 }

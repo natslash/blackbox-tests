@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
+import com.google.protobuf.Empty;
 import axoom.sharing.v1.Sharing.ClientShare;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
@@ -124,6 +125,23 @@ public class AxoomClientSharesTestsIT extends WebDriverTest {
       client.deleteShare(clientShare);
     } catch (StatusRuntimeException sre) {
       throw sre;
+    } finally {
+      client.shutdown();
+    }
+  }
+  
+  @Test
+  @Description("Create Client Shares")
+  @Severity(SeverityLevel.BLOCKER)
+  public void deleteNonExistentClientShares() throws Exception {
+
+    try {
+      ClientShare clientShare =
+          ClientShare.newBuilder().setTenantId(tenantId).setClientId(clientId).setSubjectId(subjectId + "1").build();
+      Empty response = client.deleteShare(clientShare);
+      System.out.println(response.toString());
+    } catch (StatusRuntimeException sre) {
+      assertTrue(true, "SRE exception: " + sre.getLocalizedMessage()); 
     } finally {
       client.shutdown();
     }

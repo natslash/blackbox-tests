@@ -7,6 +7,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.google.protobuf.Empty;
 import com.google.protobuf.GeneratedMessageV3;
 import axoom.filters.v1.Filter.StringPropertyFilter;
 import axoom.filters.v1.Filter.StringPropertyFilter.Operation;
@@ -100,9 +101,9 @@ public class ClientShareService implements ShareInterface {
   }
 
 
-  public void deleteShare(GeneratedMessageV3 clientShare) {
+  public Empty deleteShare(GeneratedMessageV3 clientShare) {
     DeleteClientShareRequest request =
         DeleteClientShareRequest.newBuilder().setClientShare((ClientShare) clientShare).build();
-    blockingStub.deleteClientShare(request);
+    return blockingStub.deleteClientShare(request);
   }
 }
