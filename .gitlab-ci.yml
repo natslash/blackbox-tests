@@ -26,6 +26,8 @@ test:dev:
 #        - target/surefire-reports/TEST-*.xml
 #        - target/failsafe-reports/TEST-*.xml
   script:
+    - export API_TEST_CLIENT=axoiotl-apis-test-client
+    - export API_TEST_SECRET=$$API_TEST_SECRET
     - export IOT_PROVIDER=google
     - export MACHINE_TYPE=humidity
     - export MACHINE_IDS=machine_1,machine_2
@@ -38,7 +40,7 @@ test:dev:
     - export DRS_URL=https://device-registration-service.dev.myaxoom.com
     - export DRS_CLIENT_ID=$DEV_DRS_CLIENT_ID
     - export SECRET=$DEV_SECRET
-    - export DRS_SCOPES="device-registration-service.devices.write device-registration-service.devices.read"
+    - export DRS_SCOPES="https://apis.axoom.com/auth/devices.write https://apis.axoom.com/auth/devices.read"
     - export SYSTEM_INTEGRATOR_EMAIL=264d0dac.axoom.com@emea.teams.ms
     - export SYSTEM_INTEGRATOR_PASSWORD=kafkarulestheaxoom2world
     - export DRS_DEVICES_API=/api/v1/devices
