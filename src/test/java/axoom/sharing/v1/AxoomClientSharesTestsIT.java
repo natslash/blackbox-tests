@@ -14,7 +14,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.axoom.talos.framework.WebDriverTest;
-import com.google.protobuf.Empty;
 import axoom.sharing.v1.Sharing.ClientShare;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
@@ -134,13 +133,14 @@ public class AxoomClientSharesTestsIT extends WebDriverTest {
   @Description("Create Client Shares")
   @Severity(SeverityLevel.BLOCKER)
   public void deleteClientSharesWithNonExistentSubjectID() throws Exception {
-
+    String wrongSubjectId = subjectId + "1";
     try {
       ClientShare clientShare =
-          ClientShare.newBuilder().setTenantId(tenantId).setClientId(clientId).setSubjectId(subjectId + "1").build();
+          ClientShare.newBuilder().setTenantId(tenantId).setClientId(clientId).setSubjectId(wrongSubjectId).build();
       client.deleteShare(clientShare);
     } catch (StatusRuntimeException sre) {
-      throw sre; 
+      logger.log(Level.INFO, "deleteClientSharesWithNonExistentSubjectID: " + sre.getLocalizedMessage());
+      assertTrue(sre.getLocalizedMessage().contains("ClientShare with clientID = '" + clientId + "' and subjectID = '" + wrongSubjectId + "' could not be found in the dictionary")); 
     } finally {
       client.shutdown();
     }
@@ -150,13 +150,14 @@ public class AxoomClientSharesTestsIT extends WebDriverTest {
   @Description("Create Client Shares")
   @Severity(SeverityLevel.BLOCKER)
   public void deleteClientSharesWithNonExistentClientID() throws Exception {
-
+    String wrongClientId = clientId + "1"; 
     try {
       ClientShare clientShare =
-          ClientShare.newBuilder().setTenantId(tenantId).setClientId(clientId + "1").setSubjectId(subjectId).build();
+          ClientShare.newBuilder().setTenantId(tenantId).setClientId(wrongClientId).setSubjectId(subjectId).build();
       client.deleteShare(clientShare);      
     } catch (StatusRuntimeException sre) {
-      assertTrue(sre.getLocalizedMessage().contains("INTERNAL: internal server error")); 
+      logger.log(Level.INFO, "deleteClientSharesWithNonExistentClientID: " + sre.getLocalizedMessage());
+      assertTrue(sre.getLocalizedMessage().contains("ClientShare with clientID = '" + wrongClientId + "' and subjectID = '" + subjectId + "' could not be found in the dictionary")); 
     } finally {
       client.shutdown();
     }

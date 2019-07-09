@@ -143,12 +143,12 @@ public class AxoomTenantSharesTestsIT extends WebDriverTest {
   @Description("Create Tenant Shares")
   @Severity(SeverityLevel.BLOCKER)
   public void deleteTenantSharesWithNonExistentSubjectId() throws Exception {
-
+    String wrongSubjectId = subjectId + "1";
     try {
-      TenantShare tenantShare = TenantShare.newBuilder().setTenantId(tenantId).setSubjectId(subjectId + "1").build();
+      TenantShare tenantShare = TenantShare.newBuilder().setTenantId(tenantId).setSubjectId(wrongSubjectId).build();
       client.deleteShare(tenantShare);
     } catch (StatusRuntimeException sre) {
-     throw sre;
+     assertTrue(sre.getLocalizedMessage().contains("INVALID_ARGUMENT: TenantShare with tenantID = '" + tenantId + "', subjectID = '" + wrongSubjectId + "' could not be found in the dictionary."));
     } finally {
       client.shutdown();
     }
@@ -158,12 +158,13 @@ public class AxoomTenantSharesTestsIT extends WebDriverTest {
   @Description("Create Tenant Shares")
   @Severity(SeverityLevel.BLOCKER)
   public void deleteTenantSharesWithNonExistentTenantId() throws Exception {
-
+    String wrongTenantId = tenantId + "1";
     try {
-      TenantShare tenantShare = TenantShare.newBuilder().setTenantId(tenantId + "1").setSubjectId(subjectId).build();
+      TenantShare tenantShare = TenantShare.newBuilder().setTenantId(wrongTenantId).setSubjectId(subjectId).build();
       client.deleteShare(tenantShare);      
     } catch (StatusRuntimeException sre) {
-      assertTrue(sre.getLocalizedMessage().contains("INTERNAL: internal server error"));
+      logger.log(Level.INFO, "deleteTenantSharesWithNonExistentTenantId: " + sre.getLocalizedMessage());
+      assertTrue(sre.getLocalizedMessage().contains("INVALID_ARGUMENT: TenantShare with tenantID = '" + wrongTenantId + "', subjectID = '" + subjectId + "' could not be found in the dictionary."));
     } finally {
       client.shutdown();
     }
